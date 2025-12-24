@@ -83,7 +83,7 @@ graph TD
 
     subgraph "Intelligence Layer (AI/ML)"
         E -->|Context Window| G[RAG Pipeline]
-        G -->|Agentic Processing| H[LLM (OpenAI/Claude)]
+        G -->|Agentic Processing| H["LLM (OpenAI/Claude)"]
         H -->|Insights| I[Next.js Dashboard]
     end
 
