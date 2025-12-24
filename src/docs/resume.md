@@ -1,7 +1,5 @@
 # THOMAS TO
-Oakland, CA | 510-387-5408 | thomas.to.bcheme@gmail.com
-[LinkedIn](https://www.linkedin.com/in/thomas-to-ucdavis/) | [Publication](https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf)
-[Interactive Vercel Portfolio](https://thomas-to-bcheme-github-io.vercel.app/)
+Oakland, CA | 510-387-5408 | thomas.to.bcheme@gmail.com | [LinkedIn](https://www.linkedin.com/in/thomas-to-ucdavis/) | [Publication](https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf) | [Interactive Portfolio](https://thomas-to-bcheme-github-io.vercel.app/) | [Github](https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io)
 
 ## EXPERIENCE
 
