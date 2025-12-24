@@ -1,17 +1,22 @@
+// src/lib/db.ts
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { awsCredentialsProvider } from "@vercel/oidc-aws-credentials-provider";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const client = new DynamoDBClient({
-  region: process.env.AWS_REGION,
-  credentials: awsCredentialsProvider({
-    roleArn: process.env.AWS_ROLE_ARN,
-    clientConfig: { region: process.env.AWS_REGION },
-  }),
+  region: "us-east-1",
+  credentials: isDev
+    ? {
+        // Localhost: Use standard keys from .env.local
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+      }
+    : awsCredentialsProvider({
+        // Production (Vercel): Use OIDC
+        roleArn: process.env.AWS_ROLE_ARN,
+      }),
 });
 
-const docClient = DynamoDBDocumentClient.from(client);
-
-const data = await client.send(new ScanCommand({
-  TableName: process.env.DYNAMODB_TABLE_NAME,
-}));
+export const docClient = DynamoDBDocumentClient.from(client);
