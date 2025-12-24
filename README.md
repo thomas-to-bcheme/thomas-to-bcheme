@@ -31,11 +31,11 @@
 
 ## 👨‍💻 About Me
 
-I am a **Founding AI Engineer** and **Data Architect** with a unique background in **Biochemical Engineering**. [cite_start]Unlike traditional software engineers, I started on the manufacturing floor, which gives me deep empathy for operational "physical reality." [cite: 8, 19, 20]
+I am a **Founding AI Engineer** and **Data Architect** with a unique background in **Biochemical Engineering**. Unlike traditional software engineers, I started on the manufacturing floor, which gives me deep empathy for operational "physical reality."
 
-I specialize in **reverse-engineering** complex, legacy workflows and transforming them into modern, scalable cloud architectures. [cite_start]My work focuses on **tangible ROI**—building systems that don't just look cool but actively **safeguard millions in inventory**, **reduce operational costs**, and **democratize data access** for non-technical executives. [cite: 5, 10, 14]
+I specialize in **reverse-engineering** complex, legacy workflows and transforming them into modern, scalable cloud architectures. My work focuses on **tangible ROI**—building systems that don't just look cool but actively **safeguard millions in inventory**, **reduce operational costs**, and **democratize data access** for non-technical executives.
 
-[cite_start]Currently, I am bridging the gap between **Biological Intelligence** and **Artificial Intelligence**, building agents that understand the nuances of wet-lab constraints while leveraging the power of LLMs. [cite: 10, 11]
+Currently, I am bridging the gap between **Biological Intelligence** and **Artificial Intelligence**, building agents that understand the nuances of wet-lab constraints while leveraging the power of LLMs.
 
 ---
 
@@ -52,20 +52,20 @@ I specialize in **reverse-engineering** complex, legacy workflows and transformi
 
 ## 🚀 Experience Highlights
 
-Here is what you will find detailed in my [Resume](src/docs/resume.pdf):
+Here is what you will find detailed in my [Resume](src/docs/Thomas_To_Resume.pdf):
 
 ### **Founding Data Engineer | Canventa Life Sciences**
-* [cite_start]**The "Analyst Bottleneck" Solution:** Architected a RAG AI Agent (Snowflake + LLM) that reduced executive time-to-insight by **99% (3 days to <1 min)**. [cite: 10]
-* [cite_start]**Knowledge Digitization:** Augmented internal knowledge retrieval by fine-tuning models on Confluence data, improving engineer learning rates by **80%**. [cite: 11]
-* [cite_start]**Operational Resilience:** Deployed a cloud-based calculation engine that reduced risk and forecasted production with **80% accuracy**, directly safeguarding inventory. [cite: 12]
+* **The "Analyst Bottleneck" Solution:** Architected a RAG AI Agent (Snowflake + LLM) that reduced executive time-to-insight by **99% (3 days to <1 min)**.
+* **Knowledge Digitization:** Augmented internal knowledge retrieval by fine-tuning models on Confluence data, improving engineer learning rates by **80%**.
+* **Operational Resilience:** Deployed a cloud-based calculation engine that reduced risk and forecasted production with **80% accuracy**, directly safeguarding inventory.
 
 ### **Founder | Proprietary FinTech**
-* [cite_start]**High-Frequency Trading:** Designed a low-latency (<50ms) Python trading agent running on **IoT edge devices (Raspberry Pi/AntMiner)**. [cite: 17, 18]
-* [cite_start]**Automated Arbitrage:** Solved market gaps between brokerages and exchanges (Coinbase) using agentic workflows that operate 24/7 with **99.9% uptime**. [cite: 16]
+* **High-Frequency Trading:** Designed a low-latency (<50ms) Python trading agent running on **IoT edge devices (Raspberry Pi/AntMiner)**.
+* **Automated Arbitrage:** Solved market gaps between brokerages and exchanges (Coinbase) using agentic workflows that operate 24/7 with **99.9% uptime**.
 
 ### **Process & Research Engineering | Genentech & UC Davis**
-* [cite_start]**Cost Reduction:** Optimized biological models using numerical methods to identify **$63.2M** in potential savings. [cite: 30]
-* [cite_start]**Scale:** Validated process improvement models on datasets exceeding **300k+ datapoints**. [cite: 21]
+* **Cost Reduction:** Optimized biological models using numerical methods to identify **$63.2M** in potential savings.
+* **Scale:** Validated process improvement models on datasets exceeding **300k+ datapoints**.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -83,9 +83,9 @@ Recruiters and Engineers can explore the following codebases linked here to veri
 
 I am always open to discussing **Agentic AI**, **Bio-Manufacturing Optimization**, or **Cloud Architecture**.
 
-* [cite_start]**Location:** Oakland, California, USA [cite: 2]
-* [cite_start]**LinkedIn:** [linkedin.com/in/thomas-to-ucdavis](https://www.linkedin.com/in/thomas-to-ucdavis/) [cite: 2]
-* [cite_start]**Email:** [thomas.to.bcheme@gmail.com](mailto:thomas.to.bcheme@gmail.com) [cite: 2]
+* **Location:** Oakland, California, USA
+* **LinkedIn:** [linkedin.com/in/thomas-to-ucdavis](https://www.linkedin.com/in/thomas-to-ucdavis/)
+* **Email:** [thomas.to.bcheme@gmail.com](mailto:thomas.to.bcheme@gmail.com)
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=thomas-to-bcheme&show_icons=true&theme=radical&hide_border=true" alt="Thomas's GitHub Stats" />
