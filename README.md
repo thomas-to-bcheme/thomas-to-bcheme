@@ -1,120 +1,94 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
 
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Resume][resume-shield]][resume-path]
-[![Vercel][vercel-shield]][vercel-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0d1117&height=220&section=header&text=Thomas%20To&fontSize=70&fontColor=ffffff&desc=Founding%20AI%20Engineer%20%7C%20Data%20Architect%20%7C%20Biotech%20Expert&descAlign=50&descAlignY=65" width="100%"/>
+
+  <br />
+
+  <a href="https://thomas-to-bcheme-github-io.vercel.app/">
+    <img src="https://img.shields.io/badge/Portfolio-Visit%20Live%20Site-2ea44f?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio" />
+  </a>
+  <a href="src/docs/resume.pdf">
+    <img src="https://img.shields.io/badge/Resume-Download%20PDF-0078D4?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Resume" />
+  </a>
+  <a href="https://www.linkedin.com/in/thomas-to-ucdavis/">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  <a href="mailto:thomas.to.bcheme@gmail.com">
+    <img src="https://img.shields.io/badge/Email-Contact%20Me-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
   </a>
 
-<h3 align="center">project_title</h3>
+  <br />
+  <br />
 
   <p align="center">
-    project_description
+    <b>Bridging "Physical Reality" (Biotech/IoT) with "Cloud Intelligence" (AI/Snowflake).</b>
     <br />
+    Building secure, ROI-driven AI systems that safeguard assets and automate the mundane.
   </p>
 </div>
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+## 👨‍💻 About Me
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+I am a **Founding AI Engineer** and **Data Architect** with a unique background in **Biochemical Engineering**. [cite_start]Unlike traditional software engineers, I started on the manufacturing floor, which gives me deep empathy for operational "physical reality." [cite: 8, 19, 20]
 
-Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`, `project_license`
+I specialize in **reverse-engineering** complex, legacy workflows and transforming them into modern, scalable cloud architectures. [cite_start]My work focuses on **tangible ROI**—building systems that don't just look cool but actively **safeguard millions in inventory**, **reduce operational costs**, and **democratize data access** for non-technical executives. [cite: 5, 10, 14]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[cite_start]Currently, I am bridging the gap between **Biological Intelligence** and **Artificial Intelligence**, building agents that understand the nuances of wet-lab constraints while leveraging the power of LLMs. [cite: 10, 11]
 
+---
 
+### 🛠 Tech Stack & Core Competencies
 
-### Built With
-
-* [![Next][Next.js]][Next-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+| **AI & Agentic Systems** | **Data Engineering** | **Full Stack & Cloud** | **Leadership & Ops** |
+| :--- | :--- | :--- | :--- |
+| ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=chainlink&logoColor=white) **LangChain/Graph** | ![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?style=flat-square&logo=snowflake&logoColor=white) **Snowflake** | ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white) **Next.js (React)** | **Technical Liaison** |
+| ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white) **GPT-4 / RAG** | ![dbt](https://img.shields.io/badge/dbt-FF694B?style=flat-square&logo=dbt&logoColor=white) **dbt** | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) **TypeScript** | **Risk Mitigation** |
+| ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) **Python (PyTorch)** | ![Postgres](https://img.shields.io/badge/Postgres-336791?style=flat-square&logo=postgresql&logoColor=white) **PostgreSQL** | ![GCP](https://img.shields.io/badge/GCP-4285F4?style=flat-square&logo=google-cloud&logoColor=white) **Google Cloud** | **Cost Optimization** |
+| ![Pinecone](https://img.shields.io/badge/Pinecone-VectorDB-green?style=flat-square) **Vector DBs** | ![ETL](https://img.shields.io/badge/ETL-Pipelines-orange?style=flat-square) **Auto-ETL** | ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) **CI/CD** | **Mentorship** |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## 🚀 Experience Highlights
 
-* []()
-* []()
-* []()
+Here is what you will find detailed in my [Resume](src/docs/resume.pdf):
+
+### **Founding Data Engineer | Canventa Life Sciences**
+* [cite_start]**The "Analyst Bottleneck" Solution:** Architected a RAG AI Agent (Snowflake + LLM) that reduced executive time-to-insight by **99% (3 days to <1 min)**. [cite: 10]
+* [cite_start]**Knowledge Digitization:** Augmented internal knowledge retrieval by fine-tuning models on Confluence data, improving engineer learning rates by **80%**. [cite: 11]
+* [cite_start]**Operational Resilience:** Deployed a cloud-based calculation engine that reduced risk and forecasted production with **80% accuracy**, directly safeguarding inventory. [cite: 12]
+
+### **Founder | Proprietary FinTech**
+* [cite_start]**High-Frequency Trading:** Designed a low-latency (<50ms) Python trading agent running on **IoT edge devices (Raspberry Pi/AntMiner)**. [cite: 17, 18]
+* [cite_start]**Automated Arbitrage:** Solved market gaps between brokerages and exchanges (Coinbase) using agentic workflows that operate 24/7 with **99.9% uptime**. [cite: 16]
+
+### **Process & Research Engineering | Genentech & UC Davis**
+* [cite_start]**Cost Reduction:** Optimized biological models using numerical methods to identify **$63.2M** in potential savings. [cite: 30]
+* [cite_start]**Scale:** Validated process improvement models on datasets exceeding **300k+ datapoints**. [cite: 21]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## 📂 What You'll Find in This Repo
 
+Recruiters and Engineers can explore the following codebases linked here to verify my "Fullstack" claims:
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[resume-shield]: https://img.shields.io/badge/Resume-View%20Doc-0078D4?style=for-the-badge&logo=microsoftword
-[resume-path]: src/docs/resume.md
-[vercel-shield]: https://img.shields.io/badge/Portfolio-Visit%20Site-2ea44f?style=for-the-badge&logo=vercel
-[vercel-url]: https://thomas-to-bcheme-github-io.vercel.app/
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/thomas-to-ucdavis/
-[product-screenshot]: images/screenshot.png
-<!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+1.  **[Live Portfolio (Next.js)](https://thomas-to-bcheme-github-io.vercel.app/)**: My interactive resume and project showcase, deployed via Vercel.
+2.  **AI Agents (Coming Soon)**: Python/LangChain implementations of my RAG architectures.
+3.  **Data Pipelines**: Examples of dbt models and SQL transformations used for revenue optimization.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 📫 Connect With Me
+
+I am always open to discussing **Agentic AI**, **Bio-Manufacturing Optimization**, or **Cloud Architecture**.
+
+* [cite_start]**Location:** Oakland, California, USA [cite: 2]
+* [cite_start]**LinkedIn:** [linkedin.com/in/thomas-to-ucdavis](https://www.linkedin.com/in/thomas-to-ucdavis/) [cite: 2]
+* [cite_start]**Email:** [thomas.to.bcheme@gmail.com](mailto:thomas.to.bcheme@gmail.com) [cite: 2]
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=thomas-to-bcheme&show_icons=true&theme=radical&hide_border=true" alt="Thomas's GitHub Stats" />
+</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
