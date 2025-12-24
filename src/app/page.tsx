@@ -5,8 +5,8 @@ import { ScanCommand } from "@aws-sdk/lib-dynamodb";
 // 1. Mark component as 'async' to fetch data server-side
 export default async function Home() {
   
-  // 2. Use 'await' to get the actual data
-  const response =  docClient.send(new ScanCommand({
+  // 2. Use to get the actual data
+  const response = await docClient.send(new ScanCommand({
     TableName: process.env.DYNAMODB_TABLE_NAME
   }));
   
