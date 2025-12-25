@@ -36,7 +36,7 @@ const Badge = ({ children, color = "zinc", pulse = false }: { children: React.Re
   );
 };
 
-const BentoGrid = ({ children, className }: { children: React.ReactNode, className?: string }) => (
+const BentoGrid = ({ children, className, id }: { children: React.ReactNode, className?: string }) => (
   <div className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]", className)}>
     {children}
   </div>
