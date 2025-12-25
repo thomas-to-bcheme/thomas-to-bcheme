@@ -163,9 +163,9 @@ We define three operational states based on the Risk Factor ($R$). A system is c
 $$
 \text{Condition:} \quad
 \begin{cases} 
-   R \leq 80\% & \text{SAFE} \\
-   80\% < R < 100\% & \text{CRITICAL} \\
-   R \geq 100\% & \text{FAILURE} 
+   R \leq 80\% & \text{SAFE (Green)} \\
+   80\% < R < 100\% & \text{CRITICAL (Red)} \\
+   R \geq 100\% & \text{FAILURE (Black)} 
 \end{cases}
 $$
 
@@ -201,30 +201,27 @@ $$
 ### Comparison: Hourly vs. 30 Minutes
 The following table compares the capacity impact of standard cron schedules against the platform hard limit ($L_{max}=100$).
 
-| Metric | Hourly ($60$ min) | 30 Minutes |
+| Metric | Hourly (60 min) | 30 Minutes |
 | :--- | :--- | :--- |
-| **Daily Deploys ($U$)** | $24$ | $48$ |
-| **Risk Factor ($R$)** | $24\%$ | $48\%$ |
+| **Daily Deploys ($U$)** | 24 | 48 |
+| **Risk Factor ($R$)** | 24 | 48 |
 | **Status** | ✅ **SAFE** | ⚠️ **CAUTION** |
-| **Buffer Remaining** | $76$ slots | $52$ slots |
+| **Buffer Remaining** | 76 slots | 52 slots |
 
 ### Mathematical Proof
 
 **Case A: Hourly Schedule**
 $$
-T = 60 \text{ min}
+T = 60 \text{min}
 $$
+
 $$
 R_{60} = \left( \frac{1440 / 60}{100} \right) \times 100\% = \mathbf{24\%}
 $$
 
 **Case B: 30-Minute Schedule**
-$$
-T = 30 \text{ min}
-$$
-$$
-R_{30} = \left( \frac{1440 / 30}{100} \right) \times 100\% = \mathbf{48\%}
-$$
+$$T = 30 \text{min}$$
+$$R_{30} = \left( \frac{1440 / 30}{100} \right) \times 100\% = \mathbf{48\%}$$
 
 ### Final Decision
 30 Minutes during active development and maintenace of tools while under continous deployment and allow for continual uptime for users to interact with the production server upto 20 minutes when the project life cycle has reached it's Stewardship phase and is no longer undergoing development of new features given the (financial) constraints previously mentioned.
@@ -251,44 +248,64 @@ More robust agentic models and methods (e.g RAG) are out of scope at this time o
 
 *(This diagram is live-rendered by GitHub using Mermaid.js)*
 
+# 🔄 System Architecture: ETL & Data Flow
+
+This diagram illustrates the automated pipeline moving data from external sources into Vercel Edge Config for low-latency frontend access.
+
 ```mermaid
 flowchart TD
-    %% Styling
+    %% Styling Definitions
     classDef external fill:#f9f,stroke:#333,stroke-width:2px;
     classDef backend fill:#bbf,stroke:#333,stroke-width:2px;
     classDef storage fill:#ff9,stroke:#333,stroke-width:2px;
     classDef frontend fill:#bfb,stroke:#333,stroke-width:2px;
 
+    %% 1. Data Sources
     subgraph Sources [Data Sources]
         Web[GitHub]:::external
         API[3rd Party APIs]:::external
     end
 
+    %% 2. Backend Logic
     subgraph ETL_Backend [Backend / GitHub Actions]
         Cron((CRON Scheduler)):::backend
         Script[ETL Script Node.js]:::backend
         Transform[Data Normalization & JSON Prep]:::backend
     end
 
+    %% 3. Storage Layer
     subgraph Cloud_Storage [Cloud Storage / Database]
         Blob[(Vercel Edge Config)]:::storage
         DynamoDB[("AWS DynamoDB (Failed)")]:::storage
-        style DynamoDB stroke-dasharray: 5 5
+        style DynamoDB stroke-dasharray: 5 5, fill:#eee, color:#999
     end
 
+    %% 4. Frontend Layer
     subgraph Client [Frontend / Vercel]
         NextJS[Next.js Server Component]:::frontend
         UI[React UI]:::frontend
     end
 
-    %% Flows
+    %% --- Connectivity Flows ---
+    
+    %% Trigger
     Cron --"Triggers every 15m"--> Script
+    
+    %% Extraction Phase
     Script --"EXTRACT (GitHub)"--> Web
     Script --"EXTRACT (3rd Party API)"--> API
-    Web & API --"Raw Data"--> Transform
-    Transform --"LOAD (Put Command)"--> Blob
     
-    Blob --"Read JSON"--> NextJS
-    NextJS --"Render"--> UI
-```
+    %% Transformation Phase
+    Web --"Raw Data"--> Transform
+    API --"Raw Data"--> Transform
+    
+    %% Load Phase (The Option 2 "Back and Forth")
+    Transform --"1. GET Current State"--> Blob
+    Blob --"2. Return JSON"--> Transform
+    Transform --"3. PUT (Update/Overwrite)"--> Blob
+    
+    %% Consumption Phase
+    Blob --"READ (Low Latency)"--> NextJS
+    NextJS --"Hydrate"--> UI
+```    
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
