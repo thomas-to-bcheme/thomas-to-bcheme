@@ -119,7 +119,7 @@ const SystemStatusTicker = () => {
       </div>
        <div className="hidden md:flex items-center gap-1.5">
         <GitBranch size={10} />
-        <span>BUILD: {lastCall.split('T')[1].split('.')[0]} UTC</span>
+        {/*<span>BUILD: {lastCall.split('T')[1].split('.')[0]} UTC</span>*/}
       </div>
     </div>
   );
