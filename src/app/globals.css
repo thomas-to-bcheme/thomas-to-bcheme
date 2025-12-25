@@ -1,26 +1,122 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* --- THEME CONFIGURATION (Tailwind v4) --- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom Animation Curves for "Engineering" feel */
+  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+  --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+  
+  /* Tech Stack Colors */
+  --color-brand-blue: #2563eb;
+  --color-brand-emerald: #10b981;
+}
+
+/* --- ROOT VARIABLES --- */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  /* Grid Pattern Color (Light Mode) */
+  --grid-color: rgba(0, 0, 0, 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #050505; /* Slightly deeper black for contrast */
     --foreground: #ededed;
+    /* Grid Pattern Color (Dark Mode) */
+    --grid-color: rgba(255, 255, 255, 0.05);
   }
+}
+
+/* --- GLOBAL BEHAVIORS --- */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased; /* Critical for clean text on Mac */
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* 🚀 FIX: Connects layout.tsx fonts to the page */
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden; /* Prevents horizontal scroll from animations */
+}
+
+/* --- MICRO-INTERACTIONS --- */
+
+/* Custom Text Selection Color (Branding) */
+::selection {
+  background-color: rgba(37, 99, 235, 0.15); /* Brand Blue with opacity */
+  color: inherit;
+}
+
+/* --- UTILITY CLASSES --- */
+
+/* 1. ENGINEERING GRID BACKGROUND 
+   Updated: Removed 'mask-image' so the grid does not fade out.
+*/
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  /* Fading masks removed for better readability */
+}
+
+/* 2. CUSTOM SCROLLBAR (Refined) 
+   Keeps the UI clean in your Chat/Agent windows 
+*/
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px; /* For horizontal scrolling */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(161, 161, 170, 0.3); /* Subtle Zinc */
+  border-radius: 99px;
+  transition: background-color 0.2s;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(161, 161, 170, 0.5); /* Darker on hover */
+}
+
+/* Dark mode override */
+@media (prefers-color-scheme: dark) {
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* 3. CODE BLOCK SYNTAX HIGHLIGHTING 
+   If you display raw code logs, this makes them readable 
+*/
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* 4. UTILITY FOR HIDING SCROLLBARS 
+   Useful for horizontal KPI scrollers on mobile 
+*/
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
