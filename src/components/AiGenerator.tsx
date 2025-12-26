@@ -17,7 +17,7 @@ export default function AiGenerator() {
             try {
               const response = await fetch('/api/completion', {
                 method: 'POST',
-                body: JSON.stringify({ prompt: 'Why is the sky blue?' }),
+                body: JSON.stringify({ prompt: 'What is the meaning of life?' }),
               });
               const json = await response.json();
               setGeneration(json.text);
@@ -29,7 +29,7 @@ export default function AiGenerator() {
             }
           }}
         >
-          {isLoading ? 'Generating...' : 'Ask AI: Why is the sky blue?'}
+          {isLoading ? 'Generating...' : 'Ask AI: What is the meaning of life?'}
         </button>
 
         {generation && (
