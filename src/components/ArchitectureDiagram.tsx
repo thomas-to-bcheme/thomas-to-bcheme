@@ -23,8 +23,7 @@ export default function ArchitectureDiagram() {
             <div className="text-center sm:text-left">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white">Empirical Data Acquisition</h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                Capturing raw signals from the <strong>Manufacturing Floor</strong>. 
-                Sensors, logs, and user inputs provide the ground truth for reality-based modeling.
+                <strong>Digitized Systems</strong> to capture raw data reflecting reality
               </p>
             </div>
           </div>
@@ -43,10 +42,9 @@ export default function ArchitectureDiagram() {
               </svg>
             </div>
             <div className="text-center sm:text-left">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Data Infrastructure & Modeling</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Data Infrastructure</h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                <strong>Enterprise ETL/ELT Pipelines</strong> and rigorous Data Modeling. 
-                Digitizing physical processes into structured, queryable assets (SQL/NoSQL/DynamoDB).
+                <strong>Data Pipelines</strong> to digitutilize data for modeling, analysis, and/or automation.
               </p>
             </div>
           </div>
@@ -65,10 +63,9 @@ export default function ArchitectureDiagram() {
               </svg>
             </div>
             <div className="text-center sm:text-left">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Algorithmic and/or Agentic Applications</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Fullstack Agentic Software Development</h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                Digital Transformation via <strong>Agentic Machine Learning</strong>. 
-                Deploying automated, self-optimizing software that reflects real-world dynamics.
+                <strong>Digital Transformation</strong> by realizing asset potential through the modernization of legacy tech stacks.
               </p>
             </div>
           </div>
@@ -87,10 +84,10 @@ export default function ArchitectureDiagram() {
               </svg>
             </div>
             <div className="text-center sm:text-left">
-              <h3 className="text-lg font-bold text-green-900 dark:text-green-100">Tangible Value & ROI</h3>
+              <h3 className="text-lg font-bold text-green-900 dark:text-green-100">Tangible Value & Return on Investment (ROI)</h3>
               <p className="text-sm text-green-800 dark:text-green-300 mt-1">
                 <strong>Efficiency, Revenue, Optimization.</strong> <br/>
-                Delivering 0-to-1 scalable solutions that ground software in financial reality.
+                Net gains as the measurable delta between manual process costs and optimized agentic output, directly converting engineering efficiency into recognized revenue.
               </p>
             </div>
           </div>

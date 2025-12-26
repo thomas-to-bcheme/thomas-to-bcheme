@@ -23,7 +23,9 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
 import AiGenerator from "@/components/AiGenerator";
-import ArchitectureDiagram from "@/components/ArchitectureDiagram"; 
+import ArchitectureDiagram from "@/components/ArchitectureDiagram";
+import ROICalculation from "@/components/ROICalculation";
+import EfficiencyCalculator from '@/components/EfficiencyCalculator'; // Import it
 import { // --- SOCIAL & CONTACT ---
 	Users, HeartHandshake, TrendingUp, Github, Linkedin, Mail, FileText, MapPin, 
 	
@@ -58,6 +60,8 @@ function cn(...inputs: ClassValue[]) {
 const scrollToTop = () => {
 	window.scrollTo({ top: 0, behavior: 'smooth' });
 };
+
+
 
 // --- UI COMPONENT: BADGE ---
 const Badge = ({ 
@@ -278,17 +282,29 @@ return (
 		</div>
 	);
 };
-// --- COMPONENT: KPI METRICS ---
+
+// --- UI COMPONENT: KPI METRIC ---
 const ImpactMetric = ({ value, label, prefix = "", suffix = "", subtext }: any) => (
-	<div className="flex flex-col items-center justify-center p-6 text-center border-b md:border-b-0 md:border-r last:border-r-0 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors duration-300 group cursor-default">
-		<div className="text-3xl md:text-4xl font-extrabold text-zinc-900 dark:text-white mb-2 font-mono group-hover:scale-110 transition-transform duration-300">
-			{prefix}
-			<CountUp end={value} duration={2.5} separator="," enableScrollSpy scrollSpyOnce />
-			{suffix}
-		</div>
-		<div className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-3">{label}</div>
-		<p className="text-[11px] text-zinc-500 dark:text-zinc-400 max-w-[180px] leading-relaxed">{subtext}</p>
-	</div>
+  <div className="flex flex-col items-center justify-start h-full pt-8 pb-6 px-4 text-center border-b md:border-b-0 md:border-r last:border-r-0 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors duration-300 group cursor-default">
+    
+    {/* Metric Number */}
+    <div className="text-3xl md:text-4xl font-extrabold text-zinc-900 dark:text-white mb-2 font-mono group-hover:scale-110 transition-transform duration-300">
+      {prefix}
+      <CountUp end={value} duration={2.5} separator="," enableScrollSpy scrollSpyOnce />
+      {suffix}
+    </div>
+    
+    {/* Label */}
+    <div className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-4">
+      {label}
+    </div>
+    
+    {/* Subtext Container (Updated for Top Alignment) */}
+    <div className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed flex items-start justify-center flex-1 w-full">
+      {subtext}
+    </div>
+
+  </div>
 );
 
 // --- MAIN PAGE COMPONENT ---
@@ -366,7 +382,7 @@ export default function Home() {
 					 <Github size={20} /> View Source
 				</a>
 				<a 
-					href="src/docs/Thomas_To_Resume.pdf" 
+					href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io/blob/main/src/docs/Thomas_To_Resume.pdf?raw=true" 
 					target="_blank" 
 					className="flex items-center gap-2 px-6 py-3 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg font-medium transition-all"
 				>
@@ -435,50 +451,66 @@ export default function Home() {
 	</div>
 </section>
 
-				{/* --- KPI SECTION --- */}
-				<section id="impact" className="mb-24 scroll-mt-24">
-					 <div className="relative rounded-2xl bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
-							<div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-							<div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800">
-									<ImpactMetric 
-										value={63} 
-										suffix=".2M" 
-										prefix="$" 
-										label="Cost Savings" 
-										subtext="Reduced costs via Python modeling at UC Davis/Genentech"
-									/>
-									<ImpactMetric 
-										value={87} 
-										suffix="%" 
-										label="Efficiency Gain" 
-										subtext="Reduction in daily calculation time via DevOps CI/CD"
-									/>
-									<ImpactMetric 
-										value={2} 
-										prefix="$"
-										suffix="M" 
-										label="Risk Prevented" 
-										subtext="Inventory stockout prevention via Data Science methods"
-									/>
-									<ImpactMetric 
-										value={1} 
-										label="End-to-End Design" 
-										subtext="Zero to One Infrastructure Architecture (Agentic Systems)"
-									/>
-							</div>
-					 </div>
-				</section>
+{/* --- KPI SECTION --- */}
+<section id="impact" className="mb-24 scroll-mt-24">
+	<div className="relative rounded-2xl bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
+		<div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+			<div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800">
+			<ImpactMetric 
+				value={63} 
+				suffix=".2M" 
+				prefix="$" 
+				label="Revenue Protected" 
+				subtext="Optimized End-to-end Parameters."
+			/>
+			<ImpactMetric 
+				value={50} 
+				prefix=">$"
+				suffix="k/yr" 
+				label="OpEx Reduction" 
+				subtext={
+			<div className="flex flex-col gap-1.5 w-full">
+				{/* Line 1: The mechanism */}
+				<div className="flex items-center justify-center md:justify-start gap-2">
+					<span className="text-emerald-500 font-bold text-xs">✔</span>
+					<span>Automated Manual Data Entry</span>
+				</div>
+
+				{/* Line 2: The business result */}
+				<div className="flex items-center justify-center md:justify-start gap-2 text-zinc-400">
+					<span className="text-blue-500 font-bold text-xs">↗</span>
+					<span>Recurring Labor Cost Savings</span>
+				</div>
+			</div>
+		}
+		/>
+		<ImpactMetric 
+			value={200} 
+			prefix=">$"
+			suffix="k" 
+			label="Waste Eliminated" 
+			subtext="Inventory Modeling & Standard Operating Procedure."
+		/>
+		<ImpactMetric 
+			value={10}
+			prefix=">"
+			suffix="+" 
+			label="Agentic Products" 
+			subtext="Deployed Proprietary & Open Source"
+		/>
+		</div>
+	</div>
+</section>
 
 				{/* --- PROJECTS DEEP DIVE SECTION (NEW) --- */}
 				<div id="projects" className="mb-8">
-					<h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-						<Code2 className="text-blue-600" /> Featured Engineering
-					</h3>
 				</div>
 
 		{/* 🟢 DIAGRAM EMBEDDED HERE */}
 		<div className="my-6 border-t border-zinc-200 dark:border-zinc-700 pt-6">
 			 <ArchitectureDiagram />
+			 <ROICalculation />
+			 <EfficiencyCalculator />
 		</div>
 
 				<BentoGrid className="pb-24">
@@ -524,6 +556,16 @@ export default function Home() {
 						<p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6 italic">
 							 "We've seen how even simplistic algorithms can automate manual workflows. Now with Agentic methods, I combine classical fullstack methods with agentic AI/ML solutions to drive reality into the future."
 						</p>
+
+						<div className="flex gap-2 flex-wrap content-start mb-8">
+						  <a 
+						    href="mailto:thomas.to.bcheme@gmail.com" 
+						    className="hover:opacity-80 transition-opacity"
+						    aria-label="Email Thomas To"
+						  >
+						    <Badge color="blue" icon={Globe}>thomas.to.bcheme@gmail.com</Badge>
+						  </a>
+						</div>
 						
 						{/* Hierarchical Badge Section */}
 						<div className="flex gap-2 flex-wrap content-start mb-8">
