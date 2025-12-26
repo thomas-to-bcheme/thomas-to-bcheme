@@ -184,5 +184,4 @@ const EfficiencyCalculator = () => {
     </div>
   );
 };
-
 export default EfficiencyCalculator;

@@ -56,5 +56,4 @@ const ImpactEquation = () => {
     </div>
   );
 };
-
 export default ImpactEquation;

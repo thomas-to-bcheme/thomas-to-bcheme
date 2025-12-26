@@ -96,4 +96,4 @@ export default function ArchitectureDiagram() {
       </div>
     </div>
   );
-}
+};
