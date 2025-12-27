@@ -18,7 +18,7 @@ import ProjectDeepDive from '@/components/ProjectDeepDive';
 import Badge from '@/components/Badge';
 import ImpactMetric from '@/components/ImpactMetric';
 import { BentoGrid, BentoCard } from '@/components/BentoGrid';
-
+import Roadmap from '@/components/Roadmap';
 // --- UTILITY ---
 const scrollToTop = () => {
   if (typeof window !== 'undefined') {
@@ -369,6 +369,8 @@ export default function Home() {
 						</div>
 					</BentoCard>
 				</BentoGrid>
+
+<Roadmap />
 
 				{/* --- FOOTER SECTION --- */}
 				<footer className="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 pt-16 pb-8">

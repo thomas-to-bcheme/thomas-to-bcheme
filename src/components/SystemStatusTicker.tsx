@@ -75,7 +75,7 @@ return (
 			 <div className="hidden md:flex items-center gap-1.5">
 				<GitBranch size={10} />
 				{/* Updated to display the PST string directly */}
-				<span>BUILD: { lastCall || "SYNCING..."} PST</span>
+				<span>LOCAL TIME: { lastCall || "SYNCING..."} PST</span>
 			</div>
 		</div>
 	);
