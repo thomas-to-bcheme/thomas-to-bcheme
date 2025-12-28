@@ -47,23 +47,25 @@ export default function Home() {
 					>
 						THOMAS<span className="text-blue-600 dark:text-blue-500 group-hover:text-blue-700 transition-colors duration-300">TO</span>
 					</div>
-					
-					<nav className="hidden sm:flex gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-						{[
-							{ label: 'Live Agent', href: '#agent' },
-							{ label: 'Business Impact', href: '#impact' },
-							{ label: 'Engineering', href: '#projects' },
-							{ label: 'About', href: '#about' },
-						].map((link) => (
-							<a 
-								key={link.href}
-								href={link.href} 
-								className="hover:text-blue-600 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm"
-							>
-								{link.label}
-							</a>
-						))}
-					</nav>
+					{/* UPDATED NAV: Added Roadmap */}
+          <nav className="hidden sm:flex gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            {[
+              { label: 'Live Agent', href: '#agent' },
+              { label: 'Impact', href: '#impact' },
+              { label: 'Engineering', href: '#projects' },
+              { label: 'Solutions', href: '#proj-1'},
+              { label: 'Profile', href: '#about' },
+              { label: 'Lifecycle', href: '#roadmap' },
+            ].map((link) => (
+              <a 
+                key={link.href}
+                href={link.href} 
+                className="hover:text-blue-600 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 					
 					<a 
 						href="mailto:thomas.to.bcheme@gmail.com" 
@@ -164,7 +166,7 @@ export default function Home() {
         </div>
 
         <BentoGrid className="pb-12">
-          <BentoCard colSpan={2} noFade={true} id="proj-1">
+          <BentoCard colSpan={2} noFade={true} id="proj-1" className="mb-4 scroll-mt-24">
              <ProjectDeepDive 
              	title="Agentic Revenue Optimization"
              	role="AI/ML Engineer"
@@ -183,112 +185,145 @@ export default function Home() {
              	problem="Fragmented documentation and reliance on tribal knowledge (i.e word of mouth) caused slow onboarding and information silos."
              	solution="RAG Agents fine-tuned to department specific standard operating procedures (SOP) for niche context with atleast one (1) orchestrator agent with general context for cross-functional insight"
              	parameters={['SOP','Work Instructions','Human Validated Training Text']}
-             	tags={['Google','ERP (SAP)','Snowflake', 'Atlassian (Confluence)', 'SQL','Python']}
-              kpis={['Context improving learning rate up to 80% (Wright’s Law: Stanford-B model)', 'Resource efficient contextual GenAI']}
+             	tags={['Google','ERP (SAP)','Snowflake', 'Atlassian (Confluence)','MCP','Vector DB', 'SQL','Python']}
+              kpis={['Increased learning rate up to 80% (Wright’s Law: Stanford-B model)', 'Resource efficient contextual GenAI']}
            	/>
           </BentoCard>
         </BentoGrid>
 
-				{/* --- ABOUT ME SECTION (UPDATED with Work Auth) --- */}
-
-
+{/* --- ABOUT ME SECTION --- */}
 <section id="about" className="mb-4 scroll-mt-24">
-	 <div className="grid md:grid-cols-3 gap-8">
-			{/* LEFT COLUMN: Profile & Badges */}
-			<div className="md:col-span-1">
-				 <div className="sticky top-24">
-						<h3 className="text-2xl font-bold mb-2 flex items-center gap-2 text-zinc-900 dark:text-white">
-							 <Users className="text-blue-600" /> About Me
-						</h3>
-						<p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4 italic">
-							 "We've seen how even simplistic algorithms can automate manual workflows. Now with Agentic methods, I combine classical fullstack methods with agentic AI/ML solutions to drive reality into the future."
-						</p>
-
-						<div className="flex gap-2 flex-wrap content-start mb-4">
-						  <a 
-						    href="mailto:thomas.to.bcheme@gmail.com" 
-						    className="hover:opacity-80 transition-opacity"
-						    aria-label="Email Thomas To"
-						  >
-						    <Badge color="green" pulse icon={Globe}>thomas.to.bcheme@gmail.com</Badge>
-						  </a>
-						</div>
-						
-						{/* Hierarchical Badge Section
-
-						<div className="flex gap-2 flex-wrap content-start mb-2">
-							 <Badge color="blue" icon={Code2}>Fullstack Agentic Software Engineer</Badge>
-							 <Badge color="blue" icon={Dna}>Protein Design</Badge>
-							 <Badge color="blue" icon={Database}>Data Analyst</Badge>
-							 <Badge color="blue" variant="outline" icon={Bot}>Data Science (AI/ML)</Badge>
-							 <Badge color="blue" variant="outline" icon={Database}>AI/ML Engineer</Badge>
-							 <Badge color="blue" variant="outline" icon={FlaskConical}>Biochemical Engineer</Badge>
-						</div>
-						*/}
-
-						{/* 🟢 NEW: Work Authorization Status */}
-						<div className="pt-6 border-t border-zinc-200 dark:border-zinc-800">
-							 <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2 block">Work Authorization</span>
-							 <ul className="space-y-2">
-									<li className="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-										 <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-										 <span>Authorized to work in the U.S. for any employer.</span>
-									</li>
-									<li className="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-										 <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-										 <span>No visa sponsorship required (now or future).</span>
-									</li>
-									<li className="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
-										 <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-										 <span>Eligible to work in the U.S. without restriction.</span>
-									</li>
-							 </ul>
-						</div>
-				 </div>
-			</div>
-
-			{/* RIGHT COLUMN: The Story */}
-<div className="md:col-span-2 space-y-6 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-	
-{/* RIGHT COLUMN: The Story */}
-<div className="md:col-span-2 space-y-6 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-  
-  {/* 1. PROFESSIONAL SUMMARY (Technical & Business Impact) */}
-  <div className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-    <h4 className="font-bold text-lg text-zinc-900 dark:text-white mb-3">Professional Summary</h4>
-    <p className="mb-4">
-      I architect data models and pipelines that accurately reflect real-world processes, delivering tangible value through scalable, reality-grounded software solutions. 
-      My focus is on revenue generation, minimizing risk, and optimization by bridging the gap between reality and digital agents; as a humanoid Agentic API.
-    </p>
-  </div>
-  
-  {/* 2. GRID: Philosophy & Leadership */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <div className="grid md:grid-cols-3 gap-6">
     
-    {/* Philosophy Card */}
-    <div className="bg-white dark:bg-black p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-blue-300 transition-colors">
-       <Globe className="mb-3 text-blue-500" size={20} />
-       <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Philosophy</h5>
-       <p className="text-xs text-zinc-500 leading-snug">
-         Data and mathematics are a means to engineer 0-to-1 minimally viable solutions, optimizing thereafter for maximum reality-grounded impact.
-       </p>
+    {/* LEFT COLUMN: Profile & Badges (Now in a matching Card) */}
+    <div className="md:col-span-1">
+      <div className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm h-full flex flex-col justify-between">
+        <div>
+          <h3 className="text-2xl font-bold mb-4 flex items-center gap-2 text-zinc-900 dark:text-white">
+            <Users className="text-blue-600" /> About Me
+          </h3>
+        <div className="mb-4">
+        {/* The Closer */}
+        <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+    I am a Fullstack Engineer with a formal background in Biochemical Engineering. 
+    I apply software engineering principles across diverse use cases, leveraging a strong mathematical and empirical foundation to design end-to-end architectures that bridge physical reality with cloud infrastructure.
+  </p>
+      </div>
+          <div className="flex gap-2 flex-wrap content-start mb-6">
+            <a 
+              href="mailto:thomas.to.bcheme@gmail.com" 
+              className="hover:opacity-80 transition-opacity"
+              aria-label="Email Thomas To"
+            >
+              <Badge color="green" pulse icon={Globe}>thomas.to.bcheme@gmail.com</Badge>
+            </a>
+          </div>
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6 italic leading-relaxed">
+            "We've seen how even simplistic algorithms can automate manual workflows. Now with Agentic methods, I combine classical fullstack methods with agentic AI/ML solutions to drive reality into the future."
+          </p>                 
+        </div>
+
+        {/* Work Authorization Status (Pinned to bottom of card) */}
+        <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-3 block">Work Authorization</span>
+          <ul className="space-y-2.5">
+            <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+              <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
+              <span>Authorized to work in the U.S. for any employer.</span>
+            </li>
+            <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+              <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
+              <span>No visa sponsorship required (now or future).</span>
+            </li>
+            <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+              <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
+              <span>Eligible to work in the U.S. without restriction.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    {/* Leadership Card (Refined Text) */}
-    <div className="bg-white dark:bg-black p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-pink-300 transition-colors">
-       <HeartHandshake className="mb-3 text-pink-500" size={20} />
-       <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Leadership</h5>
-       <p className="text-xs text-zinc-500 leading-snug">
-          Scaling engineering excellence through junior mentorship and cross-departmental upskilling. I act as a technical liaison, translating complex engineering constraints into clear business value for executive leadership.
-       </p>
-    </div>
+    {/* RIGHT COLUMN: The Story */}
+    <div className="md:col-span-2 space-y-6 flex flex-col h-full">
+      
+{/* 1. PROFESSIONAL SUMMARY (Updated) */}
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex-1">
+        <h4 className="font-bold text-lg text-zinc-900 dark:text-white mb-3">Professional Summary</h4>
+        
+        {/* Core Identity */}
+<div className="space-y-4 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+  
+  {/* Paragraph 2: The Data Lifecycle */}
+  <p>
+    My experience spans the entire data lifecycle—from capturing empirical data on the manufacturing floor to digitizing it via <strong className="text-zinc-900 dark:text-white">enterprise ETL/ELT pipelines</strong> and capitalizing on it through <strong className="text-zinc-900 dark:text-white">Agentic Machine Learning</strong>. 
+    By architecting data models that accurately reflect real-world processes, I deliver tangible value: driving efficiency, revenue generation, and optimization through scalable software solutions.
+  </p>
 
+  {/* Section 4: The 'Live' Status Update (Dec 2025) */}
+  <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+    <div className="flex items-center gap-2 mb-2">
+      <div className="relative flex h-2 w-2">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+      </div>
+      <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+        Current Focus (Jan 2026)
+      </span>
+    </div>
+    <div className="bg-zinc-100 dark:bg-zinc-800/50 p-3 rounded-lg border border-zinc-200 dark:border-zinc-700">
+        <p className="text-xs text-zinc-700 dark:text-zinc-300 font-medium">
+        	Actively searching for new roles in AI/ML Engineering.
+        {/*AI/ML Engineer by Day, Protein design by night*/}
+        </p>
+    </div>
   </div>
 
 </div>
-
+        
+      </div>
+      
+      {/* 2. GRID: Philosophy & Leadership */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
+        
+{/* Philosophy Card */}
+<div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-blue-300 transition-colors shadow-sm flex flex-col justify-center">
+    <Globe className="mb-3 text-blue-500" size={20} />
+    <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Philosophy</h5>
+    
+    <div>
+        <h6 className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
+            The 0&rarr;1 Lifecycle
+        </h6>
+        <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+            <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
+                Abstraction
+            </span>
+            <span className="text-zinc-300">&rarr;</span>
+            <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
+                Architecture
+            </span>
+            <span className="text-zinc-300">&rarr;</span>
+            <span className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded font-bold">
+                Deployment
+            </span>
+        </div>
+    </div>
 </div>
-	 </div>
+
+        {/* Leadership Card */}
+        <div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-pink-300 transition-colors shadow-sm flex flex-col justify-center">
+           <HeartHandshake className="mb-3 text-pink-500" size={20} />
+           <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Leadership</h5>
+           <p className="text-xs text-zinc-500 leading-snug">
+              Scaling engineering excellence through junior mentorship and cross-departmental upskilling. I act as a technical liaison, translating complex constraints into business value.
+           </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </section>
 
 
@@ -318,7 +353,7 @@ export default function Home() {
 									</h3>
 									<p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed max-w-xl">
 										If you are looking for an engineer who can architect 0&rarr;1 systems, automate tribal knowledge, 
-										and deploy self-correcting AI agents, let's talk.
+										and deploy AI agents, let's talk.
 									</p>
 								</div>
 

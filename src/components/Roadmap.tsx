@@ -210,18 +210,49 @@ const Roadmap = () => {
       <div className="max-w-4xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="text-center mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-medium uppercase tracking-wide">
-             <Milestone size={12} /> Project Roadmap
-          </div>
-          <h2 className="text-3xl md:text-4xl font-black text-zinc-900 dark:text-white">
-            From MVP to <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Open Source</span>
-          </h2>
-          <p className="max-w-2xl mx-auto text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">
-            A transparent view of the engineering lifecycle. Prioritizing a 0 &rarr; 1 mindset to demonstrate aptitude, 
-            evolving into a robust, autonomous ecosystem.
+<div className="text-center mb-20 space-y-8">
+  
+  {/* Header Badge */}
+  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-medium uppercase tracking-wide">
+     <Milestone size={12} /> Project Roadmap
+  </div>
+
+  {/* Main Title */}
+  <h2 className="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tight leading-tight">
+    From MVP to <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Open Source</span>
+  </h2>
+
+  {/* Living Dynamic Text Card */}
+  <div className="max-w-3xl mx-auto relative group perspective-1000">
+    
+    {/* Dynamic Glow Effect (Behind) */}
+    <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 dark:from-blue-600/20 dark:to-indigo-600/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+    {/* The Content Card */}
+    <div className="relative bg-white dark:bg-zinc-900/50 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 p-8 rounded-2xl shadow-sm">
+        
+        {/* Micro-Header inside card */}
+        <div className="flex items justify-center gap-2 mb-6 opacity-50">
+            <div className="h-px w-8 bg-zinc-300 dark:bg-zinc-700"></div>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+              The Engineering Manifesto
+            </span>
+            <div className="h-px w-8 bg-zinc-300 dark:bg-zinc-700"></div>
+        </div>
+
+        {/* Formatted Text Body */}
+        <div className="text-sm text-left md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed space-y-4">
+          <p>
+            In an AI-saturated labor market where the barrier to entry has lowered, this portfolio serves as a <strong className="text-zinc-900 dark:text-white font-semibold">verification mechanism for engineering aptitude</strong>.
+          </p>
+          <p>
+            It provides a transparent, end-to-end view of the "0-to-1" engineering lifecycle—demonstrating the evolution from a minimal viable product to a robust, autonomous ecosystem. The objective is to move beyond static qualifications by offering a <span className="text-blue-600 dark:text-blue-400 font-medium">live, interactive demonstration</span> of full-stack competency distinguishing qualified engineering architecture from less qualified so-called engineers.
           </p>
         </div>
+
+    </div>
+  </div>
+</div>
 
         {/* Timeline Container */}
         <div className="relative">
