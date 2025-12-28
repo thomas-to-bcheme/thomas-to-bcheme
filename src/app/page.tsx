@@ -13,7 +13,6 @@ import {
 import HeroSection from '@/components/HeroSection';
 import ArchitectureDiagram from "@/components/ArchitectureDiagram";
 import ROICalculation from "@/components/ROICalculation";
-import EfficiencyCalculator from '@/components/EfficiencyCalculator';
 import ProjectDeepDive from '@/components/ProjectDeepDive';
 import Badge from '@/components/Badge';
 import ImpactMetric from '@/components/ImpactMetric';
