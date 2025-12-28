@@ -6,7 +6,6 @@ import CountUp from 'react-countup';
 import AiGenerator from "@/components/AiGenerator";
 import ArchitectureDiagram from "@/components/ArchitectureDiagram";
 import ROICalculation from "@/components/ROICalculation";
-import EfficiencyCalculator from '@/components/EfficiencyCalculator'; // Import it
 import { // --- SOCIAL & CONTACT ---
   Users, HeartHandshake, TrendingUp, Github, Linkedin, Mail, FileText, MapPin, 
   
