@@ -60,66 +60,97 @@ This diagram illustrates the automated pipeline moving data from external source
 * 1 server-side (vercel) integrated database [See Vercel Limits](markdown/architecture.md#vercel-free-hobby-limitation-specifications)
 
 More information can be found in each respective section:
-[Architecture](architecture.md)
-[Database](database.md)
-[API](api.md)
-[Deployment](deployment.md)
+[Architecture](markdown/architecture.md)
+[Database](markdown/database.md)
+[API](markdown/api.md)
+[Deployment](markdown/deployment.md)
 
 ```mermaid
-flowchart TD
-    %% Styling Definitions
-    classDef external fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef backend fill:#bbf,stroke:#333,stroke-width:2px;
-    classDef storage fill:#ff9,stroke:#333,stroke-width:2px;
-    classDef frontend fill:#bfb,stroke:#333,stroke-width:2px;
+flowchart BT
+    %% --- Styling Definitions ---
+    classDef external fill:#e1e4e8,stroke:#24292e,stroke-width:2px;
+    classDef github fill:#f6f8fa,stroke:#24292e,stroke-width:2px,stroke-dasharray: 0;
+    classDef dwh fill:#d1e7dd,stroke:#0f5132,stroke-width:1px;
+    classDef vercel fill:#000000,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef huggingface fill:#ffd21e,stroke:#333,stroke-width:2px;
+    classDef db fill:#0070f3,stroke:#fff,stroke-width:2px,color:#fff;
 
-    %% 1. Data Sources
-    subgraph Sources [Data Sources]
-        Web[GitHub]:::external
-        API[3rd Party APIs]:::external
+    %% --- 1. External Data Sources (Bottom) ---
+    subgraph Sources ["External Sources"]
+        direction LR
+        Ext_API["3rd Party APIs"]:::external
+        Ext_Web["Web Scrapers"]:::external
     end
 
-    %% 2. Backend Logic
-    subgraph ETL_Backend [Backend / GitHub Actions]
-        Cron((CRON Scheduler)):::backend
-        Script[ETL Script Node.js]:::backend
-        Transform[Data Normalization & JSON Prep]:::backend
+    %% --- 2. GitHub Ecosystem (Center / Monolith) ---
+    subgraph GitHub ["GitHub Monolith & CI/CD"]
+        
+        %% The Codebase
+        Repo[("Monorepo<br/>")]:::github
+        
+        %% The Scheduler
+        Cron(("CRON Scheduler<br/>Every 30m")):::github
+        
+        %% The Data Warehouse Model
+        subgraph DataWarehouse ["Data Warehouse Model (On GitHub)"]
+            direction TB
+            
+            subgraph Env_Sandbox ["Env: Sandbox"]
+                L1_S["Raw / Stage / Transform / Analyze"]:::dwh
+            end
+            
+            subgraph Env_Quality ["Env: Quality"]
+                L1_Q["Raw / Stage / Transform / Analyze"]:::dwh
+            end
+            
+            subgraph Env_Prod ["Env: Production"]
+                L1_P["Raw / Stage / Transform / Analyze"]:::dwh
+            end
+            
+            %% Pipeline Flow inside GitHub
+            Env_Sandbox ==> Env_Quality ==> Env_Prod
+        end
     end
 
-    %% 3. Storage Layer
-    subgraph Cloud_Storage [Cloud Storage / Database]
-        Blob[(Vercel Edge Config)]:::storage
-        DynamoDB[("AWS DynamoDB (Failed)")]:::storage
-        style DynamoDB stroke-dasharray: 5 5, fill:#eee, color:#999
+    %% --- 3. Deployment Targets (Left & Right) ---
+    
+    %% LEFT: Frontend (Vercel)
+    subgraph Vercel_Env ["Vercel Deployment"]
+        FE_Node[("Frontend<br/>Next.js / React / TS")]:::vercel
     end
 
-    %% 4. Frontend Layer
-    subgraph Client [Frontend / Vercel]
-        NextJS[Next.js Server Component]:::frontend
-        UI[React UI]:::frontend
+    %% RIGHT: Backend (Hugging Face)
+    subgraph HF_Env ["Hugging Face Deployment"]
+        BE_Node[("Backend ML Model<br/>Python / PyTorch / Tensorflow / Huggingface")]:::huggingface
     end
 
-    %% --- Connectivity Flows ---
+    %% --- 4. The Bridge (Top) ---
+    subgraph Database_Layer ["Internal Ecosystem Database"]
+        DB[("Structured SQL Database<br/>(Cleaned Data)")]:::db
+    end
+
+    %% --- Connections & Flows ---
+
+    %% 1. Ingestion Flow (Bottom Up)
+    Ext_API & Ext_Web --"Ingest Raw Data"--> Cron
+    Cron --"Trigger Pipeline"--> Env_Sandbox
     
-    %% Trigger
-    Cron --"Triggers every 15m"--> Script
+    %% 2. Data Processing to DB
+    Env_Prod --"Load Cleaned Data"--> DB
+
+    %% 3. CI/CD Deployment Flow
+    Repo --"Deploy Frontend (Next.js)"--> FE_Node
+    Repo --"Deploy Backend (FastAPI)"--> BE_Node
+
+    %% 4. Application Communication (The Triangle)
+    FE_Node <--"REST API / JSON"--> DB
+    BE_Node <--"REST API / SQL"--> DB
     
-    %% Extraction Phase
-    Script --"EXTRACT (GitHub)"--> Web
-    Script --"EXTRACT (3rd Party API)"--> API
-    
-    %% Transformation Phase
-    Web --"Raw Data"--> Transform
-    API --"Raw Data"--> Transform
-    
-    %% Load Phase (The Option 2 "Back and Forth")
-    Transform --"1. GET Current State"--> Blob
-    Blob --"2. Return JSON"--> Transform
-    Transform --"3. PUT (Update/Overwrite)"--> Blob
-    
-    %% Consumption Phase
-    Blob --"READ (Low Latency)"--> NextJS
-    NextJS --"Hydrate"--> UI
+    %% Optional: Direct Frontend-Backend Link via DB logic or Direct
+    FE_Node -. "Request Predictions" .-> BE_Node
+
+    %% Formatting Layout Hints
+    Sources ~~~ Repo
 ```    
 ### 🏗️ Built Using
 
