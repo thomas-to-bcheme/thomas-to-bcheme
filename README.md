@@ -126,7 +126,7 @@ flowchart BT
 
     %% --- 4. The Bridge (Top) ---
     subgraph Database_Layer ["Internal Ecosystem Database"]
-        DB[("Structured SQL Database<br/>(Cleaned Data)")]:::db
+        DB[("Vector supported Database<br/>(RAG; Cleaned Data)")]:::db
     end
 
     %% --- Connections & Flows ---
