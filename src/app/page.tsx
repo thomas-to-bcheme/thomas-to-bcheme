@@ -17,7 +17,10 @@ import ProjectDeepDive from '@/components/ProjectDeepDive';
 import Badge from '@/components/Badge';
 import ImpactMetric from '@/components/ImpactMetric';
 import { BentoGrid, BentoCard } from '@/components/BentoGrid';
+import AboutMeSection from '@/components/AboutMeSection'
 import Roadmap from '@/components/Roadmap';
+import Connect from '@/components/Connect';
+import Projects from '@/components/Projects';
 // --- UTILITY ---
 const scrollToTop = () => {
   if (typeof window !== 'undefined') {
@@ -51,10 +54,8 @@ export default function Home() {
           <nav className="hidden sm:flex gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
             {[
               { label: 'Live Agent', href: '#agent' },
-              { label: 'Impact', href: '#impact' },
-              { label: 'Engineering', href: '#projects' },
-              { label: 'Solutions', href: '#proj-1'},
-              { label: 'Profile', href: '#about' },
+              { label: 'About Me', href: '#about' },
+              { label: 'Solutions', href: '#proj-1' },
               { label: 'Lifecycle', href: '#roadmap' },
             ].map((link) => (
               <a 
@@ -80,83 +81,40 @@ export default function Home() {
 				</div>
 			</header>
       <main className="max-w-7xl mx-auto px-4 sm:px-6">
-        
-        {/* --- HERO SECTION --- */}
-        <HeroSection />
 
-        {/* --- KPI SECTION --- */}
-        <section id="impact" className="mb-4 scroll-mt-24">
-          <div className="relative rounded-2xl bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
-            <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800">
-              
-              <ImpactMetric 
-                value={63} suffix=".2M" prefix="$" label="Revenue Protected" 
-                subtext={
-                  <div className="flex flex-col gap-1.5 w-full mt-2">
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <Workflow size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">Optimized End-to-end Parameters</span>
-                    </div>
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <ClipboardCheck size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">ICH7 and GMP Compliant</span>
-                    </div>
-                  </div>
-                }
-              />
+        {/* --- ABOUT ME SECTION --- */}
+        <div id="about-me" className="mt-0 scroll-mt-24">
+          <HeroSection />
+          <AboutMeSection />
+          <Connect />
+        </div>
+        <div id="impact" className="mt-0 scroll-mt-24">
+        <BentoGrid className="pb-12">
+          <BentoCard colSpan={2} noFade={true} id="proj-1" className="mb-4 scroll-mt-24">
+             <ProjectDeepDive 
+              title="Agentic Revenue Optimization"
+              role="AI/ML Engineer"
+              problem="High biological variability in donor starting material (Leukopaks, Bone Marrow) led to unpredictable cell yields, causing inventory misalignment and lost revenue on rare cell types."
+              solution="Architected a predictive model to classify donors by highest probable cell yield (optimizing for Rarity vs. Throughput). Deployed an Agentic Interface to bridge lab data with enterprise ERP systems, automating yield reporting for sales teams."
+              parameters={['Weight', 'Height', 'Age', 'Sex', 'Ethnicity','Smoker','Blood Type', 'CMV Status', 'Cell Count (TNC)', 'Cell Count (MNC)', 'Cell Count (Isolate)']}
+              tags={['CRM (CRIO)','ERP (SAP)','Snowflake', 'BI (Tableau)', 'SQL','Python']}
+              kpis={['Querying from hours to minutes','Ability to select donors for orders']}
+            />
+          </BentoCard>
 
-              <ImpactMetric 
-                value={100} prefix=">$" suffix="k/yr" label="OpEx Reduction" 
-                subtext={
-                  <div className="flex flex-col gap-1.5 w-full mt-2">
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <Bot size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">Automated Manual Data Entry</span>
-                    </div>
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <PiggyBank size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">Recurring Labor Cost Savings</span>
-                    </div>
-                  </div>
-                }
-              />
-
-              <ImpactMetric 
-                value={200} prefix=">$" suffix="k" label="Waste Eliminated" 
-                subtext={
-                  <div className="flex flex-col gap-1.5 w-full mt-2">
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <Package size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">Material Management Model</span>
-                    </div>
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <BookOpenCheck size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">Standard Operating Procedures</span>
-                    </div>
-                  </div>
-                }
-              />
-
-              <ImpactMetric 
-                value={10} suffix="+" label="Agentic Products Deployed" 
-                subtext={
-                  <div className="flex flex-col gap-1.5 w-full mt-2">
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <Copyright size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">Proprietary (Profitable & Compliant)</span>
-                    </div>
-                    <div className="flex items-center justify-center md:justify-start gap-2">
-                      <GitFork size={14} className="text-emerald-500 shrink-0" />
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400">Open Source</span>
-                    </div>
-                  </div>
-                }
-              />
-            </div>
-          </div>
-        </section>
+          <BentoCard colSpan={2} noFade={true} id="proj-2">
+             <ProjectDeepDive 
+              title="Agentic Onboarding"
+              role="AI/ML Engineer"
+              problem="Fragmented documentation and reliance on tribal knowledge (i.e word of mouth) caused slow onboarding and information silos."
+              solution="RAG Agents fine-tuned to department specific standard operating procedures (SOP) for niche context with atleast one (1) orchestrator agent with general context for cross-functional insight"
+              parameters={['SOP','Work Instructions','Human Validated Training Text']}
+              tags={['Google','ERP (SAP)','Snowflake', 'Atlassian (Confluence)','MCP','Vector DB', 'SQL','Python']}
+              kpis={['Increased learning rate up to 80% (Wright’s Law: Stanford-B model)', 'Resource efficient contextual GenAI']}
+            />
+          </BentoCard>
+        </BentoGrid>
+        </div>
 
         {/* --- PROJECTS & DIAGRAMS --- */}
         <div id="projects" className="mt-0 scroll-mt-24">
@@ -165,246 +123,8 @@ export default function Home() {
            
         </div>
 
-        <BentoGrid className="pb-12">
-          <BentoCard colSpan={2} noFade={true} id="proj-1" className="mb-4 scroll-mt-24">
-             <ProjectDeepDive 
-             	title="Agentic Revenue Optimization"
-             	role="AI/ML Engineer"
-             	problem="High biological variability in donor starting material (Leukopaks, Bone Marrow) led to unpredictable cell yields, causing inventory misalignment and lost revenue on rare cell types."
-             	solution="Architected a predictive model to classify donors by highest probable cell yield (optimizing for Rarity vs. Throughput). Deployed an Agentic Interface to bridge lab data with enterprise ERP systems, automating yield reporting for sales teams."
-             	parameters={['Weight', 'Height', 'Age', 'Sex', 'Ethnicity','Smoker','Blood Type', 'CMV Status', 'Cell Count (TNC)', 'Cell Count (MNC)', 'Cell Count (Isolate)']}
-             	tags={['CRM (CRIO)','ERP (SAP)','Snowflake', 'BI (Tableau)', 'SQL','Python']}
-              kpis={['Querying from hours to minutes','Ability to select donors for orders']}
-           	/>
-         	</BentoCard>
 
-          <BentoCard colSpan={2} noFade={true} id="proj-2">
-             <ProjectDeepDive 
-             	title="Agentic Onboarding"
-             	role="AI/ML Engineer"
-             	problem="Fragmented documentation and reliance on tribal knowledge (i.e word of mouth) caused slow onboarding and information silos."
-             	solution="RAG Agents fine-tuned to department specific standard operating procedures (SOP) for niche context with atleast one (1) orchestrator agent with general context for cross-functional insight"
-             	parameters={['SOP','Work Instructions','Human Validated Training Text']}
-             	tags={['Google','ERP (SAP)','Snowflake', 'Atlassian (Confluence)','MCP','Vector DB', 'SQL','Python']}
-              kpis={['Increased learning rate up to 80% (Wright’s Law: Stanford-B model)', 'Resource efficient contextual GenAI']}
-           	/>
-          </BentoCard>
-        </BentoGrid>
-
-{/* --- ABOUT ME SECTION --- */}
-<section id="about" className="mb-4 scroll-mt-24">
-  <div className="grid md:grid-cols-3 gap-6">
-    
-    {/* LEFT COLUMN: Profile & Badges (Now in a matching Card) */}
-    <div className="md:col-span-1">
-      <div className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm h-full flex flex-col justify-between">
-        <div>
-          <h3 className="text-2xl font-bold mb-4 flex items-center gap-2 text-zinc-900 dark:text-white">
-            <Users className="text-blue-600" /> About Me
-          </h3>
-        <div className="mb-4">
-        {/* The Closer */}
-        <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-    I am a Fullstack Engineer with a formal background in Biochemical Engineering. 
-    I apply software engineering principles across diverse use cases, leveraging a strong mathematical and empirical foundation to design end-to-end architectures that bridge physical reality with cloud infrastructure.
-  </p>
-      </div>
-          <div className="flex gap-2 flex-wrap content-start mb-6">
-            <a 
-              href="mailto:thomas.to.bcheme@gmail.com" 
-              className="hover:opacity-80 transition-opacity"
-              aria-label="Email Thomas To"
-            >
-              <Badge color="green" pulse icon={Globe}>thomas.to.bcheme@gmail.com</Badge>
-            </a>
-          </div>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6 italic leading-relaxed">
-            "We've seen how even simplistic algorithms can automate manual workflows. Now with Agentic methods, I combine classical fullstack methods with agentic AI/ML solutions to drive reality into the future."
-          </p>                 
-        </div>
-
-        {/* Work Authorization Status (Pinned to bottom of card) */}
-        <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-3 block">Work Authorization</span>
-          <ul className="space-y-2.5">
-            <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
-              <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-              <span>Authorized to work in the U.S. for any employer.</span>
-            </li>
-            <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
-              <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-              <span>No visa sponsorship required (now or future).</span>
-            </li>
-            <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
-              <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-              <span>Eligible to work in the U.S. without restriction.</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    {/* RIGHT COLUMN: The Story */}
-    <div className="md:col-span-2 space-y-6 flex flex-col h-full">
-      
-{/* 1. PROFESSIONAL SUMMARY (Updated) */}
-      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex-1">
-        <h4 className="font-bold text-lg text-zinc-900 dark:text-white mb-3">Professional Summary</h4>
-        
-        {/* Core Identity */}
-<div className="space-y-4 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-  
-  {/* Paragraph 2: The Data Lifecycle */}
-  <p>
-    My experience spans the entire data lifecycle—from capturing empirical data on the manufacturing floor to digitizing it via <strong className="text-zinc-900 dark:text-white">enterprise ETL/ELT pipelines</strong> and capitalizing on it through <strong className="text-zinc-900 dark:text-white">Agentic Machine Learning</strong>. 
-    By architecting data models that accurately reflect real-world processes, I deliver tangible value: driving efficiency, revenue generation, and optimization through scalable software solutions.
-  </p>
-
-  {/* Section 4: The 'Live' Status Update (Dec 2025) */}
-  <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-    <div className="flex items-center gap-2 mb-2">
-      <div className="relative flex h-2 w-2">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-      </div>
-      <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-        Current Focus (Jan 2026)
-      </span>
-    </div>
-    <div className="bg-zinc-100 dark:bg-zinc-800/50 p-3 rounded-lg border border-zinc-200 dark:border-zinc-700">
-        <p className="text-xs text-zinc-700 dark:text-zinc-300 font-medium">
-        	Actively searching for new roles in AI/ML Engineering.
-        {/*AI/ML Engineer by Day, Protein design by night*/}
-        </p>
-    </div>
-  </div>
-
-</div>
-        
-      </div>
-      
-      {/* 2. GRID: Philosophy & Leadership */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
-        
-{/* Philosophy Card */}
-<div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-blue-300 transition-colors shadow-sm flex flex-col justify-center">
-    <Globe className="mb-3 text-blue-500" size={20} />
-    <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Philosophy</h5>
-    
-    <div>
-        <h6 className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
-            The 0&rarr;1 Lifecycle
-        </h6>
-        <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
-            <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
-                Abstraction
-            </span>
-            <span className="text-zinc-300">&rarr;</span>
-            <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
-                Architecture
-            </span>
-            <span className="text-zinc-300">&rarr;</span>
-            <span className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded font-bold">
-                Deployment
-            </span>
-        </div>
-    </div>
-</div>
-
-        {/* Leadership Card */}
-        <div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-pink-300 transition-colors shadow-sm flex flex-col justify-center">
-           <HeartHandshake className="mb-3 text-pink-500" size={20} />
-           <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Leadership</h5>
-           <p className="text-xs text-zinc-500 leading-snug">
-              Scaling engineering excellence through junior mentorship and cross-departmental upskilling. I act as a technical liaison, translating complex constraints into business value.
-           </p>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-{/* --- CONNECT & FOOTER --- */}
-				{/* UX FIX: Reduced 'pb-24' to 'pb-12' to bring the footer closer to the call-to-action */}
-				<BentoGrid className="pb-12">
-					<BentoCard 
-						colSpan={4} 
-						noFade={true}
-						className="bg-gradient-to-br from-white to-blue-50/50 dark:from-zinc-900 dark:to-blue-900/10 border-blue-100 dark:border-blue-900/30"
-					>
-						<div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 h-full">
-							
-							<div className="flex-1 space-y-4">
-								<div>
-									<div className="flex items-center gap-2 mb-2">
-									  <Badge 
-									    color="green" 
-									    pulse 
-									    href="mailto:thomas.to.bcheme@gmail.com" // <--- Added this prop
-									  >
-									    AVAILABLE FOR HIRE
-									  </Badge>
-									</div>
-									<h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
-										Let's Engineer the Future.
-									</h3>
-									<p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed max-w-xl">
-										If you are looking for an engineer who can architect 0&rarr;1 systems, automate tribal knowledge, 
-										and deploy AI agents, let's talk.
-									</p>
-								</div>
-
-								<div className="space-y-2">
-									<span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">Ideal Role Fit</span>
-									<div className="flex flex-wrap gap-2">
-										{['AI/ML Engineer', 'AI/ML Ops', 'Data Scientist', 'Senior Fullstack Software Engineer'].map((role) => (
-											<span key={role} className="px-2.5 py-1 rounded-md bg-white border border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700 text-xs font-medium text-zinc-700 dark:text-zinc-300 shadow-sm cursor-default hover:border-blue-400 transition-colors">
-												{role}
-											</span>
-										))}
-									</div>
-								</div>
-							</div>
-
-							<div className="flex flex-col gap-3 w-full md:w-auto shrink-0">
-								<a 
-									href="mailto:thomas.to.bcheme@gmail.com" 
-									className="flex items-center justify-center gap-3 w-full md:w-48 px-4 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white rounded-lg font-bold transition-all shadow-xl shadow-blue-200/50 dark:shadow-none group transform hover:scale-[1.02] active:scale-95"
-								>
-									<Mail size={18} />
-									<span>Contact</span>
-									<ArrowRight 
-										size={16} 
-										className="animate-pulse opacity-75 group-hover:translate-x-1 transition-transform" 
-									/>
-								</a>
-								
-								<a 
-									href="https://www.linkedin.com/in/thomas-to-ucdavis/" 
-									target="_blank" 
-									rel="noopener noreferrer" 
-									className="flex items-center justify-center gap-3 w-full md:w-48 px-4 py-3 bg-white hover:bg-blue-50 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50 rounded-lg font-bold transition-all hover:border-blue-300"
-								>
-									<Linkedin size={18} />
-									<span>View Profile</span>
-								</a>
-								
-								<div className="text-center">
-									<p className="text-[10px] text-zinc-400 flex items-center justify-center gap-1">
-										<Zap size={10} className="text-yellow-500" />
-										Response time: &lt; 24 hours
-									</p>
-								</div>
-							</div>
-
-						</div>
-					</BentoCard>
-				</BentoGrid>
-
-<Roadmap />
+        <Roadmap />
 
 				{/* --- FOOTER SECTION --- */}
 				<footer className="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 pt-16 pb-8">
