@@ -84,7 +84,7 @@ Maintain a library of boilerplate templates for reusable patterns:
 
 **Selective Adoption Process:**
 1. Review your project's needs
-2. Pull relevant sections from boilerplates
+2. Incorporate relevant sections from boilerplates of best practices and guardrails
 3. Customize for project-specific constraints
 4. Remove inapplicable guidance
 
@@ -120,12 +120,12 @@ The authoritative context file containing:
 
 The implementing phase answers: **How do we structure guidance for specialized work?**
 
-### 3.1 Create the `agents/` Folder Structure
+### 3.1 Create the `.agents/` Folder Structure
 
 ```
 project/
 ├── CLAUDE.md                    # Foundation context (always loaded)
-└── agents/                      # Specialized agent guidance
+└── .agents/                      # Specialized agent guidance
     ├── _index.md                # Agent registry & routing rules
     ├── backend.md               # Data & logic specialization
     ├── frontend.md              # UI/UX specialization
