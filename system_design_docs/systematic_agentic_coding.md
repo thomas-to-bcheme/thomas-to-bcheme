@@ -11,6 +11,7 @@ A first-principles workflow for AI-assisted development using the **Planning →
 4. [VALIDATING Phase — Verification Loop](#4-validating-phase--verification-loop)
 5. [The Complete Systematic Workflow](#5-the-complete-systematic-workflow)
 6. [Quick Reference](#6-quick-reference)
+7. [Practical Exercises — Continuing Existing Projects](#7-practical-exercises--continuing-existing-projects)
 
 ---
 
@@ -423,6 +424,249 @@ After each development cycle:
 - [ ] Patterns followed?
 - [ ] Tests pass?
 ```
+
+---
+
+## 7. Practical Exercises — Continuing Existing Projects
+
+This section provides prompt templates for common workflows when building off an established agentic coding setup.
+
+### 7.1 Exercise: Setting Up Ruff for AI Self-Correction
+
+Ruff is a fast Python linter that integrates well with AI-assisted development. This exercise demonstrates the complete workflow.
+
+**Prompt to Use:**
+
+> Using the official Ruff documentation as context, let's set up Ruff for our project optimized for AI self-correction.
+>
+> Document to read FETCH: (https://docs.astral.sh/ruff/configuration/)
+>
+> Read and understand the configuration options before continuing. Don't set up anything beyond Ruff. Write a simple Python script in main.py then test our Ruff set up when done.
+
+**Why This Exercise Matters:**
+- **Linting as Validation**: Ruff provides instant feedback for the VALIDATING phase
+- **AI Self-Correction Loop**: Lint errors become prompts for the AI to fix its own output
+- **Zero-Config Start**: Ruff works out of the box, reducing setup friction
+
+**Expected Workflow:**
+1. Fetch and read Ruff configuration documentation
+2. Create `pyproject.toml` or `ruff.toml` with project-appropriate rules
+3. Write `main.py` with intentional style variations
+4. Run `ruff check main.py` to verify setup
+5. Use `ruff check --fix` for auto-correction demonstration
+
+**Integration with Agentic Workflow:**
+- Add Ruff to CLAUDE.md commands section
+- Consider a `backend.md` or `python.md` agent that enforces Ruff compliance
+- Use Ruff output as feedback in the validation loop
+
+### 7.2 Exercise: Setting Up Pyright for Type Safety
+
+Pyright adds static type checking as a second validation layer.
+
+**Prompt to Use:**
+
+> Using the official Pyright documentation as context, set up Pyright for our project as a second layer of type safety.
+>
+> Documentation to read: FETCH:(https://github.com/microsoft/pyright/blob/main/docs/configuration.md)
+>
+> Read and understand the configuration options, especially type checking modes and diagnostic rules.
+>
+> First, run:
+> uv add --dev pyright
+>
+> Then add the Pyright configuration to pyproject.toml based on the documentation. Use strict mode with all safety checks enabled.
+>
+> When you have added the rules, run both MyPy and Pyright on main.py to verify both type checkers pass.
+>
+> main.py is just for testing, so feel free to override anything that's there.
+>
+> When done, write a short summary comparing what Pyright caught vs MyPy.
+
+**Why This Exercise Matters:**
+- **Type Safety**: Catches type errors before runtime
+- **IDE Integration**: Pyright powers VS Code's Python language server
+- **Complements Ruff**: Ruff handles style, Pyright handles types
+- **Comparison Learning**: Understanding differences between MyPy and Pyright
+
+### 7.3 Exercise: Setting Up MyPy for Strict Type Checking
+
+MyPy provides strict type enforcement optimized for AI-assisted development.
+
+**Prompt to Use:**
+
+> Using the official MyPy documentation as context, set up MyPy for our project.
+>
+> Documentation to read: FETCH: (https://mypy.readthedocs.io/en/stable/config_file.html)
+>
+> Read and understand the configuration options, especially strict mode settings.
+>
+> First, run:
+> uv add --dev mypy
+>
+> Then add the MyPy configuration to pyproject.toml based on the documentation, optimized for AI coding.
+>
+> When you have added the rules, modify main.py to properly test that all of our type checking rules are working as expected.
+>
+> main.py is just for testing, so feel free to override anything that's there.
+>
+> When done, write a short summary of what was configured and tested.
+
+**Why This Exercise Matters:**
+- **Strict Mode**: Enforces comprehensive type annotations
+- **AI Self-Correction**: Type errors provide precise feedback for AI to fix
+- **pyproject.toml Integration**: Centralizes all tool configuration
+
+### 7.4 Exercise: Setting Up Pytest with Async Support
+
+Pytest provides the testing foundation for the VALIDATING phase.
+
+**Prompt to Use:**
+
+> Using the official pytest-asyncio documentation as context, set up pytest for our project.
+>
+> Documentation to read: FETCH:(https://pytest-asyncio.readthedocs.io/)
+>
+> Read and understand async test setup, fixtures, and event loop configuration.
+>
+> First, run:
+> uv add --dev pytest pytest-cov pytest-asyncio
+>
+> Then create tests for main.py following best practices from the documentation.
+>
+> Make sure all tests pass, and that Ruff, MyPy, and Pyright checks all pass as well.
+>
+> When everything is green, run /commit to commit the changes.
+>
+> Write a short summary of what was configured and tested.
+>
+> output:
+> Summary: [short descriptive summary]
+> Files changed: [bullet list]
+> # tests passing: [bullet list]
+> exact commit message used:
+
+**Why This Exercise Matters:**
+- **Testing Foundation**: Pytest is the standard for Python testing
+- **Async Support**: pytest-asyncio enables testing async code
+- **Coverage Tracking**: pytest-cov measures test coverage
+- **Full Validation Loop**: Combines linting + type checking + testing
+- **Commit Integration**: Demonstrates the complete workflow ending with /commit
+
+### 7.5 Exercise: Setting Up Docker with uv
+
+Docker provides containerization for consistent deployment environments.
+
+**Prompt to Use:**
+
+> Using this article as context, set up Docker for our project with uv.
+>
+> Here is the article to read FETCH:(https://docs.astral.sh/uv/guides/integration/docker/)
+>
+> Read it and fully understand it before you continue, do any additional research as needed.
+>
+> Create:
+>
+> 1. Dockerfile using multi-stage build with official uv images
+>    - Use python3.12-bookworm-slim as base
+>    - Separate dependency installation layer for caching
+>    - Use --no-editable for production builds
+>    - Include cache mounts for uv
+>
+> 2. .dockerignore file to exclude:
+>    - Virtual environments (.venv)
+>    - Cache directories (.mypy_cache, .ruff_cache, .pytest_cache, .pyright)
+>    - Python bytecode (__pycache__, *.pyc)
+>    - Git and environment files
+>
+> 3. docker-compose.yml for local development with:
+>    - Volume mounts for the project (excluding .venv)
+>    - Port mapping (8123:8123)
+>    - Environment variable support
+>
+> Test the setup:
+> - Build the Docker image successfully
+> - Verify the image size is reasonable
+> - Test running the container
+>
+> When done, write a short summary of the Docker setup.
+>
+> output:
+> Summary: [short descriptive summary]
+> Image details: [size, base image, key optimizations]
+> Usage commands: [docker build, docker run, docker compose]
+
+**Why This Exercise Matters:**
+- **Reproducible Builds**: Docker ensures consistent environments across machines
+- **Multi-Stage Optimization**: Separates build and runtime for smaller images
+- **uv Integration**: Uses official uv images for fast dependency installation
+- **Cache Efficiency**: Layer caching and cache mounts speed up rebuilds
+- **Production Ready**: --no-editable flag creates production-optimized installs
+
+### 7.6 Exercise: Setting Up Pydantic for Data Validation
+
+Pydantic provides runtime data validation with static type checking support—essential for agentic coding workflows.
+
+**Prompt to Use:**
+
+> Using the official Pydantic documentation as context, set up Pydantic for our project.
+>
+> Documentation to read: FETCH:(https://docs.pydantic.dev/latest/concepts/models/)
+>
+> Read and understand BaseModel, field validation, and serialization patterns.
+>
+> First, run:
+> uv add pydantic
+>
+> Then create example models in main.py demonstrating:
+> 1. Basic model with type validation
+> 2. Field constraints (min/max, regex patterns)
+> 3. Nested models
+> 4. Custom validators
+> 5. JSON serialization/deserialization
+>
+> Make sure all tests pass, and that Ruff, MyPy, and Pyright checks all pass.
+>
+> When done, write a summary explaining how Pydantic integrates with the agentic coding ecosystem.
+>
+> output:
+> Summary: [short descriptive summary]
+> Models created: [bullet list with purpose of each]
+> Agentic integrations: [how Pydantic works with LLMs, agents, and other tools]
+
+**Why This Exercise Matters:**
+- **Runtime Validation**: Catches data errors that static type checkers miss
+- **LLM Tool Schemas**: Pydantic models define function calling schemas for OpenAI, Anthropic, etc.
+- **Structured Outputs**: Forces LLM responses into validated Python objects
+- **Agent Frameworks**: LangChain, CrewAI, and other agent frameworks use Pydantic for tool definitions
+- **FastAPI Integration**: Pydantic powers request/response validation in FastAPI
+- **Settings Management**: pydantic-settings handles environment variables and config files
+
+**Agentic Coding Ecosystem:**
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Pydantic in Agentic Coding                   │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  LLM APIs ──► Pydantic Models ──► Validated Tool Calls          │
+│     │              │                     │                       │
+│     │              ▼                     ▼                       │
+│     │      JSON Schema Generation   Type-Safe Execution          │
+│     │              │                     │                       │
+│     ▼              ▼                     ▼                       │
+│  OpenAI/Anthropic  LangChain/CrewAI  Your Agent Code            │
+│  function_call     Tool Definitions   Business Logic             │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Key Integrations:**
+- **OpenAI**: `function_call` and `tools` use JSON Schema generated from Pydantic
+- **Anthropic**: Tool use definitions map directly to Pydantic models
+- **LangChain**: `@tool` decorator uses Pydantic for input validation
+- **Instructor**: Patches LLM clients to return Pydantic objects directly
+- **FastAPI**: Request bodies and responses validated via Pydantic
+- **SQLModel**: Combines Pydantic + SQLAlchemy for database models
 
 ---
 
