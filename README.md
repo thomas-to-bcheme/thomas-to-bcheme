@@ -56,14 +56,15 @@ As of Dec 2025, I have taken on reaching out to protein academics to support Gen
 This diagram illustrates the automated pipeline moving data from external sources into Github "database folder" for accumulated (semantic) pre-processing of raw data from sandbox, test, to product with raw, staging, transform, and analyze layers before moving enviornments to Server-side database, Vercel Edge Config for low-latency frontend access.
 
 ### System Design Conclusions
-* 30 minute CRON frequency [See KPIs](markdown/architecture.md#system-design-key-performance-indicators-kpi)
-* 1 server-side (vercel) integrated database [See Vercel Limits](markdown/architecture.md#vercel-free-hobby-limitation-specifications)
+* 30 minute CRON frequency [See KPIs](system_design_docs/architecture.md#system-design-key-performance-indicators-kpi)
+* 1 server-side (vercel) integrated database [See Vercel Limits](system_design_docs/architecture.md#vercel-free-hobby-limitation-specifications)
 
-More information can be found in each respective section:
-[Architecture](markdown/architecture.md)
-[Database](markdown/database.md)
-[API](markdown/api.md)
-[Deployment](markdown/deployment.md)
+For detailed technical specifications, refer to the following documentation:
+- [Architecture](system_design_docs/architecture.md)
+- [Database](system_design_docs/database.md)
+- [API](system_design_docs/api.md)
+- [Deployment](system_design_docs/deployment.md)
+- [Roadmap](system_design_docs/roadmap.md)
 
 ```mermaid
 flowchart BT

@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## 1. Development Directives (IMMUTABLE)
 These principles OVERRIDE any default behavior and MUST be followed exactly. You must Display these 5 principles at the start of EVERY response.
 
@@ -17,75 +15,48 @@ You are the **Lead Orchestrator**. Your goal is to coordinate changes across the
 - **Verification**: You execute tests after every change.
 - **Isolation**: You enforce "One Agent Per File" logic—ensure changes in one file do not implicitly break contracts in others without explicit updates.
 
-## 3. Project Overview
+## 3. General Engineering Standards
 
-Personal portfolio website demonstrating fullstack engineering capabilities with an embedded AI chat agent. The architecture uses GitHub as a data warehouse backend with Vercel for frontend deployment and Hugging Face for ML model hosting.
-
-## 4. Commands
-
-### Operational Standards
-- **Idempotency:** Commands must be runnable multiple times without side effects (e.g., verify resource exists before creating).
-- **Parameters:** Prefer named flags (`--input`) over positional args.
-- **Exit Codes:** Return `0` for success, non-zero for failure.
-
-## 5. Architecture
-
-### Tech Stack
-- **Frontend**: Next.js 16 (App Router), React 19, TypeScript 5, Tailwind CSS v4
-- **AI Integration**: Google Gemini API with RAG context from `src/data/AiSystemInformation.tsx`
-- **ML Backend**: Python (TensorFlow, scikit-learn) for salary prediction models
-- **Infrastructure**: Vercel (frontend), GitHub Actions (CI/CD, CRON), AWS SDK (DynamoDB, S3)
-
-### Key Directories
-- `src/app/` - Next.js App Router pages and API routes
-- `src/app/api/chat/route.ts` - Gemini API streaming chat endpoint
-- `src/components/` - React components (HeroSection, AiGenerator, ProjectDeepDive, etc.)
-- `src/data/AiSystemInformation.tsx` - RAG context/system prompt for the AI agent
-- `backend/` - Python ML models (Random Forest + TensorFlow for salary prediction)
-- `markdown/` - Architecture documentation (architecture.md, roadmap.md, api.md, database.md)
-
-### Data Flow
-GitHub CRON (30-min intervals) → ETL Processing → Data Warehouse (Sandbox → Quality → Production) → Vercel deployment
-
-### Design Constraints
-- Zero-cost architecture using free-tier services
-- Vercel limit: 100 deploys/24h (safe max: hourly = 24/day)
-- GitHub Actions handle scheduled tasks since Vercel Hobby limits CRON to daily
-
-## 6. Path Aliases
-TypeScript path alias `@/*` maps to `./src/*`
-
-## 7. General Engineering Standards
-
-### 7.1 Global Philosophy
+### 3.1 Global Philosophy
 - **KISS (Keep It Simple, Stupid):** Prioritize readability. Complexity is the enemy of reliability.
 - **YAGNI (You Aren't Gonna Need It):** Solve the current problem exclusively; do not abstract for hypothetical futures.
 - **DRY vs. AHA:** Avoid "Write Everything Twice," but prefer duplication over the wrong abstraction ("Avoid Hasty Abstractions").
 - **SOLID:** Enforce Single Responsibility strictly.
 
-### 7.2 Primitive Data Types
+### 3.2 Primitive Data Types
 - **Strings:** Use interpolation/templates over concatenation. Treat as immutable. Explicitly handle UTF-8.
 - **Numbers:** Avoid "Magic Numbers" (use named constants). Use integer/decimal types for currency/precision; avoid floating-point for money.
 - **Booleans:** Name variables positively (e.g., `isEnabled` not `isNotDisabled`). Avoid "truthy/falsy" reliance; check explicitly.
 
-### 7.3 Data Structures
+### 3.3 Data Structures
 - **Collections:** Prefer immutability (return new lists vs. mutate in place). Use vector operations (`map`, `filter`) over manual loops.
 - **Maps/Objects:** Enforce consistent key casing. Use safe access methods (return default/null) rather than throwing on missing keys.
 - **Depth:** Avoid deep nesting (>3 levels); refactor into models/classes if structure becomes too deep.
 
-### 7.4 Control Flow
+### 3.4 Control Flow
 - **Guard Clauses:** Use early returns to handle edge cases immediately, flattening the "happy path."
 - **Bounded Iteration:** Ensure loops have explicit exit conditions and safeguards (timeouts/max-counts).
 - **Descriptive Naming:** Iterator variables must be descriptive (`for user in users`), not generic (`i`, `x`).
 
-### 7.5 Error Handling
+### 3.5 Error Handling
 - **Fail Fast:** Validate inputs immediately. Crash/return early rather than propagating bad state.
 - **Catch Specifics:** Catch specific exceptions (e.g., `FileNotFound`) rather than generic catch-alls.
 - **Contextual Logging:** Log the *context* (state/inputs) alongside the error, not just the stack trace.
 - **No Silent Failures:** No empty `try/catch` blocks.
 - **Resource Cleanup:** Always use `finally` or `using/with` blocks for resource disposal.
 
-## 8. Testing Strategy
+## 4. Operational Commands
+*All scripts and CLI tools must adhere to the following:*
+- **Idempotency:** Commands must be runnable multiple times without side effects (e.g., verify resource exists before creating).
+- **Parameters:** Prefer named flags (`--input`) over positional args.
+- **Exit Codes:** Return `0` for success, non-zero for failure.
+
+### Command List
+- **Boot**: `[Insert Command, e.g., docker-compose up]`
+- **Test Suite**: `[Insert Command, e.g., pytest]`
+- **Linting**: `[Insert Command, e.g., ruff check]`
+
+## 5. Testing Strategy
 - **The Pyramid:**
     1. **Unit:** Many fast, isolated tests (mock external deps).
     2. **Integration:** Moderate number, verifying module interactions.
@@ -93,7 +64,7 @@ TypeScript path alias `@/*` maps to `./src/*`
 - **Structure:** Use **Arrange-Act-Assert** pattern for all tests.
 - **Data:** Use Factories to generate test data; avoid brittle static fixtures.
 
-## 9. Logging & Observability
+## 6. Logging & Observability
 - **Structured Logging:** Use JSON/Key-Value pairs (e.g., `level=INFO user_id=123`) for aggregation.
 - **Correlation IDs:** Pass unique IDs through the stack to trace requests.
 - **Sanitization:** STRICTLY scrub PII and secrets from all logs.
