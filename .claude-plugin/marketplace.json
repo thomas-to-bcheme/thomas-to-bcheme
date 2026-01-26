@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "git-push",
-      "source": "./plugins/git-push",
+      "source": "./.claude-plugin/plugins/git-push",
       "description": "Interactive git push with manual commit messages - prompts for staging and commit message before pushing",
       "version": "1.0.0",
       "author": {
@@ -18,7 +18,7 @@
     },
     {
       "name": "git-push-agentic",
-      "source": "./plugins/git-push-agentic",
+      "source": "./.claude-plugin/plugins/git-push-agentic",
       "description": "Autonomous git workflow - Claude handles add, commit message generation, and push automatically",
       "version": "1.0.0",
       "author": {
@@ -30,7 +30,7 @@
     },
     {
       "name": "git-README",
-      "source": "./plugins/git-README",
+      "source": "./.claude-plugin/plugins/git-README",
       "description": "5-agent README generator with smart merge - 4 parallel analyzers + review coordinator",
       "version": "1.0.0",
       "author": {
