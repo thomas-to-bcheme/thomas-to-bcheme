@@ -23,6 +23,8 @@ Generate a LinkedIn post following this exact structure:
 ### 1. Hook (Required)
 Start with `Hello World,` followed by a 150-character max executive summary that creates curiosity in past-tense using high impact language.
 
+**Algorithm Note**: The first 150 characters appear before "See more" - this determines dwell time and whether readers expand the post.
+
 Never start with: "I'm excited to announce...", "Happy to share...", or generic corporate phrases.
 
 ### 2. Moving Forward
@@ -50,15 +52,20 @@ End with "Happy to connect, network, and chat about AI/ML/SW Engineering and/or 
 
 ### 6. References
 Include 1-2 inline citations using bracketed numbers [1], [2].
-At the end of the post, add:
+
+**Algorithm Note**: External links reduce reach by ~60%, but convenience is prioritized here.
+
+At the end of the post, add full hyperlinks:
 ```
 References:
-[1] Title - URL
-[2] Title - URL
+[1] Title - https://example.com/link1
+[2] Title - https://example.com/link2
 ```
 
 ### 7. Hashtags
-Add exactly 4 hashtags. Use this mix:
+Add exactly 4 hashtags (3-5 is optimal for algorithm). Place at the very end, not inline.
+
+Use this mix:
 - 1 high-reach: `#MachineLearning` or `#ArtificialIntelligence` or `#SoftwareEngineering`
 - 2 targeted: `#OpenToWork` `#MLOps` `#SystemDesign` `#DeepLearning` `#TechCareers`
 - 1 niche: `#BuildInPublic` or `#MLEngineering`
@@ -69,9 +76,20 @@ Add exactly 4 hashtags. Use this mix:
 
 1. **No emojis** - Professional text only
 2. **No subtitles** - Essay format, continuous prose
-3. **Line breaks** - Single-sentence paragraphs for mobile readability
-4. **Length** - 1,200-1,500 characters optimal, 3,000 max
+3. **Line breaks** - Single-sentence paragraphs for mobile readability; white space improves dwell time
+4. **Length** - 1,000-1,300 characters optimal for consistent reach, 3,000 max
 5. **Bold** - Only the summary section
+6. **Text-only preferred** - Text posts outperform single-image posts by 30% in 2026 algorithm
+
+---
+
+## Algorithm Optimization (2026)
+
+- **Golden Hour**: First 60-90 minutes determine reach expansion - post when you can engage
+- **Reply Speed**: Respond to comments within 15 minutes for 90% algorithmic boost
+- **Comments > Likes**: 50 meaningful comments outperform 500 likes for reach
+- **Avoid Engagement Bait**: "Like if you agree" or "Share this" phrases are actively suppressed
+- **Native Content**: Keep readers on LinkedIn - external links penalize reach
 
 ---
 
@@ -100,13 +118,13 @@ The next open-source project I have in mind will be an embedded AI project to sh
 
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 
-[1] Project Demo / Portfolio: https://lnkd.in/gSq7BDVj
-[2] Agentic CLI: https://opencode.ai/
-[3] Dataset (Kaggle): https://lnkd.in/gtE_fy6J
-[4] Public Scraper Tooling: https://lnkd.in/gDGKK4nK
-[5] Hugging Face Space: https://lnkd.in/gu_ecBbR
-[6] Google Vertex AI Monitoring: https://lnkd.in/gPsKd-_V
-hashtag#MachineLearning hashtag#ArtificialIntelligence hashtag#DataScience hashtag#SoftwareEngineering hashtag#MLEngineer hashtag#FullStack hashtag#MLOps hashtag#DeepLearning hashtag#OpenToWork hashtag#BuildingInPublic hashtag#Python hashtag#FastAPI hashtag#Docker hashtag#HuggingFace hashtag#DevCommunity hashtag#AgenticAI hashtag#JobSearch hashtag#Portfolio
+References:
+[1] Project Demo / Portfolio - https://lnkd.in/gSq7BDVj
+[2] Agentic CLI - https://opencode.ai/
+[3] Dataset (Kaggle) - https://lnkd.in/gtE_fy6J
+[4] Hugging Face Space - https://lnkd.in/gu_ecBbR
+
+#MachineLearning #OpenToWork #BuildInPublic #MLEngineering
 ```
 
 ---
