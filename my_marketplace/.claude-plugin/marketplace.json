@@ -1,0 +1,23 @@
+{
+  "name": "thomas-to-plugins",
+  "owner": {
+    "name": "Thomas To"
+  },
+  "plugins": [
+    {
+      "name": "git-push",
+      "source": "./plugins/git-push",
+      "description": "Interactive git push with manual commit messages - prompts for staging and commit message before pushing"
+    },
+    {
+      "name": "git-push-agentic",
+      "source": "./plugins/git-push-agentic",
+      "description": "Autonomous git workflow - Claude handles add, commit message generation, and push automatically"
+    },
+    {
+      "name": "git-README",
+      "source": "./plugins/git-README",
+      "description": "5-agent README generator with smart merge - 4 parallel analyzers + review coordinator"
+    }
+  ]
+}
