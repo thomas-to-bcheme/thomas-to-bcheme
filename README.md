@@ -18,6 +18,30 @@
 </div>
 
 ---
+## 🔌 Claude Code Plugin Marketplace
+
+This repository includes a **[Claude Code Plugin Marketplace](.claude-plugin/)** with distributable plugins for AI-assisted development workflows.
+
+### Available Plugins
+
+| Plugin | Description | Install |
+|--------|-------------|---------|
+| **[git-push](.claude-plugin/plugins/git-push/)** | Smart git push workflow - checks status, stages/commits if needed, then pushes | [Instructions](.claude-plugin/README.md#installation) |
+
+### Quick Install
+
+```bash
+# One-liner install for git-push plugin
+mkdir -p .claude/plugins/git-push && \
+curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/plugin.json -o .claude/plugins/git-push/plugin.json && \
+curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/SKILL.md -o .claude/plugins/git-push/SKILL.md
+```
+
+Then use in Claude Code: `/git-push`
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
 
 ## 👨‍💻 Executive Summary
 
@@ -39,15 +63,6 @@ My experience spans the entire data lifecycle—from capturing empirical data on
 > **We've seen how even simplistic algorithms can automate manual workflows. Now with Agentic methods, I combine classical fullstack methods with agentic AI/ML solutions to drive reality into the future.**
 
 As of Dec 2025, I have taken on reaching out to protein academics to support GenAI of novel designs leveraging my formal background. Working in industry with tech during the day and protein design by night.
-
-## 🛠 Tech Stack & Core Competencies
-| **🤖 AI & Agentic Systems** | **📊 Data & Analytics** | **💻 Full Stack & API** | **☁️ Cloud, DevOps & IoT** | **🧬 Bio-Computation** |
-| :--- | :--- | :--- | :--- | :--- |
-| **LangChain** | **Snowflake** | **Python** | **Google Cloud** | **pyRosetta** |
-| **RAG / LLMs** | **dbt** | **TypeScript** | **AWS** | **pyMol** |
-| **PyTorch** | **PostgreSQL** | **Next.js** | **Docker** | **Benchling** |
-| **TensorFlow** | **Tableau** | **React.js** | **Kubernetes** | **OpenCV** |
-| **Hugging Face** | **Fivetran** | **RestAPI** | **CI/CD** | **ImageJ / Fiji** |
 
 ---
 
