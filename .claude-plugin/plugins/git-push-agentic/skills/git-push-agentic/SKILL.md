@@ -1,7 +1,7 @@
 ---
 name: git-push-agentic
 description: Autonomous push - auto stage all changes, generate commit message, and push to remote
-tools: Bash(git status*), Bash(git diff*), Bash(git add*), Bash(git commit*), Bash(git push*), Bash(git log*), Bash(git branch*)
+tools: Bash
 ---
 
 # /git-push-agentic - Fully Autonomous Git Push
