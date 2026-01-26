@@ -165,3 +165,28 @@ flowchart BT
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
+
+## 🔌 Claude Code Plugin Marketplace
+
+This repository includes a **[Claude Code Plugin Marketplace](claude/marketplace/)** with distributable plugins for AI-assisted development workflows.
+
+### Available Plugins
+
+| Plugin | Description | Install |
+|--------|-------------|---------|
+| **[git-push](claude/marketplace/plugins/git-push/)** | Smart git push workflow - checks status, stages/commits if needed, then pushes | [Instructions](claude/marketplace/README.md#installation-methods) |
+
+### Quick Install
+
+```bash
+# One-liner install for git-push plugin
+mkdir -p .claude/plugins/git-push && \
+curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/claude/marketplace/plugins/git-push/plugin.json -o .claude/plugins/git-push/plugin.json && \
+curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/claude/marketplace/plugins/git-push/SKILL.md -o .claude/plugins/git-push/SKILL.md
+```
+
+Then use in Claude Code: `/git-push`
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
