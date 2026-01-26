@@ -8,7 +8,7 @@
     {
       "name": "git-push",
       "description": "Smart push: check status, stage/commit if needed, then push to remote",
-      "skillFile": "SKILL.md"
+      "skillFile": "skills/git-push/SKILL.md"
     }
   ],
   "permissions": {

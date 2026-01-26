@@ -1,0 +1,20 @@
+{
+  "name": "thomas-to-plugins",
+  "owner": {
+    "name": "Thomas To"
+  },
+  "plugins": [
+    {
+      "name": "git-push",
+      "source": "./plugins/git-push",
+      "description": "Smart git push workflow - checks status, stages/commits if needed, then pushes",
+      "version": "1.0.0",
+      "author": {
+        "name": "Thomas To"
+      },
+      "license": "MIT",
+      "keywords": ["git", "push", "workflow", "automation"],
+      "category": "version-control"
+    }
+  ]
+}

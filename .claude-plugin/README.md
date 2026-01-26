@@ -33,15 +33,17 @@ git submodule update --remote --merge
 ### Method 2: Direct Download (curl)
 
 ```bash
-# Create plugin directory
-mkdir -p .claude/plugins/git-push
+# Create plugin directories
+mkdir -p .claude/plugins/git-push/.claude-plugin
+mkdir -p .claude/plugins/git-push/skills/git-push
 
-# Download plugin files
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/plugin.json \
-  -o .claude/plugins/git-push/plugin.json
+# Download plugin manifest
+curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/.claude-plugin/plugin.json \
+  -o .claude/plugins/git-push/.claude-plugin/plugin.json
 
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/SKILL.md \
-  -o .claude/plugins/git-push/SKILL.md
+# Download skill definition
+curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/skills/git-push/SKILL.md \
+  -o .claude/plugins/git-push/skills/git-push/SKILL.md
 ```
 
 ### Method 3: Manual Copy
@@ -71,11 +73,38 @@ The plugin handles:
 
 ```
 .claude-plugin/
-  README.md                    # This file
+  marketplace.json               # Plugin registry manifest
+  README.md                      # This file
   plugins/
     git-push/
-      plugin.json              # Plugin manifest
-      SKILL.md                 # Skill workflow definition
+      .claude-plugin/
+        plugin.json              # Plugin manifest
+      skills/
+        git-push/
+          SKILL.md               # Skill workflow definition
+```
+
+### marketplace.json Schema
+
+```json
+{
+  "name": "marketplace-name",
+  "owner": {
+    "name": "Owner Name"
+  },
+  "plugins": [
+    {
+      "name": "plugin-name",
+      "source": "./plugins/plugin-name",
+      "description": "What this plugin does",
+      "version": "1.0.0",
+      "author": { "name": "Author Name" },
+      "license": "MIT",
+      "keywords": ["keyword1", "keyword2"],
+      "category": "category-name"
+    }
+  ]
+}
 ```
 
 ### plugin.json Schema
@@ -91,7 +120,7 @@ The plugin handles:
     {
       "name": "command-name",
       "description": "Command description",
-      "skillFile": "SKILL.md"
+      "skillFile": "skills/command-name/SKILL.md"
     }
   ],
   "permissions": {
@@ -105,10 +134,12 @@ The plugin handles:
 ## Contributing
 
 1. Fork this repository
-2. Create plugin in `.claude-plugin/plugins/your-plugin/`
-3. Add `plugin.json` and `SKILL.md`
-4. Update this README's "Available Plugins" table
-5. Submit a pull request
+2. Create plugin directory: `.claude-plugin/plugins/your-plugin/`
+3. Add `.claude-plugin/plugin.json` manifest
+4. Add `skills/your-command/SKILL.md` skill definition
+5. Register plugin in `marketplace.json`
+6. Update this README's "Available Plugins" table
+7. Submit a pull request
 
 ---
 
