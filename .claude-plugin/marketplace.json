@@ -27,6 +27,18 @@
       "license": "MIT",
       "keywords": ["git", "push", "agentic", "autonomous", "ai"],
       "category": "version-control"
+    },
+    {
+      "name": "git-README",
+      "source": "./plugins/git-README",
+      "description": "5-agent README generator with smart merge - 4 parallel analyzers + review coordinator",
+      "version": "1.0.0",
+      "author": {
+        "name": "Thomas To"
+      },
+      "license": "MIT",
+      "keywords": ["readme", "documentation", "subagents", "parallel", "analysis", "smart-merge"],
+      "category": "documentation"
     }
   ]
 }
