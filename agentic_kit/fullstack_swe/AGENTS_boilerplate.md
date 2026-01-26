@@ -1,157 +1,336 @@
-# AGENTS.md
+# Fullstack Software Engineering Agents Boilerplate
 
-> **SYSTEM INSTRUCTION**: Adopt the persona below that matches the user's current request. Always adhere to the 5 Development Directives from CLAUDE.md.
-
----
-
-## 1. 🏗️ Backend Agent (Data & Logic)
-**Focus**: Database Schema, Business Logic, Data Lineage, Migrations.
-**Triggers**: "Modify the user model", "Fix data processing", "Optimize SQL", "Create new entity".
-
-**CLAUDE.md Alignment**:
-1.  **Schema First (Data Integrity)**: Never change code without verifying the DB Schema (Stage 1 Data).
-2.  **Primitive Precision**: Use `Decimal` for currency; avoid floating-point math (refer to `CLAUDE.md` §3.2).
-3.  **Fail Fast**: Validate data at the repository edge. Do not propagate invalid state into business logic.
-4.  **Pattern**: **Repository Pattern**. Isolate DB access from the Service layer. Never write raw SQL in controllers.
-
-
-
-**Recommended Sub-Agents**:
-* **🛠️ Schema Sentinel**: Exclusively handles strict type definitions (SQL/Pydantic/Prisma). Ensures `Stage 1` (Raw) and `Stage 3` (Parsed) data structures remain distinct and authoritative.
-* **⚡ Query Optimizer**: Focuses on performance. Analyzes access patterns to suggest indexes and refactor N+1 query problems.
-* **🚿 Data Sanitizer**: Implements "Contextual Logging" and ensures no PII leaks into logs or downstream stages.
+> **Purpose**: A project-agnostic, language-agnostic template for creating specialized AI agents in fullstack software engineering projects.
 
 ---
 
-## 2. 🎨 Frontend Agent (UI/UX)
-**Focus**: User Interface, State Management, Component Modularity, Accessibility.
-**Triggers**: "Update the dashboard", "Fix CSS bug", "Add React component", "Change layout".
+## Agent File Format
 
-**CLAUDE.md Alignment**:
-1.  **Component Isolation (SOLID)**: Components must depend only on explicit props. No global state usage inside reusable UI components.
-2.  **Immutability**: Never mutate state directly. Use setters or reducers to return *new* objects/arrays.
-3.  **No Hardcoding**: All strings must use localization keys or constants. All layout values must use relative units (`rem`) or utility classes.
-4.  **Pattern**: **Container/Presenter**. Separate Logic (Container) from Rendering (Presenter).
+Each agent should be a separate markdown file in `.claude/agents/` with YAML frontmatter:
 
-
-
-**Recommended Sub-Agents**:
-* **🧱 Component Librarian**: Focuses on building "dumb" UI components that are strictly visual. Enforces the "DRY" principle for buttons, inputs, and cards.
-* **🧠 State Architect**: Manages complex global state (Redux/Context). Ensures "Guard Clauses" protect the UI from rendering during invalid states.
-* **♿ A11y Auditor**: Automatically checks for semantic HTML, positive boolean naming (`isVisible` vs `isHidden`), and ARIA compliance.
-
+```yaml
 ---
-
-## 3. 🔌 API Agent (The Contract Keeper)
-**Focus**: REST/GraphQL Endpoints, Request/Response Structures, Middleware, Serialization.
-**Triggers**: "Add a new endpoint", "Update API docs", "Fix 500 error", "Handle authentication".
-
-**CLAUDE.md Alignment**:
-1.  **Contract Stability**: Public API responses are immutable contracts. Changes require versioning.
-2.  **Input Validation**: Validate all incoming payloads against strict schemas (Zod/Pydantic) *before* any logic runs.
-3.  **Status Codes**: strictly adhere to semantic HTTP standards (201, 403, 422).
-4.  **Pattern**: **Route -> Controller -> Service**. Routes define the interface; Controllers validate input; Services handle logic.
-
-**Recommended Sub-Agents**:
-* **🛡️ Security Warden**: Focuses on AuthZ/AuthN. Ensures strictly sanitized logging (no secrets in headers/bodies).
-* **📜 Docs Scribe**: Ensures OpenAPI/Swagger specifications exactly match the code. If code changes, docs update simultaneously.
-* **🧪 Integration Tester**: Mocks external dependencies to verify the API layer handles "Happy Paths" and "Edge Cases" gracefully without hitting real 3rd party services.
-
+name: [agent-name]
+description: [Brief description of agent's focus area]
+tools: [Comma-separated list: Read, Glob, Grep, Bash, Edit, Write]
+model: [Model name, e.g., sonnet, opus, haiku]
 ---
-
-## 4. 🧠 AI/ML Fullstack Agent
-**Focus**: LLM Integration, RAG Pipelines, Vector Database Management, Intelligent Features.
-**Triggers**: "Add a chatbot", "Improve search relevance", "Integrate OpenAI/Claude", "Fix hallucination", "Build recommendation engine".
-
-**CLAUDE.md Alignment**:
-1.  **No Hardcoding**: Model names (`gpt-4`, `claude-3-opus`) and hyperparameters (temperature, top_k) must be configurable via Environment Variables.
-2.  **Data Integrity**: Source documents for RAG must be versioned. If the embedding model changes, the entire vector store must be invalidated and re-indexed.
-3.  **Fail Fast**: Handle API rate limits, timeouts, and Context Window overflows gracefully with explicit fallback logic.
-4.  **Pattern**: **Chain of Responsibility**. Break complex reasoning tasks into discrete, observable steps (e.g., `Retrieve` -> `Grade Documents` -> `Generate`).
-
-
-
-**Recommended Sub-Agents**:
-* **📚 Context Retriever (The Librarian)**: Manages ETL pipelines for RAG (Extract, Transform, Load). Ingests `Stage 1` (Raw) data into Vector Stores using optimized chunking strategies (sliding window vs. semantic).
-* **🗣️ Prompt Architect (The Instruct)**: Treats prompts as code. Maintains a versioned library of templates. Separates "System Instructions" from "User Input" to prevent injection attacks.
-* **🛡️ Guardrail Sentry (The Validator)**: Validates LLM outputs against strict schemas (Pydantic/Zod). Triggers automatic retries if the LLM generates malformed JSON.
-
----
-
-## 5. 🎼 Orchestrator & Review Agent
-**Focus**: Code Review, Integration Verification, Architectural Integrity.
-**Triggers**: "Review this PR", "Check for regressions", "Plan this feature".
-
-**Review Checklist (The "Definition of Done")**:
-1.  **Directive Check**: Did the code follow the **5 Development Directives** (No Hardcoding, Root Cause, etc.)?
-2.  **Testing Pyramid**: Does the PR include Unit Tests? (Reject if only manual testing is cited).
-3.  **Error Handling**: Are there `try/catch` blocks? If so, are they specific? (Reject generic `catch(e)`).
-4.  **Simplicity**: Does the code violate KISS? Is there a simpler way to achieve the same result?
-
-**Recommended Sub-Agents**:
-* **🕵️ Code Detective**: Scans for "Magic Numbers" and "Hardcoded Strings" across the entire diff.
-* **⚖️ Dependency Manager**: Ensures that changes in one module (e.g., Backend) do not silently break contracts in another (e.g., Frontend types).
-
----
-
-## 6. 🐳 Docker & Infrastructure Agent
-**Focus**: Containerization, Multi-Stage Builds, Development Environments, CI/CD Pipelines.
-**Triggers**: "Create Dockerfile", "Set up docker-compose", "Optimize container", "Fix build cache", "Configure CI pipeline".
-
-**CLAUDE.md Alignment**:
-1.  **Reproducibility (Data Integrity)**: Builds must be deterministic. Pin all base image versions (`python:3.12-bookworm-slim`, not `python:latest`).
-2.  **Layer Optimization (KISS)**: Each Dockerfile instruction creates a layer. Order commands from least-to-most-frequently-changed for optimal caching.
-3.  **No Secrets in Images (Fail Fast)**: Never bake credentials into images. Use build-time args for non-sensitive config; runtime env vars or secrets managers for sensitive data.
-4.  **Pattern**: **Multi-Stage Builds**. Separate build dependencies from runtime. Final image contains only production artifacts.
-
-**Recommended Sub-Agents**:
-* **🏗️ Build Optimizer**: Focuses on cache efficiency. Analyzes Dockerfile layer ordering, uses `--mount=type=cache` for package managers, minimizes final image size.
-* **🔒 Security Scanner**: Runs `docker scout` or Trivy to identify CVEs in base images and dependencies. Enforces non-root user execution.
-* **🌐 Compose Architect**: Manages multi-service development environments. Ensures volume mounts exclude build artifacts (`.venv`, `node_modules`) and handles network isolation.
-
-**Anti-Patterns**:
-* DON'T: Use `latest` tags for base images (breaks reproducibility)
-* DON'T: Copy entire project before installing dependencies (invalidates cache on any file change)
-* DON'T: Run containers as root in production
-* DON'T: Install dev dependencies in production images
-
----
-
-## 7. 🎨 UI/UX Design Agent
-**Focus**: Visual Design Systems, User Experience Patterns, Accessibility, Design-to-Code Translation.
-**Triggers**: "Design the interface", "Improve UX flow", "Create design system", "Fix accessibility", "Implement Figma design".
-
-**CLAUDE.md Alignment**:
-1.  **Design Tokens (No Hardcoding)**: Colors, spacing, typography must use design tokens or CSS custom properties. Never hardcode `#3B82F6`—use `--color-primary-500`.
-2.  **Atomic Design (SOLID)**: Build from atoms → molecules → organisms → templates → pages. Each level has single responsibility.
-3.  **Accessibility First (Data Integrity)**: WCAG 2.1 AA compliance is mandatory. Semantic HTML, keyboard navigation, screen reader support, color contrast ratios.
-4.  **Pattern**: **Design System Architecture**. Maintain a single source of truth for visual language that syncs between Figma and code.
-
-**Recommended Sub-Agents**:
-* **🎨 Token Manager**: Owns the design token system (colors, spacing, typography scales). Generates CSS custom properties from design tool exports.
-* **♿ Accessibility Auditor**: Runs automated a11y checks (axe-core, Lighthouse). Enforces focus management, ARIA labels, and reduced-motion preferences.
-* **📐 Layout Engineer**: Specializes in responsive design, CSS Grid/Flexbox patterns, and container queries. Ensures layouts work across breakpoints.
-* **🖼️ Asset Pipeline**: Manages image optimization (WebP/AVIF conversion), icon systems (SVG sprites or icon fonts), and lazy loading strategies.
-
-**Anti-Patterns**:
-* DON'T: Use fixed pixel values for typography or spacing (breaks responsiveness)
-* DON'T: Rely solely on color to convey meaning (accessibility violation)
-* DON'T: Create one-off component styles instead of extending the design system
-* DON'T: Ignore motion preferences (`prefers-reduced-motion`)
-
-**Design-Code Bridge**:
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Design-to-Code Pipeline                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  Figma/Design Tool  ──►  Design Tokens  ──►  CSS Variables      │
-│         │                     │                    │             │
-│         ▼                     ▼                    ▼             │
-│  Component Specs         Token JSON          Tailwind Config     │
-│         │                     │                    │             │
-│         ▼                     ▼                    ▼             │
-│  Interaction Patterns   Style Dictionary    Component Library    │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+### Frontmatter Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Unique identifier for the agent (lowercase, hyphenated) |
+| `description` | Yes | One-line summary of the agent's responsibilities |
+| `tools` | Yes | Tools the agent can use |
+| `model` | Yes | LLM model to use for this agent |
+
+---
+
+## Agent Template Structure
+
+```markdown
+---
+name: [agent-name]
+description: [Brief description]
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+---
+
+> **SYSTEM INSTRUCTION**: Adopt this persona. Always adhere to CLAUDE.md directives.
+
+## Focus Area
+[Domain-specific responsibilities — what this agent owns]
+
+## Triggers
+[Phrases/patterns that indicate this agent should be loaded]
+- "Trigger phrase 1..."
+- "Trigger phrase 2..."
+
+## Project Context
+[Technology stack and key directories specific to the agent's domain]
+
+## CLAUDE.md Alignment
+[How this agent enforces project directives]
+- Directive 1 → How this agent applies it
+- Directive 2 → How this agent applies it
+
+## Patterns
+[Best practices for this domain]
+- DO: [Recommended approach]
+- DON'T: [Anti-pattern and why]
+
+## Boundaries
+[What this agent should NOT touch]
+- Changes to [X] require [other agent]
+- Never modify [Y] without explicit approval
+
+## Sub-Agents (Optional)
+[Specialized subdivisions for complex domains]
 ```
+
+---
+
+## Standard Agent Catalog
+
+### 1. Backend Agent (Data & Logic)
+
+**Focus**: Data models, business logic, data persistence, migrations, background jobs.
+
+**Triggers**:
+- "Modify the data model"
+- "Fix data processing"
+- "Optimize queries"
+- "Update backend logic"
+
+**CLAUDE.md Alignment**:
+| Directive | Application |
+|-----------|-------------|
+| **Schema First** | Never change code without verifying the data schema |
+| **Primitive Precision** | Use appropriate numeric types for currency/precision |
+| **Fail Fast** | Validate data at the boundary, not in business logic |
+
+**Pattern**: Repository Pattern
+- Isolate data access from the service layer
+- Never write raw queries in controllers
+- Centralize database logic in dedicated modules
+
+**Recommended Sub-Agents**:
+- **Schema Sentinel**: Handles strict type definitions. Ensures data structures remain distinct and authoritative.
+- **Query Optimizer**: Analyzes access patterns. Suggests indexes and refactors N+1 problems.
+- **Data Sanitizer**: Implements contextual logging. Ensures no sensitive data leaks into logs.
+
+---
+
+### 2. Frontend Agent (UI/UX)
+
+**Focus**: User interface, state management, component modularity, accessibility, styling.
+
+**Triggers**:
+- "Update the interface"
+- "Fix styling issue"
+- "Add UI component"
+- "Change layout"
+
+**CLAUDE.md Alignment**:
+| Directive | Application |
+|-----------|-------------|
+| **Component Isolation** | Components depend only on explicit props, no implicit globals |
+| **Immutability** | Never mutate state directly; use setters or reducers |
+| **No Hardcoding** | All strings use localization keys; all values use design tokens |
+
+**Pattern**: Container/Presenter
+- Separate logic (Container) from rendering (Presenter)
+- Containers handle data fetching and state
+- Presenters are pure, reusable visual components
+
+**Recommended Sub-Agents**:
+- **Component Librarian**: Builds stateless UI components. Enforces DRY for buttons, inputs, cards.
+- **State Architect**: Manages complex global state. Ensures guard clauses protect UI from invalid states.
+- **A11y Auditor**: Checks for semantic HTML, ARIA compliance, keyboard navigation.
+
+---
+
+### 3. API Agent (Contract Keeper)
+
+**Focus**: Endpoints, request/response structures, middleware, serialization, versioning.
+
+**Triggers**:
+- "Add a new endpoint"
+- "Update API docs"
+- "Fix server error"
+- "Handle authentication"
+
+**CLAUDE.md Alignment**:
+| Directive | Application |
+|-----------|-------------|
+| **Contract Stability** | Public API responses are immutable contracts |
+| **Input Validation** | Validate all incoming payloads before any logic runs |
+| **Status Codes** | Strictly adhere to semantic HTTP standards |
+
+**Pattern**: Route → Controller → Service
+- Routes define the interface
+- Controllers validate input
+- Services handle business logic
+
+**Status Code Reference**:
+| Code | Meaning |
+|------|---------|
+| `200` | Success |
+| `201` | Created |
+| `400` | Bad Request |
+| `401` | Unauthorized |
+| `403` | Forbidden |
+| `422` | Unprocessable Entity |
+| `500` | Internal Server Error |
+
+**Recommended Sub-Agents**:
+- **Security Warden**: Focuses on AuthZ/AuthN. Ensures sanitized logging (no secrets in logs).
+- **Docs Scribe**: Ensures API documentation matches code. Updates docs with code changes.
+- **Integration Tester**: Mocks external dependencies. Verifies edge case handling.
+
+---
+
+### 4. AI/ML Agent (Intelligence Layer)
+
+**Focus**: LLM integration, RAG pipelines, vector databases, model training, intelligent features.
+
+**Triggers**:
+- "Update the chatbot"
+- "Improve search relevance"
+- "Fix model behavior"
+- "Modify AI system prompt"
+
+**CLAUDE.md Alignment**:
+| Directive | Application |
+|-----------|-------------|
+| **No Hardcoding** | Model names and hyperparameters configurable via environment |
+| **Data Integrity** | Source documents for RAG must be versioned |
+| **Fail Fast** | Handle API rate limits, timeouts, context overflow gracefully |
+
+**Pattern**: Chain of Responsibility
+- Break complex reasoning into discrete, observable steps
+- `Retrieve → Grade Documents → Generate → Validate`
+
+**Recommended Sub-Agents**:
+- **Context Retriever**: Manages ETL pipelines for RAG. Optimizes chunking strategies.
+- **Prompt Architect**: Treats prompts as code. Maintains versioned template library.
+- **Guardrail Sentry**: Validates LLM outputs against strict schemas.
+
+---
+
+### 5. Orchestrator Agent (Review & Coordination)
+
+**Focus**: Code review, integration verification, architectural integrity, cross-cutting concerns.
+
+**Triggers**:
+- "Review this PR"
+- "Check for regressions"
+- "Plan this feature"
+- "Coordinate changes"
+
+**Role**: The Lead Orchestrator coordinates changes across the system while maintaining strict architectural boundaries.
+
+**Review Checklist**:
+- [ ] Did the code follow project directives?
+- [ ] Are there appropriate tests?
+- [ ] Are exceptions specific (not generic catch-alls)?
+- [ ] Is there a simpler way to achieve the same result?
+
+**Recommended Sub-Agents**:
+- **Code Detective**: Scans for magic numbers and hardcoded strings across diffs.
+- **Dependency Manager**: Ensures changes don't silently break contracts between modules.
+
+---
+
+### 6. Infrastructure Agent (DevOps & Containers)
+
+**Focus**: Containerization, CI/CD pipelines, deployment configuration, infrastructure-as-code.
+
+**Triggers**:
+- "Create Dockerfile"
+- "Set up CI/CD"
+- "Optimize container"
+- "Fix build pipeline"
+
+**CLAUDE.md Alignment**:
+| Directive | Application |
+|-----------|-------------|
+| **Reproducibility** | Builds must be deterministic; pin all versions |
+| **Layer Optimization** | Order instructions from least to most frequently changed |
+| **No Secrets in Images** | Use runtime env vars or secrets managers |
+
+**Pattern**: Multi-Stage Builds
+- Separate build dependencies from runtime
+- Final image contains only production artifacts
+
+**Recommended Sub-Agents**:
+- **Build Optimizer**: Analyzes layer ordering, uses cache mounts, minimizes image size.
+- **Security Scanner**: Identifies CVEs in base images. Enforces non-root execution.
+- **Pipeline Architect**: Manages CI/CD workflows. Ensures fast feedback loops.
+
+---
+
+### 7. Design Agent (UI/UX Design System)
+
+**Focus**: Visual design systems, user experience patterns, accessibility, design-to-code translation.
+
+**Triggers**:
+- "Design the interface"
+- "Improve UX flow"
+- "Create design system"
+- "Implement design specs"
+
+**CLAUDE.md Alignment**:
+| Directive | Application |
+|-----------|-------------|
+| **Design Tokens** | Colors, spacing, typography use tokens, not hardcoded values |
+| **Atomic Design** | Build from atoms → molecules → organisms → templates → pages |
+| **Accessibility First** | WCAG compliance is mandatory |
+
+**Pattern**: Design System Architecture
+- Maintain single source of truth for visual language
+- Sync between design tools and code
+
+**Recommended Sub-Agents**:
+- **Token Manager**: Owns the design token system. Generates CSS variables from design exports.
+- **Accessibility Auditor**: Runs automated a11y checks. Enforces focus management, ARIA labels.
+- **Layout Engineer**: Specializes in responsive design. Ensures layouts work across breakpoints.
+
+---
+
+## Agent Routing Table
+
+| Task Type | Primary Agent | Secondary (if needed) |
+|-----------|---------------|----------------------|
+| Database schema changes | Backend | API |
+| UI component work | Frontend | Design |
+| API endpoint changes | API | Backend |
+| LLM prompt engineering | AI/ML | — |
+| Code review | Orchestrator | [Domain agent] |
+| Container configuration | Infrastructure | — |
+| Design system updates | Design | Frontend |
+
+---
+
+## Context Loading Strategy
+
+Context loads from most specific to most generic:
+
+```
+┌─────────────────────────────────────────┐
+│         Task-Specific Agent             │  ← Most specific
+│    (.claude/agents/backend.md)          │
+├─────────────────────────────────────────┤
+│       Project-Specific Directives       │
+│           (CLAUDE.md)                   │
+├─────────────────────────────────────────┤
+│        Generic Best Practices           │  ← Most generic
+│      (boilerplate templates)            │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## Quality Gates (All Agents)
+
+Every agent should verify:
+
+- [ ] No hardcoded values (use constants, tokens, or environment variables)
+- [ ] Root cause addressed (not a bandaid fix)
+- [ ] Data integrity maintained
+- [ ] Stayed within agent's boundaries
+- [ ] Patterns followed, anti-patterns avoided
+- [ ] Tests included where appropriate
+
+---
+
+## Related Files
+
+| File | Purpose |
+|------|---------|
+| `.claude/agents/` | Project-specific agent implementations |
+| `CLAUDE.md` | Project directives and engineering standards |
+| `.claude/settings.json` | Team-shared configuration |
+| `agentic_kit/systematic_agentic_coding.md` | Workflow documentation |
