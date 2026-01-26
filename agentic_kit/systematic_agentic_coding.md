@@ -35,7 +35,7 @@ Context layers from generic to specific:
 ```
 ┌─────────────────────────────────────────┐
 │         Task-Specific Context           │  ← Most specific
-│    (agents/backend.md for this task)    │
+│  (.claude/agents/backend.md for task)   │
 ├─────────────────────────────────────────┤
 │       Project-Specific Context          │
 │           (CLAUDE.md)                   │
@@ -111,7 +111,7 @@ The authoritative context file containing:
 [What agents should NOT do]
 
 ## 6. Agents
-[Pointer to agents/ folder for specialized work]
+[Pointer to .claude/agents/ folder for specialized work]
 ```
 
 ---
@@ -120,31 +120,59 @@ The authoritative context file containing:
 
 The implementing phase answers: **How do we structure guidance for specialized work?**
 
-### 3.1 Create the `.agents/` Folder Structure
+### 3.1 Create the `.claude/agents/` Folder Structure
 
 ```
 project/
 ├── CLAUDE.md                    # Foundation context (always loaded)
-└── .agents/                      # Specialized agent guidance
-    ├── _index.md                # Agent registry & routing rules
-    ├── backend.md               # Data & logic specialization
-    ├── frontend.md              # UI/UX specialization
-    ├── api.md                   # Contract & integration specialization
-    ├── ai-ml.md                 # LLM/RAG specialization
-    └── orchestrator.md          # Review & coordination specialization
+└── .claude/
+    ├── settings.json            # Team-shared configuration
+    ├── settings.local.json      # Personal overrides (gitignored)
+    └── agents/                  # Specialized agent guidance
+        ├── backend.md           # Data & logic specialization
+        ├── frontend.md          # UI/UX specialization
+        ├── api.md               # Contract & integration specialization
+        ├── ai-ml.md             # LLM/RAG specialization
+        └── orchestrator.md      # Review & coordination specialization
 ```
 
 **Why separate files?**
 - **Focused context**: Load only relevant guidance for the task
 - **Parallel development**: Different engineers own different agent specs
 - **Cleaner diffs**: Changes to frontend guidance don't pollute backend history
+- **YAML frontmatter**: Each agent has metadata (name, description, tools, model)
 
 ### 3.2 Agent Markdown Template
 
-Each `agents/*.md` file follows a consistent structure:
+Each `.claude/agents/*.md` file uses YAML frontmatter followed by structured content:
+
+```yaml
+---
+name: [agent-name]
+description: [Brief description of agent's focus area]
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+---
+```
+
+**Frontmatter Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Unique identifier (lowercase, hyphenated) |
+| `description` | Yes | One-line summary of responsibilities |
+| `tools` | Yes | Comma-separated tools the agent can use |
+| `model` | Yes | LLM model (sonnet, opus, haiku) |
+
+**Content Structure:**
 
 ```markdown
-# [Agent Name]
+---
+name: api
+description: API specialist for endpoints, contracts, and middleware
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+---
 
 > SYSTEM: Adopt this persona. Always adhere to CLAUDE.md directives.
 
@@ -179,45 +207,30 @@ Each `agents/*.md` file follows a consistent structure:
 
 ## Sub-Agents (Optional)
 [Specialized subdivisions for complex domains]
-- `agents/backend-db.md` — Database-specific operations
-- `agents/backend-cache.md` — Caching layer operations
 ```
 
-### 3.3 The `_index.md` Registry
+### 3.3 Agent Routing (via YAML Frontmatter)
 
-The `agents/_index.md` serves as a routing table:
+With YAML frontmatter, routing information is embedded in each agent file. The `description` field serves as the routing hint:
 
-```markdown
-# Agent Registry
-
-## Routing Rules
+**Routing Table:**
 
 | Task Type | Primary Agent | Secondary (if needed) |
 |-----------|---------------|----------------------|
 | Database schema changes | backend.md | api.md |
-| React component work | frontend.md | — |
+| UI component work | frontend.md | — |
 | API endpoint changes | api.md | backend.md |
 | LLM prompt engineering | ai-ml.md | — |
 | Code review | orchestrator.md | [domain agent] |
 
-## Agent Descriptions
+**Agent Boundaries:**
 
-### backend.md
-Owns: Data models, business logic, database operations
-Boundaries: Does not modify UI components or API contracts
-
-### frontend.md
-Owns: React components, styling, client-side state
-Boundaries: Does not modify backend logic or database
-
-### api.md
-Owns: Route definitions, request/response contracts, middleware
-Boundaries: Must coordinate with backend.md for logic changes
-
-### orchestrator.md
-Owns: Cross-cutting reviews, integration verification
-Boundaries: Does not implement—only reviews and coordinates
-```
+| Agent | Owns | Does NOT Touch |
+|-------|------|----------------|
+| `backend.md` | Data models, business logic, database | UI components, API contracts |
+| `frontend.md` | UI components, styling, client-side state | Backend logic, database |
+| `api.md` | Route definitions, contracts, middleware | Must coordinate with backend for logic |
+| `orchestrator.md` | Cross-cutting reviews, integration | Does not implement—only reviews |
 
 ### 3.4 Referencing Agents from CLAUDE.md
 
@@ -226,20 +239,22 @@ Add an explicit section to `CLAUDE.md`:
 ```markdown
 ## Agents
 
-For specialized tasks, load context from `agents/`:
+For specialized tasks, load context from `.claude/agents/`:
 
 | Domain | Agent File | When to Load |
 |--------|------------|--------------|
-| Backend | `agents/backend.md` | Data models, business logic, DB |
-| Frontend | `agents/frontend.md` | React components, UI, styling |
-| API | `agents/api.md` | Endpoints, contracts, middleware |
-| AI/ML | `agents/ai-ml.md` | Prompts, RAG, model integration |
-| Review | `agents/orchestrator.md` | Code review, coordination |
+| Backend | `.claude/agents/backend.md` | Data models, business logic, DB |
+| Frontend | `.claude/agents/frontend.md` | UI components, styling |
+| API | `.claude/agents/api.md` | Endpoints, contracts, middleware |
+| AI/ML | `.claude/agents/ai-ml.md` | Prompts, RAG, model integration |
+| Review | `.claude/agents/orchestrator.md` | Code review, coordination |
+
+**Agent Format:** Each agent uses YAML frontmatter with `name`, `description`, `tools`, `model` fields.
 
 **Loading pattern:**
 1. CLAUDE.md loads automatically (always)
 2. Identify task domain from user request
-3. Load relevant `agents/*.md` for specialized context
+3. Load relevant `.claude/agents/*.md` for specialized context
 4. Execute with combined context
 ```
 
@@ -253,7 +268,7 @@ User: "Add caching to the user lookup function"
 Claude Code process:
 1. ✓ CLAUDE.md loaded (automatic)
 2. Identify domain: Backend (caching, data logic)
-3. Load: agents/backend.md
+3. Load: .claude/agents/backend.md
 4. Execute with combined context
 ```
 
@@ -265,7 +280,7 @@ User: "Add a new /users/:id endpoint that returns cached data"
 Claude Code process:
 1. ✓ CLAUDE.md loaded (automatic)
 2. Identify domains: API (new endpoint) + Backend (caching)
-3. Load: agents/api.md + agents/backend.md
+3. Load: .claude/agents/api.md + .claude/agents/backend.md
 4. Execute with combined context
 ```
 
@@ -314,7 +329,7 @@ For significant changes, invoke the orchestrator agent:
 ```
 User: "Review the changes I just made to the user service"
 
-Load: agents/orchestrator.md
+Load: .claude/agents/orchestrator.md
 
 Orchestrator checks:
 1. Cross-reference changes against CLAUDE.md directives
@@ -332,7 +347,7 @@ After each development cycle:
    - Boundaries that need clarification
    - Directives that need refinement
 
-2. **Refine agents/*.md** based on edge cases
+2. **Refine `.claude/agents/*.md`** based on edge cases
    - Add new triggers for ambiguous routing
    - Document new anti-patterns encountered
    - Clarify boundaries that caused confusion
@@ -364,10 +379,10 @@ After each development cycle:
 │         "How do we structure specialized guidance?"                 │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                      │
-│   Create agents/  ──►  Write agent  ──►  Link from CLAUDE.md        │
-│                        markdowns                                     │
+│   Create .claude/  ──►  Write agent  ──►  Link from CLAUDE.md       │
+│       agents/          markdowns                                     │
 │                                                                      │
-│   Output: agents/*.md with focus areas, triggers, boundaries        │
+│   Output: .claude/agents/*.md with YAML frontmatter + content       │
 │                                                                      │
 └─────────────────────────────────────────────────────────────────────┘
                                 │
@@ -394,17 +409,16 @@ After each development cycle:
 | Command | Purpose |
 |---------|---------|
 | "Load CLAUDE.md" | Always first — foundation context |
-| "For this backend task, also load `agents/backend.md`" | Add specialized context |
+| "For this backend task, also load `.claude/agents/backend.md`" | Add specialized context |
 | "Review against directives in CLAUDE.md" | Verification prompt |
-| "Check boundaries in `agents/_index.md`" | Routing clarification |
 
 ### File Purposes
 
 | File | Purpose | When Updated |
 |------|---------|--------------|
 | `CLAUDE.md` | Foundation context, directives, architecture | Project setup, major changes |
-| `agents/_index.md` | Agent registry, routing rules | New agents, routing confusion |
-| `agents/[name].md` | Specialized domain guidance | Domain pattern evolution |
+| `.claude/agents/[name].md` | Specialized domain guidance (with YAML frontmatter) | Domain pattern evolution |
+| `.claude/settings.json` | Team-shared tool permissions | New tool approvals |
 | `*_boilerplate.md` | Reusable templates | Cross-project learnings |
 
 ### Verification Checklist (Copy-Paste)
@@ -759,31 +773,31 @@ claude
 # 2. MAIN2 - Review terminal (parallel with main1)
 cd ~/project
 claude
-# Load: CLAUDE.md + agents/orchestrator.md
+# Load: CLAUDE.md + .claude/agents/orchestrator.md
 # Role: Code review, validation, PR prep
 
 # 3. DEV - Feature development (primary work)
 cd ~/project-dev
 claude
-# Load: CLAUDE.md + agents/backend.md (or relevant agent)
+# Load: CLAUDE.md + .claude/agents/backend.md (or relevant agent)
 # Role: Active implementation
 
 # 4. UIUX - Design implementation (parallel with dev)
 cd ~/project-uiux
 claude
-# Load: CLAUDE.md + agents/frontend.md + agents/uiux.md
+# Load: CLAUDE.md + .claude/agents/frontend.md
 # Role: Component development, styling, accessibility
 
 # 5. DOCKER - Infrastructure (as needed)
 cd ~/project-docker
 claude
-# Load: CLAUDE.md + agents/docker.md
+# Load: CLAUDE.md + .claude/agents/infrastructure.md
 # Role: Container builds, CI/CD configuration
 
 # 6. MAIN-TO-BRANCH - Merge coordination (when integrating)
 cd ~/project
 claude
-# Load: CLAUDE.md + agents/orchestrator.md
+# Load: CLAUDE.md + .claude/agents/orchestrator.md
 # Role: Merge prep, conflict resolution, staging
 ```
 
@@ -858,7 +872,7 @@ git merge origin/branch-name  # or rebase
 The **Planning → Implementing → Validating** framework transforms AI-assisted development from ad-hoc prompting into systematic engineering:
 
 1. **PLANNING**: Build foundation context with `/init` + boilerplates → `CLAUDE.md`
-2. **IMPLEMENTING**: Create specialized agents in `agents/` → domain expertise on demand
+2. **IMPLEMENTING**: Create specialized agents in `.claude/agents/` with YAML frontmatter → domain expertise on demand
 3. **VALIDATING**: Verify compliance, respect boundaries, iterate → continuous improvement
 
 The markdown-as-context paradigm ensures that both humans and AI agents operate from the same source of truth, version-controlled alongside the code it governs.
