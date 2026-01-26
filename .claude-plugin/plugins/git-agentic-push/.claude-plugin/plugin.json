@@ -1,0 +1,25 @@
+{
+  "$schema": "https://claude.ai/code/plugin.schema.json",
+  "name": "git-agentic-push",
+  "version": "1.0.0",
+  "description": "Fully autonomous git workflow - auto stages, generates commit message, and pushes without user input",
+  "author": "Thomas To",
+  "commands": [
+    {
+      "name": "git-agentic-push",
+      "description": "Autonomous push: auto stage all changes, generate commit message, and push to remote",
+      "skillFile": "skills/git-agentic-push/SKILL.md"
+    }
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(git log*)",
+      "Bash(git branch*)"
+    ]
+  }
+}
