@@ -1,4 +1,4 @@
-# /git-agentic-push - Fully Autonomous Git Push
+# /git-push-agentic - Fully Autonomous Git Push
 
 ## Purpose
 Execute a completely autonomous git workflow: stage all changes, auto-generate a meaningful commit message based on the diff, and push to remote. No user input required.
@@ -89,12 +89,12 @@ This skill does NOT ask for user input. It:
 ## Example Output
 
 ```
-/git-agentic-push
+/git-push-agentic
 
 Checking repository... ✓ Branch: main (tracking origin/main)
 Staging changes... ✓ 3 files modified, 1 file added
-Generating commit... ✓ "Add git-agentic-push plugin for autonomous commits"
+Generating commit... ✓ "Add git-push-agentic plugin for autonomous commits"
 Pushing to origin... ✓
 
-Pushed: abc1234 Add git-agentic-push plugin for autonomous commits
+Pushed: abc1234 Add git-push-agentic plugin for autonomous commits
 ```

@@ -7,13 +7,13 @@ Distributable Claude Code plugins hosted in this repository.
 | Plugin | Version | Description |
 |--------|---------|-------------|
 | [git-push](./plugins/git-push/) | 1.0.0 | Interactive git push with manual commit messages - prompts for staging and commit message before pushing |
-| [git-agentic-push](./plugins/git-agentic-push/) | 1.0.0 | Autonomous git workflow - Claude handles add, commit message generation, and push automatically |
+| [git-push-agentic](./plugins/git-push-agentic/) | 1.0.0 | Autonomous git workflow - Claude handles add, commit message generation, and push automatically |
 
 ---
 
 ## Installation
 
-Replace `<PLUGIN_NAME>` with the plugin you want to install (e.g., `git-push` or `git-agentic-push`).
+Replace `<PLUGIN_NAME>` with the plugin you want to install (e.g., `git-push` or `git-push-agentic`).
 
 ### Method 1: Git Submodule (Recommended)
 
@@ -37,7 +37,7 @@ git submodule update --remote --merge
 
 ```bash
 # Set the plugin name
-PLUGIN_NAME="git-push"  # or "git-agentic-push"
+PLUGIN_NAME="git-push"  # or "git-push-agentic"
 
 # Create plugin directories
 mkdir -p .claude/plugins/${PLUGIN_NAME}/.claude-plugin
@@ -73,9 +73,9 @@ Prompts you for:
 3. **Entering your own commit message**
 4. Pushing to remote
 
-### git-agentic-push (Autonomous)
+### git-push-agentic (Autonomous)
 ```
-/git-agentic-push
+/git-push-agentic
 ```
 Claude automatically:
 1. Stages all changes (`git add .`)
@@ -99,11 +99,11 @@ Both plugins add a `Co-Authored-By: Claude` footer to commits.
       skills/
         git-push/
           SKILL.md               # Skill workflow definition
-    git-agentic-push/
+    git-push-agentic/
       .claude-plugin/
         plugin.json              # Plugin manifest
       skills/
-        git-agentic-push/
+        git-push-agentic/
           SKILL.md               # Skill workflow definition
 ```
 

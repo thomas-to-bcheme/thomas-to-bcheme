@@ -17,8 +17,8 @@
       "category": "version-control"
     },
     {
-      "name": "git-agentic-push",
-      "source": "./plugins/git-agentic-push",
+      "name": "git-push-agentic",
+      "source": "./plugins/git-push-agentic",
       "description": "Autonomous git workflow - Claude handles add, commit message generation, and push automatically",
       "version": "1.0.0",
       "author": {
