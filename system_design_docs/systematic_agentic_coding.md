@@ -670,6 +670,189 @@ Pydantic provides runtime data validation with static type checking support—es
 
 ---
 
+## 8. Distributed Terminal Strategy — Maximizing Parallel Compute
+
+This section describes the recommended terminal setup for maximizing distributed compute across multiple Claude Code instances and git worktrees.
+
+### 8.1 The Multi-Terminal Architecture
+
+Boot up **6 specialized terminals** to parallelize work across different concerns:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    TERMINAL DISTRIBUTION STRATEGY                    │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌──────────┐  ┌──────────┐  ┌───────────────┐                      │
+│  │  main1   │  │  main2   │  │ main-to-branch│                      │
+│  │ (stable) │  │ (review) │  │   (staging)   │                      │
+│  └────┬─────┘  └────┬─────┘  └───────┬───────┘                      │
+│       │             │                │                               │
+│       └─────────────┼────────────────┘                               │
+│                     │                                                │
+│              Main Branch Worktree                                    │
+│                     │                                                │
+│       ┌─────────────┼────────────────┐                               │
+│       │             │                │                               │
+│  ┌────┴─────┐  ┌────┴─────┐  ┌───────┴───────┐                      │
+│  │   dev    │  │   uiux   │  │    docker     │                      │
+│  │(feature) │  │ (design) │  │(infrastructure)│                     │
+│  └──────────┘  └──────────┘  └───────────────┘                      │
+│                                                                      │
+│           Feature Branch Worktrees (isolated)                        │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 8.2 Terminal Roles & Responsibilities
+
+| Terminal | Worktree | Primary Role | Claude Agent |
+|----------|----------|--------------|--------------|
+| **main1** | `main` | Stable reference, quick lookups, documentation | Orchestrator |
+| **main2** | `main` | Code review, PR preparation, validation | Orchestrator |
+| **main-to-branch** | `main` | Merge coordination, conflict resolution, staging | Orchestrator |
+| **dev** | `feature/*` | Active feature development, implementation | Backend/API |
+| **uiux** | `feature/*` or `design/*` | UI/UX work, component development, styling | Frontend/UI-UX |
+| **docker** | `infra/*` or `main` | Container builds, CI/CD, infrastructure | Docker |
+
+### 8.3 Git Worktree Setup
+
+Git worktrees allow multiple working directories from a single repository, enabling true parallel development:
+
+```bash
+# From your main repository directory
+# Create worktrees for parallel development
+
+# Feature development worktree
+git worktree add ../project-dev feature/current-work
+
+# UI/UX dedicated worktree
+git worktree add ../project-uiux feature/ui-updates
+
+# Infrastructure worktree
+git worktree add ../project-docker infra/docker-setup
+
+# List all worktrees
+git worktree list
+```
+
+**Directory Structure After Setup:**
+```
+parent-directory/
+├── project/              # Main worktree (main1, main2, main-to-branch)
+├── project-dev/          # Dev worktree (dev terminal)
+├── project-uiux/         # UI/UX worktree (uiux terminal)
+└── project-docker/       # Infrastructure worktree (docker terminal)
+```
+
+### 8.4 Terminal Startup Sequence
+
+**Recommended boot order for maximum efficiency:**
+
+```bash
+# 1. MAIN1 - Stable reference (first, for context)
+cd ~/project
+claude
+# Load: CLAUDE.md (automatic)
+# Role: Quick lookups, documentation reference
+
+# 2. MAIN2 - Review terminal (parallel with main1)
+cd ~/project
+claude
+# Load: CLAUDE.md + agents/orchestrator.md
+# Role: Code review, validation, PR prep
+
+# 3. DEV - Feature development (primary work)
+cd ~/project-dev
+claude
+# Load: CLAUDE.md + agents/backend.md (or relevant agent)
+# Role: Active implementation
+
+# 4. UIUX - Design implementation (parallel with dev)
+cd ~/project-uiux
+claude
+# Load: CLAUDE.md + agents/frontend.md + agents/uiux.md
+# Role: Component development, styling, accessibility
+
+# 5. DOCKER - Infrastructure (as needed)
+cd ~/project-docker
+claude
+# Load: CLAUDE.md + agents/docker.md
+# Role: Container builds, CI/CD configuration
+
+# 6. MAIN-TO-BRANCH - Merge coordination (when integrating)
+cd ~/project
+claude
+# Load: CLAUDE.md + agents/orchestrator.md
+# Role: Merge prep, conflict resolution, staging
+```
+
+### 8.5 Parallel Workflow Patterns
+
+**Pattern A: Feature + UI Development (Most Common)**
+```
+dev terminal:     Implements API endpoints and business logic
+uiux terminal:    Builds React components consuming the API
+main2 terminal:   Reviews both streams, identifies integration issues
+```
+
+**Pattern B: Infrastructure + Feature (DevOps Focus)**
+```
+docker terminal:  Updates Dockerfile, adds new service to compose
+dev terminal:     Implements feature requiring new infrastructure
+main1 terminal:   Documents changes, updates CLAUDE.md
+```
+
+**Pattern C: Review + Hotfix (Emergency Response)**
+```
+main1 terminal:   Investigates production issue
+main2 terminal:   Prepares hotfix PR
+main-to-branch:   Coordinates cherry-pick to release branch
+```
+
+### 8.6 Communication Between Terminals
+
+Terminals operate independently but share the git repository. Coordinate via:
+
+1. **Git commits**: Small, frequent commits allow other terminals to pull changes
+2. **Branch conventions**: Clear naming (`feature/`, `design/`, `infra/`) prevents conflicts
+3. **CLAUDE.md updates**: Document decisions that affect other agents
+4. **Slack/notes**: For complex coordination, maintain a shared notes file
+
+**Sync Protocol:**
+```bash
+# In any terminal, before starting work:
+git fetch origin
+git status
+
+# After completing a logical unit:
+git add -p  # Stage intentionally
+git commit -m "descriptive message"
+
+# Other terminals can then:
+git fetch origin
+git merge origin/branch-name  # or rebase
+```
+
+### 8.7 Resource Considerations
+
+**Claude API Limits:**
+- Each terminal is an independent Claude session
+- Monitor token usage across all sessions
+- Consider staggering intensive operations
+
+**System Resources:**
+- Each worktree consumes disk space (shared .git objects)
+- Each Claude instance uses memory
+- Recommended: 16GB+ RAM for 4+ parallel sessions
+
+**Cost Optimization:**
+- Use `main1` for read-only reference (minimal token usage)
+- Batch questions in review terminals
+- Close idle terminals to free resources
+
+---
+
 ## Summary
 
 The **Planning → Implementing → Validating** framework transforms AI-assisted development from ad-hoc prompting into systematic engineering:

@@ -91,3 +91,67 @@
 **Recommended Sub-Agents**:
 * **🕵️ Code Detective**: Scans for "Magic Numbers" and "Hardcoded Strings" across the entire diff.
 * **⚖️ Dependency Manager**: Ensures that changes in one module (e.g., Backend) do not silently break contracts in another (e.g., Frontend types).
+
+---
+
+## 6. 🐳 Docker & Infrastructure Agent
+**Focus**: Containerization, Multi-Stage Builds, Development Environments, CI/CD Pipelines.
+**Triggers**: "Create Dockerfile", "Set up docker-compose", "Optimize container", "Fix build cache", "Configure CI pipeline".
+
+**CLAUDE.md Alignment**:
+1.  **Reproducibility (Data Integrity)**: Builds must be deterministic. Pin all base image versions (`python:3.12-bookworm-slim`, not `python:latest`).
+2.  **Layer Optimization (KISS)**: Each Dockerfile instruction creates a layer. Order commands from least-to-most-frequently-changed for optimal caching.
+3.  **No Secrets in Images (Fail Fast)**: Never bake credentials into images. Use build-time args for non-sensitive config; runtime env vars or secrets managers for sensitive data.
+4.  **Pattern**: **Multi-Stage Builds**. Separate build dependencies from runtime. Final image contains only production artifacts.
+
+**Recommended Sub-Agents**:
+* **🏗️ Build Optimizer**: Focuses on cache efficiency. Analyzes Dockerfile layer ordering, uses `--mount=type=cache` for package managers, minimizes final image size.
+* **🔒 Security Scanner**: Runs `docker scout` or Trivy to identify CVEs in base images and dependencies. Enforces non-root user execution.
+* **🌐 Compose Architect**: Manages multi-service development environments. Ensures volume mounts exclude build artifacts (`.venv`, `node_modules`) and handles network isolation.
+
+**Anti-Patterns**:
+* DON'T: Use `latest` tags for base images (breaks reproducibility)
+* DON'T: Copy entire project before installing dependencies (invalidates cache on any file change)
+* DON'T: Run containers as root in production
+* DON'T: Install dev dependencies in production images
+
+---
+
+## 7. 🎨 UI/UX Design Agent
+**Focus**: Visual Design Systems, User Experience Patterns, Accessibility, Design-to-Code Translation.
+**Triggers**: "Design the interface", "Improve UX flow", "Create design system", "Fix accessibility", "Implement Figma design".
+
+**CLAUDE.md Alignment**:
+1.  **Design Tokens (No Hardcoding)**: Colors, spacing, typography must use design tokens or CSS custom properties. Never hardcode `#3B82F6`—use `--color-primary-500`.
+2.  **Atomic Design (SOLID)**: Build from atoms → molecules → organisms → templates → pages. Each level has single responsibility.
+3.  **Accessibility First (Data Integrity)**: WCAG 2.1 AA compliance is mandatory. Semantic HTML, keyboard navigation, screen reader support, color contrast ratios.
+4.  **Pattern**: **Design System Architecture**. Maintain a single source of truth for visual language that syncs between Figma and code.
+
+**Recommended Sub-Agents**:
+* **🎨 Token Manager**: Owns the design token system (colors, spacing, typography scales). Generates CSS custom properties from design tool exports.
+* **♿ Accessibility Auditor**: Runs automated a11y checks (axe-core, Lighthouse). Enforces focus management, ARIA labels, and reduced-motion preferences.
+* **📐 Layout Engineer**: Specializes in responsive design, CSS Grid/Flexbox patterns, and container queries. Ensures layouts work across breakpoints.
+* **🖼️ Asset Pipeline**: Manages image optimization (WebP/AVIF conversion), icon systems (SVG sprites or icon fonts), and lazy loading strategies.
+
+**Anti-Patterns**:
+* DON'T: Use fixed pixel values for typography or spacing (breaks responsiveness)
+* DON'T: Rely solely on color to convey meaning (accessibility violation)
+* DON'T: Create one-off component styles instead of extending the design system
+* DON'T: Ignore motion preferences (`prefers-reduced-motion`)
+
+**Design-Code Bridge**:
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Design-to-Code Pipeline                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  Figma/Design Tool  ──►  Design Tokens  ──►  CSS Variables      │
+│         │                     │                    │             │
+│         ▼                     ▼                    ▼             │
+│  Component Specs         Token JSON          Tailwind Config     │
+│         │                     │                    │             │
+│         ▼                     ▼                    ▼             │
+│  Interaction Patterns   Style Dictionary    Component Library    │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
