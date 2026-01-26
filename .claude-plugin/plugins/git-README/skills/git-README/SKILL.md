@@ -1,3 +1,9 @@
+---
+name: git-README
+description: Spawn 5 subagents to analyze codebase and smart-merge README.md
+tools: Read, Glob, Grep, Task, Edit, Write
+---
+
 # /git-README - 5-Agent README Generator with Smart Merge
 
 ## Purpose

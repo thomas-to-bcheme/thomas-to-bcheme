@@ -1,3 +1,9 @@
+---
+name: git-push
+description: Smart push - check status, stage/commit if needed, then push to remote
+tools: Bash(git status*), Bash(git diff*), Bash(git add*), Bash(git commit*), Bash(git push*), Bash(git log*), Bash(git branch*)
+---
+
 # /git-push - Smart Git Push Workflow
 
 ## Purpose

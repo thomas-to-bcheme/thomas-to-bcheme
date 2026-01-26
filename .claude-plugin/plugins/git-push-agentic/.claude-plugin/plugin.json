@@ -7,7 +7,7 @@
   "commands": [
     {
       "name": "git-push-agentic",
-      "description": "Autonomous push: auto stage all changes, generate commit message, and push to remote",
+      "description": "Autonomous git workflow with auto-generated commit messages",
       "skillFile": "skills/git-push-agentic/SKILL.md"
     }
   ],

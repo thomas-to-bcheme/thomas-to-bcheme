@@ -8,6 +8,7 @@ Distributable Claude Code plugins hosted in this repository.
 |--------|---------|-------------|
 | [git-push](./plugins/git-push/) | 1.0.0 | Interactive git push with manual commit messages - prompts for staging and commit message before pushing |
 | [git-push-agentic](./plugins/git-push-agentic/) | 1.0.0 | Autonomous git workflow - Claude handles add, commit message generation, and push automatically |
+| [git-README](./plugins/git-README/) | 1.0.0 | 5-agent README generator with smart merge - 4 parallel analyzers + review coordinator |
 
 ---
 
@@ -37,7 +38,7 @@ git submodule update --remote --merge
 
 ```bash
 # Set the plugin name
-PLUGIN_NAME="git-push"  # or "git-push-agentic"
+PLUGIN_NAME="git-push"  # or "git-push-agentic" or "git-README"
 
 # Create plugin directories
 mkdir -p .claude/plugins/${PLUGIN_NAME}/.claude-plugin
@@ -82,7 +83,16 @@ Claude automatically:
 2. **Generates commit message** by analyzing the diff
 3. Commits and pushes to remote
 
-Both plugins add a `Co-Authored-By: Claude` footer to commits.
+### git-README (Documentation Generator)
+```
+/git-README
+```
+Claude launches 5 subagents:
+1. **4 Parallel Analyzers**: Project structure, features, setup, testing/CI
+2. **1 Review Coordinator**: Synthesizes findings into README draft
+3. **Smart Merge**: Preserves custom content while updating standard sections
+
+The git-push plugins add a `Co-Authored-By: Claude` footer to commits.
 
 ---
 
@@ -105,6 +115,12 @@ Both plugins add a `Co-Authored-By: Claude` footer to commits.
       skills/
         git-push-agentic/
           SKILL.md               # Skill workflow definition
+    git-README/
+      .claude-plugin/
+        plugin.json              # Plugin manifest
+      skills/
+        git-README/
+          SKILL.md               # 5-agent workflow definition
 ```
 
 ### marketplace.json Schema
