@@ -6,11 +6,14 @@ Distributable Claude Code plugins hosted in this repository.
 
 | Plugin | Version | Description |
 |--------|---------|-------------|
-| [git-push](./plugins/git-push/) | 1.0.0 | Smart git push workflow - checks status, stages/commits if needed, then pushes |
+| [git-push](./plugins/git-push/) | 1.0.0 | Interactive git push with manual commit messages - prompts for staging and commit message before pushing |
+| [git-agentic-push](./plugins/git-agentic-push/) | 1.0.0 | Autonomous git workflow - Claude handles add, commit message generation, and push automatically |
 
 ---
 
 ## Installation
+
+Replace `<PLUGIN_NAME>` with the plugin you want to install (e.g., `git-push` or `git-agentic-push`).
 
 ### Method 1: Git Submodule (Recommended)
 
@@ -22,7 +25,7 @@ cd your-project
 git submodule add https://github.com/thomas-to/thomas-to-bcheme.git .claude/vendor/thomas-to
 
 # Symlink the plugin you want
-ln -s ../vendor/thomas-to/.claude-plugin/plugins/git-push .claude/plugins/git-push
+ln -s ../vendor/thomas-to/.claude-plugin/plugins/<PLUGIN_NAME> .claude/plugins/<PLUGIN_NAME>
 ```
 
 **Update submodules:**
@@ -33,39 +36,53 @@ git submodule update --remote --merge
 ### Method 2: Direct Download (curl)
 
 ```bash
+# Set the plugin name
+PLUGIN_NAME="git-push"  # or "git-agentic-push"
+
 # Create plugin directories
-mkdir -p .claude/plugins/git-push/.claude-plugin
-mkdir -p .claude/plugins/git-push/skills/git-push
+mkdir -p .claude/plugins/${PLUGIN_NAME}/.claude-plugin
+mkdir -p .claude/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}
 
 # Download plugin manifest
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/.claude-plugin/plugin.json \
-  -o .claude/plugins/git-push/.claude-plugin/plugin.json
+curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/${PLUGIN_NAME}/.claude-plugin/plugin.json" \
+  -o ".claude/plugins/${PLUGIN_NAME}/.claude-plugin/plugin.json"
 
 # Download skill definition
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/skills/git-push/SKILL.md \
-  -o .claude/plugins/git-push/skills/git-push/SKILL.md
+curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md" \
+  -o ".claude/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md"
 ```
 
 ### Method 3: Manual Copy
 
 1. Clone this repository
-2. Copy `.claude-plugin/plugins/git-push/` to your project's `.claude/plugins/`
+2. Copy `.claude-plugin/plugins/<PLUGIN_NAME>/` to your project's `.claude/plugins/`
 
 ---
 
 ## Usage
 
-Once installed, invoke in Claude Code:
+Once installed, invoke plugins in Claude Code:
 
+### git-push (Interactive)
 ```
 /git-push
 ```
-
-The plugin handles:
-1. Checking git status and branch tracking
-2. Staging uncommitted changes (with approval)
-3. Creating commits with Co-Authored-By footer
+Prompts you for:
+1. Reviewing git status and staged changes
+2. Approving files to stage
+3. **Entering your own commit message**
 4. Pushing to remote
+
+### git-agentic-push (Autonomous)
+```
+/git-agentic-push
+```
+Claude automatically:
+1. Stages all changes (`git add .`)
+2. **Generates commit message** by analyzing the diff
+3. Commits and pushes to remote
+
+Both plugins add a `Co-Authored-By: Claude` footer to commits.
 
 ---
 
@@ -81,6 +98,12 @@ The plugin handles:
         plugin.json              # Plugin manifest
       skills/
         git-push/
+          SKILL.md               # Skill workflow definition
+    git-agentic-push/
+      .claude-plugin/
+        plugin.json              # Plugin manifest
+      skills/
+        git-agentic-push/
           SKILL.md               # Skill workflow definition
 ```
 
