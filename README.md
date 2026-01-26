@@ -22,22 +22,29 @@
 
 This repository includes a **[Claude Code Plugin Marketplace](.claude-plugin/)** with distributable plugins for AI-assisted development workflows.
 
+> **Note:** This marketplace follows the [Claude Code Plugin Marketplaces schema](https://code.claude.com/docs/en/plugin-marketplaces#host-and-distribute-marketplaces). This schema reference is used to agentically generate tools in this marketplace, ensuring compatibility with Claude Code's expected plugin structure.
+
 ### Available Plugins
 
 | Plugin | Description | Install |
 |--------|-------------|---------|
-| **[git-push](.claude-plugin/plugins/git-push/)** | Smart git push workflow - checks status, stages/commits if needed, then pushes | [Instructions](.claude-plugin/README.md#installation) |
+| **[git-push](.claude-plugin/plugins/git-push/)** | Interactive git push with manual commit messages | [Instructions](.claude-plugin/README.md#installation) |
+| **[git-push-agentic](.claude-plugin/plugins/git-push-agentic/)** | Autonomous git workflow - auto stages, commits, and pushes | [Instructions](.claude-plugin/README.md#installation) |
+| **[git-README](.claude-plugin/plugins/git-README/)** | 5-agent README generator with smart merge | [Instructions](.claude-plugin/README.md#installation) |
 
 ### Quick Install
 
 ```bash
-# One-liner install for git-push plugin
-mkdir -p .claude/plugins/git-push && \
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/plugin.json -o .claude/plugins/git-push/plugin.json && \
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/SKILL.md -o .claude/plugins/git-push/SKILL.md
+# Set plugin name: git-push, git-push-agentic, or git-README
+PLUGIN_NAME="git-push"
+
+# One-liner install
+mkdir -p .claude/plugins/${PLUGIN_NAME}/.claude-plugin .claude/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME} && \
+curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/${PLUGIN_NAME}/.claude-plugin/plugin.json" -o ".claude/plugins/${PLUGIN_NAME}/.claude-plugin/plugin.json" && \
+curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md" -o ".claude/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md"
 ```
 
-Then use in Claude Code: `/git-push`
+Then use in Claude Code: `/git-push`, `/git-push-agentic`, or `/git-README`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -176,31 +183,6 @@ flowchart BT
 | **Vercel** (Edge Hosting & Deployment) | **TypeScript** (Type Safety) | **AWS DynamoDB** (NoSQL / Roadmap) | **Hugging Face** (Model Inference) |
 | **GitHub Actions** (CI/CD & CRON Workers) | **Next.js** (Server Components) | **Node.js** (ETL Scripting) | **Open API** (Coincap) |
 | **Markdown** (Documentation as Code) | **Tailwind CSS** (Styling) | **OpenSSH** (Secure Auth) | **RESTful API** (public-apis) |
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
----
-
-## 🔌 Claude Code Plugin Marketplace
-
-This repository includes a **[Claude Code Plugin Marketplace](.claude-plugin/)** with distributable plugins for AI-assisted development workflows.
-
-### Available Plugins
-
-| Plugin | Description | Install |
-|--------|-------------|---------|
-| **[git-push](.claude-plugin/plugins/git-push/)** | Smart git push workflow - checks status, stages/commits if needed, then pushes | [Instructions](.claude-plugin/README.md#installation) |
-
-### Quick Install
-
-```bash
-# One-liner install for git-push plugin
-mkdir -p .claude/plugins/git-push && \
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/plugin.json -o .claude/plugins/git-push/plugin.json && \
-curl -sL https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/.claude-plugin/plugins/git-push/SKILL.md -o .claude/plugins/git-push/SKILL.md
-```
-
-Then use in Claude Code: `/git-push`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

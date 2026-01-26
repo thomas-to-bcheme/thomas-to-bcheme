@@ -150,23 +150,17 @@ The git-push plugins add a `Co-Authored-By: Claude` footer to commits.
 
 ```json
 {
-  "$schema": "https://claude.ai/code/plugin.schema.json",
   "name": "plugin-name",
-  "version": "1.0.0",
   "description": "What this plugin does",
-  "author": "Author Name",
-  "commands": [
-    {
-      "name": "command-name",
-      "description": "Command description",
-      "skillFile": "skills/command-name/SKILL.md"
-    }
-  ],
-  "permissions": {
-    "allow": ["Bash(git *)"]
+  "version": "1.0.0",
+  "author": {
+    "name": "Author Name",
+    "email": "author@example.com"
   }
 }
 ```
+
+**Note:** Only include `name`, `description`, `version`, and `author` (as object). Do NOT include `$schema`, `commands`, or `permissions` - these are not valid fields. Skills are auto-discovered from `skills/*/SKILL.md` files.
 
 ---
 

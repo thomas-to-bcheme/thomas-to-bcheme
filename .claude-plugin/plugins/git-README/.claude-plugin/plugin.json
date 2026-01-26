@@ -1,24 +1,9 @@
 {
-  "$schema": "https://claude.ai/code/plugin.schema.json",
   "name": "git-README",
-  "version": "1.0.0",
   "description": "5-agent README generator with smart merge - 4 parallel analyzers + review coordinator",
-  "author": "Thomas To",
-  "commands": [
-    {
-      "name": "git-README",
-      "description": "Generate comprehensive README using multi-agent analysis",
-      "skillFile": "skills/git-README/SKILL.md"
-    }
-  ],
-  "permissions": {
-    "allow": [
-      "Read",
-      "Glob",
-      "Grep",
-      "Task",
-      "Edit",
-      "Write"
-    ]
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
   }
 }
