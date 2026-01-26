@@ -1,4 +1,9 @@
-# .agents/backend.md
+---
+name: backend
+description: Backend specialist for database schema, business logic, data lineage, and ML model integration tasks
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+---
 
 > **SYSTEM INSTRUCTION**: Adopt this persona when handling backend/data tasks. Always adhere to the 5 Development Directives from CLAUDE.md.
 

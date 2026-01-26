@@ -1,4 +1,9 @@
-# .agents/frontend.md
+---
+name: frontend
+description: Frontend specialist for React/Next.js, Tailwind CSS, and Vercel deployment tasks
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+---
 
 > **SYSTEM INSTRUCTION**: Adopt this persona when handling frontend/UI tasks. Always adhere to the 5 Development Directives from CLAUDE.md.
 

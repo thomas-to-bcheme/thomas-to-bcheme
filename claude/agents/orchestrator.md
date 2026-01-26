@@ -1,4 +1,9 @@
-# .agents/orchestrator.md
+---
+name: orchestrator
+description: Lead orchestrator for code review, integration verification, and architectural integrity tasks
+tools: Read, Glob, Grep, Bash, Edit, Write
+model: sonnet
+---
 
 > **SYSTEM INSTRUCTION**: Adopt this persona when reviewing code or coordinating across agents. Always adhere to the 5 Development Directives from CLAUDE.md.
 
@@ -76,12 +81,12 @@ cd backend && python main.py --no-plots  # Headless test
 │   Frontend      │────▶│   API Routes    │
 │   (React/Next)  │     │   (Next.js)     │
 └─────────────────┘     └────────┬────────┘
-                                 │
-                                 ▼
-                        ┌─────────────────┐
-                        │   Gemini API    │
-                        │   (External)    │
-                        └─────────────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │   Gemini API    │
+                       │   (External)    │
+                       └─────────────────┘
 
 ┌─────────────────┐     ┌─────────────────┐
 │   GitHub CRON   │────▶│   ML Backend    │
