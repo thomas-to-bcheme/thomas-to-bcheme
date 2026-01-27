@@ -1,0 +1,136 @@
+name: LinkedIn Post Scheduler
+
+on:
+  schedule:
+    # Every Tuesday at 10:00 AM PST (18:00 UTC)
+    - cron: '0 18 * * 2'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no actual posting)'
+        required: false
+        default: 'false'
+        type: boolean
+      filename:
+        description: 'Specific post filename (optional, without .md)'
+        required: false
+        type: string
+
+env:
+  LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+  LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+
+jobs:
+  post-to-linkedin:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start server in background
+        run: |
+          npm start &
+          echo "Waiting for server to start..."
+          sleep 15
+
+      - name: Get oldest validated post
+        id: get-post
+        run: |
+          # Get the oldest post by date (first to be published)
+          OLDEST_POST=$(ls -1 genAI/linkedin-posts/validated/*.md 2>/dev/null | sort | head -1 | xargs -r basename | sed 's/.md$//')
+          if [ -z "$OLDEST_POST" ]; then
+            echo "No validated posts available"
+            echo "has_post=false" >> $GITHUB_OUTPUT
+          else
+            echo "Found post: $OLDEST_POST"
+            echo "filename=$OLDEST_POST" >> $GITHUB_OUTPUT
+            echo "has_post=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip if no posts
+        if: steps.get-post.outputs.has_post == 'false'
+        run: |
+          echo "No validated posts to publish. Skipping."
+          exit 0
+
+      - name: Set dry run mode
+        if: steps.get-post.outputs.has_post == 'true'
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            echo "LINKEDIN_DRY_RUN=true" >> $GITHUB_ENV
+          else
+            echo "LINKEDIN_DRY_RUN=false" >> $GITHUB_ENV
+          fi
+
+      - name: Post to LinkedIn
+        if: steps.get-post.outputs.has_post == 'true'
+        id: post
+        env:
+          POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
+        run: |
+          echo "Posting: $POST_FILENAME"
+          echo "Dry run: $LINKEDIN_DRY_RUN"
+
+          RESPONSE=$(curl -s -X POST http://localhost:3000/api/linkedin/post \
+            -H 'Content-Type: application/json' \
+            -d "{\"source\":\"file\",\"filename\":\"$POST_FILENAME\",\"visibility\":\"PUBLIC\"}")
+
+          echo "Response: $RESPONSE"
+          echo "response=$RESPONSE" >> $GITHUB_OUTPUT
+
+          # Check if successful
+          if echo "$RESPONSE" | grep -q '"success":true'; then
+            echo "Successfully posted: $POST_FILENAME"
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "Failed to post to LinkedIn"
+            echo "$RESPONSE"
+            echo "success=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: Archive posted content
+        if: steps.get-post.outputs.has_post == 'true' && steps.post.outputs.success == 'true' && github.event.inputs.dry_run != 'true'
+        env:
+          POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
+        run: |
+          echo "Archiving: $POST_FILENAME"
+
+          # Create posted directory if not exists
+          mkdir -p genAI/linkedin-posts/posted
+
+          # Move to posted archive
+          mv "genAI/linkedin-posts/validated/${POST_FILENAME}.md" genAI/linkedin-posts/posted/
+
+          # Commit the change
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add genAI/linkedin-posts/
+          git commit -m "Archive posted LinkedIn content: ${POST_FILENAME}"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## LinkedIn Post Scheduler Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.get-post.outputs.has_post }}" = "true" ]; then
+            echo "- **Post:** ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Dry Run:** ${{ github.event.inputs.dry_run || 'false' }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Success:** ${{ steps.post.outputs.success || 'N/A' }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Status:** No validated posts available" >> $GITHUB_STEP_SUMMARY
+          fi

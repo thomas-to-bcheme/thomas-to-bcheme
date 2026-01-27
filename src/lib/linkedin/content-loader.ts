@@ -1,8 +1,13 @@
 /**
  * LinkedIn Content Loader
  *
- * Parses markdown files with YAML frontmatter from genAI/linkedin-posts/
+ * Parses markdown files with YAML frontmatter from genAI/linkedin-posts/validated/
  * Frontmatter schema: date, topic, target_audience
+ *
+ * Directory structure:
+ * - genAI/linkedin-posts/drafts/    - AI-generated posts pending review
+ * - genAI/linkedin-posts/validated/ - Human-approved posts ready to publish
+ * - genAI/linkedin-posts/posted/    - Archive of published posts
  */
 import fs from 'fs/promises';
 import path from 'path';
@@ -20,7 +25,7 @@ export interface LinkedInPostContent {
   filename: string;
 }
 
-const POSTS_DIR = path.join(process.cwd(), 'genAI', 'linkedin-posts');
+const POSTS_DIR = path.join(process.cwd(), 'genAI', 'linkedin-posts', 'validated');
 
 /**
  * Load a single post by filename (without .md extension)
