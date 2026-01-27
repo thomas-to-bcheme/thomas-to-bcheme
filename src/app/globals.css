@@ -25,6 +25,22 @@
  * - text-lg+ : Headings and titles
  *
  * Note: text-[10px] deprecated - use text-xs or .text-micro instead
+ *
+ * TEXT COLORS:
+ * - Primary: text-zinc-900 dark:text-white (headings, main content)
+ * - Secondary: text-zinc-600 dark:text-zinc-300 (body descriptions)
+ * - Muted: text-zinc-500 dark:text-zinc-400 (labels, metadata, hints)
+ * - Disabled: text-zinc-400 dark:text-zinc-500 (placeholders)
+ * - Brand: text-blue-600 dark:text-blue-400 (links, actions)
+ * - Success: text-emerald-600 dark:text-emerald-400
+ * - Error: text-rose-600 dark:text-rose-400
+ *
+ * FONT WEIGHTS:
+ * - h1-h2: font-extrabold or font-black
+ * - h3-h5: font-bold
+ * - h6: font-semibold
+ * - Body: font-normal
+ * - Labels: font-bold (with .text-micro)
  */
 
 /* --- ROOT VARIABLES --- */
