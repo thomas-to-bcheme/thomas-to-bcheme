@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Mail, ArrowRight, Globe, Linkedin, Github, GitBranch } from 'lucide-react';
 
 // --- LOCAL COMPONENTS ---
@@ -12,15 +12,32 @@ import { BentoGrid, BentoCard } from '@/components/BentoGrid';
 import AboutMeSection from '@/components/AboutMeSection';
 import Roadmap from '@/components/Roadmap';
 import Connect from '@/components/Connect';
+import SkipLink from '@/components/SkipLink';
+import { useActiveSection } from '@/hooks/useActiveSection';
+
+// Navigation links with their corresponding section IDs (U2)
+const NAV_LINKS = [
+  { label: 'Live Agent', href: '#agent', sectionId: 'agent' },
+  { label: 'About Me', href: '#about', sectionId: 'about-me' },
+  { label: 'Solutions', href: '#proj-1', sectionId: 'proj-1' },
+  { label: 'Lifecycle', href: '#roadmap', sectionId: 'roadmap' },
+] as const;
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
+
+  // Active section tracking (U2)
+  const sectionIds = useMemo(() => NAV_LINKS.map(link => link.sectionId), []);
+  const activeSection = useActiveSection(sectionIds);
+
   if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">
-      
+      {/* Skip Link for keyboard navigation (A1) */}
+      <SkipLink />
+
 {/* --- STICKY NAV --- */}
 			<header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-black/80 border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300 supports-[backdrop-filter]:bg-white/60">
 				<div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
@@ -35,22 +52,26 @@ export default function Home() {
 					>
 						THOMAS<span className="text-blue-600 dark:text-blue-500 group-hover:text-blue-700 transition-colors duration-300">TO</span>
 					</div>
-					{/* UPDATED NAV: Added Roadmap */}
+					{/* UPDATED NAV: Active section highlighting (U2) */}
           <nav className="hidden sm:flex gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-            {[
-              { label: 'Live Agent', href: '#agent' },
-              { label: 'About Me', href: '#about' },
-              { label: 'Solutions', href: '#proj-1' },
-              { label: 'Lifecycle', href: '#roadmap' },
-            ].map((link) => (
-              <a 
-                key={link.href}
-                href={link.href} 
-                className="hover:text-blue-600 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm"
-              >
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = activeSection === link.sectionId;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`relative hover:text-blue-600 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm ${
+                    isActive ? 'text-blue-600 dark:text-blue-400' : ''
+                  }`}
+                >
+                  {link.label}
+                  {/* Active indicator underline */}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full" />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 					
 					<a 
@@ -65,7 +86,7 @@ export default function Home() {
 					</a>
 				</div>
 			</header>
-      <main className="max-w-7xl mx-auto px-4 sm:px-6">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6" role="main">
 
         {/* --- ABOUT ME SECTION --- */}
         <div id="about-me" className="mt-0 scroll-mt-24">

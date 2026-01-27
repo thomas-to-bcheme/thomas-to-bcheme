@@ -6,15 +6,26 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
   /* Custom Animation Curves for "Engineering" feel */
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
-  
+
   /* Tech Stack Colors */
   --color-brand-blue: #2563eb;
   --color-brand-emerald: #10b981;
 }
+
+/*
+ * TYPOGRAPHY SCALE (V1)
+ * Standardized micro-typography system:
+ * - text-[10px]: Badges, status indicators, system metadata
+ * - text-xs (12px): Section subtitles, secondary labels
+ * - text-sm (14px): Body text, descriptions
+ * - text-base+: Headings and titles
+ *
+ * Avoid: text-[11px] - use text-xs instead for consistency
+ */
 
 /* --- ROOT VARIABLES --- */
 :root {

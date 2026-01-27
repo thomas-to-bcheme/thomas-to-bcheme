@@ -231,3 +231,5 @@ GitHub (Current)
 | `.github/workflows/` | ETL automation (future) |
 | `.claude/agents/backend.md` | Backend agent guidance |
 | `system_design_docs/architecture.md` | Platform KPIs |
+| `system_design_docs/ml-models.md` | ML model data pipeline |
+| `system_design_docs/frontend.md` | Frontend data consumption |

@@ -38,6 +38,9 @@
 - **Development Roadmap** - Visual timeline of upcoming features
 - **ML Salary Prediction** - Random Forest + TensorFlow models for job market analysis
 - **Claude Code Plugins** - Distributable AI workflow automation tools
+- **Dark Mode Support** - Automatic theme switching with system preferences
+- **Mobile Responsive** - Optimized UI with collapsible components and touch-friendly navigation
+- **System Status Ticker** - Real-time system health monitoring display
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -165,7 +168,9 @@ npm start
 
 ```bash
 cd backend
-python main.py
+python main.py                      # Train with sample data
+python main.py --data-path FILE.csv # Train with custom dataset
+python main.py --no-plots           # Skip visualization (headless)
 ```
 
 ### Available Scripts
@@ -190,11 +195,16 @@ thomas-to-bcheme/
 │   │   ├── api/chat/           # Gemini streaming API endpoint
 │   │   ├── layout.tsx          # Root layout
 │   │   └── page.tsx            # Home page
-│   ├── components/             # React components
-│   │   ├── HeroSection.tsx     # Landing hero
-│   │   ├── AiGenerator.tsx     # Chat interface
-│   │   ├── ProjectDeepDive.tsx # Project showcase
-│   │   └── ...                 # Additional components
+│   ├── components/             # React components (17 total)
+│   │   ├── HeroSection.tsx     # Landing hero with badges
+│   │   ├── AiGenerator.tsx     # Streaming chat interface
+│   │   ├── ProjectDeepDive.tsx # Project showcase cards
+│   │   ├── ArchitectureDiagram.tsx # System architecture viz
+│   │   ├── ROICalculation.tsx  # Interactive ROI calculator
+│   │   ├── Roadmap.tsx         # Development timeline
+│   │   ├── BentoGrid.tsx       # Responsive layout grid
+│   │   ├── SystemStatusTicker.tsx # Real-time status
+│   │   └── ...                 # Badge, TrustBadge, Connect, etc.
 │   ├── data/
 │   │   └── AiSystemInformation.tsx  # RAG context/system prompt
 │   ├── lib/                    # Utility functions
@@ -212,7 +222,15 @@ thomas-to-bcheme/
 │   │   ├── git-push-agentic/
 │   │   └── git-README/
 │   └── README.md
-├── system_design_docs/         # Architecture documentation
+├── system_design_docs/         # Architecture documentation (8 docs)
+│   ├── README.md               # Documentation index
+│   ├── architecture.md         # Platform KPIs & constraints
+│   ├── api.md                  # Chat API specification
+│   ├── database.md             # GitHub-as-warehouse pattern
+│   ├── deployment.md           # CI/CD pipeline
+│   ├── frontend.md             # React component architecture
+│   ├── ml-models.md            # ML/DL implementation details
+│   └── roadmap.md              # Feature roadmap
 ├── public/                     # Static assets
 ├── CLAUDE.md                   # AI assistant instructions
 ├── package.json
@@ -408,7 +426,7 @@ For Claude Code Plugins, see the [Plugin Marketplace Contributing Guide](my_mark
 
 ## License
 
-This project is provided as an open source learning resource.
+MIT License - This project is provided as an open source learning resource.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

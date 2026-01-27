@@ -1,26 +1,29 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Github, 
-  FileText, 
-  Cpu, 
-  ShieldCheck, 
-  TrendingUp, 
+import {
+  Github,
+  FileText,
+  Cpu,
+  ShieldCheck,
+  TrendingUp,
   TrendingDown,
   Dna,
 } from 'lucide-react';
 
 // --- IMPORTS ---
-import Badge from '@/components/Badge'; 
+import Badge from '@/components/Badge';
 import SystemStatusTicker from '@/components/SystemStatusTicker';
-import AiGenerator from '@/components/AiGenerator'; 
-import TrustBadge from '@/components/TrustBadge'; 
+import AiGenerator from '@/components/AiGenerator';
+import TrustBadge from '@/components/TrustBadge';
+import Button from '@/components/ui/Button';
 
 const HeroSection = () => {
+  // Mobile chat collapsed state (U1)
+  const [isMobileChatCollapsed, setIsMobileChatCollapsed] = useState(true);
   return (
-    <section className="mb-8 pt-4">
+    <section className="mb-16 pt-4">
       {/* SYSTEM TICKER: Real-time status bar */}
       <SystemStatusTicker />
 
@@ -76,41 +79,39 @@ const HeroSection = () => {
               ))}
             </div>
 
-            {/* CTA BUTTONS */}
+            {/* CTA BUTTONS (V3: Using Button component) */}
             <div className="flex flex-wrap gap-4 mt-auto">
-              <a 
-                href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-95"
+              <Button
+                variant="primary"
+                href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io"
+                external
               >
-                 <Github size={20} /> View Source
-              </a>
-              <a 
-                href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io/blob/main/src/docs/Thomas_To_Resume.pdf?raw=true" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg font-medium transition-all border border-zinc-200 dark:border-zinc-700 hover:scale-[1.02] active:scale-95"
+                <Github size={20} /> View Source
+              </Button>
+              <Button
+                variant="secondary"
+                href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io/blob/main/src/docs/Thomas_To_Resume.pdf?raw=true"
+                external
               >
-                 <FileText size={20} /> Download Resume
-              </a>
+                <FileText size={20} /> Download Resume
+              </Button>
             </div>
         </motion.div>
 
-        {/* --- RIGHT COL: Live Agent Card --- */}
-        <motion.div 
+        {/* --- RIGHT COL: Live Agent Card (Desktop) --- */}
+        <motion.div
           id="agent"
           className="relative hidden lg:block h-full min-h-[400px] scroll-mt-32"
-          initial={{ opacity: 0, scale: 0.98 }} 
-          animate={{ opacity: 1, scale: 1 }} 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
            {/* Glow Effect */}
            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20 animate-pulse"></div>
-           
+
            {/* Card Container */}
            <div className="relative bg-white dark:bg-black rounded-xl border border-zinc-200 dark:border-zinc-800 h-full p-4 shadow-2xl flex flex-col">
-              
+
               {/* Agent Header */}
               <div className="flex justify-between items-start mb-4 border-b border-zinc-100 dark:border-zinc-800 pb-3">
                 <div className="flex gap-3">
@@ -121,11 +122,11 @@ const HeroSection = () => {
                     <span className="font-bold text-sm text-zinc-900 dark:text-zinc-100">
                       Resume RAG Agent
                     </span>
-                    <div className="text-[11px] leading-tight text-zinc-500 dark:text-zinc-400 mt-1">
+                    <div className="text-xs leading-tight text-zinc-500 dark:text-zinc-400 mt-1">
                       <span>Limited to free license plans. </span>
-                      <a 
-                        href="https://github.com/thomas-to-bcheme" 
-                        target="_blank" 
+                      <a
+                        href="https://github.com/thomas-to-bcheme"
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 dark:text-blue-400 hover:underline decoration-blue-600/30 transition-all font-medium inline-flex items-center gap-1"
                       >
@@ -140,10 +141,50 @@ const HeroSection = () => {
               {/* Chat Interface Area */}
               <div className="flex-1 overflow-hidden relative rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
                   <div className="absolute inset-0 overflow-auto custom-scrollbar">
-                     <AiGenerator /> 
+                     <AiGenerator />
                   </div>
               </div>
            </div>
+        </motion.div>
+
+        {/* --- MOBILE: Collapsible AI Chat Card (U1) --- */}
+        <motion.div
+          className="lg:hidden mt-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="relative">
+            {/* Glow Effect (only when expanded) */}
+            {!isMobileChatCollapsed && (
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20 animate-pulse" />
+            )}
+
+            <div className={`relative bg-white dark:bg-black rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-lg overflow-hidden transition-all duration-300 ${
+              isMobileChatCollapsed ? '' : 'min-h-[400px]'
+            }`}>
+              {/* Mobile Agent Header (always visible) */}
+              {!isMobileChatCollapsed && (
+                <div className="flex justify-between items-center p-4 border-b border-zinc-100 dark:border-zinc-800">
+                  <div className="flex items-center gap-2">
+                    <Cpu size={18} className="text-blue-600 dark:text-blue-400" />
+                    <span className="font-bold text-sm text-zinc-900 dark:text-zinc-100">
+                      Resume RAG Agent
+                    </span>
+                  </div>
+                  <Badge color="green">Online</Badge>
+                </div>
+              )}
+
+              {/* Chat Content */}
+              <div className={`${isMobileChatCollapsed ? '' : 'h-[350px] overflow-auto custom-scrollbar'}`}>
+                <AiGenerator
+                  collapsed={isMobileChatCollapsed}
+                  onToggleCollapse={() => setIsMobileChatCollapsed(!isMobileChatCollapsed)}
+                />
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

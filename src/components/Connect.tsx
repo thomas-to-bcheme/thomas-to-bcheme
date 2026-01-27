@@ -2,6 +2,7 @@ import React from 'react';
 import { Mail, ArrowRight, Linkedin, Zap } from 'lucide-react';
 import Badge from '@/components/Badge';
 import { BentoGrid, BentoCard } from '@/components/BentoGrid';
+import Button from '@/components/ui/Button';
 
 // --- Main Component ---
 
@@ -50,30 +51,31 @@ const Connect: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Side: Actions */}
+            {/* Right Side: Actions (V3: Using Button component) */}
             <div className="flex flex-col gap-3 w-full md:w-auto shrink-0">
-              <a 
-                href="mailto:thomas.to.bcheme@gmail.com" 
-                className="flex items-center justify-center gap-3 w-full md:w-48 px-4 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 text-white rounded-lg font-bold transition-all shadow-xl shadow-blue-200/50 dark:shadow-none group transform hover:scale-[1.02] active:scale-95"
+              <Button
+                variant="primary"
+                href="mailto:thomas.to.bcheme@gmail.com"
+                className="w-full md:w-48 shadow-xl shadow-blue-200/50 dark:shadow-none group"
               >
                 <Mail size={18} />
                 <span>Contact</span>
-                <ArrowRight 
-                  size={16} 
-                  className="animate-pulse opacity-75 group-hover:translate-x-1 transition-transform" 
+                <ArrowRight
+                  size={16}
+                  className="animate-pulse opacity-75 group-hover:translate-x-1 transition-transform"
                 />
-              </a>
-              
-              <a 
-                href="https://www.linkedin.com/in/thomas-to-ucdavis/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex items-center justify-center gap-3 w-full md:w-48 px-4 py-3 bg-white hover:bg-blue-50 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50 rounded-lg font-bold transition-all hover:border-blue-300"
+              </Button>
+
+              <Button
+                variant="secondary"
+                href="https://www.linkedin.com/in/thomas-to-ucdavis/"
+                external
+                className="w-full md:w-48 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-900/50 hover:border-blue-300"
               >
                 <Linkedin size={18} />
                 <span>View Profile</span>
-              </a>
-              
+              </Button>
+
               <div className="text-center">
                 <p className="text-[10px] text-zinc-400 flex items-center justify-center gap-1">
                   <Zap size={10} className="text-yellow-500" />

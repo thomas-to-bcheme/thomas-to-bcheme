@@ -200,3 +200,5 @@ Following `.claude/agents/api.md` guidelines:
 | `src/data/AiSystemInformation.tsx` | RAG context/system prompt |
 | `src/components/AiGenerator.tsx` | Client-side chat interface |
 | `.claude/agents/api.md` | Agent guidance for API work |
+| `system_design_docs/frontend.md` | Frontend component consuming this API |
+| `system_design_docs/database.md` | Data architecture patterns |

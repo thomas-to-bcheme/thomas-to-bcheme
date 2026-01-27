@@ -6,7 +6,7 @@ import Badge from '@/components/Badge';
 
 const AboutMeSection: React.FC = () => {
   return (
-    <section id="about" className="mb-4 scroll-mt-24">
+    <section id="about" className="mb-16 scroll-mt-24">
       <div className="grid md:grid-cols-3 gap-6">
         
         {/* LEFT COLUMN: Profile & Badges */}

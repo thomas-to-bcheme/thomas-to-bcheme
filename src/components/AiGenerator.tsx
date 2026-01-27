@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, User, Bot, Loader2 } from 'lucide-react';
+import { Send, Sparkles, User, Bot, Loader2, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 type Message = {
@@ -9,19 +9,30 @@ type Message = {
   content: string;
 };
 
+interface AiGeneratorProps {
+  /** When true, shows a compact collapsed view (mobile-friendly) */
+  collapsed?: boolean;
+  /** Callback when collapsed state should change */
+  onToggleCollapse?: () => void;
+}
+
 const SUGGESTED_QUESTIONS = [
   "Ask me about this project",
   "What is your tech stack?",
   "How does the RAG Agent work?"
 ];
 
-export default function AiGenerator() {
+export default function AiGenerator({ collapsed = false, onToggleCollapse }: AiGeneratorProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [loadingDuration, setLoadingDuration] = useState(0);
+  const [hasError, setHasError] = useState(false);
+
   // Ref for the container to handle scrolling locally
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  // Store last prompt for retry functionality
+  const lastPromptRef = useRef<string>('');
 
   // Improved Scroll Logic: Only scroll the chat container, not the window
   const scrollToBottom = () => {
@@ -35,11 +46,29 @@ export default function AiGenerator() {
     scrollToBottom();
   }, [messages, isLoading]);
 
+  // Track loading duration for timeout message (U3)
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isLoading) {
+      setLoadingDuration(0);
+      interval = setInterval(() => {
+        setLoadingDuration((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setLoadingDuration(0);
+    }
+    return () => clearInterval(interval);
+  }, [isLoading]);
+
   async function handleSubmit(e?: React.FormEvent, overridePrompt?: string) {
     e?.preventDefault();
     const promptText = overridePrompt || input;
-    
+
     if (!promptText.trim() || isLoading) return;
+
+    // Store for retry (U3)
+    lastPromptRef.current = promptText;
+    setHasError(false);
 
     // 1. Add User Message
     const newHistory: Message[] = [...messages, { role: 'user', content: promptText }];
@@ -78,17 +107,65 @@ export default function AiGenerator() {
       }
     } catch (error) {
       console.error(error);
-      setMessages((prev) => [...prev, { role: 'assistant', content: 'Error: Could not fetch response.' }]);
+      setHasError(true);
+      setMessages((prev) => [...prev, { role: 'assistant', content: 'Error: Could not fetch response. Please check your connection and try again.' }]);
     } finally {
       setIsLoading(false);
     }
+  }
+
+  // Retry handler (U3)
+  function handleRetry() {
+    if (lastPromptRef.current && !isLoading) {
+      // Remove the error message before retrying
+      setMessages((prev) => prev.slice(0, -1));
+      handleSubmit(undefined, lastPromptRef.current);
+    }
+  }
+
+  // --- COLLAPSED MOBILE VIEW ---
+  if (collapsed) {
+    return (
+      <div className="p-4 text-sm">
+        <button
+          onClick={onToggleCollapse}
+          className="w-full flex items-center justify-between p-4 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
+              <Sparkles className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div className="text-left">
+              <h3 className="font-semibold text-zinc-900 dark:text-white text-sm">
+                Chat with AI Agent
+              </h3>
+              <p className="text-zinc-500 dark:text-zinc-400 text-xs">
+                Ask about resume, tech stack, or architecture
+              </p>
+            </div>
+          </div>
+          <ChevronDown className="w-5 h-5 text-zinc-400" />
+        </button>
+      </div>
+    );
   }
 
   return (
     // Height is set to min-h-full to ensure it fills the HeroSection container
     // We use relative positioning to contain the sticky footer
     <div ref={chatContainerRef} className="flex flex-col min-h-full relative text-sm">
-      
+
+      {/* --- MOBILE COLLAPSE BUTTON (when expanded) --- */}
+      {onToggleCollapse && (
+        <button
+          onClick={onToggleCollapse}
+          className="lg:hidden flex items-center justify-center gap-2 p-2 text-xs text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 border-b border-zinc-200 dark:border-zinc-800"
+        >
+          <ChevronUp className="w-4 h-4" />
+          Collapse chat
+        </button>
+      )}
+
       {/* --- EMPTY STATE / STARTER BUTTONS --- */}
       {messages.length === 0 && (
         <div className="flex-1 flex flex-col items-center justify-center p-8 space-y-6 text-center opacity-90">
@@ -161,15 +238,30 @@ export default function AiGenerator() {
           </div>
         ))}
 
-        {/* --- LOADING INDICATOR --- */}
+        {/* --- LOADING INDICATOR with timeout message (U3) --- */}
         {isLoading && (
           <div className="flex gap-3 justify-start animate-pulse motion-reduce:animate-none">
             <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center shrink-0">
                <Loader2 size={14} className="animate-spin motion-reduce:animate-none text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
             </div>
             <div className="bg-white dark:bg-zinc-800 px-4 py-2 rounded-2xl rounded-bl-none border border-zinc-100 dark:border-zinc-700">
-              <span className="text-xs text-zinc-400" role="status" aria-live="polite">Thinking...</span>
+              <span className="text-xs text-zinc-400" role="status" aria-live="polite">
+                Thinking...{loadingDuration >= 10 && ' (taking longer than usual)'}
+              </span>
             </div>
+          </div>
+        )}
+
+        {/* --- RETRY BUTTON after error (U3) --- */}
+        {hasError && !isLoading && lastPromptRef.current && (
+          <div className="flex justify-center">
+            <button
+              onClick={handleRetry}
+              className="flex items-center gap-2 px-3 py-1.5 text-xs bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors border border-zinc-200 dark:border-zinc-700"
+            >
+              <RefreshCw size={14} />
+              Try again
+            </button>
           </div>
         )}
       </div>

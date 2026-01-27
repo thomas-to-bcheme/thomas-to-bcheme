@@ -420,9 +420,14 @@ const KPICard = ({ icon, title, value, prefix, suffix, isCurrency, color, bottom
                 <div className="p-1.5 bg-zinc-50 dark:bg-zinc-800 rounded-lg">{icon}</div>
             </div>
             
-            <div className={`text-5xl lg:text-6xl font-black tracking-tighter leading-none ${color} mb-1`}>
+            {/* A3: Reduced duration for snappy reactive updates */}
+            <div
+              className={`text-5xl lg:text-6xl font-black tracking-tighter leading-none ${color} mb-1`}
+              aria-live="polite"
+              aria-atomic="true"
+            >
                 {prefix}
-                <CountUp end={value} separator="," duration={0.8} decimals={isCurrency ? 0 : 1} />
+                <CountUp end={value} separator="," duration={0.3} decimals={isCurrency ? 0 : 1} />
                 {suffix && <span className="text-2xl text-zinc-400 ml-1 font-bold align-baseline">{suffix}</span>}
             </div>
         </div>

@@ -42,7 +42,7 @@ const TrustBadge = ({ icon: Icon, label, variant = 'compliance', className }: Tr
       className
     )}>
       <Icon size={14} className={styles.icon} strokeWidth={2.5} />
-      <span className="text-[11px] font-bold uppercase tracking-wide opacity-90">
+      <span className="text-xs font-bold uppercase tracking-wide opacity-90">
         {label}
       </span>
     </div>

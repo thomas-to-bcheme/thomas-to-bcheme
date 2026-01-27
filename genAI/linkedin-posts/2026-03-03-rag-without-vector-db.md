@@ -4,7 +4,7 @@ topic: AI Agent with GitHub MCP
 target_audience: AI/ML Engineers
 ---
 
-Hello World, I built an AI Agent for my portfolio and am now exploring GitHub MCP to replace embedded RAG with contemporary context retrieval methods.
+Hello World, I built an AI Agent for my portfolio and am now exploring GitHub MCP for contemporary context retrieval methods.
 
 My portfolio includes a conversational AI agent powered by Google Gemini. The current implementation uses a "file-as-context" pattern where a TypeScript file gets injected directly into prompts. While this eliminated vector database complexity, it requires manual updates and doesn't scale as the monorepo grows.
 

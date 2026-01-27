@@ -258,3 +258,5 @@ git push origin main
 | `.env.local` | Local environment variables |
 | `.claude/agents/frontend.md` | Frontend/Vercel agent guidance |
 | `system_design_docs/architecture.md` | Platform KPIs |
+| `system_design_docs/frontend.md` | Frontend component architecture |
+| `system_design_docs/ml-models.md` | ML backend deployment (future) |
