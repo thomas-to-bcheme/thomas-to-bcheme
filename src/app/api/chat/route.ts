@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, GoogleGenerativeAIFetchError } from "@google/generative-ai";
 import { z } from "zod";
 import AiSystemInformation from "@/data/AiSystemInformation";
 
@@ -105,6 +105,26 @@ function createErrorResponse(
 }
 
 // =============================================================================
+// GOOGLE API ERROR HANDLING
+// =============================================================================
+
+/**
+ * Parse retry delay from Google API error message
+ * Example message: "Resource has been exhausted (e.g. check quota). Retry in 30s"
+ */
+function parseGoogleRetryDelay(message: string): number | null {
+  const match = message.match(/retry in (\d+(?:\.\d+)?)s/i);
+  return match ? Math.ceil(parseFloat(match[1])) : null;
+}
+
+/**
+ * Type guard for Google API quota exceeded errors
+ */
+function isGoogleQuotaError(error: unknown): error is GoogleGenerativeAIFetchError {
+  return error instanceof GoogleGenerativeAIFetchError && error.status === 429;
+}
+
+// =============================================================================
 // MAIN HANDLER
 // =============================================================================
 
@@ -199,6 +219,25 @@ export async function POST(req: Request) {
       },
     });
   } catch (error) {
+    // Handle Google Gemini quota exceeded errors specifically
+    if (isGoogleQuotaError(error)) {
+      const retryDelay = parseGoogleRetryDelay(error.message) || 30;
+      log("WARN", "Google API quota exceeded", {
+        ...logCtx,
+        retryAfter: retryDelay,
+        googleStatus: error.status,
+      });
+      const response = createErrorResponse(
+        429,
+        "GOOGLE_QUOTA_EXCEEDED",
+        `AI service rate limit reached. Please wait ${retryDelay} seconds.`,
+        correlationId
+      );
+      response.headers.set("Retry-After", retryDelay.toString());
+      return response;
+    }
+
+    // Generic error handling
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     log("ERROR", "Unhandled API error", { ...logCtx, error: errorMessage });
 

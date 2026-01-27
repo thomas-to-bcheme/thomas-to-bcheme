@@ -18,37 +18,10 @@ import SystemStatusTicker from '@/components/SystemStatusTicker';
 import AiGenerator from '@/components/AiGenerator';
 import TrustBadge from '@/components/TrustBadge';
 import Button from '@/components/ui/Button';
-import { useChatHistory } from '@/hooks/useChatHistory';
 
 const HeroSection = () => {
   // Mobile chat collapsed state (U1)
   const [isMobileChatCollapsed, setIsMobileChatCollapsed] = useState(true);
-
-  // Chat history persistence
-  const {
-    conversations,
-    activeConversation,
-    activeConversationId,
-    createConversation,
-    setActiveConversation,
-    updateActiveMessages,
-    deleteConversation,
-    clearAllConversations,
-    isLoaded,
-  } = useChatHistory();
-
-  // Common props for AiGenerator (both desktop and mobile)
-  const aiGeneratorHistoryProps = {
-    conversations,
-    activeConversation,
-    activeConversationId,
-    onSelectConversation: setActiveConversation,
-    onNewConversation: createConversation,
-    onUpdateMessages: updateActiveMessages,
-    onDeleteConversation: deleteConversation,
-    onClearAllConversations: clearAllConversations,
-    historyEnabled: isLoaded,
-  };
 
   return (
     <section className="mb-16 pt-4">
@@ -169,7 +142,7 @@ const HeroSection = () => {
               {/* Chat Interface Area */}
               <div className="flex-1 overflow-hidden relative rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
                   <div className="absolute inset-0 overflow-auto custom-scrollbar">
-                     <AiGenerator {...aiGeneratorHistoryProps} />
+                     <AiGenerator />
                   </div>
               </div>
            </div>
@@ -209,7 +182,6 @@ const HeroSection = () => {
                 <AiGenerator
                   collapsed={isMobileChatCollapsed}
                   onToggleCollapse={() => setIsMobileChatCollapsed(!isMobileChatCollapsed)}
-                  {...aiGeneratorHistoryProps}
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Send,
   User,
@@ -14,11 +14,16 @@ import {
   Wrench,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { ChatMessage, Conversation } from '@/types/chat';
+import { ChatError } from '@/types/api-errors';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis';
 import VoiceControls from '@/components/VoiceControls';
-import ChatHistorySidebar from '@/components/ChatHistorySidebar';
+import {
+  sendChatMessage,
+  getErrorMessage,
+  isRetryableError,
+  isRateLimitError,
+} from '@/lib/chat-api';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -30,17 +35,6 @@ interface AiGeneratorProps {
   collapsed?: boolean;
   /** Callback when collapsed state should change */
   onToggleCollapse?: () => void;
-  /** Controlled mode: conversation history props */
-  conversations?: Conversation[];
-  activeConversation?: Conversation | null;
-  activeConversationId?: string | null;
-  onSelectConversation?: (id: string) => void;
-  onNewConversation?: () => Conversation;
-  onUpdateMessages?: (messages: ChatMessage[]) => void;
-  onDeleteConversation?: (id: string) => void;
-  onClearAllConversations?: () => void;
-  /** Whether history features are available */
-  historyEnabled?: boolean;
 }
 
 const SUGGESTED_QUESTIONS = [
@@ -63,22 +57,13 @@ const CAPABILITY_BADGES = [
 export default function AiGenerator({
   collapsed = false,
   onToggleCollapse,
-  conversations = [],
-  activeConversation,
-  activeConversationId,
-  onSelectConversation,
-  onNewConversation,
-  onUpdateMessages,
-  onDeleteConversation,
-  onClearAllConversations,
-  historyEnabled = false,
 }: AiGeneratorProps) {
-  // Internal state (used when not in controlled mode)
-  const [internalMessages, setInternalMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [loadingDuration, setLoadingDuration] = useState(0);
-  const [hasError, setHasError] = useState(false);
+  const [chatError, setChatError] = useState<ChatError | null>(null);
+  const [rateLimitCountdown, setRateLimitCountdown] = useState(0);
   const [ttsEnabled, setTtsEnabled] = useState(false);
 
   // Voice hooks
@@ -99,46 +84,6 @@ export default function AiGenerator({
     isSpeaking,
     isSupported: ttsSupported,
   } = useSpeechSynthesis();
-
-  // Determine which messages to use (controlled vs uncontrolled)
-  const messages: Message[] = activeConversation
-    ? activeConversation.messages.map((m) => ({
-        role: m.role,
-        content: m.content,
-      }))
-    : internalMessages;
-
-  const setMessages = useCallback(
-    (
-      updater:
-        | Message[]
-        | ((prev: Message[]) => Message[])
-    ) => {
-      if (activeConversation && onUpdateMessages) {
-        const newMessages =
-          typeof updater === 'function'
-            ? updater(
-                activeConversation.messages.map((m) => ({
-                  role: m.role,
-                  content: m.content,
-                }))
-              )
-            : updater;
-
-        const chatMessages: ChatMessage[] = newMessages.map((m) => ({
-          role: m.role,
-          content: m.content,
-          timestamp: Date.now(),
-        }));
-        onUpdateMessages(chatMessages);
-      } else {
-        const newMessages =
-          typeof updater === 'function' ? updater(internalMessages) : updater;
-        setInternalMessages(newMessages);
-      }
-    },
-    [activeConversation, onUpdateMessages, internalMessages]
-  );
 
   // Ref for the container to handle scrolling locally
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -172,6 +117,15 @@ export default function AiGenerator({
     }
     return () => clearInterval(interval);
   }, [isLoading]);
+
+  // Rate limit countdown timer
+  useEffect(() => {
+    if (rateLimitCountdown <= 0) return;
+    const timer = setInterval(() => {
+      setRateLimitCountdown((prev) => Math.max(0, prev - 1));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [rateLimitCountdown]);
 
   // Handle voice transcript → input sync
   useEffect(() => {
@@ -222,14 +176,9 @@ export default function AiGenerator({
 
     if (!promptText.trim() || isLoading) return;
 
-    // Ensure we have a conversation in controlled mode
-    if (historyEnabled && !activeConversation && onNewConversation) {
-      onNewConversation();
-    }
-
     // Store for retry
     lastPromptRef.current = promptText;
-    setHasError(false);
+    setChatError(null);
 
     // 1. Add User Message
     const newHistory: Message[] = [
@@ -240,21 +189,36 @@ export default function AiGenerator({
     setInput('');
     setIsLoading(true);
 
+    // 2. Send request with proper error handling
+    const result = await sendChatMessage(newHistory);
+
+    if (!result.success) {
+      // Handle error - show user-friendly message
+      const error = result.error;
+      setChatError(error);
+
+      // Set rate limit countdown if applicable
+      if (isRateLimitError(error) && error.type === 'api' && error.retryAfter) {
+        setRateLimitCountdown(error.retryAfter);
+      }
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: `Error: ${getErrorMessage(error)}`,
+        },
+      ]);
+      setIsLoading(false);
+      return;
+    }
+
+    // 3. Prepare Assistant Message Placeholder
+    setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
+
+    // 4. Stream Response
     try {
-      // 2. Start Request
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newHistory }),
-      });
-
-      if (!response.body) throw new Error('No response body');
-
-      // 3. Prepare Assistant Message Placeholder
-      setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
-
-      // 4. Stream Reader
-      const reader = response.body.getReader();
+      const reader = result.response.body!.getReader();
       const decoder = new TextDecoder();
 
       while (true) {
@@ -269,17 +233,25 @@ export default function AiGenerator({
           return [...others, { ...last, content: last.content + chunk }];
         });
       }
-    } catch (error) {
-      console.error(error);
-      setHasError(true);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content:
-            'Error: Could not fetch response. Please check your connection and try again.',
-        },
-      ]);
+    } catch (streamError) {
+      console.error('Stream error:', streamError);
+      const error: ChatError = {
+        type: 'stream',
+        message: streamError instanceof Error ? streamError.message : 'Stream interrupted',
+      };
+      setChatError(error);
+      // Update the assistant message with error
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        const others = prev.slice(0, -1);
+        return [
+          ...others,
+          {
+            ...last,
+            content: last.content + `\n\n[Error: ${getErrorMessage(error)}]`,
+          },
+        ];
+      });
     } finally {
       setIsLoading(false);
     }
@@ -287,7 +259,7 @@ export default function AiGenerator({
 
   // Retry handler
   function handleRetry() {
-    if (lastPromptRef.current && !isLoading) {
+    if (lastPromptRef.current && !isLoading && chatError && isRetryableError(chatError)) {
       // Remove the error message before retrying
       setMessages((prev) => prev.slice(0, -1));
       handleSubmit(undefined, lastPromptRef.current);
@@ -310,13 +282,6 @@ export default function AiGenerator({
       cancelSpeech();
     }
     setTtsEnabled(!ttsEnabled);
-  };
-
-  // History handlers
-  const handleNewConversation = () => {
-    if (onNewConversation) {
-      onNewConversation();
-    }
   };
 
   // --- COLLAPSED MOBILE VIEW ---
@@ -353,21 +318,6 @@ export default function AiGenerator({
       ref={chatContainerRef}
       className="flex flex-col min-h-full relative text-sm"
     >
-      {/* --- CHAT HISTORY SIDEBAR --- */}
-      {historyEnabled &&
-        onSelectConversation &&
-        onDeleteConversation &&
-        onClearAllConversations && (
-          <ChatHistorySidebar
-            conversations={conversations}
-            activeConversationId={activeConversationId ?? null}
-            onSelectConversation={onSelectConversation}
-            onNewConversation={handleNewConversation}
-            onDeleteConversation={onDeleteConversation}
-            onClearAll={onClearAllConversations}
-          />
-        )}
-
       {/* --- MOBILE COLLAPSE BUTTON (when expanded) --- */}
       {onToggleCollapse && (
         <button
@@ -494,15 +444,22 @@ export default function AiGenerator({
         )}
 
         {/* --- RETRY BUTTON after error --- */}
-        {hasError && !isLoading && lastPromptRef.current && (
+        {chatError && !isLoading && lastPromptRef.current && (
           <div className="flex justify-center">
-            <button
-              onClick={handleRetry}
-              className="flex items-center gap-2 px-3 py-1.5 text-xs bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors border border-zinc-200 dark:border-zinc-700"
-            >
-              <RefreshCw size={14} />
-              Try again
-            </button>
+            {isRateLimitError(chatError) && rateLimitCountdown > 0 ? (
+              <div className="flex items-center gap-2 px-3 py-1.5 text-xs bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded-lg border border-amber-200 dark:border-amber-800">
+                <Loader2 size={14} className="animate-spin" />
+                Retry in {rateLimitCountdown}s
+              </div>
+            ) : isRetryableError(chatError) ? (
+              <button
+                onClick={handleRetry}
+                className="flex items-center gap-2 px-3 py-1.5 text-xs bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-lg transition-colors border border-zinc-200 dark:border-zinc-700"
+              >
+                <RefreshCw size={14} />
+                Try again
+              </button>
+            ) : null}
           </div>
         )}
       </div>
