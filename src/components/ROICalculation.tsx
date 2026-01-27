@@ -1,15 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
-import { 
-  Users, Hammer, Activity,
-  Calculator, Info, FileText,
-  TrendingUp, Clock, CheckCircle2, DollarSign,
-  Lightbulb
-} from 'lucide-react';
+import { Users, Hammer, Activity, Calculator, Info, FileText, Lightbulb } from 'lucide-react';
 import CountUp from 'react-countup';
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
+import type { CleanInputProps, KPICardProps, VariableDefProps, ProfitLossGraphProps } from '@/types/roi';
 
 const ROICalculation = () => {
   // --- 1. STATE ---
@@ -400,7 +396,7 @@ const ROICalculation = () => {
 
 // --- SUBCOMPONENTS ---
 
-const CleanInput = ({ label, val, set, min, max, step, unit }: any) => (
+const CleanInput = ({ label, val, set, min, max, step, unit }: CleanInputProps) => (
     <div className="group">
         <div className="flex justify-between items-end mb-2">
             <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">{label}</span>
@@ -416,7 +412,7 @@ const CleanInput = ({ label, val, set, min, max, step, unit }: any) => (
     </div>
 );
 
-const KPICard = ({ icon, title, value, prefix, suffix, isCurrency, color, bottomLabel }: any) => (
+const KPICard = ({ icon, title, value, prefix, suffix, isCurrency, color, bottomLabel }: KPICardProps) => (
     <div className="flex flex-col h-full bg-white dark:bg-black p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">
         <div className="flex-grow flex flex-col justify-center">
             <div className="flex justify-between items-center mb-2">
@@ -439,7 +435,7 @@ const KPICard = ({ icon, title, value, prefix, suffix, isCurrency, color, bottom
     </div>
 );
 
-const VariableDef = ({ symbol, desc }: any) => (
+const VariableDef = ({ symbol, desc }: VariableDefProps) => (
     <div className="flex items-center gap-4">
         <span className="font-mono font-bold text-blue-600 dark:text-blue-400 text-sm w-12 text-center bg-blue-50 dark:bg-blue-900/20 rounded py-1 border border-blue-100 dark:border-blue-900/50 shrink-0">
             <InlineMath math={symbol} />
@@ -456,7 +452,7 @@ const AssumptionItem = ({ text }: { text: string }) => (
 );
 
 // --- GRAPH COMPONENT ---
-const ProfitLossGraph = ({ weeks, manualBurn, autoBurn, buildCost, breakEven }: any) => {
+const ProfitLossGraph = ({ weeks, manualBurn, autoBurn, buildCost, breakEven }: ProfitLossGraphProps) => {
     const width = 1000; 
     const height = 300; 
     const paddingRight = 60; 

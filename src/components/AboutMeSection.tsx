@@ -1,46 +1,6 @@
 import React from 'react';
-import { 
-  Users, 
-  Globe, 
-  CheckCircle2, 
-  HeartHandshake, 
-  type LucideIcon 
-} from 'lucide-react';
-
-// --- Components ---
-
-/**
- * A simple Badge component helper to match the usage in your snippet.
- * You can replace this with your actual UI library badge if you have one.
- */
-interface BadgeProps {
-  children: React.ReactNode;
-  color?: 'green' | 'blue' | 'zinc'; 
-  pulse?: boolean;
-  icon?: LucideIcon;
-}
-
-const Badge: React.FC<BadgeProps> = ({ children, color = 'green', pulse, icon: Icon }) => {
-  // Basic styling map based on the 'color' prop
-  const colorStyles = {
-    green: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800",
-    blue: "bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border-blue-200 dark:border-blue-800",
-    zinc: "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700",
-  };
-
-  return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${colorStyles[color]}`}>
-      {pulse && (
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-        </span>
-      )}
-      {Icon && <Icon size={12} />}
-      {children}
-    </span>
-  );
-};
+import { Users, Globe, CheckCircle2, HeartHandshake } from 'lucide-react';
+import Badge from '@/components/Badge';
 
 // --- Main Section Component ---
 

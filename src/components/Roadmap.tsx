@@ -1,24 +1,17 @@
 "use client";
 
 import React from 'react';
-import { 
-  CheckCircle2, 
-  Circle, 
-  Loader2, 
-  Milestone, 
-  ArrowDown,
+import {
+  CheckCircle2,
+  Circle,
+  Loader2,
+  Milestone,
   Layers,
   Server,
   LayoutTemplate,
   GitBranch
 } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-// --- UTILS (If you don't have this in a separate file yet) ---
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '@/lib/utils';
 
 // --- TYPES ---
 type PhaseStatus = 'completed' | 'current' | 'upcoming';

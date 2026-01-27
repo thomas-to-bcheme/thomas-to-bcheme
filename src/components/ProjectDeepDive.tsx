@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, TrendingUp, CheckCircle2, Code2, Sliders } from 'lucide-react';
+import { Layers, TrendingUp, CheckCircle2, Sliders } from 'lucide-react';
 
 interface ProjectDeepDiveProps {
   title: string;

@@ -1,32 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Users, HeartHandshake, Mail, ArrowRight, Zap, 
-  Code2, Database, FlaskConical, Dna, CheckCircle2, 
-  Workflow, ClipboardCheck, Bot, PiggyBank, Package, 
-  BookOpenCheck, Copyright, GitFork, Globe, Linkedin, Github, 
-  GitBranch
-} from 'lucide-react';
+import { Mail, ArrowRight, Globe, Linkedin, Github, GitBranch } from 'lucide-react';
 
 // --- LOCAL COMPONENTS ---
 import HeroSection from '@/components/HeroSection';
-import ArchitectureDiagram from "@/components/ArchitectureDiagram";
-import ROICalculation from "@/components/ROICalculation";
+import ArchitectureDiagram from '@/components/ArchitectureDiagram';
+import ROICalculation from '@/components/ROICalculation';
 import ProjectDeepDive from '@/components/ProjectDeepDive';
-import Badge from '@/components/Badge';
-import ImpactMetric from '@/components/ImpactMetric';
 import { BentoGrid, BentoCard } from '@/components/BentoGrid';
-import AboutMeSection from '@/components/AboutMeSection'
+import AboutMeSection from '@/components/AboutMeSection';
 import Roadmap from '@/components/Roadmap';
 import Connect from '@/components/Connect';
-import Projects from '@/components/Projects';
-// --- UTILITY ---
-const scrollToTop = () => {
-  if (typeof window !== 'undefined') {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-};
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);

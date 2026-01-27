@@ -67,11 +67,11 @@ const HeroSection = () => {
                 { label: 'GxP', icon: ShieldCheck, variant: 'compliance' },
                 { label: 'HIPAA', icon: ShieldCheck, variant: 'compliance' },
               ].map((badge) => (
-                <TrustBadge 
+                <TrustBadge
                   key={badge.label}
                   label={badge.label}
                   icon={badge.icon}
-                  variant={badge.variant as any}
+                  variant={badge.variant as 'success' | 'innovation' | 'compliance' | 'risk'}
                 />
               ))}
             </div>

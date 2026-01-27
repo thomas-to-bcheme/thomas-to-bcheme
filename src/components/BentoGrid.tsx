@@ -3,12 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, LucideIcon } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '@/lib/utils';
 
 export const BentoGrid = ({ children, className, id }: { children: React.ReactNode, className?: string, id?: string }) => (
   <div id={id} className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]", className)}>
@@ -30,17 +25,19 @@ type BentoCardProps = {
 
 export const BentoCard = ({ children, className, colSpan = 1, rowSpan = 1, title, icon: Icon, href, id, noFade = true }: BentoCardProps) => {
   const Wrapper = href ? 'a' : 'div';
-  // @ts-ignore - dynamic component wrapper typing
-  const wrapperProps = href ? { href, target: "_blank" } : {};
+  const wrapperProps = href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
+
+  // Respect reduced motion preference
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   return (
-    <motion.div 
+    <motion.div
       id={id}
-      initial={noFade ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      whileInView={noFade ? undefined : { opacity: 1, y: 0 }}
+      initial={noFade || prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      whileInView={noFade || prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, ease: "easeOut" }}
+      whileHover={prefersReducedMotion ? undefined : { y: -4, transition: { duration: 0.2 } }}
       className={cn(
         "group relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 p-6 shadow-sm transition-all hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-800 flex flex-col",
         colSpan === 2 && "md:col-span-2", colSpan === 3 && "md:col-span-3", colSpan === 4 && "md:col-span-4",

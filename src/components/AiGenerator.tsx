@@ -163,12 +163,12 @@ export default function AiGenerator() {
 
         {/* --- LOADING INDICATOR --- */}
         {isLoading && (
-          <div className="flex gap-3 justify-start animate-pulse">
+          <div className="flex gap-3 justify-start animate-pulse motion-reduce:animate-none">
             <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center shrink-0">
-               <Loader2 size={14} className="animate-spin text-indigo-600 dark:text-indigo-400" />
+               <Loader2 size={14} className="animate-spin motion-reduce:animate-none text-indigo-600 dark:text-indigo-400" aria-hidden="true" />
             </div>
             <div className="bg-white dark:bg-zinc-800 px-4 py-2 rounded-2xl rounded-bl-none border border-zinc-100 dark:border-zinc-700">
-              <span className="text-xs text-zinc-400">Thinking...</span>
+              <span className="text-xs text-zinc-400" role="status" aria-live="polite">Thinking...</span>
             </div>
           </div>
         )}
@@ -186,13 +186,15 @@ export default function AiGenerator() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question..."
             disabled={isLoading}
+            aria-label="Chat message input"
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
+            aria-label={isLoading ? "Sending message" : "Send message"}
             className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white p-2 rounded-lg transition-colors flex items-center justify-center"
           >
-            {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+            {isLoading ? <Loader2 size={18} className="animate-spin motion-reduce:animate-none" /> : <Send size={18} />}
           </button>
         </form>
       </div>
