@@ -38,7 +38,7 @@ const HeroSection = () => {
           className="flex flex-col justify-center h-full" // Added flex col to maintain vertical alignment
         >
             {/* Header Badges */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
               <Badge
                 color="green"
                 pulse
@@ -52,7 +52,7 @@ const HeroSection = () => {
             {/* Main Title */}
             <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 text-zinc-900 dark:text-white leading-[1.1]">
               Fullstack<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">
+              <span className="gradient-text-blue">
                 AI/ML Engineer
               </span>
             </h1>
@@ -111,7 +111,7 @@ const HeroSection = () => {
            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20 animate-pulse"></div>
 
            {/* Card Container */}
-           <div className="relative bg-white dark:bg-black rounded-xl border border-zinc-200 dark:border-zinc-800 h-full p-4 shadow-2xl flex flex-col">
+           <div className="relative card-base h-full p-4 shadow-2xl flex flex-col">
 
               {/* Agent Header */}
               <div className="flex justify-between items-start mb-4 border-b border-zinc-100 dark:border-zinc-800 pb-3">
@@ -160,7 +160,7 @@ const HeroSection = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20 animate-pulse" />
             )}
 
-            <div className={`relative bg-white dark:bg-black rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-lg overflow-hidden transition-all duration-300 ${
+            <div className={`relative card-base shadow-lg overflow-hidden transition-all duration-300 ${
               isMobileChatCollapsed ? '' : 'min-h-[400px]'
             }`}>
               {/* Mobile Agent Header (always visible) */}

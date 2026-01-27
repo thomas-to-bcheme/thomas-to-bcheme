@@ -25,10 +25,13 @@ const AboutMeSection: React.FC = () => {
                 </p>
               </div>
 
-              <div className="flex gap-2 flex-wrap content-start mb-6">
-                <a 
-                  href="mailto:thomas.to.bcheme@gmail.com" 
-                  className="hover:opacity-80 transition-opacity"
+              <div className="mb-6">
+                <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
+                  Contact
+                </span>
+                <a
+                  href="mailto:thomas.to.bcheme@gmail.com"
+                  className="inline-block hover:opacity-80 transition-opacity"
                   aria-label="Email Thomas To"
                 >
                   <Badge color="green" pulse icon={Globe}>

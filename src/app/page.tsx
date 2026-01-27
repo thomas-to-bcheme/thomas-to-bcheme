@@ -140,10 +140,10 @@ export default function Home() {
         <Roadmap />
 
 				{/* --- FOOTER SECTION --- */}
-				<footer className="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 pt-16 pb-8">
+				<footer className="border-default surface-secondary pt-16 pb-8">
 					<div className="max-w-7xl mx-auto px-6">
 						<div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-							
+
 							{/* COLUMN 1: BRAND IDENTITY */}
 							<div className="col-span-1 md:col-span-2 space-y-4">
 								<div className="font-bold text-xl tracking-tighter flex items-center gap-2">
@@ -153,26 +153,26 @@ export default function Home() {
 									Operationalizing AI Agents: <br/> Bridging the gap between reality and the matrix.
 								</p>
 								<div className="flex gap-4 pt-2">
-									<a 
-										href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io" 
-										target="_blank" 
+									<a
+										href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io"
+										target="_blank"
 										rel="noopener noreferrer"
 										aria-label="GitHub Profile"
 										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
 									>
 										<Github size={18} aria-hidden="true" />
 									</a>
-									<a 
-										href="https://www.linkedin.com/in/thomas-to-ucdavis/" 
-										target="_blank" 
+									<a
+										href="https://www.linkedin.com/in/thomas-to-ucdavis/"
+										target="_blank"
 										rel="noopener noreferrer"
 										aria-label="LinkedIn Profile"
 										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
 									>
 										<Linkedin size={18} aria-hidden="true" />
 									</a>
-									<a 
-										href="mailto:thomas.to.bcheme@gmail.com" 
+									<a
+										href="mailto:thomas.to.bcheme@gmail.com"
 										aria-label="Email Contact"
 										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
 									>
@@ -183,7 +183,7 @@ export default function Home() {
 
 							{/* COLUMN 2: SITEMAP */}
 							<div>
-								<h4 className="font-bold text-xs text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">Navigation</h4>
+								<h4 className="text-micro text-zinc-900 dark:text-white mb-6">Navigation</h4>
 								<ul className="space-y-3 text-sm text-zinc-500 dark:text-zinc-400">
 									<li><a href="#agent" className="hover:text-blue-600 transition-colors flex items-center gap-2">Live Agent</a></li>
 									<li><a href="#impact" className="hover:text-blue-600 transition-colors flex items-center gap-2">Business Impact</a></li>
@@ -194,11 +194,11 @@ export default function Home() {
 
 							{/* COLUMN 3: SYSTEM STATUS & LEGAL */}
 							<div>
-								<h4 className="font-bold text-xs text-zinc-900 dark:text-white mb-6 uppercase tracking-widest">System Status</h4>
+								<h4 className="text-micro text-zinc-900 dark:text-white mb-6">System Status</h4>
 								<ul className="space-y-3 text-sm text-zinc-500 dark:text-zinc-400">
 									<li className="flex items-center gap-2">
 										<div className="relative flex h-2 w-2">
-											<span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+											<span className="status-dot-ping bg-emerald-400"></span>
 											<span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
 										</div>
 										<span className="text-emerald-600 dark:text-emerald-400 font-medium">All Systems Nominal</span>
@@ -216,17 +216,17 @@ export default function Home() {
 						</div>
 
 						{/* BOTTOM BAR */}
-						<div className="border-t border-zinc-200 dark:border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+						<div className="border-default border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
 							<div className="text-xs text-zinc-400 space-y-1">
 								<p>&copy; {new Date().getFullYear()} Thomas To. All rights reserved.</p>
 								<p>Licensed under MIT Open Source.</p>
 							</div>
-							
+
 							<div className="flex items-center gap-6">
 								<div className="text-xs text-zinc-500 font-mono hidden md:block">
 									Built with <span className="text-zinc-700 dark:text-zinc-300">GitHub, Next.js, Vercel, and ~Vibes~ </span>
 								</div>
-								<button 
+								<button
 									onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 									className="flex items-center gap-2 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full hover:scale-105 active:scale-95"
 								>

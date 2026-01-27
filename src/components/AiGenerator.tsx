@@ -343,7 +343,7 @@ export default function AiGenerator({
               >
                 <cap.icon className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                 <div className="text-left">
-                  <p className="text-xs font-medium text-zinc-800 dark:text-zinc-200">
+                  <p className="text-micro text-zinc-800 dark:text-zinc-200">
                     {cap.label}
                   </p>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -391,14 +391,7 @@ export default function AiGenerator({
 
             {/* Message Bubble */}
             <div
-              className={`
-  max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed shadow-sm overflow-hidden
-  ${
-    m.role === 'user'
-      ? 'bg-blue-600 text-white rounded-br-none'
-      : 'bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 rounded-bl-none'
-  }
-`}
+              className={m.role === 'user' ? 'message-user' : 'message-assistant'}
             >
               {m.role === 'user' ? (
                 <p>{m.content}</p>
@@ -488,7 +481,7 @@ export default function AiGenerator({
           </label>
           <input
             id="chat-message-input"
-            className="flex-1 bg-white dark:bg-black border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:text-white placeholder:text-zinc-400"
+            className="flex-1 input-base"
             value={isListening ? `${input}${interimTranscript}` : input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={

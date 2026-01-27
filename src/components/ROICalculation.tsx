@@ -48,10 +48,10 @@ const ROICalculation = () => {
     <div className="w-full max-w-5xl mx-auto my-8 font-sans text-zinc-800 dark:text-zinc-200">
       
       {/* --- MAIN CONTAINER (Graph + Dashboard) --- */}
-      <div className="bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm mb-8">
+      <div className="surface-secondary border-default rounded-2xl overflow-hidden shadow-sm mb-8">
           
           {/* 1. HERO GRAPH */}
-          <div className="relative w-full h-[320px] bg-white dark:bg-black/50 border-b border-zinc-200 dark:border-zinc-800 flex flex-col">
+          <div className="relative w-full h-[320px] surface-primary border-b border-default flex flex-col">
               <div className="absolute top-4 left-14 z-10 pointer-events-none">
                   <h2 className="text-xs font-black uppercase tracking-widest text-zinc-800 dark:text-white flex items-center gap-2">
                       <Activity className="text-blue-600" size={16} /> 
@@ -76,7 +76,7 @@ const ROICalculation = () => {
           <div className="p-4 grid lg:grid-cols-12 gap-4">
             
             {/* LEFT: MODEL DRIVERS */}
-            <div className="lg:col-span-4 bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-5 rounded-xl shadow-sm flex flex-col gap-6">
+            <div className="lg:col-span-4 card-base p-5 flex flex-col gap-6">
                 <div className="pb-2 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center">
                     <h3 className="text-micro text-zinc-400">Model Drivers</h3>
                     <div className="p-1 bg-zinc-100 dark:bg-zinc-800 rounded">
@@ -170,7 +170,7 @@ const ROICalculation = () => {
       <div className="grid lg:grid-cols-3 gap-8">
           
           {/* LEFT: STEP-BY-STEP DERIVATION */}
-          <div className="lg:col-span-2 bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl p-8 shadow-sm">
+          <div className="lg:col-span-2 card-base p-8">
              <div className="flex items-center gap-3 mb-2 pb-2 border-b border-zinc-100 dark:border-zinc-800">
                 <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400"><Calculator size={24} /></div>
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Engineering Derivation</h3>
@@ -179,8 +179,8 @@ const ROICalculation = () => {
              <div className="space-y-10">
                  
                  {/* Step 1: Manual Cost */}
-                 <div className="relative pl-4 border-l-2 border-zinc-100 dark:border-zinc-800">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-600 dark:text-zinc-300">1</div>
+                 <div className="step-divider">
+                    <div className="step-circle">1</div>
                     <h4 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2">
   Manual Cost (<InlineMath math="C_{manual}" />)
 </h4>
@@ -204,8 +204,8 @@ const ROICalculation = () => {
                  </div>
 
                  {/* Step 2: Auto Cost */}
-                 <div className="relative pl-4 border-l-2 border-zinc-100 dark:border-zinc-800">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-600 dark:text-zinc-300">2</div>
+                 <div className="step-divider">
+                    <div className="step-circle">2</div>
                     <h4 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2">
   Automated Cost (<InlineMath math="C_{auto}" />)
 </h4>
@@ -337,7 +337,7 @@ const ROICalculation = () => {
           </div>
 
           {/* RIGHT: VARIABLES & ASSUMPTIONS */}
-          <div className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-xl p-8 shadow-sm flex flex-col gap-8">
+          <div className="card-base p-8 flex flex-col gap-8">
              
              {/* Definitions */}
              <div>
@@ -405,7 +405,7 @@ const CleanInput = ({ label, val, set, min, max, step, unit }: CleanInputProps) 
             <div className="flex justify-between items-end mb-2">
                 <label
                     htmlFor={inputId}
-                    className="text-micro text-zinc-500 dark:text-zinc-400"
+                    className="text-micro text-subtle"
                 >
                     {label}
                 </label>
@@ -425,14 +425,14 @@ const CleanInput = ({ label, val, set, min, max, step, unit }: CleanInputProps) 
                 aria-valuemax={max}
                 aria-valuenow={val}
                 aria-valuetext={ariaValueText}
-                className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-800 dark:accent-white hover:accent-blue-600 dark:hover:accent-blue-400 transition-colors"
+                className="slider-input"
             />
         </div>
     );
 };
 
 const KPICard = ({ icon, title, value, prefix, suffix, isCurrency, color, bottomLabel }: KPICardProps) => (
-    <div className="flex flex-col h-full bg-white dark:bg-black p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">
+    <div className="flex flex-col h-full card-base p-5 hover:shadow-md transition-shadow">
         <div className="flex-grow flex flex-col justify-center">
             <div className="flex justify-between items-center mb-2">
                 <div className="text-xs font-bold text-zinc-400 uppercase tracking-widest">{title}</div>
@@ -461,7 +461,7 @@ const KPICard = ({ icon, title, value, prefix, suffix, isCurrency, color, bottom
 
 const VariableDef = ({ symbol, desc }: VariableDefProps) => (
     <div className="flex items-center gap-4">
-        <span className="font-mono font-bold text-blue-600 dark:text-blue-400 text-sm w-12 text-center bg-blue-50 dark:bg-blue-900/20 rounded py-1 border border-blue-100 dark:border-blue-900/50 shrink-0">
+        <span className="font-mono font-bold text-sm w-12 text-center tag-blue py-1 shrink-0">
             <InlineMath math={symbol} />
         </span>
         <span className="text-sm text-zinc-600 dark:text-zinc-300">{desc}</span>

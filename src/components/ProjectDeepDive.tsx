@@ -32,12 +32,12 @@ const ProjectDeepDive = ({
       {/* Left Col: Narrative */}
       <div className="space-y-4">
         <div>
-          <span className="text-micro uppercase font-bold text-zinc-400 block mb-1">The Problem</span>
-          <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">{problem}</p>
+          <span className="text-micro text-zinc-400 block mb-1">The Problem</span>
+          <p className="text-sm text-subtle leading-relaxed">{problem}</p>
         </div>
         <div>
-          <span className="text-micro uppercase font-bold text-zinc-400 block mb-1">The Solution</span>
-          <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">{solution}</p>
+          <span className="text-micro text-zinc-400 block mb-1">The Solution</span>
+          <p className="text-sm text-subtle leading-relaxed">{solution}</p>
         </div>
       </div>
       
@@ -47,15 +47,15 @@ const ProjectDeepDive = ({
 {/* --- FIXED SECTION START --- */}
         {Array.isArray(parameters) && parameters.length > 0 && (
           <div>
-            <span className="text-micro uppercase font-bold text-zinc-400 flex items-center gap-1.5 mb-2">
+            <span className="text-micro text-zinc-400 flex items-center gap-1.5 mb-2">
               <Sliders size={12}/> Parameters
             </span>
             {/* CHANGED: Switched from 'grid grid-cols-2' to 'flex flex-wrap' to match Architecture */}
             <div className="flex flex-wrap gap-1.5">
               {parameters.map((param) => (
-                 <span 
-                    key={param} 
-                    className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded text-xs font-medium text-blue-700 dark:text-blue-300" 
+                 <span
+                    key={param}
+                    className="tag-blue"
                     title={param}
                  >
                   {param}
@@ -68,12 +68,12 @@ const ProjectDeepDive = ({
 
         {/* Architecture Tags */}
         <div>
-           <span className="text-micro uppercase font-bold text-zinc-400 flex items-center gap-1.5 mb-2">
+           <span className="text-micro text-zinc-400 flex items-center gap-1.5 mb-2">
              <Layers size={12}/> Architecture Stack
            </span>
            <div className="flex flex-wrap gap-1.5">
              {tags.map((t) => (
-               <span key={t} className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded text-xs font-medium text-blue-700 dark:text-blue-300">
+               <span key={t} className="tag-blue">
                  {t}
                </span>
              ))}
@@ -82,13 +82,13 @@ const ProjectDeepDive = ({
 
         {/* Impact KPIs */}
         <div className="pt-2 border-t border-zinc-200 dark:border-zinc-700">
-           <span className="text-micro uppercase font-bold text-zinc-400 flex items-center gap-1.5 mb-2">
+           <span className="text-micro text-zinc-400 flex items-center gap-1.5 mb-2">
              <TrendingUp size={12}/> Impact Outcomes
            </span>
            <ul className="space-y-1.5">
              {kpis.map((k) => (
                <li key={k} className="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-start gap-1.5">
-                 <CheckCircle2 size={14} className="shrink-0 mt-0.5" /> 
+                 <CheckCircle2 size={14} className="shrink-0 mt-0.5" />
                  <span>{k}</span>
                </li>
              ))}

@@ -96,20 +96,20 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
       {/* DESKTOP: Timeline Line */}
       <div className="hidden md:flex flex-col items-center absolute left-[50%] -translate-x-1/2 h-full top-0">
         <div className={cn(
-          "w-px h-8 bg-zinc-200 dark:bg-zinc-800",
+          "timeline-connector h-8",
           phase.id === 1 && "opacity-0" // Hide top line for first item
         )} />
         <div className="bg-white dark:bg-zinc-950 p-2 z-10">
           <StatusIcon status={phase.status} />
         </div>
         <div className={cn(
-          "w-px flex-1 bg-zinc-200 dark:bg-zinc-800",
+          "timeline-connector flex-1",
           isLast && "opacity-0" // Hide bottom line for last item
         )} />
       </div>
 
       {/* MOBILE: Timeline Line */}
-      <div className="md:hidden absolute left-2 top-0 h-full w-px bg-zinc-200 dark:bg-zinc-800">
+      <div className="md:hidden absolute left-2 top-0 h-full timeline-connector">
         <div className="absolute top-8 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-950 py-2">
            <StatusIcon status={phase.status} />
         </div>
@@ -123,14 +123,14 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
         {/* CARD SIDE */}
         <div className="flex-1 ml-6 md:ml-0">
           <div className={cn(
-            "p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden",
-            isActive 
-              ? "bg-white dark:bg-zinc-900 border-blue-500 shadow-xl shadow-blue-500/10 scale-[1.02]" 
+            "card-base p-6 transition-all duration-300 relative overflow-hidden",
+            isActive
+              ? "dark:bg-zinc-900 border-blue-500 shadow-xl shadow-blue-500/10 scale-[1.02]"
               : isCompleted
                 ? "bg-zinc-50 dark:bg-zinc-900/50 border-blue-200 dark:border-blue-900/30 opacity-90 hover:opacity-100"
-                : "bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 opacity-60 grayscale hover:grayscale-0 transition-all"
+                : "dark:bg-zinc-950 opacity-60 grayscale hover:grayscale-0 transition-all"
           )}>
-            
+
             {isActive && (
               <div className="absolute top-0 left-0 w-1 h-full bg-blue-500" />
             )}
@@ -139,7 +139,7 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
             <div className="flex justify-between items-start mb-4">
               <div>
                  <span className={cn(
-                   "text-micro font-bold uppercase tracking-widest mb-1 block",
+                   "text-micro mb-1 block",
                    isActive || isCompleted ? "text-blue-600 dark:text-blue-400" : "text-zinc-400"
                  )}>
                    {phase.subtitle}
@@ -151,7 +151,7 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
                    {phase.title}
                  </h3>
               </div>
-              <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800">
+              <div className="icon-container-zinc">
                 <phase.icon size={18} className={cn(
                   isActive || isCompleted ? "text-blue-600" : "text-zinc-400"
                 )} />
@@ -226,11 +226,11 @@ const Roadmap = () => {
         
         {/* Micro-Header inside card */}
         <div className="flex items justify-center gap-2 mb-6 opacity-50">
-            <div className="h-px w-8 bg-zinc-300 dark:bg-zinc-700"></div>
-            <span className="text-micro font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+            <div className="timeline-connector-h w-8"></div>
+            <span className="text-micro font-mono text-zinc-500 dark:text-zinc-400">
               The Engineering Manifesto
             </span>
-            <div className="h-px w-8 bg-zinc-300 dark:bg-zinc-700"></div>
+            <div className="timeline-connector-h w-8"></div>
         </div>
 
         {/* Formatted Text Body */}
