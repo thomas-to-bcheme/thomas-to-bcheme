@@ -33,7 +33,7 @@ const Connect: React.FC = () => {
                 <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
                   Let's Engineer the Future.
                 </h3>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed max-w-xl">
+                <p className="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed max-w-xl">
                   If you are looking for an engineer who can architect 0&rarr;1 systems, automate tribal knowledge, 
                   and deploy AI agents, let's talk.
                 </p>

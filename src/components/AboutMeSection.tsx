@@ -48,15 +48,15 @@ const AboutMeSection: React.FC = () => {
                 Work Authorization
               </span>
               <ul className="space-y-2.5">
-                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-300">
                   <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
                   <span>Authorized to work in the U.S. for any employer.</span>
                 </li>
-                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-300">
                   <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
                   <span>No visa sponsorship required (now or future).</span>
                 </li>
-                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-400">
+                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-300">
                   <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
                   <span>Eligible to work in the U.S. without restriction.</span>
                 </li>
@@ -134,7 +134,7 @@ const AboutMeSection: React.FC = () => {
             <div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-pink-300 transition-colors shadow-sm flex flex-col justify-center">
               <HeartHandshake className="mb-3 text-pink-500" size={20} />
               <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Leadership</h5>
-              <p className="text-xs text-zinc-500 leading-snug">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-snug">
                 Scaling engineering excellence through junior mentorship and cross-departmental upskilling. I act as a technical liaison, translating complex constraints into business value.
               </p>
             </div>
