@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, User, Bot, Loader2, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
+import { Send, User, Bot, Loader2, ChevronDown, ChevronUp, RefreshCw, FileText, Briefcase, Wrench } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 type Message = {
@@ -17,9 +17,16 @@ interface AiGeneratorProps {
 }
 
 const SUGGESTED_QUESTIONS = [
-  "Ask me about this project",
-  "What is your tech stack?",
-  "How does the RAG Agent work?"
+  "What are your strongest technical skills?",
+  "Tell me about your AI/ML experience",
+  "What projects demonstrate your capabilities?",
+  "Are you available for interviews?",
+];
+
+const CAPABILITY_BADGES = [
+  { icon: FileText, label: "Resume Context", description: "Full resume access" },
+  { icon: Briefcase, label: "Career History", description: "Work experience details" },
+  { icon: Wrench, label: "Tech Stack", description: "Technical expertise" },
 ];
 
 export default function AiGenerator({ collapsed = false, onToggleCollapse }: AiGeneratorProps) {
@@ -129,18 +136,18 @@ export default function AiGenerator({ collapsed = false, onToggleCollapse }: AiG
       <div className="p-4 text-sm">
         <button
           onClick={onToggleCollapse}
-          className="w-full flex items-center justify-between p-4 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 transition-colors"
+          className="w-full flex items-center justify-between p-4 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-indigo-500 dark:hover:border-indigo-500 transition-colors"
         >
           <div className="flex items-center gap-3">
-            <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
-              <Sparkles className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-2 rounded-full">
+              <Bot className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-zinc-900 dark:text-white text-sm">
-                Chat with AI Agent
+                Resume RAG Agent
               </h3>
               <p className="text-zinc-500 dark:text-zinc-400 text-xs">
-                Ask about resume, tech stack, or architecture
+                Ask about qualifications &amp; experience
               </p>
             </div>
           </div>
@@ -168,24 +175,35 @@ export default function AiGenerator({ collapsed = false, onToggleCollapse }: AiG
 
       {/* --- EMPTY STATE / STARTER BUTTONS --- */}
       {messages.length === 0 && (
-        <div className="flex-1 flex flex-col items-center justify-center p-8 space-y-6 text-center opacity-90">
-          <div className="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-full">
-            <Sparkles className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+        <div className="flex flex-col p-4 space-y-4">
+          {/* Capability Badges */}
+          <div className="flex flex-wrap gap-2">
+            {CAPABILITY_BADGES.map((cap) => (
+              <div
+                key={cap.label}
+                className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg"
+              >
+                <cap.icon className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
+                <div className="text-left">
+                  <p className="text-xs font-medium text-zinc-800 dark:text-zinc-200">{cap.label}</p>
+                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">{cap.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
-          <div>
-            <h3 className="font-semibold text-zinc-900 dark:text-white mb-2">
-              Ready to Chat
-            </h3>
-            <p className="text-zinc-500 dark:text-zinc-400 text-xs max-w-[200px] mx-auto">
-              I can answer questions about Thomas's resume, tech stack, and architecture.
-            </p>
-          </div>
-          <div className="grid gap-2 w-full max-w-[250px]">
+
+          {/* Tagline */}
+          <p className="text-zinc-500 dark:text-zinc-400 text-xs">
+            Ask me about Thomas&apos;s qualifications, experience, or technical expertise
+          </p>
+
+          {/* Suggested Questions Grid (2x2) */}
+          <div className="grid grid-cols-2 gap-2">
             {SUGGESTED_QUESTIONS.map((q) => (
               <button
                 key={q}
                 onClick={() => handleSubmit(undefined, q)}
-                className="text-xs border border-zinc-200 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 bg-white dark:bg-zinc-800 p-2 rounded-lg transition-colors text-left truncate"
+                className="text-xs border border-zinc-200 dark:border-zinc-700 hover:border-indigo-500 dark:hover:border-indigo-500 bg-white dark:bg-zinc-800 p-2.5 rounded-lg transition-colors text-left line-clamp-2"
               >
                 {q}
               </button>
