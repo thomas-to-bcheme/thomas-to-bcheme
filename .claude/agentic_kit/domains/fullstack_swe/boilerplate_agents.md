@@ -96,10 +96,20 @@ model: sonnet
 - Never write raw queries in controllers
 - Centralize database logic in dedicated modules
 
+**Pattern**: Data Staging Pipeline
+```
+Stage 1 (Raw) → Stage 2 (Validated) → Stage 3 (Transformed)
+     ↓              ↓                    ↓
+Source of Truth   Business Rules      Final Structure
+```
+- Each stage has clear ownership and validation
+- Never skip stages; data flows sequentially
+- Rollback to previous stage on failure
+
 **Recommended Sub-Agents**:
 - **Schema Sentinel**: Handles strict type definitions. Ensures data structures remain distinct and authoritative.
 - **Query Optimizer**: Analyzes access patterns. Suggests indexes and refactors N+1 problems.
-- **Data Sanitizer**: Implements contextual logging. Ensures no sensitive data leaks into logs.
+- **Data Sanitizer**: Implements contextual logging. Ensures no PII or sensitive data leaks into logs.
 
 ---
 
@@ -129,6 +139,7 @@ model: sonnet
 - **Component Librarian**: Builds stateless UI components. Enforces DRY for buttons, inputs, cards.
 - **State Architect**: Manages complex global state. Ensures guard clauses protect UI from invalid states.
 - **A11y Auditor**: Checks for semantic HTML, ARIA compliance, keyboard navigation.
+- **Performance Auditor**: Monitors bundle size, Core Web Vitals, render performance. Identifies optimization opportunities.
 
 ---
 
@@ -226,13 +237,15 @@ model: sonnet
 
 ### 6. Infrastructure Agent (DevOps & Containers)
 
-**Focus**: Containerization, CI/CD pipelines, deployment configuration, infrastructure-as-code.
+**Focus**: Containerization, CI/CD pipelines, deployment configuration, infrastructure-as-code, environment management.
 
 **Triggers**:
 - "Create Dockerfile"
 - "Set up CI/CD"
 - "Optimize container"
 - "Fix build pipeline"
+- "Deploy to production"
+- "Configure environment variables"
 
 **CLAUDE.md Alignment**:
 | Directive | Application |
@@ -240,15 +253,33 @@ model: sonnet
 | **Reproducibility** | Builds must be deterministic; pin all versions |
 | **Layer Optimization** | Order instructions from least to most frequently changed |
 | **No Secrets in Images** | Use runtime env vars or secrets managers |
+| **Idempotency** | Commands must be runnable multiple times without side effects |
 
 **Pattern**: Multi-Stage Builds
 - Separate build dependencies from runtime
 - Final image contains only production artifacts
 
+**Pattern**: Idempotent Operations
+```bash
+# DO: Check before creating
+[ -d ./dist ] || mkdir ./dist
+
+# DON'T: Fail on second run
+mkdir ./dist  # Fails if exists
+```
+
+**Pattern**: Environment Parity
+```
+Development → Staging → Production
+     ↓           ↓          ↓
+  Same config structure, different values
+```
+
 **Recommended Sub-Agents**:
 - **Build Optimizer**: Analyzes layer ordering, uses cache mounts, minimizes image size.
 - **Security Scanner**: Identifies CVEs in base images. Enforces non-root execution.
 - **Pipeline Architect**: Manages CI/CD workflows. Ensures fast feedback loops.
+- **Environment Manager**: Manages environment variables across stages. Ensures parity between environments.
 
 ---
 
@@ -277,6 +308,68 @@ model: sonnet
 - **Token Manager**: Owns the design token system. Generates CSS variables from design exports.
 - **Accessibility Auditor**: Runs automated a11y checks. Enforces focus management, ARIA labels.
 - **Layout Engineer**: Specializes in responsive design. Ensures layouts work across breakpoints.
+- **Motion Designer**: Handles animations and transitions. Respects reduced-motion preferences.
+
+---
+
+### 8. QA Agent (Quality Assurance)
+
+**Focus**: Test strategy, test automation, regression testing, bug triage, quality gates, coverage analysis.
+
+**Triggers**:
+- "Write tests for this feature"
+- "Check test coverage"
+- "Create test plan"
+- "Fix flaky test"
+- "Triage this bug"
+- "Add regression tests"
+
+**CLAUDE.md Alignment**:
+| Directive | Application |
+|-----------|-------------|
+| **Test Pyramid** | Enforce unit > integration > E2E ratio |
+| **Arrange-Act-Assert** | All tests follow AAA structure |
+| **No Silent Failures** | Tests must have explicit assertions, never pass by default |
+| **Data Factories** | Use factories for test data, not brittle fixtures |
+
+**Pattern**: Test Pyramid
+```
+        ┌───────┐
+        │  E2E  │  ← Few, high-value critical paths
+        ├───────┤
+        │ Integ │  ← Moderate, module interactions
+        ├───────┤
+        │ Unit  │  ← Many, fast, isolated
+        └───────┘
+```
+
+**Pattern**: Arrange-Act-Assert (AAA)
+```
+// Arrange - set up test data
+const input = createTestUser();
+
+// Act - execute code under test
+const result = validateUser(input);
+
+// Assert - verify outcome
+expect(result.isValid).toBe(true);
+```
+
+**Pattern**: Given-When-Then (BDD)
+- Structure tests as behavioral specifications
+- Tests document expected behavior
+- Edge cases are first-class citizens
+
+**Recommended Sub-Agents**:
+- **Test Strategist**: Defines coverage requirements. Maps features to test cases.
+- **Regression Guardian**: Maintains regression suites. Identifies flaky tests and root causes.
+- **Performance Analyst**: Runs load tests. Identifies bottlenecks before production.
+- **Bug Triager**: Categorizes bugs by severity. Ensures reproducible steps are documented.
+
+**Boundaries**:
+- Does NOT write production code (only test code)
+- Implementation fixes require handoff to domain agent
+- Security testing escalates to API Agent's Security Warden
 
 ---
 
@@ -291,6 +384,10 @@ model: sonnet
 | Code review | Orchestrator | [Domain agent] |
 | Container configuration | Infrastructure | — |
 | Design system updates | Design | Frontend |
+| Test strategy/coverage | QA | [Domain agent] |
+| Bug triage | QA | Orchestrator |
+| Regression testing | QA | Backend/Frontend |
+| Deployment/CI-CD | Infrastructure | — |
 
 ---
 
