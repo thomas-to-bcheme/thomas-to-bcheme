@@ -18,36 +18,64 @@ import SystemStatusTicker from '@/components/SystemStatusTicker';
 import AiGenerator from '@/components/AiGenerator';
 import TrustBadge from '@/components/TrustBadge';
 import Button from '@/components/ui/Button';
+import { useChatHistory } from '@/hooks/useChatHistory';
 
 const HeroSection = () => {
   // Mobile chat collapsed state (U1)
   const [isMobileChatCollapsed, setIsMobileChatCollapsed] = useState(true);
+
+  // Chat history persistence
+  const {
+    conversations,
+    activeConversation,
+    activeConversationId,
+    createConversation,
+    setActiveConversation,
+    updateActiveMessages,
+    deleteConversation,
+    clearAllConversations,
+    isLoaded,
+  } = useChatHistory();
+
+  // Common props for AiGenerator (both desktop and mobile)
+  const aiGeneratorHistoryProps = {
+    conversations,
+    activeConversation,
+    activeConversationId,
+    onSelectConversation: setActiveConversation,
+    onNewConversation: createConversation,
+    onUpdateMessages: updateActiveMessages,
+    onDeleteConversation: deleteConversation,
+    onClearAllConversations: clearAllConversations,
+    historyEnabled: isLoaded,
+  };
+
   return (
     <section className="mb-16 pt-4">
       {/* SYSTEM TICKER: Real-time status bar */}
       <SystemStatusTicker />
 
       <div className="grid lg:grid-cols-2 gap-12 items-center mt-8">
-        
+
         {/* --- LEFT COL: Value Proposition & Trust Signals --- */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }} 
-          animate={{ opacity: 1, x: 0 }} 
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           className="flex flex-col justify-center h-full" // Added flex col to maintain vertical alignment
         >
             {/* Header Badges */}
             <div className="flex items-center gap-2 mb-4">
-              <Badge 
-                color="green" 
-                pulse 
+              <Badge
+                color="green"
+                pulse
                 href="mailto:thomas.to.bcheme@gmail.com"
               >
                 AVAILABLE FOR HIRE
               </Badge>
               <Badge color="zinc">California, United States</Badge>
-            </div>               
-            
+            </div>
+
             {/* Main Title */}
             <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 text-zinc-900 dark:text-white leading-[1.1]">
               Fullstack<br />
@@ -55,11 +83,11 @@ const HeroSection = () => {
                 AI/ML Engineer
               </span>
             </h1>
-            
+
             <p className="text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl mb-6">
               Integrating AI to digitally transform software engineering using machine learning methods to enhance workflows.
             </p>
-            
+
             {/* TRUST SIGNALS */}
             <div className="flex flex-wrap items-center gap-3 mb-8">
               {[
@@ -141,7 +169,7 @@ const HeroSection = () => {
               {/* Chat Interface Area */}
               <div className="flex-1 overflow-hidden relative rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
                   <div className="absolute inset-0 overflow-auto custom-scrollbar">
-                     <AiGenerator />
+                     <AiGenerator {...aiGeneratorHistoryProps} />
                   </div>
               </div>
            </div>
@@ -181,6 +209,7 @@ const HeroSection = () => {
                 <AiGenerator
                   collapsed={isMobileChatCollapsed}
                   onToggleCollapse={() => setIsMobileChatCollapsed(!isMobileChatCollapsed)}
+                  {...aiGeneratorHistoryProps}
                 />
               </div>
             </div>
