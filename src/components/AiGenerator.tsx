@@ -14,7 +14,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { ChatError } from '@/types/api-errors';
+import type { ChatError } from '@/types/api-errors';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis';
 import VoiceControls from '@/components/VoiceControls';
@@ -170,7 +170,7 @@ export default function AiGenerator({
     }
   }, [isLoading, ttsEnabled, cancelSpeech]);
 
-  async function handleSubmit(e?: React.FormEvent, overridePrompt?: string) {
+  const handleSubmit = async (e?: React.FormEvent, overridePrompt?: string) => {
     e?.preventDefault();
     const promptText = overridePrompt || input;
 
@@ -234,7 +234,9 @@ export default function AiGenerator({
         });
       }
     } catch (streamError) {
-      console.error('Stream error:', streamError);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Stream error:', streamError);
+      }
       const error: ChatError = {
         type: 'stream',
         message: streamError instanceof Error ? streamError.message : 'Stream interrupted',
@@ -255,16 +257,16 @@ export default function AiGenerator({
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   // Retry handler
-  function handleRetry() {
+  const handleRetry = () => {
     if (lastPromptRef.current && !isLoading && chatError && isRetryableError(chatError)) {
       // Remove the error message before retrying
       setMessages((prev) => prev.slice(0, -1));
       handleSubmit(undefined, lastPromptRef.current);
     }
-  }
+  };
 
   // Voice control handlers
   const handleToggleListening = () => {
@@ -344,7 +346,7 @@ export default function AiGenerator({
                   <p className="text-xs font-medium text-zinc-800 dark:text-zinc-200">
                     {cap.label}
                   </p>
-                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
                     {cap.description}
                   </p>
                 </div>

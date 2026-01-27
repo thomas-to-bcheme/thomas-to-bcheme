@@ -17,14 +17,14 @@
 }
 
 /*
- * TYPOGRAPHY SCALE (V1)
- * Standardized micro-typography system:
- * - text-[10px]: Badges, status indicators, system metadata
- * - text-xs (12px): Section subtitles, secondary labels
+ * TYPOGRAPHY SCALE (V2)
+ * Standardized typography system with 12px minimum:
+ * - text-xs (12px): Badges, labels, status indicators, system metadata (MINIMUM)
  * - text-sm (14px): Body text, descriptions
- * - text-base+: Headings and titles
+ * - text-base (16px): Primary content
+ * - text-lg+ : Headings and titles
  *
- * Avoid: text-[11px] - use text-xs instead for consistency
+ * Note: text-[10px] deprecated - use text-xs or .text-micro instead
  */
 
 /* --- ROOT VARIABLES --- */
@@ -196,9 +196,9 @@ pre {
   @apply text-zinc-600 dark:text-zinc-400;
 }
 
-/* Micro typography (badges, labels, status indicators) */
+/* Micro typography (badges, labels, status indicators) - 12px minimum */
 .text-micro {
-  @apply text-[10px] font-bold uppercase tracking-wider;
+  @apply text-xs font-bold uppercase tracking-wider;
 }
 
 /* Status indicator ping animation with motion-reduce support */

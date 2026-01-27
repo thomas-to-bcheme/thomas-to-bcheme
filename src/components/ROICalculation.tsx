@@ -57,7 +57,7 @@ const ROICalculation = () => {
                       <Activity className="text-blue-600" size={16} /> 
                       ROI Trajectory
                   </h2>
-                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400 font-medium mt-1 max-w-md leading-relaxed">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-1 max-w-md leading-relaxed">
                       Visualizing the cost arbitrage between human labor (Manual) and automated systems (Agentic)
                   </p>
               </div>
@@ -78,7 +78,7 @@ const ROICalculation = () => {
             {/* LEFT: MODEL DRIVERS */}
             <div className="lg:col-span-4 bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-5 rounded-xl shadow-sm flex flex-col gap-6">
                 <div className="pb-2 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Model Drivers</h3>
+                    <h3 className="text-micro text-zinc-400">Model Drivers</h3>
                     <div className="p-1 bg-zinc-100 dark:bg-zinc-800 rounded">
                         <Calculator size={12} className="text-zinc-500" />
                     </div>
@@ -180,7 +180,7 @@ const ROICalculation = () => {
                  
                  {/* Step 1: Manual Cost */}
                  <div className="relative pl-4 border-l-2 border-zinc-100 dark:border-zinc-800">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-[10px] font-bold text-zinc-600 dark:text-zinc-300">1</div>
+                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-600 dark:text-zinc-300">1</div>
                     <h4 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2">
   Manual Cost (<InlineMath math="C_{manual}" />)
 </h4>
@@ -205,7 +205,7 @@ const ROICalculation = () => {
 
                  {/* Step 2: Auto Cost */}
                  <div className="relative pl-4 border-l-2 border-zinc-100 dark:border-zinc-800">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-[10px] font-bold text-zinc-600 dark:text-zinc-300">2</div>
+                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-600 dark:text-zinc-300">2</div>
                     <h4 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 mb-2">
   Automated Cost (<InlineMath math="C_{auto}" />)
 </h4>
@@ -239,7 +239,7 @@ const ROICalculation = () => {
 
                  {/* Step 3: Break Even */}
                  <div className="relative pl-4 border-l-2 border-blue-200 dark:border-blue-900">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[10px] font-bold text-white">3</div>
+                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white">3</div>
                     <h4 className="text-lg font-bold text-blue-700 dark:text-blue-400 mb-2">
                         Solve for Break-Even (<InlineMath math="t_{break}" />)
                     </h4>
@@ -287,7 +287,7 @@ const ROICalculation = () => {
 
                  {/* Step 4: Profitable Case */}
                  <div className="relative pl-4 border-l-2 border-emerald-200 dark:border-emerald-900">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-[10px] font-bold text-white">4</div>
+                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-xs font-bold text-white">4</div>
                     <h4 className="text-lg font-bold text-emerald-700 dark:text-emerald-400 mb-2">
                         Case A: Profitable (<InlineMath math="C_{manual} > C_{cloud}" />)
                     </h4>
@@ -311,7 +311,7 @@ const ROICalculation = () => {
 
                  {/* Step 5: Unprofitable Case */}
                  <div className="relative pl-4 border-l-2 border-rose-200 dark:border-rose-900">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-rose-500 flex items-center justify-center text-[10px] font-bold text-white">5</div>
+                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-rose-500 flex items-center justify-center text-xs font-bold text-white">5</div>
                     <h4 className="text-lg font-bold text-rose-700 dark:text-rose-400 mb-2">
                         Case B: Unprofitable (<InlineMath math="C_{manual} < C_{cloud}" />)
                     </h4>
@@ -405,7 +405,7 @@ const CleanInput = ({ label, val, set, min, max, step, unit }: CleanInputProps) 
             <div className="flex justify-between items-end mb-2">
                 <label
                     htmlFor={inputId}
-                    className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider"
+                    className="text-micro text-zinc-500 dark:text-zinc-400"
                 >
                     {label}
                 </label>
@@ -583,14 +583,14 @@ const ProfitLossGraph = ({ weeks, manualBurn, autoBurn, buildCost, breakEven }: 
                  return (
                     <g key={i}>
                         <line x1="0" y1={y} x2={graphWidth} y2={y} stroke="currentColor" strokeOpacity="0.05" strokeWidth="1" className="text-zinc-400" />
-                        <text x={graphWidth + 10} y={y + 3} textAnchor="start" className="text-[10px] font-bold fill-zinc-400">
+                        <text x={graphWidth + 10} y={y + 3} textAnchor="start" className="text-xs font-bold fill-zinc-400">
                             ${(val / 1000).toFixed(0)}k
                         </text>
                     </g>
                  )
              })}
              
-             <text x={graphWidth + 10} y={graphHeight + 3} textAnchor="start" className="text-[10px] font-bold fill-zinc-400">$0</text>
+             <text x={graphWidth + 10} y={graphHeight + 3} textAnchor="start" className="text-xs font-bold fill-zinc-400">$0</text>
              <line x1={graphWidth} y1={0} x2={graphWidth} y2={graphHeight} stroke="currentColor" strokeOpacity="0.1" strokeWidth="1" className="text-zinc-400" />
 
              {/* Minor Tickers */}
@@ -619,11 +619,11 @@ const ProfitLossGraph = ({ weeks, manualBurn, autoBurn, buildCost, breakEven }: 
             {/* --- LINES --- */}
             {/* Manual */}
             <path d={`M 0,${startY} L ${endX},${manualEndY}`} fill="none" stroke="#e11d48" strokeWidth="2" strokeDasharray="4,4" className="opacity-50" />
-            <text x={endX - 10} y={manualEndY - 10} textAnchor="end" className="text-[10px] font-bold fill-rose-600 uppercase tracking-wider">Manual</text>
+            <text x={endX - 10} y={manualEndY - 10} textAnchor="end" className="text-micro fill-rose-600">Manual</text>
 
             {/* Agentic */}
             <path d={`M 0,${autoStartY} L ${endX},${autoEndY}`} fill="none" stroke="#2563eb" strokeWidth="3" />
-            <text x={endX - 10} y={autoEndY - 10} textAnchor="end" className="text-[10px] font-bold fill-blue-600 uppercase tracking-wider">Agentic</text>
+            <text x={endX - 10} y={autoEndY - 10} textAnchor="end" className="text-micro fill-blue-600">Agentic</text>
 
             {/* --- HOVER INTERACTION OVERLAY --- */}
             {/* Transparent rect to catch events everywhere in the grid */}
@@ -650,7 +650,7 @@ const ProfitLossGraph = ({ weeks, manualBurn, autoBurn, buildCost, breakEven }: 
                         
                         <g transform="translate(12, 12)">
                             {/* Header: Week Number */}
-                            <text y="6" className="text-[10px] font-black uppercase tracking-wider fill-zinc-400">
+                            <text y="6" className="text-micro fill-zinc-400">
                                 Week {hoverWeek?.toFixed(0)}
                             </text>
 
@@ -678,17 +678,17 @@ const ProfitLossGraph = ({ weeks, manualBurn, autoBurn, buildCost, breakEven }: 
             )}
 
             {/* --- X AXIS LABELS (Time) --- */}
-            <text x={0} y={height} className="text-[10px] font-bold fill-zinc-400 uppercase">Start</text>
-            <text x={yearWidth} y={height} textAnchor="middle" className="text-[10px] font-bold fill-zinc-400 uppercase">Year 1</text>
-            <text x={yearWidth * 2} y={height} textAnchor="middle" className="text-[10px] font-bold fill-zinc-400 uppercase">Year 2</text>
-            <text x={graphWidth} y={height} textAnchor="end" className="text-[10px] font-bold fill-zinc-400 uppercase">Year 3</text>
+            <text x={0} y={height} className="text-micro fill-zinc-400">Start</text>
+            <text x={yearWidth} y={height} textAnchor="middle" className="text-micro fill-zinc-400">Year 1</text>
+            <text x={yearWidth * 2} y={height} textAnchor="middle" className="text-micro fill-zinc-400">Year 2</text>
+            <text x={graphWidth} y={height} textAnchor="end" className="text-micro fill-zinc-400">Year 3</text>
 
             {/* --- BREAK EVEN MARKER (Only show if not hovering to reduce clutter) --- */}
             {hasIntersection && !hoverData && (
                 <g>
                     <circle cx={crossX} cy={crossY} r="4" fill="#10b981" stroke="white" strokeWidth="2" />
                     <line x1={crossX} y1={crossY} x2={crossX} y2={graphHeight} stroke="#10b981" strokeWidth="1" strokeDasharray="3,3" />
-                    <text x={crossX} y={graphHeight - 10} textAnchor="middle" className="text-[10px] font-bold fill-emerald-600 bg-white dark:bg-black p-1">Break-Even</text>
+                    <text x={crossX} y={graphHeight - 10} textAnchor="middle" className="text-xs font-bold fill-emerald-600 bg-white dark:bg-black p-1">Break-Even</text>
                 </g>
             )}
         </svg>

@@ -40,7 +40,7 @@ const Connect: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">Ideal Role Fit</span>
+                <span className="text-micro font-mono text-zinc-400">Ideal Role Fit</span>
                 <div className="flex flex-wrap gap-2">
                   {['AI/ML Engineer', 'AI/ML Ops', 'Data Scientist', 'Senior Fullstack Software Engineer'].map((role) => (
                     <span key={role} className="px-2.5 py-1 rounded-md bg-white border border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700 text-xs font-medium text-zinc-700 dark:text-zinc-300 shadow-sm cursor-default hover:border-blue-400 transition-colors">
@@ -77,7 +77,7 @@ const Connect: React.FC = () => {
               </Button>
 
               <div className="text-center">
-                <p className="text-[10px] text-zinc-400 flex items-center justify-center gap-1">
+                <p className="text-xs text-zinc-400 flex items-center justify-center gap-1">
                   <Zap size={10} className="text-yellow-500" />
                   Response time: &lt; 24 hours
                 </p>

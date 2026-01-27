@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils'; // Import the utility we just made
 
-type BadgeProps = {
+interface BadgeProps {
   children: React.ReactNode;
   color?: "gradient" | "blue" | "green" | "zinc" | "amber" | "purple" | "red" | "rose";
   variant?: "solid" | "outline" | "glass";
@@ -10,7 +10,7 @@ type BadgeProps = {
   title?: string;
   pulse?: boolean;
   className?: string;
-};
+}
 
 const Badge = ({ 
   children, 
@@ -24,7 +24,7 @@ const Badge = ({
 }: BadgeProps) => {
   
   // 1. Solid Colors
-  const solidColors = {
+  const SOLID_COLORS = {
     gradient: "bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-transparent shadow-sm",
     blue: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-200 dark:border-blue-800",
     green: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800",
@@ -36,7 +36,7 @@ const Badge = ({
   };
 
   // 2. Outline Colors
-  const outlineColors = {
+  const OUTLINE_COLORS = {
     gradient: "bg-transparent text-blue-600 dark:text-blue-400 border-blue-500", 
     blue: "bg-transparent text-blue-700 dark:text-blue-400 border-blue-600/50",
     green: "bg-transparent text-emerald-700 dark:text-emerald-400 border-emerald-600/50",
@@ -48,7 +48,7 @@ const Badge = ({
   };
 
   // 3. Logic
-  const selectedColors = variant === 'outline' ? outlineColors : solidColors;
+  const selectedColors = variant === 'outline' ? OUTLINE_COLORS : SOLID_COLORS;
   const glassEffect = variant === 'glass' ? "backdrop-blur-md bg-opacity-50 dark:bg-opacity-20" : "";
   
   const Component = href ? 'a' : 'span';
@@ -62,7 +62,7 @@ const Badge = ({
       target={href ? "_blank" : undefined}
       title={title}
       className={cn(
-        `px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-bold border flex items-center gap-1.5 transition-all`, 
+        `px-2.5 py-1 rounded-md text-micro border flex items-center gap-1.5 transition-all`,
         selectedColors[color],
         glassEffect,
         interactionStyles,

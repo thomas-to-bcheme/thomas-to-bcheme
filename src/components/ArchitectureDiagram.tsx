@@ -21,7 +21,7 @@ export default function ArchitectureDiagram() {
             </div>
             {/* Text */}
             <div className="text-center sm:text-left">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Empirical Data Acquisition</h3>
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Empirical Data Acquisition</h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
                 <strong>Digitized Systems</strong> to capture raw data sources reflecting reality
               </p>
@@ -42,7 +42,7 @@ export default function ArchitectureDiagram() {
               </svg>
             </div>
             <div className="text-center sm:text-left">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Data Infrastructure</h3>
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Data Infrastructure</h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
                 <strong>Digitutilize</strong> digitized data for modeling, analysis, and/or automation
                 <br />
@@ -65,7 +65,7 @@ export default function ArchitectureDiagram() {
               </svg>
             </div>
             <div className="text-center sm:text-left">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Digital Transformation</h3>
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Digital Transformation</h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
                 <strong>Fullstack Agentic Software</strong> to realize revenue and/or innovate
               </p>

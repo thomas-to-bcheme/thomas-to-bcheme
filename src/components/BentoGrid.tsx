@@ -11,7 +11,7 @@ export const BentoGrid = ({ children, className, id }: { children: React.ReactNo
   </div>
 );
 
-type BentoCardProps = {
+interface BentoCardProps {
   children: React.ReactNode;
   className?: string;
   colSpan?: 1 | 2 | 3 | 4;
@@ -21,7 +21,7 @@ type BentoCardProps = {
   href?: string;
   id?: string;
   noFade?: boolean;
-};
+}
 
 export const BentoCard = ({ children, className, colSpan = 1, rowSpan = 1, title, icon: Icon, href, id, noFade = true }: BentoCardProps) => {
   const Wrapper = href ? 'a' : 'div';

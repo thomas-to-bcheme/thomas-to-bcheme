@@ -73,7 +73,7 @@ export default function VoiceControls({
 
       {/* Unsupported Message */}
       {!sttSupported && !ttsSupported && (
-        <span className="text-[10px] text-zinc-400 dark:text-zinc-500">
+        <span className="text-xs text-zinc-400 dark:text-zinc-500">
           Voice not supported
         </span>
       )}

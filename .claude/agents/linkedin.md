@@ -97,7 +97,25 @@ Use this mix:
 
 - **Show, don't tell**: Use specific metrics over vague claims
 - **Process over polish**: Share the learning journey, not just wins
-- **Authenticity**: Admit challenges and failures when relevant
+
+---
+
+## Tone & Voice Guidelines
+
+**DO:**
+- Share personal learning experiences ("I discovered...", "What surprised me was...")
+- Use reflective language ("One thing I learned...", "Something I found interesting...")
+- Be conversational and approachable
+- Invite discussion ("Has anyone else found...", "I'd love to hear how others...")
+- Focus on positive discoveries and growth
+- Share excitement about what you're building
+
+**DON'T:**
+- Make authoritative claims or statements
+- Sound like a tutorial or lecture
+- Use corporate or marketing language
+- Position yourself as an expert giving advice
+- Show vulnerability or admit weaknesses/struggles
 
 ---
 

@@ -44,7 +44,7 @@ const AboutMeSection: React.FC = () => {
 
             {/* Work Authorization Status (Pinned to bottom of card) */}
             <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
+              <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
                 Work Authorization
               </span>
               <ul className="space-y-2.5">
@@ -88,7 +88,7 @@ const AboutMeSection: React.FC = () => {
                     <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+                  <span className="text-micro font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
                     Current Focus (Jan 2026)
                   </span>
                 </div>
@@ -111,18 +111,18 @@ const AboutMeSection: React.FC = () => {
               <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Philosophy</h5>
               
               <div>
-                <h6 className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
-                    The 0&rarr;1 Lifecycle
+                <h6 className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-2">
+                    The 0→1 Lifecycle
                 </h6>
-                <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+                <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono text-zinc-500 dark:text-zinc-400">
                   <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
                     Abstraction
                   </span>
-                  <span className="text-zinc-300">&rarr;</span>
+                  <span className="text-zinc-300">→</span>
                   <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
                     Architecture
                   </span>
-                  <span className="text-zinc-300">&rarr;</span>
+                  <span className="text-zinc-300">→</span>
                   <span className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded font-bold">
                     Deployment
                   </span>

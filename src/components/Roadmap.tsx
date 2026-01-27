@@ -31,43 +31,43 @@ interface RoadmapPhase {
 const PHASES: RoadmapPhase[] = [
   {
     id: 1,
-    title: "Phase 1: Minimal Viable Product",
-    subtitle: "Frontend > Backend",
+    title: 'Phase 1: Minimal Viable Product',
+    subtitle: 'Frontend > Backend',
     status: 'completed', // <--- CHANGE TO 'completed', 'current', or 'upcoming'
-    stakeholder: "Recruiters",
+    stakeholder: 'Recruiters',
     icon: LayoutTemplate,
-    description: "Deployment of the core frontend architecture to act as a marketing signal. Demonstrating proven competency and qualification to recruiters through a high-performance, accessible web application.",
-    goal: "Frontend UI as a better visual representation of the resume. Prioritizing 0 to 1 delivery to demonstrate aptitude."
+    description: 'Deployment of the core frontend architecture to act as a marketing signal. Demonstrating proven competency and qualification to recruiters through a high-performance, accessible web application.',
+    goal: 'Frontend UI as a better visual representation of the resume. Prioritizing 0 to 1 delivery to demonstrate aptitude.'
   },
   {
     id: 2,
-    title: "Phase 2: Agentic Integration",
-    subtitle: "Lightweight Backend Features",
+    title: 'Phase 2: Agentic Integration',
+    subtitle: 'Lightweight Backend Features',
     status: 'current', // <--- CURRENTLY ACTIVE PHASE
-    stakeholder: "Hiring Managers",
+    stakeholder: 'Hiring Managers',
     icon: Server,
-    description: "Implementation of proof-of-concept Agentic features using Vercel's serverless infrastructure. Highlighting the agentic projects shown on the homepage to demonstrate immediate value.",
-    goal: "Frontend development with lightweight backend development of agentic features. Focus on shipping demonstrable features live during interviews."
+    description: 'Implementation of proof-of-concept Agentic features using Vercel\'s serverless infrastructure. Highlighting the agentic projects shown on the homepage to demonstrate immediate value.',
+    goal: 'Frontend development with lightweight backend development of agentic features. Focus on shipping demonstrable features live during interviews.'
   },
   {
     id: 3,
-    title: "Phase 3: E2E ML Infrastructure",
-    subtitle: "Robust Backend & CI/CD",
+    title: 'Phase 3: E2E ML Infrastructure',
+    subtitle: 'Robust Backend & CI/CD',
     status: 'upcoming',
-    stakeholder: "Technical Leads",
+    stakeholder: 'Technical Leads',
     icon: Layers,
-    description: "Complete end-to-end and cross-platform CI/CD of local Python ML models shipped as a FastAPI to GitHub and deployed on Hugging Face. The Vercel frontend will call this custom ecosystem without external platforms.",
-    goal: "Robust backend development with its own CI/CD pipeline integrated via API. All infrastructure built from scratch to demonstrate fullstack architectural control."
+    description: 'Complete end-to-end and cross-platform CI/CD of local Python ML models shipped as a FastAPI to GitHub and deployed on Hugging Face. The Vercel frontend will call this custom ecosystem without external platforms.',
+    goal: 'Robust backend development with its own CI/CD pipeline integrated via API. All infrastructure built from scratch to demonstrate fullstack architectural control.'
   },
   {
     id: 4,
-    title: "Phase 4: Open Source Distribution",
-    subtitle: "Refactoring & Education",
+    title: 'Phase 4: Open Source Distribution',
+    subtitle: 'Refactoring & Education',
     status: 'upcoming',
-    stakeholder: "Community & Developers",
+    stakeholder: 'Community & Developers',
     icon: GitBranch,
-    description: "Refactoring code, addressing technical debt, and distributing the public portfolio as an open-source learning resource. Creating modules to teach building Agentic methods from code, not low-code solutions.",
-    goal: "Completeness of a final project. Refactoring to best practices, aligning documentation, and creating educational resources to mentor open collaboration."
+    description: 'Refactoring code, addressing technical debt, and distributing the public portfolio as an open-source learning resource. Creating modules to teach building Agentic methods from code, not low-code solutions.',
+    goal: 'Completeness of a final project. Refactoring to best practices, aligning documentation, and creating educational resources to mentor open collaboration.'
   }
 ];
 
@@ -139,7 +139,7 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
             <div className="flex justify-between items-start mb-4">
               <div>
                  <span className={cn(
-                   "text-[10px] font-bold uppercase tracking-widest mb-1 block",
+                   "text-micro font-bold uppercase tracking-widest mb-1 block",
                    isActive || isCompleted ? "text-blue-600 dark:text-blue-400" : "text-zinc-400"
                  )}>
                    {phase.subtitle}
@@ -170,7 +170,7 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
                 ? "bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800 text-blue-800 dark:text-blue-200"
                 : "bg-zinc-100 dark:bg-zinc-800/50 border-zinc-200 dark:border-zinc-700 text-zinc-500"
             )}>
-              <span className="font-bold block mb-1 uppercase text-[10px] opacity-70">
+              <span className="font-bold block mb-1 uppercase text-xs opacity-70">
                 Primary Goal
               </span>
               {phase.goal}
@@ -178,7 +178,7 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
 
             {/* Stakeholder Tag */}
             <div className="mt-4 flex items-center gap-2">
-              <span className="text-[10px] text-zinc-400 uppercase font-medium">Target Stakeholder:</span>
+              <span className="text-xs text-zinc-400 uppercase font-medium">Target Stakeholder:</span>
               <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
                 {phase.stakeholder}
               </span>
@@ -227,7 +227,7 @@ const Roadmap = () => {
         {/* Micro-Header inside card */}
         <div className="flex items justify-center gap-2 mb-6 opacity-50">
             <div className="h-px w-8 bg-zinc-300 dark:bg-zinc-700"></div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+            <span className="text-micro font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
               The Engineering Manifesto
             </span>
             <div className="h-px w-8 bg-zinc-300 dark:bg-zinc-700"></div>

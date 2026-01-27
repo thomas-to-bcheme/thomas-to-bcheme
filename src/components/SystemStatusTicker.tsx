@@ -31,7 +31,7 @@ const SystemStatusTicker = () => {
   }, []);
 
 return (
-		<div className="flex flex-wrap gap-4 text-[10px] font-mono text-zinc-500 bg-zinc-50 dark:bg-zinc-900/50 py-2 px-4 rounded-full border border-zinc-200 dark:border-zinc-800 w-fit mb-8 shadow-sm hover:border-blue-200 transition-colors">
+		<div className="flex flex-wrap gap-4 text-xs font-mono text-zinc-500 bg-zinc-50 dark:bg-zinc-900/50 py-2 px-4 rounded-full border border-zinc-200 dark:border-zinc-800 w-fit mb-8 shadow-sm hover:border-blue-200 transition-colors">
 			<div className="flex items-center gap-1.5">
 				<div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
 				<span>SYSTEM: NOMINAL</span>
