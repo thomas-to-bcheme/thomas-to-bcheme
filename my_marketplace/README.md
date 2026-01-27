@@ -16,17 +16,34 @@ Plugins add new commands to Claude Code. Instead of typing complex git commands,
 
 ## Get Started
 
-**New to this?** Start with our [Quick Start Guide](docs/QUICK-START.md) (5 minutes, no coding required)
+**Recommended:** [Claude Code Installation Guide](docs/CLAUDE-CODE-INSTALLATION.md) (2 commands, 2 minutes)
 
-**Want all options?** See the [Full Installation Guide](docs/INSTALLATION-GUIDE.md)
+**Alternative methods:** [Quick Start Guide](docs/QUICK-START.md) | [Full Installation Guide](docs/INSTALLATION-GUIDE.md)
 
 **Having problems?** Check [Troubleshooting](docs/TROUBLESHOOTING.md)
 
 ---
 
-## Quick Install (One Command)
+## Quick Install (Recommended)
 
-Already comfortable with terminal? Run this in your project folder:
+In Claude Code, run these two commands:
+
+```shell
+# Step 1: Add the marketplace
+/plugin marketplace add thomas-to/thomas-to-bcheme
+
+# Step 2: Install the plugins you want
+/plugin install git-push@thomas-to-plugins
+/plugin install git-push-agentic@thomas-to-plugins
+/plugin install git-README@thomas-to-plugins
+```
+
+That's it! The plugins are now available.
+
+<details>
+<summary>Alternative: Manual curl installation</summary>
+
+If your Claude Code version doesn't support `/plugin`, run this in your project folder:
 
 ```bash
 mkdir -p .claude/plugins && \
@@ -39,6 +56,8 @@ for plugin in git-push git-push-agentic git-README; do \
     -o ".claude/plugins/${plugin}/skills/${plugin}/SKILL.md"; \
 done && echo "All plugins installed!"
 ```
+
+</details>
 
 ---
 

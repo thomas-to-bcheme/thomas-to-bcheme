@@ -1,6 +1,10 @@
 # git-push-agentic Plugin Guide
 
+**Command:** `/git-push-agentic`
+
 **What it does:** Automatically saves and uploads all your changes without asking questions.
+
+> **Installation:** See [Claude Code Installation Guide](../CLAUDE-CODE-INSTALLATION.md) for the quickest setup method.
 
 ---
 

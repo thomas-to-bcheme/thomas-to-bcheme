@@ -1,6 +1,10 @@
 # git-push Plugin Guide
 
+**Command:** `/git-push`
+
 **What it does:** Helps you save and upload your code changes step by step, with full control over the process.
+
+> **Installation:** See [Claude Code Installation Guide](../CLAUDE-CODE-INSTALLATION.md) for the quickest setup method.
 
 ---
 

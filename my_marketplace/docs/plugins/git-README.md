@@ -1,6 +1,10 @@
 # git-README Plugin Guide
 
+**Command:** `/git-README`
+
 **What it does:** Analyzes your project and creates (or updates) a professional README.md file.
+
+> **Installation:** See [Claude Code Installation Guide](../CLAUDE-CODE-INSTALLATION.md) for the quickest setup method.
 
 ---
 

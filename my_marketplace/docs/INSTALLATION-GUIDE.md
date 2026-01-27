@@ -4,25 +4,74 @@ Choose your installation method based on your comfort level.
 
 | Skill Level | Recommended Method | Time |
 |-------------|-------------------|------|
-| Beginner | [Download and Copy](#method-1-download-and-copy-beginner-friendly) | 10 min |
-| Intermediate | [Terminal Commands](#method-2-terminal-commands-intermediate) | 5 min |
-| Developer | [Git Submodule](#method-3-git-submodule-developer) | 3 min |
+| **Everyone** | [Claude Code Native](#method-1-claude-code-native-recommended) | 2 min |
+| Beginner | [Download and Copy](#method-2-download-and-copy-beginner-friendly) | 10 min |
+| Intermediate | [Terminal Commands](#method-3-terminal-commands-intermediate) | 5 min |
+| Developer | [Git Submodule](#method-4-git-submodule-developer) | 3 min |
 
 ---
 
-## Method 1: Download and Copy (Beginner-Friendly)
+## Method 1: Claude Code Native (Recommended)
+
+**Best for:** Everyone - this is the simplest and recommended method
+**Updates:** Managed through Claude Code's plugin system
+
+### Why Use This Method?
+
+- Simplest installation (2 commands)
+- Automatic update notifications
+- Built-in scope management (User/Project/Local)
+- Visual plugin manager interface
+- No file manipulation required
+
+### 1.1 Add the Marketplace
+
+In Claude Code, type:
+
+```shell
+/plugin marketplace add thomas-to/thomas-to-bcheme
+```
+
+This registers the plugin collection. You only need to do this once.
+
+### 1.2 Install Plugins
+
+Install one or more:
+
+```shell
+/plugin install git-push@thomas-to-plugins
+/plugin install git-push-agentic@thomas-to-plugins
+/plugin install git-README@thomas-to-plugins
+```
+
+### 1.3 Choose Scope
+
+When prompted, select:
+- **User** - Available in all your projects (recommended for personal use)
+- **Project** - Shared with team (adds to `.claude/settings.json`)
+- **Local** - Personal, this project only
+
+### 1.4 Verify
+
+Type `/plugin` and check the **Installed** tab.
+
+For the full walkthrough, see [Claude Code Installation Guide](CLAUDE-CODE-INSTALLATION.md).
+
+---
+
+## Method 2: Download and Copy (Beginner-Friendly)
 
 **Best for:** People who prefer clicking over typing commands
 **Updates:** Manual (re-download when updates are available)
 
-### 1.1 Download the Repository
+### 2.1 Download the Repository
 
 1. Visit https://github.com/thomas-to/thomas-to-bcheme
 2. Click the green **Code** button
 3. Select **Download ZIP**
 4. Unzip the downloaded file
 
-### 1.2 Locate the Plugin Files
+### 2.2 Locate the Plugin Files
 
 After downloading, find this folder:
 ```
@@ -34,7 +83,7 @@ thomas-to-bcheme-main/
       git-README/
 ```
 
-### 1.3 Create the Destination Folder
+### 2.3 Create the Destination Folder
 
 In YOUR project folder, create:
 ```
@@ -54,7 +103,7 @@ your-project/
 2. Click in the address bar, type `.claude`, press Enter
 3. Inside `.claude`, create a folder named `plugins`
 
-### 1.4 Copy the Plugin
+### 2.4 Copy the Plugin
 
 Drag the plugin folder(s) you want from the downloaded files into your `.claude/plugins/` folder.
 
@@ -73,7 +122,7 @@ your-project/
 
 ---
 
-## Method 2: Terminal Commands (Intermediate)
+## Method 3: Terminal Commands (Intermediate)
 
 **Best for:** Users comfortable with basic terminal/command line
 **Updates:** Re-run the commands to update
@@ -137,7 +186,7 @@ ls -la .claude/plugins/
 
 ---
 
-## Method 3: Git Submodule (Developer)
+## Method 4: Git Submodule (Developer)
 
 **Best for:** Developers who want version control and automatic updates
 **Updates:** Automatic with `git submodule update`

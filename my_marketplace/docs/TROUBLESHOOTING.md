@@ -4,6 +4,123 @@ Common problems and their solutions.
 
 ---
 
+## Native Plugin System Issues
+
+If you're using Claude Code's `/plugin` commands, check these first.
+
+### /plugin Command Not Recognized
+
+**Symptom:** Typing `/plugin` shows "unknown command" or doesn't work.
+
+**Cause:** Claude Code version is too old.
+
+**Solution:**
+1. Check your version: `claude --version`
+2. Update Claude Code if below version 1.0.33
+   - **Homebrew:** `brew upgrade claude-code`
+   - **npm:** `npm update -g @anthropic-ai/claude-code`
+3. Restart Claude Code after updating
+
+---
+
+### Marketplace Not Found
+
+**Symptom:** Error when running `/plugin marketplace add thomas-to/thomas-to-bcheme`
+
+**Possible causes:**
+
+1. **Typo in repository name**
+   - Use exact spelling: `thomas-to/thomas-to-bcheme`
+
+2. **Network connectivity**
+   - Check internet connection
+   - Verify GitHub is accessible: `curl -I https://github.com`
+
+3. **Repository access**
+   - The repository must be public
+   - Try opening https://github.com/thomas-to/thomas-to-bcheme in a browser
+
+---
+
+### Plugin Install Fails
+
+**Symptom:** `/plugin install git-push@thomas-to-plugins` shows an error.
+
+**Possible causes:**
+
+1. **Marketplace not added yet**
+   - First run: `/plugin marketplace add thomas-to/thomas-to-bcheme`
+   - Then try install again
+
+2. **Wrong marketplace name**
+   - The marketplace name is `thomas-to-plugins` (not the repo name)
+   - Full format: `plugin-name@marketplace-name`
+
+3. **Plugin name typo**
+   - Available plugins: `git-push`, `git-push-agentic`, `git-README`
+   - Names are case-sensitive
+
+---
+
+### Plugin Installed But Command Not Working
+
+**Symptom:** Plugin shows in "Installed" tab but `/git-push` doesn't work.
+
+**Solutions:**
+
+1. **Restart Claude Code**
+   - Close and reopen Claude Code
+   - Try the command again
+
+2. **Check the Errors tab**
+   - Run `/plugin` and go to the **Errors** tab
+   - Look for any loading errors
+
+3. **Clear plugin cache**
+   ```bash
+   rm -rf ~/.claude/plugins/cache
+   ```
+   Then restart Claude Code and reinstall the plugin
+
+4. **Verify scope**
+   - Open `/plugin` → **Installed** tab
+   - Check the plugin is installed for the correct scope
+
+---
+
+### Interactive UI Not Appearing
+
+**Symptom:** Typing `/plugin` doesn't open the visual interface.
+
+**Solutions:**
+
+1. **Terminal compatibility**
+   - Some terminals may not support the TUI
+   - Try using a different terminal app
+
+2. **Use direct commands instead**
+   - `/plugin install plugin-name@marketplace-name`
+   - `/plugin uninstall plugin-name@marketplace-name`
+   - `/plugin marketplace list`
+
+---
+
+### Cannot Remove Marketplace
+
+**Symptom:** Error when running `/plugin marketplace remove thomas-to-plugins`
+
+**Solution:**
+1. First uninstall all plugins from that marketplace
+2. Then remove the marketplace
+
+---
+
+## Manual Installation Issues
+
+If you're using manual file copying or curl commands, check these.
+
+---
+
 ## Command Not Recognized
 
 **Symptom:** You type `/git-push` but Claude says it doesn't recognize the command.

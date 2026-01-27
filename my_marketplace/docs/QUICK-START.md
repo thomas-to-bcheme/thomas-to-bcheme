@@ -1,22 +1,75 @@
 # Quick Start Guide
 
-**Time needed:** 5 minutes
+**Time needed:** 2 minutes
 **Skill level:** No coding experience required
 
 ---
 
-## Before You Begin
+## The Fastest Way to Install
+
+### Step 1: Add the Marketplace
+
+In Claude Code, type:
+
+```shell
+/plugin marketplace add thomas-to/thomas-to-bcheme
+```
+
+### Step 2: Install Your Plugin
+
+Choose one (or install all three):
+
+```shell
+/plugin install git-push@thomas-to-plugins
+```
+
+Or:
+```shell
+/plugin install git-push-agentic@thomas-to-plugins
+```
+
+Or:
+```shell
+/plugin install git-README@thomas-to-plugins
+```
+
+### Step 3: Try It
+
+Type the command for your installed plugin:
+
+| Plugin | Command | What It Does |
+|--------|---------|--------------|
+| git-push | `/git-push` | Interactive save and upload |
+| git-push-agentic | `/git-push-agentic` | Automatic save and upload |
+| git-README | `/git-README` | Generate documentation |
+
+**Done!** Your plugin is ready to use.
+
+---
+
+## Want More Details?
+
+- **Full native installation walkthrough:** [Claude Code Installation Guide](CLAUDE-CODE-INSTALLATION.md)
+- **Alternative methods (manual, curl, git):** [Full Installation Guide](INSTALLATION-GUIDE.md)
+- **Problems?** [Troubleshooting](TROUBLESHOOTING.md)
+
+---
+
+<details>
+<summary>Alternative: Manual Installation (click to expand)</summary>
+
+If your Claude Code doesn't support the `/plugin` command, you can install manually.
+
+**Time needed:** 5 minutes
+
+### Before You Begin
 
 Make sure you have:
 - [ ] Claude Code installed and working
 - [ ] A project folder where you want to use these plugins
 - [ ] Git installed on your computer
 
----
-
-## Step 1: Download the Plugin Files
-
-### Option A: Download ZIP (Easiest)
+### Step 1: Download the Plugin Files
 
 1. Go to: https://github.com/thomas-to/thomas-to-bcheme
 2. Click the green **Code** button
@@ -25,13 +78,7 @@ Make sure you have:
 5. Double-click to unzip it
 6. Look inside for the `my_marketplace/plugins/` folder
 
-### Option B: Use the One-Line Installer
-
-If you're comfortable with terminal, skip to the [Installation Guide](INSTALLATION-GUIDE.md#method-2-terminal-commands-intermediate).
-
----
-
-## Step 2: Find Your Project Folder
+### Step 2: Find Your Project Folder
 
 Your project folder is where your code lives. It might be called something like:
 - `my-website`
@@ -41,11 +88,9 @@ Your project folder is where your code lives. It might be called something like:
 **On Mac:** Open Finder and navigate to your project
 **On Windows:** Open File Explorer and navigate to your project
 
----
+### Step 3: Create the Plugin Folder
 
-## Step 3: Create the Plugin Folder
-
-Inside your project folder, you need to create this folder structure:
+Inside your project folder, create this folder structure:
 
 ```
 your-project/
@@ -53,7 +98,7 @@ your-project/
     plugins/
 ```
 
-### Creating Hidden Folders
+**Creating Hidden Folders**
 
 The `.claude` folder starts with a dot, which makes it "hidden" on some computers.
 
@@ -75,9 +120,7 @@ The `.claude` folder starts with a dot, which makes it "hidden" on some computer
 - On Mac: Press `Cmd + Shift + .` in Finder to show hidden files, then create folders normally
 - On Windows: Enable "Show hidden files" in View options, then create folders normally
 
----
-
-## Step 4: Copy the Plugin
+### Step 4: Copy the Plugin
 
 From the downloaded/unzipped files, find:
 ```
@@ -103,34 +146,22 @@ your-project/
   (your other project files...)
 ```
 
----
-
-## Step 5: Test It
+### Step 5: Test It
 
 1. Open Claude Code
-2. Navigate to your project folder (use `cd your-project` or open it directly)
+2. Navigate to your project folder
 3. Type: `/git-push`
 
 **Success!** If Claude starts checking your git status, the plugin is working.
 
 **Not working?** Check the [Troubleshooting Guide](TROUBLESHOOTING.md).
 
----
-
-## Want More Plugins?
-
-Repeat Step 4 for any other plugins you want:
-
-| Plugin Folder | Command | What It Does |
-|---------------|---------|--------------|
-| `git-push/` | `/git-push` | Interactive save and upload |
-| `git-push-agentic/` | `/git-push-agentic` | Automatic save and upload |
-| `git-README/` | `/git-README` | Generate documentation |
+</details>
 
 ---
 
 ## Next Steps
 
-- **Learn what each plugin does:** Check the [plugin guides](plugins/)
-- **See all installation options:** Read the [full Installation Guide](INSTALLATION-GUIDE.md)
-- **Having issues?** Visit [Troubleshooting](TROUBLESHOOTING.md)
+- **Learn what each plugin does:** [git-push](plugins/git-push.md) | [git-push-agentic](plugins/git-push-agentic.md) | [git-README](plugins/git-README.md)
+- **See all installation options:** [Full Installation Guide](INSTALLATION-GUIDE.md)
+- **Having issues?** [Troubleshooting](TROUBLESHOOTING.md)
