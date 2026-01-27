@@ -423,6 +423,88 @@ Every agent should verify:
 
 ---
 
+## Agent Handoff Protocol
+
+Explicit escalation paths prevent scope creep and ensure clear ownership.
+
+### Handoff Rules
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ORCHESTRATOR                              │
+│         (Architectural decisions, code review)              │
+└───────────────────────┬─────────────────────────────────────┘
+                        │
+        ┌───────────────┼───────────────┐
+        ▼               ▼               ▼
+   ┌─────────┐    ┌─────────┐    ┌─────────┐
+   │ Backend │◄──►│   API   │◄──►│ AI/ML   │
+   └────┬────┘    └────┬────┘    └─────────┘
+        │              │
+        ▼              ▼
+   ┌─────────┐    ┌─────────┐    ┌─────────┐
+   │Frontend │◄──►│ Design  │    │   QA    │◄── Tests all
+   └─────────┘    └─────────┘    └─────────┘
+        │
+        ▼
+   ┌─────────────┐
+   │Infrastructure│
+   └─────────────┘
+```
+
+### Escalation Triggers
+
+| From Agent | To Agent | When |
+|------------|----------|------|
+| QA | Domain Agent | Bug fix required in production code |
+| Domain Agent | QA | Test coverage needed for new feature |
+| Any Agent | Orchestrator | Architectural decision or cross-cutting change |
+| Frontend | Design | Visual design or UX decision needed |
+| Design | Frontend | Implementation of approved design |
+| Backend | API | Contract changes affect external consumers |
+| Any Agent | Infrastructure | Deployment or pipeline changes needed |
+
+### Handoff Checklist
+
+When handing off to another agent:
+- [ ] Clearly state what was attempted and why escalation is needed
+- [ ] Provide relevant file paths and line numbers
+- [ ] Include any error messages or unexpected behavior
+- [ ] Specify the expected outcome
+
+---
+
+## Reusable Sub-Agent Catalog
+
+Sub-agents are specialized roles that can be invoked across multiple primary agents.
+
+| Sub-Agent | Primary Home | Can Be Used By | Purpose |
+|-----------|--------------|----------------|---------|
+| **Schema Sentinel** | Backend | API, AI/ML | Type definitions, data contracts |
+| **Query Optimizer** | Backend | API | Access patterns, N+1 detection |
+| **Data Sanitizer** | Backend | All | PII scrubbing, contextual logging |
+| **Security Warden** | API | All | AuthZ/AuthN, secrets management |
+| **Docs Scribe** | API | All | Code-documentation sync |
+| **Integration Tester** | API | Backend, QA | Mock dependencies, edge cases |
+| **Component Librarian** | Frontend | Design | Reusable UI primitives |
+| **State Architect** | Frontend | — | Complex state management |
+| **A11y Auditor** | Frontend, Design | QA | WCAG compliance, semantic HTML |
+| **Performance Auditor** | Frontend | Backend, Infrastructure | Metrics, bottleneck detection |
+| **Token Manager** | Design | Frontend | Design token system |
+| **Layout Engineer** | Design | Frontend | Responsive design, breakpoints |
+| **Motion Designer** | Design | Frontend | Animations, reduced-motion |
+| **Build Optimizer** | Infrastructure | — | Caching, artifact sizing |
+| **Security Scanner** | Infrastructure | API | CVE detection, vulnerability reports |
+| **Pipeline Architect** | Infrastructure | — | CI/CD workflow design |
+| **Environment Manager** | Infrastructure | All | Environment variable parity |
+| **Test Strategist** | QA | All | Coverage requirements, test planning |
+| **Regression Guardian** | QA | — | Flaky test detection, suite maintenance |
+| **Bug Triager** | QA | Orchestrator | Severity categorization, reproducibility |
+| **Code Detective** | Orchestrator | All | Magic numbers, hardcoded strings |
+| **Dependency Manager** | Orchestrator | All | Module contracts, cross-layer impacts |
+
+---
+
 ## Related Files
 
 | File | Purpose |
