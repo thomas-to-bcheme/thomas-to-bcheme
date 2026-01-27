@@ -5,5 +5,11 @@
   "author": {
     "name": "Thomas To",
     "email": "thomas.to.bcheme@gmail.com"
-  }
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["git", "automation", "agentic", "ai-powered", "autonomous", "workflow"],
+  "category": "developer-tools",
+  "tags": ["git", "automation", "agentic"]
 }

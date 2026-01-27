@@ -1,23 +1,41 @@
 {
   "name": "thomas-to-plugins",
+  "metadata": {
+    "description": "AI-powered git workflow automation plugins for Claude Code",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
   "owner": {
-    "name": "Thomas To"
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
   },
   "plugins": [
     {
       "name": "git-push",
       "source": "./plugins/git-push",
-      "description": "Interactive git push with manual commit messages - prompts for staging and commit message before pushing"
+      "description": "Interactive git push with manual commit messages - prompts for staging and commit message before pushing",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "keywords": ["git", "push", "commit", "version-control", "interactive", "workflow"],
+      "tags": ["git", "workflow", "productivity"]
     },
     {
       "name": "git-push-agentic",
       "source": "./plugins/git-push-agentic",
-      "description": "Autonomous git workflow - Claude handles add, commit message generation, and push automatically"
+      "description": "Autonomous git workflow - Claude handles add, commit message generation, and push automatically",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "keywords": ["git", "automation", "agentic", "ai-powered", "autonomous", "workflow"],
+      "tags": ["git", "automation", "agentic"]
     },
     {
       "name": "git-README",
       "source": "./plugins/git-README",
-      "description": "5-agent README generator with smart merge - 4 parallel analyzers + review coordinator"
+      "description": "5-agent README generator with smart merge - 4 parallel analyzers + review coordinator",
+      "version": "1.0.0",
+      "category": "documentation",
+      "keywords": ["readme", "documentation", "generator", "multi-agent", "ai-powered", "automation"],
+      "tags": ["documentation", "readme", "automation"]
     }
   ]
 }
