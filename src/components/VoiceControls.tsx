@@ -38,7 +38,7 @@ export default function VoiceControls({
           disabled={disabled}
           className={`p-2 rounded-lg transition-all ${
             isListening
-              ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
+              ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse motion-reduce:animate-none'
               : 'bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-400'
           } disabled:opacity-50 disabled:cursor-not-allowed`}
           aria-label={isListening ? 'Stop listening' : 'Start voice input'}
@@ -60,7 +60,7 @@ export default function VoiceControls({
           className={`p-2 rounded-lg transition-all ${
             ttsEnabled
               ? isSpeaking
-                ? 'bg-indigo-500 text-white animate-pulse'
+                ? 'bg-indigo-500 text-white animate-pulse motion-reduce:animate-none'
                 : 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
               : 'bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-400'
           } disabled:opacity-50 disabled:cursor-not-allowed`}

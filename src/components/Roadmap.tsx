@@ -78,8 +78,8 @@ const StatusIcon = ({ status }: { status: PhaseStatus }) => {
   if (status === 'current') {
     return (
       <div className="relative flex items-center justify-center">
-        <div className="absolute w-full h-full bg-blue-400/30 rounded-full animate-ping" />
-        <Loader2 className="w-6 h-6 text-blue-600 dark:text-blue-400 animate-spin relative z-10" />
+        <div className="absolute w-full h-full bg-blue-400/30 rounded-full animate-ping motion-reduce:animate-none" />
+        <Loader2 className="w-6 h-6 text-blue-600 dark:text-blue-400 animate-spin motion-reduce:animate-none relative z-10" />
       </div>
     );
   }

@@ -481,7 +481,11 @@ export default function AiGenerator({
           />
 
           {/* Input Field */}
+          <label htmlFor="chat-message-input" className="sr-only">
+            Chat message
+          </label>
           <input
+            id="chat-message-input"
             className="flex-1 bg-white dark:bg-black border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:text-white placeholder:text-zinc-400"
             value={isListening ? `${input}${interimTranscript}` : input}
             onChange={(e) => setInput(e.target.value)}

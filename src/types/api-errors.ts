@@ -7,7 +7,6 @@
 
 /** Error codes returned by the chat API */
 export type ApiErrorCode =
-  | 'RATE_LIMIT_EXCEEDED'
   | 'GOOGLE_QUOTA_EXCEEDED'
   | 'VALIDATION_ERROR'
   | 'INVALID_JSON'
@@ -24,8 +23,6 @@ export interface ApiErrorResponse {
 
 /** User-friendly messages for each error code */
 export const ERROR_MESSAGES: Record<ApiErrorCode, string> = {
-  RATE_LIMIT_EXCEEDED:
-    "You're sending messages too quickly. Please wait and try again.",
   GOOGLE_QUOTA_EXCEEDED:
     'The AI service is temporarily at capacity. Please wait a moment.',
   VALIDATION_ERROR:

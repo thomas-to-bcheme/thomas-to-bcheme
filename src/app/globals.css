@@ -33,6 +33,22 @@
   --foreground: #171717;
   /* Grid Pattern Color (Light Mode) */
   --grid-color: rgba(0, 0, 0, 0.05);
+
+  /* Semantic Surface Colors */
+  --surface-primary: #ffffff;
+  --surface-secondary: #fafafa;
+
+  /* Semantic Border Colors */
+  --border-default: #e4e4e7;
+  --border-accent: #3b82f6;
+
+  /* Semantic Text Colors */
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+
+  /* Focus Ring Offset (for dark mode support) */
+  --ring-offset: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,6 +57,20 @@
     --foreground: #ededed;
     /* Grid Pattern Color (Dark Mode) */
     --grid-color: rgba(255, 255, 255, 0.05);
+
+    /* Dark Mode Surface Overrides */
+    --surface-primary: #000000;
+    --surface-secondary: #18181b;
+
+    /* Dark Mode Border Overrides */
+    --border-default: #27272a;
+
+    /* Dark Mode Text Overrides */
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+
+    /* Dark Mode Focus Ring Offset */
+    --ring-offset: #000000;
   }
 }
 
@@ -130,4 +160,53 @@ pre {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* =================================
+   REUSABLE ACCESSIBILITY PATTERNS
+   ================================= */
+
+/* Focus ring with dark mode support (WCAG 2.1 AA) */
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+         focus-visible:ring-offset-2;
+  --tw-ring-offset-color: var(--ring-offset);
+}
+
+/* Default border pattern (reduces repetition) */
+.border-default {
+  @apply border-zinc-200 dark:border-zinc-800;
+}
+
+/* Surface backgrounds */
+.surface-primary {
+  @apply bg-white dark:bg-black;
+}
+
+.surface-secondary {
+  @apply bg-zinc-50 dark:bg-zinc-900;
+}
+
+/* Text color utilities */
+.text-default {
+  @apply text-zinc-900 dark:text-white;
+}
+
+.text-subtle {
+  @apply text-zinc-600 dark:text-zinc-400;
+}
+
+/* Micro typography (badges, labels, status indicators) */
+.text-micro {
+  @apply text-[10px] font-bold uppercase tracking-wider;
+}
+
+/* Status indicator ping animation with motion-reduce support */
+.status-dot-ping {
+  @apply animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full opacity-75;
+}
+
+/* Card base pattern */
+.card-base {
+  @apply bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm;
 }

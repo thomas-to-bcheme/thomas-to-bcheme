@@ -396,21 +396,40 @@ const ROICalculation = () => {
 
 // --- SUBCOMPONENTS ---
 
-const CleanInput = ({ label, val, set, min, max, step, unit }: CleanInputProps) => (
-    <div className="group">
-        <div className="flex justify-between items-end mb-2">
-            <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">{label}</span>
-            <span className="font-mono text-xs font-bold text-zinc-800 dark:text-zinc-200 border-b border-zinc-200 dark:border-zinc-800 pb-0.5">
-                {val.toLocaleString()}{unit}
-            </span>
+const CleanInput = ({ label, val, set, min, max, step, unit }: CleanInputProps) => {
+    const inputId = `input-${label.toLowerCase().replace(/\s+/g, '-')}`;
+    const ariaValueText = `${val.toLocaleString()}${unit}`;
+
+    return (
+        <div className="group">
+            <div className="flex justify-between items-end mb-2">
+                <label
+                    htmlFor={inputId}
+                    className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider"
+                >
+                    {label}
+                </label>
+                <span className="font-mono text-xs font-bold text-zinc-800 dark:text-zinc-200 border-b border-zinc-200 dark:border-zinc-800 pb-0.5">
+                    {val.toLocaleString()}{unit}
+                </span>
+            </div>
+            <input
+                id={inputId}
+                type="range"
+                min={min}
+                max={max}
+                step={step}
+                value={val}
+                onChange={e => set(+e.target.value)}
+                aria-valuemin={min}
+                aria-valuemax={max}
+                aria-valuenow={val}
+                aria-valuetext={ariaValueText}
+                className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-800 dark:accent-white hover:accent-blue-600 dark:hover:accent-blue-400 transition-colors"
+            />
         </div>
-        <input 
-            type="range" min={min} max={max} step={step} value={val} 
-            onChange={e => set(+e.target.value)} 
-            className="w-full h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-zinc-800 dark:accent-white hover:accent-blue-600 dark:hover:accent-blue-400 transition-colors" 
-        />
-    </div>
-);
+    );
+};
 
 const KPICard = ({ icon, title, value, prefix, suffix, isCurrency, color, bottomLabel }: KPICardProps) => (
     <div className="flex flex-col h-full bg-white dark:bg-black p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow">

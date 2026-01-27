@@ -18,7 +18,7 @@ import { useActiveSection } from '@/hooks/useActiveSection';
 // Navigation links with their corresponding section IDs (U2)
 const NAV_LINKS = [
   { label: 'Live Agent', href: '#agent', sectionId: 'agent' },
-  { label: 'About Me', href: '#about', sectionId: 'about-me' },
+  { label: 'About Me', href: '#about-me', sectionId: 'about-me' },
   { label: 'Solutions', href: '#proj-1', sectionId: 'proj-1' },
   { label: 'Lifecycle', href: '#roadmap', sectionId: 'roadmap' },
 ] as const;
@@ -43,8 +43,14 @@ export default function Home() {
 				<div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
 					
 					{/* LOGO: UX Value-Add -> Clicking logo resets to top */}
-					<div 
+					<div
 						onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+						onKeyDown={(e) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								e.preventDefault();
+								window.scrollTo({ top: 0, behavior: 'smooth' });
+							}
+						}}
 						className="font-bold text-xl tracking-tighter flex items-center gap-2 group cursor-pointer select-none"
 						role="button"
 						aria-label="Scroll to top"
@@ -60,7 +66,8 @@ export default function Home() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className={`relative hover:text-blue-600 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm ${
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`relative hover:text-blue-600 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black rounded-sm ${
                     isActive ? 'text-blue-600 dark:text-blue-400' : ''
                   }`}
                 >
@@ -74,12 +81,12 @@ export default function Home() {
             })}
           </nav>
 					
-					<a 
-						href="mailto:thomas.to.bcheme@gmail.com" 
-						className="flex items-center gap-2 text-xs bg-blue-600 text-white dark:bg-blue-500 px-4 py-2 rounded-full font-bold 
-											 hover:bg-blue-700 dark:hover:bg-blue-400 hover:scale-105 active:scale-95 
-											 transition-all duration-200 shadow-sm hover:shadow-blue-500/25 group 
-											 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
+					<a
+						href="mailto:thomas.to.bcheme@gmail.com"
+						className="flex items-center gap-2 text-xs bg-blue-600 text-white dark:bg-blue-500 px-4 py-2 rounded-full font-bold
+											 hover:bg-blue-700 dark:hover:bg-blue-400 hover:scale-105 active:scale-95
+											 transition-all duration-200 shadow-sm hover:shadow-blue-500/25 group
+											 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black focus-visible:ring-blue-600"
 					>
 						Contact
 						<ArrowRight size={16} className="opacity-75 group-hover:translate-x-1 transition-transform duration-200" />
@@ -153,7 +160,7 @@ export default function Home() {
 										aria-label="GitHub Profile"
 										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
 									>
-										<Github size={18} />
+										<Github size={18} aria-hidden="true" />
 									</a>
 									<a 
 										href="https://www.linkedin.com/in/thomas-to-ucdavis/" 
@@ -162,14 +169,14 @@ export default function Home() {
 										aria-label="LinkedIn Profile"
 										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
 									>
-										<Linkedin size={18} />
+										<Linkedin size={18} aria-hidden="true" />
 									</a>
 									<a 
 										href="mailto:thomas.to.bcheme@gmail.com" 
 										aria-label="Email Contact"
 										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
 									>
-										<Mail size={18} />
+										<Mail size={18} aria-hidden="true" />
 									</a>
 								</div>
 							</div>
@@ -181,7 +188,7 @@ export default function Home() {
 									<li><a href="#agent" className="hover:text-blue-600 transition-colors flex items-center gap-2">Live Agent</a></li>
 									<li><a href="#impact" className="hover:text-blue-600 transition-colors flex items-center gap-2">Business Impact</a></li>
 									<li><a href="#projects" className="hover:text-blue-600 transition-colors flex items-center gap-2">Engineering</a></li>
-									<li><a href="#about" className="hover:text-blue-600 transition-colors flex items-center gap-2">About Me</a></li>
+									<li><a href="#about-me" className="hover:text-blue-600 transition-colors flex items-center gap-2">About Me</a></li>
 								</ul>
 							</div>
 
@@ -191,17 +198,17 @@ export default function Home() {
 								<ul className="space-y-3 text-sm text-zinc-500 dark:text-zinc-400">
 									<li className="flex items-center gap-2">
 										<div className="relative flex h-2 w-2">
-											<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+											<span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
 											<span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
 										</div>
 										<span className="text-emerald-600 dark:text-emerald-400 font-medium">All Systems Nominal</span>
 									</li>
 									<li className="flex items-center gap-2">
-										<GitBranch size={14} />
+										<GitBranch size={14} aria-hidden="true" />
 										<span>v2.4.0 (Stable)</span>
 									</li>
 									<li className="flex items-center gap-2">
-										<Globe size={14} />
+										<Globe size={14} aria-hidden="true" />
 										<span>Region: US-West (SFO)</span>
 									</li>
 								</ul>

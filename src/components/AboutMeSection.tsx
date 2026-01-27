@@ -85,7 +85,7 @@ const AboutMeSection: React.FC = () => {
               <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                   </div>
                   <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">

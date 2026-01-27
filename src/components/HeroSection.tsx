@@ -124,7 +124,6 @@ const HeroSection = () => {
                       Resume RAG Agent
                     </span>
                     <div className="text-xs leading-tight text-zinc-500 dark:text-zinc-400 mt-1">
-                      <span>Under Repair as of Jan 26 2026. </span>
                       <a
                         href="https://github.com/thomas-to-bcheme"
                         target="_blank"

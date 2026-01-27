@@ -129,16 +129,15 @@ export function isRetryableError(error: ChatError): boolean {
   if (error.type === 'network' || error.type === 'stream') {
     return true;
   }
-  // API errors: all except rate limit errors are immediately retryable
+  // API errors: all except Google quota errors are immediately retryable
   const code = error.response.error.code;
-  return code !== 'RATE_LIMIT_EXCEEDED' && code !== 'GOOGLE_QUOTA_EXCEEDED';
+  return code !== 'GOOGLE_QUOTA_EXCEEDED';
 }
 
 /**
- * Check if error is a rate limit error
+ * Check if error is a Google quota limit error
  */
 export function isRateLimitError(error: ChatError): boolean {
   if (error.type !== 'api') return false;
-  const code = error.response.error.code;
-  return code === 'RATE_LIMIT_EXCEEDED' || code === 'GOOGLE_QUOTA_EXCEEDED';
+  return error.response.error.code === 'GOOGLE_QUOTA_EXCEEDED';
 }
