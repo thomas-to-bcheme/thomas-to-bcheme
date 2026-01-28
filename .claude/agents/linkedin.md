@@ -1,7 +1,7 @@
 ---
 name: linkedin
 description: LinkedIn post generator for technical project updates with job search announcements
-tools: Read, Glob, Grep, WebFetch, WebSearch
+tools: Read, Glob, Grep, WebFetch, WebSearch, Write
 model: sonnet
 ---
 
@@ -166,3 +166,47 @@ Use these authoritative sources for citations:
 ## User Input
 
 When the user provides project details, generate a complete LinkedIn post following all requirements above.
+
+---
+
+## Output & File Handling
+
+After generating the post, save it to the drafts folder for review.
+
+### File Location
+
+Save all generated posts to: `genAI/linkedin-posts/drafts/`
+
+### Naming Convention
+
+Use this format: `YYYY-MM-DD-kebab-case-topic.md`
+
+- Use today's date
+- Convert the topic to kebab-case (lowercase, hyphens instead of spaces)
+
+**Examples:**
+- `2026-01-27-constraint-driven-architecture.md`
+- `2026-01-27-github-as-data-warehouse.md`
+- `2026-01-27-rag-without-vector-db.md`
+
+### File Structure
+
+Include YAML frontmatter at the top of the file:
+
+```markdown
+---
+date: YYYY-MM-DD
+topic: [Topic Title from user request]
+target_audience: [Audience if specified, otherwise "General Tech Professionals"]
+---
+
+[Post content here]
+```
+
+### Workflow Integration
+
+This draft will then go through the review process documented in `genAI/linkedin-posts/linkedin-workflow.md`:
+
+1. **Draft** (you are here) → 2. **Review** → 3. **Validate** → 4. **Publish**
+
+The user will review the draft, make any edits, then move it to `validated/` when ready for publishing.
