@@ -9,7 +9,8 @@
     "lint": "eslint",
     "linkedin": "tsx --tsconfig scripts/tsconfig.cli.json scripts/linkedin-cli.ts",
     "linkedin:list": "npm run linkedin -- list",
-    "linkedin:post": "npm run linkedin -- post"
+    "linkedin:post": "npm run linkedin -- post",
+    "resume:pdf": "tsx --tsconfig scripts/tsconfig.cli.json scripts/resume-pdf.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.1",
@@ -40,13 +41,14 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "tsx": "^4.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-katex": "^3.0.4",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "puppeteer": "^24.36.1",
     "tailwindcss": "^4",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }
