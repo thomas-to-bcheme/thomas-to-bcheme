@@ -89,6 +89,22 @@
       "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
       "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
       "license": "MIT"
+    },
+    {
+      "name": "tto-agent-swe",
+      "source": "./plugins/tto-agent-swe",
+      "description": "Meta-agent for software engineering - routes to specialized agents and coordinates multi-domain workflows",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "keywords": ["swe", "software-engineering", "meta-agent", "orchestration", "routing", "multi-agent", "code-review"],
+      "tags": ["swe", "automation", "orchestration"],
+      "author": {
+        "name": "Thomas To",
+        "email": "thomas.to.bcheme@gmail.com"
+      },
+      "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "license": "MIT"
     }
   ]
 }
