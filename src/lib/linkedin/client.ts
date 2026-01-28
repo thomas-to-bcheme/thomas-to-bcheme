@@ -1,7 +1,8 @@
 /**
  * LinkedIn API Client
  *
- * Handles HTTP communication with LinkedIn's UGC Posts API v2
+ * Handles HTTP communication with LinkedIn's Posts API v2
+ * Uses w_member_social scope for posting
  * Supports DRY_RUN mode for testing without posting
  */
 import { LinkedInErrorCode } from '@/types/linkedin-errors';
@@ -10,18 +11,15 @@ export type LinkedInVisibility = 'PUBLIC' | 'CONNECTIONS';
 
 export interface LinkedInPostPayload {
   author: string;
+  commentary: string;
+  visibility: LinkedInVisibility;
+  distribution: {
+    feedDistribution: 'MAIN_FEED';
+    targetEntities: never[];
+    thirdPartyDistributionChannels: never[];
+  };
   lifecycleState: 'PUBLISHED';
-  specificContent: {
-    'com.linkedin.ugc.ShareContent': {
-      shareCommentary: {
-        text: string;
-      };
-      shareMediaCategory: 'NONE';
-    };
-  };
-  visibility: {
-    'com.linkedin.ugc.MemberNetworkVisibility': LinkedInVisibility;
-  };
+  isReshareDisabledByAuthor: boolean;
 }
 
 export type LinkedInPostResult =
@@ -34,7 +32,7 @@ export type LinkedInPostResult =
     };
 
 /**
- * Build the LinkedIn UGC Post payload
+ * Build the LinkedIn Posts API payload
  */
 export function buildPostPayload(
   content: string,
@@ -43,16 +41,15 @@ export function buildPostPayload(
 ): LinkedInPostPayload {
   return {
     author: personUrn,
+    commentary: content,
+    visibility: visibility,
+    distribution: {
+      feedDistribution: 'MAIN_FEED',
+      targetEntities: [],
+      thirdPartyDistributionChannels: [],
+    },
     lifecycleState: 'PUBLISHED',
-    specificContent: {
-      'com.linkedin.ugc.ShareContent': {
-        shareCommentary: { text: content },
-        shareMediaCategory: 'NONE',
-      },
-    },
-    visibility: {
-      'com.linkedin.ugc.MemberNetworkVisibility': visibility,
-    },
+    isReshareDisabledByAuthor: false,
   };
 }
 
@@ -80,11 +77,12 @@ export async function publishToLinkedIn(
   }
 
   try {
-    const response = await fetch('https://api.linkedin.com/v2/ugcPosts', {
+    const response = await fetch('https://api.linkedin.com/v2/posts', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
+        'LinkedIn-Version': '202401',
         'X-Restli-Protocol-Version': '2.0.0',
       },
       body: JSON.stringify(payload),
@@ -115,6 +113,8 @@ async function mapLinkedInError(
   let rawError: unknown;
   try {
     rawError = await response.json();
+    // Log raw error for debugging
+    console.error('LinkedIn API raw error:', JSON.stringify(rawError, null, 2));
   } catch {
     rawError = { status: response.status, statusText: response.statusText };
   }

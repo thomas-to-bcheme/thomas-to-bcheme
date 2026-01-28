@@ -401,25 +401,35 @@ git push
 
 ## Step 4: Publish
 
-### Option A: Manual Posting
+### Option A: Manual Posting (CLI - No Server Required)
+
+The LinkedIn CLI allows posting directly without starting the development server:
 
 ```bash
-# Start dev server
-npm run dev
-
 # List available validated posts
-curl http://localhost:3000/api/linkedin/content
+npm run linkedin list
 
-# Post specific file
-curl -X POST http://localhost:3000/api/linkedin/post \
-  -H 'Content-Type: application/json' \
-  -d '{"source":"file","filename":"YYYY-MM-DD-topic","visibility":"PUBLIC"}'
+# Post specific file (dry-run first to verify)
+npm run linkedin post -- --file YYYY-MM-DD-topic --dry-run
+
+# Post for real
+npm run linkedin post -- --file YYYY-MM-DD-topic --visibility PUBLIC
 
 # Post with CONNECTIONS visibility (limited audience for testing)
-curl -X POST http://localhost:3000/api/linkedin/post \
-  -H 'Content-Type: application/json' \
-  -d '{"source":"file","filename":"YYYY-MM-DD-topic","visibility":"CONNECTIONS"}'
+npm run linkedin post -- --file YYYY-MM-DD-topic --visibility CONNECTIONS
+
+# Post custom content directly
+npm run linkedin post -- --content "Your LinkedIn post text here" --dry-run
 ```
+
+**CLI Options:**
+| Flag | Description |
+|------|-------------|
+| `--file, -f` | Post filename (without .md extension) |
+| `--content, -c` | Custom content to post directly |
+| `--dry-run, -n` | Simulate without posting |
+| `--visibility, -v` | PUBLIC or CONNECTIONS (default: PUBLIC) |
+| `--json, -j` | Output as JSON (useful for scripts) |
 
 ### Option B: Automated Posting (GitHub CRON)
 
@@ -445,19 +455,19 @@ git push
 
 ### Schedule
 
-Posts are published automatically every **Tuesday at 10:00 AM PST** (18:00 UTC).
+Posts are published automatically every **Tuesday at 10:07 AM PST** (18:07 UTC).
 
 ### Workflow File
 
-Create `.github/workflows/linkedin-scheduler.yml`:
+The workflow at `.github/workflows/linkedin-scheduler.yml` uses the CLI directly (no server required):
 
 ```yaml
 name: LinkedIn Post Scheduler
 
 on:
   schedule:
-    # Every Tuesday at 10:00 AM PST (18:00 UTC)
-    - cron: '0 18 * * 2'
+    # Every Tuesday at 10:07 AM PST (18:07 UTC) - offset to avoid queue congestion
+    - cron: '7 18 * * 2'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -466,7 +476,7 @@ on:
         default: 'false'
         type: boolean
       filename:
-        description: 'Specific post filename (optional)'
+        description: 'Specific post filename (optional, without .md)'
         required: false
         type: string
 
@@ -491,51 +501,43 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build application
-        run: npm run build
-
-      - name: Start server
-        run: |
-          npm start &
-          sleep 10  # Wait for server to start
-
       - name: Get oldest validated post
         id: get-post
         run: |
-          # Get the oldest post by date (first to be published)
-          OLDEST_POST=$(ls -1 genAI/linkedin-posts/validated/*.md 2>/dev/null | head -1 | xargs basename | sed 's/.md$//')
+          OLDEST_POST=$(ls -1 genAI/linkedin-posts/validated/*.md 2>/dev/null | sort | head -1 | xargs -r basename | sed 's/.md$//')
           if [ -z "$OLDEST_POST" ]; then
             echo "No validated posts available"
             echo "has_post=false" >> $GITHUB_OUTPUT
           else
+            echo "Found post: $OLDEST_POST"
             echo "filename=$OLDEST_POST" >> $GITHUB_OUTPUT
             echo "has_post=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Post to LinkedIn
         if: steps.get-post.outputs.has_post == 'true'
+        id: post
         env:
-          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
           POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
           LINKEDIN_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: |
-          RESPONSE=$(curl -s -X POST http://localhost:3000/api/linkedin/post \
-            -H 'Content-Type: application/json' \
-            -d "{\"source\":\"file\",\"filename\":\"$POST_FILENAME\",\"visibility\":\"PUBLIC\"}")
+          DRY_RUN_FLAG=""
+          if [ "$LINKEDIN_DRY_RUN" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+          fi
 
-          echo "Response: $RESPONSE"
+          npm run linkedin -- post --file "$POST_FILENAME" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json
+          cat result.json
 
-          # Check if successful
-          SUCCESS=$(echo $RESPONSE | grep -o '"success":true')
-          if [ -z "$SUCCESS" ]; then
-            echo "Failed to post to LinkedIn"
+          if grep -q '"success":true' result.json; then
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "success=false" >> $GITHUB_OUTPUT
             exit 1
           fi
 
-          echo "Successfully posted: $POST_FILENAME"
-
       - name: Archive posted content
-        if: steps.get-post.outputs.has_post == 'true' && github.event.inputs.dry_run != 'true'
+        if: steps.get-post.outputs.has_post == 'true' && steps.post.outputs.success == 'true' && github.event.inputs.dry_run != true
         env:
           POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
         run: |
@@ -545,9 +547,15 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add genAI/linkedin-posts/
-          git commit -m "Archive posted LinkedIn content: ${POST_FILENAME}"
+          git diff --staged --quiet || git commit -m "Archive posted LinkedIn content: ${POST_FILENAME}"
           git push
 ```
+
+**Key improvements over server-based approach:**
+- No build step required (~30-60s faster)
+- No server startup/shutdown overhead
+- Simpler error handling
+- Direct CLI execution
 
 ### Required Secrets
 
@@ -573,33 +581,47 @@ You can manually trigger the workflow:
 
 ## Dry-Run Testing
 
-### Local Dry-Run
+### Local Dry-Run (CLI)
 
-Set environment variable:
+Use the `--dry-run` flag to test without posting:
 
 ```bash
-# In .env.local
-LINKEDIN_DRY_RUN=true
+# Dry-run a specific post
+npm run linkedin post -- --file YYYY-MM-DD-topic --dry-run
+
+# Dry-run with JSON output
+npm run linkedin post -- --file YYYY-MM-DD-topic --dry-run --json
 ```
 
-Response includes the full payload without posting:
+**Response example:**
 
 ```json
 {
   "success": true,
   "postId": "dry-run-1706806440000",
   "dryRun": true,
-  "payload": {
-    "author": "urn:li:person:...",
-    "lifecycleState": "PUBLISHED",
-    "specificContent": {...}
+  "metadata": {
+    "filename": "YYYY-MM-DD-topic",
+    "topic": "Topic Name",
+    "characterCount": 1234,
+    "visibility": "PUBLIC"
   }
 }
 ```
 
+**Alternative:** Set environment variable in `.env.local`:
+
+```bash
+LINKEDIN_DRY_RUN=true
+```
+
 ### GitHub Actions Dry-Run
 
-Trigger workflow with `dry_run: true` input.
+Trigger workflow with `dry_run: true` input:
+
+```bash
+gh workflow run linkedin-scheduler.yml -f dry_run=true
+```
 
 ---
 
@@ -677,13 +699,24 @@ mv genAI/linkedin-posts/drafts/YYYY-MM-DD-topic.md genAI/linkedin-posts/validate
 git add genAI/linkedin-posts/ && git commit -m "Validate: topic-name" && git push
 ```
 
-### Manual Post (Local)
+### List Available Posts (CLI)
 
 ```bash
-npm run dev &
-curl -X POST http://localhost:3000/api/linkedin/post \
-  -H 'Content-Type: application/json' \
-  -d '{"source":"file","filename":"YYYY-MM-DD-topic","visibility":"PUBLIC"}'
+npm run linkedin list
+npm run linkedin list -- --json
+```
+
+### Manual Post (CLI - No Server Required)
+
+```bash
+# Dry-run first
+npm run linkedin post -- --file YYYY-MM-DD-topic --dry-run
+
+# Post for real
+npm run linkedin post -- --file YYYY-MM-DD-topic --visibility PUBLIC
+
+# Post custom content
+npm run linkedin post -- --content "Your text here" --dry-run
 ```
 
 ### Trigger GitHub Workflow Manually
@@ -692,7 +725,7 @@ curl -X POST http://localhost:3000/api/linkedin/post \
 gh workflow run linkedin-scheduler.yml
 ```
 
-### Dry-Run Test
+### Dry-Run Test (GitHub Actions)
 
 ```bash
 gh workflow run linkedin-scheduler.yml -f dry_run=true

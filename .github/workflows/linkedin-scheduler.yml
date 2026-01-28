@@ -2,8 +2,8 @@ name: LinkedIn Post Scheduler
 
 on:
   schedule:
-    # Every Tuesday at 10:00 AM PST (18:00 UTC)
-    - cron: '0 18 * * 2'
+    # Every Tuesday at 10:07 AM PST (18:07 UTC) - offset to avoid queue congestion
+    - cron: '7 18 * * 2'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -37,15 +37,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build application
-        run: npm run build
-
-      - name: Start server in background
-        run: |
-          npm start &
-          echo "Waiting for server to start..."
-          sleep 15
-
       - name: Get oldest validated post
         id: get-post
         run: |
@@ -66,44 +57,40 @@ jobs:
           echo "No validated posts to publish. Skipping."
           exit 0
 
-      - name: Set dry run mode
-        if: steps.get-post.outputs.has_post == 'true'
-        run: |
-          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
-            echo "LINKEDIN_DRY_RUN=true" >> $GITHUB_ENV
-          else
-            echo "LINKEDIN_DRY_RUN=false" >> $GITHUB_ENV
-          fi
-
       - name: Post to LinkedIn
         if: steps.get-post.outputs.has_post == 'true'
         id: post
         env:
           POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
+          LINKEDIN_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: |
           echo "Posting: $POST_FILENAME"
           echo "Dry run: $LINKEDIN_DRY_RUN"
 
-          RESPONSE=$(curl -s -X POST http://localhost:3000/api/linkedin/post \
-            -H 'Content-Type: application/json' \
-            -d "{\"source\":\"file\",\"filename\":\"$POST_FILENAME\",\"visibility\":\"PUBLIC\"}")
+          # Build dry-run flag if needed
+          DRY_RUN_FLAG=""
+          if [ "$LINKEDIN_DRY_RUN" = "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+          fi
 
-          echo "Response: $RESPONSE"
-          echo "response=$RESPONSE" >> $GITHUB_OUTPUT
+          # Run CLI and capture output
+          npm run linkedin -- post --file "$POST_FILENAME" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json 2>&1 || true
 
-          # Check if successful
-          if echo "$RESPONSE" | grep -q '"success":true'; then
+          cat result.json
+
+          # Check for success
+          if grep -q '"success":true' result.json; then
             echo "Successfully posted: $POST_FILENAME"
             echo "success=true" >> $GITHUB_OUTPUT
+            exit 0
           else
-            echo "Failed to post to LinkedIn"
-            echo "$RESPONSE"
+            echo "Failed to post"
             echo "success=false" >> $GITHUB_OUTPUT
             exit 1
           fi
 
       - name: Archive posted content
-        if: steps.get-post.outputs.has_post == 'true' && steps.post.outputs.success == 'true' && github.event.inputs.dry_run != 'true'
+        if: steps.get-post.outputs.has_post == 'true' && steps.post.outputs.success == 'true' && github.event.inputs.dry_run != true
         env:
           POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
         run: |
@@ -115,11 +102,11 @@ jobs:
           # Move to posted archive
           mv "genAI/linkedin-posts/validated/${POST_FILENAME}.md" genAI/linkedin-posts/posted/
 
-          # Commit the change
+          # Commit the change (only if there are changes)
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add genAI/linkedin-posts/
-          git commit -m "Archive posted LinkedIn content: ${POST_FILENAME}"
+          git diff --staged --quiet || git commit -m "Archive posted LinkedIn content: ${POST_FILENAME}"
           git push
 
       - name: Summary

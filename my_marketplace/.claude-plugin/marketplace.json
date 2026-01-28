@@ -13,20 +13,36 @@
     {
       "name": "git-push",
       "source": "./plugins/git-push",
-      "description": "Interactive git push with manual commit messages - prompts for staging and commit message before pushing",
+      "description": "Smart git push workflow - checks status, stages/commits if needed, then pushes",
       "version": "1.0.0",
       "category": "developer-tools",
       "keywords": ["git", "push", "commit", "version-control", "interactive", "workflow"],
-      "tags": ["git", "workflow", "productivity"]
+      "tags": ["git", "workflow", "productivity"],
+      "author": {
+        "name": "Thomas To",
+        "email": "thomas.to.bcheme@gmail.com"
+      },
+      "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "license": "MIT",
+      "command": "/git-push"
     },
     {
       "name": "git-push-agentic",
       "source": "./plugins/git-push-agentic",
-      "description": "Autonomous git workflow - Claude handles add, commit message generation, and push automatically",
+      "description": "Fully autonomous git workflow - auto stages, generates commit message, and pushes without user input",
       "version": "1.0.0",
       "category": "developer-tools",
       "keywords": ["git", "automation", "agentic", "ai-powered", "autonomous", "workflow"],
-      "tags": ["git", "automation", "agentic"]
+      "tags": ["git", "automation", "agentic"],
+      "author": {
+        "name": "Thomas To",
+        "email": "thomas.to.bcheme@gmail.com"
+      },
+      "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "license": "MIT",
+      "command": "/git-push-agentic"
     },
     {
       "name": "git-README",
@@ -35,7 +51,49 @@
       "version": "1.0.0",
       "category": "documentation",
       "keywords": ["readme", "documentation", "generator", "multi-agent", "ai-powered", "automation"],
-      "tags": ["documentation", "readme", "automation"]
+      "tags": ["documentation", "readme", "automation"],
+      "author": {
+        "name": "Thomas To",
+        "email": "thomas.to.bcheme@gmail.com"
+      },
+      "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "license": "MIT",
+      "command": "/git-README"
+    },
+    {
+      "name": "git-commit",
+      "source": "./plugins/git-commit",
+      "description": "Autonomous git commit - auto stages all changes and generates commit message without pushing",
+      "version": "1.0.0",
+      "category": "developer-tools",
+      "keywords": ["git", "commit", "automation", "staging", "local", "ai-powered"],
+      "tags": ["git", "automation", "local-only"],
+      "author": {
+        "name": "Thomas To",
+        "email": "thomas.to.bcheme@gmail.com"
+      },
+      "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "license": "MIT",
+      "command": "/git-commit"
+    },
+    {
+      "name": "tto-init",
+      "source": "./plugins/tto-init",
+      "description": "Initialize CLAUDE.md with programming-agnostic best practices - establishes project standards and orchestrator role",
+      "version": "1.0.0",
+      "category": "project-setup",
+      "keywords": ["init", "claude", "CLAUDE.md", "best-practices", "standards", "setup", "engineering"],
+      "tags": ["initialization", "setup", "standards", "productivity"],
+      "author": {
+        "name": "Thomas To",
+        "email": "thomas.to.bcheme@gmail.com"
+      },
+      "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "license": "MIT",
+      "command": "/init"
     }
   ]
 }

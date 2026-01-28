@@ -8,6 +8,8 @@ Plugins add new commands to Claude Code. Instead of typing complex git commands,
 
 | Plugin | What It Does | Best For |
 |--------|-------------|----------|
+| **[tto-init](./plugins/tto-init/)** | Generates CLAUDE.md with best practices | New projects, establishing standards |
+| **[git-commit](./plugins/git-commit/)** | Stages changes and generates commit message | Local commits without pushing |
 | **[git-push](./plugins/git-push/)** | Guides you through saving and uploading code | Users who want control over their commits |
 | **[git-push-agentic](./plugins/git-push-agentic/)** | Claude does everything automatically | Quick saves when you trust Claude |
 | **[git-README](./plugins/git-README/)** | Creates or updates your README.md | Projects that need documentation |
@@ -33,6 +35,8 @@ In Claude Code, run these two commands:
 /plugin marketplace add thomas-to/thomas-to-bcheme
 
 # Step 2: Install the plugins you want
+/plugin install tto-init@thomas-to-plugins
+/plugin install git-commit@thomas-to-plugins
 /plugin install git-push@thomas-to-plugins
 /plugin install git-push-agentic@thomas-to-plugins
 /plugin install git-README@thomas-to-plugins
@@ -47,7 +51,7 @@ If your Claude Code version doesn't support `/plugin`, run this in your project 
 
 ```bash
 mkdir -p .claude/plugins && \
-for plugin in git-push git-push-agentic git-README; do \
+for plugin in tto-init git-commit git-push git-push-agentic git-README; do \
   mkdir -p ".claude/plugins/${plugin}/.claude-plugin" \
   ".claude/plugins/${plugin}/skills/${plugin}" && \
   curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/my_marketplace/plugins/${plugin}/.claude-plugin/plugin.json" \
@@ -67,11 +71,13 @@ Once installed, open Claude Code in your project and type:
 
 | Command | What Happens |
 |---------|--------------|
+| `/init` | Claude generates a CLAUDE.md with engineering best practices |
+| `/git-commit` | Claude stages changes and generates a commit message locally |
 | `/git-push` | Claude walks you through each step of saving your work |
 | `/git-push-agentic` | Claude automatically saves and uploads your changes |
 | `/git-README` | Claude analyzes your project and writes documentation |
 
-**Learn more:** [git-push guide](docs/plugins/git-push.md) | [git-push-agentic guide](docs/plugins/git-push-agentic.md) | [git-README guide](docs/plugins/git-README.md)
+**Learn more:** [tto-init guide](docs/plugins/tto-init.md) | [git-commit guide](docs/plugins/git-commit.md) | [git-push guide](docs/plugins/git-push.md) | [git-push-agentic guide](docs/plugins/git-push-agentic.md) | [git-README guide](docs/plugins/git-README.md)
 
 ---
 

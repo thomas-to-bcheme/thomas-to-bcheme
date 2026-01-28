@@ -1,0 +1,15 @@
+{
+  "name": "git-commit",
+  "description": "Autonomous git commit - auto stages all changes and generates commit message without pushing",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["git", "commit", "automation", "staging", "local", "ai-powered"],
+  "category": "developer-tools",
+  "tags": ["git", "automation", "local-only"]
+}

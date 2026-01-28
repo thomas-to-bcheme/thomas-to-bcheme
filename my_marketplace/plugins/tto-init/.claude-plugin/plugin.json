@@ -1,0 +1,15 @@
+{
+  "name": "tto-init",
+  "description": "Initialize CLAUDE.md with programming-agnostic best practices",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["init", "claude", "best-practices", "engineering-standards", "CLAUDE.md"],
+  "category": "developer-tools",
+  "tags": ["initialization", "setup", "standards", "productivity"]
+}

@@ -23,7 +23,15 @@
   <img src="https://img.shields.io/badge/React-19.2.3-61DAFB?logo=react" alt="React" />
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white" alt="Python" />
   <img src="https://img.shields.io/badge/ESLint-9-4B32C3?logo=eslint&logoColor=white" alt="ESLint" />
+
+  <br />
+
+  <!-- CI/CD Badge -->
+  <a href="https://github.com/thomas-to/thomas-to-bcheme/actions/workflows/linkedin-scheduler.yml">
+    <img src="https://github.com/thomas-to/thomas-to-bcheme/actions/workflows/linkedin-scheduler.yml/badge.svg" alt="LinkedIn Scheduler" />
+  </a>
 
 </div>
 
@@ -32,12 +40,14 @@
 ## Features
 
 - **AI Chat Agent** - Live streaming chat powered by Google Gemini with RAG context
+- **LinkedIn Integration** - Automated LinkedIn posting via GitHub Actions CRON scheduler
+- **Voice Controls** - Speech-to-Text input and Text-to-Speech output for AI chat
 - **Project Showcase** - Interactive deep-dives into engineering projects
 - **Architecture Visualization** - Mermaid diagrams with animated system flows
 - **ROI Calculator** - Interactive calculator demonstrating business value
 - **Development Roadmap** - Visual timeline of upcoming features
 - **ML Salary Prediction** - Random Forest + TensorFlow models for job market analysis
-- **Claude Code Plugins** - Distributable AI workflow automation tools
+- **Claude Code Plugins** - Distributable AI workflow automation (tto-init, git-commit, git-push, git-push-agentic, git-README)
 - **Dark Mode Support** - Automatic theme switching with system preferences
 - **Mobile Responsive** - Optimized UI with collapsible components and touch-friendly navigation
 - **System Status Ticker** - Real-time system health monitoring display
@@ -56,6 +66,8 @@ This repository includes a **[Claude Code Plugin Marketplace](my_marketplace/)**
 
 | Plugin | Description | Install |
 |--------|-------------|---------|
+| **[tto-init](my_marketplace/plugins/tto-init/)** | Initialize CLAUDE.md with programming-agnostic best practices | [Instructions](my_marketplace/README.md#installation) |
+| **[git-commit](my_marketplace/plugins/git-commit/)** | Autonomous commit - auto stages all changes and generates commit message | [Instructions](my_marketplace/README.md#installation) |
 | **[git-push](my_marketplace/plugins/git-push/)** | Interactive git push with manual commit messages | [Instructions](my_marketplace/README.md#installation) |
 | **[git-push-agentic](my_marketplace/plugins/git-push-agentic/)** | Autonomous git workflow - auto stages, commits, and pushes | [Instructions](my_marketplace/README.md#installation) |
 | **[git-README](my_marketplace/plugins/git-README/)** | 5-agent README generator with smart merge | [Instructions](my_marketplace/README.md#installation) |
@@ -63,7 +75,7 @@ This repository includes a **[Claude Code Plugin Marketplace](my_marketplace/)**
 ### Quick Install
 
 ```bash
-# Set plugin name: git-push, git-push-agentic, or git-README
+# Set plugin name: tto-init, git-commit, git-push, git-push-agentic, or git-README
 PLUGIN_NAME="git-push"
 
 # One-liner install
@@ -72,7 +84,7 @@ curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/my_m
 curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/my_marketplace/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md" -o ".claude/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md"
 ```
 
-Then use in Claude Code: `/git-push`, `/git-push-agentic`, or `/git-README`
+Then use in Claude Code: `/init`, `/git-commit`, `/git-push`, `/git-push-agentic`, or `/git-README`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -181,6 +193,9 @@ python main.py --no-plots           # Skip visualization (headless)
 | `npm run build` | Create production build |
 | `npm start` | Start production server |
 | `npm run lint` | Run ESLint |
+| `npm run linkedin` | LinkedIn CLI for post management |
+| `npm run linkedin:list` | List available LinkedIn posts |
+| `npm run linkedin:post` | Publish post to LinkedIn |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -192,22 +207,30 @@ python main.py --no-plots           # Skip visualization (headless)
 thomas-to-bcheme/
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   │   ├── api/chat/           # Gemini streaming API endpoint
+│   │   ├── api/
+│   │   │   ├── chat/           # Gemini streaming API endpoint
+│   │   │   └── linkedin/       # LinkedIn API endpoints
+│   │   │       ├── post/       # POST - publish to LinkedIn
+│   │   │       └── content/    # GET - list available posts
 │   │   ├── layout.tsx          # Root layout
 │   │   └── page.tsx            # Home page
-│   ├── components/             # React components (17 total)
+│   ├── components/             # React components (19 total)
 │   │   ├── HeroSection.tsx     # Landing hero with badges
 │   │   ├── AiGenerator.tsx     # Streaming chat interface
 │   │   ├── ProjectDeepDive.tsx # Project showcase cards
 │   │   ├── ArchitectureDiagram.tsx # System architecture viz
 │   │   ├── ROICalculation.tsx  # Interactive ROI calculator
 │   │   ├── Roadmap.tsx         # Development timeline
-│   │   ├── BentoGrid.tsx       # Responsive layout grid
-│   │   ├── SystemStatusTicker.tsx # Real-time status
-│   │   └── ...                 # Badge, TrustBadge, Connect, etc.
+│   │   ├── VoiceControls.tsx   # STT/TTS interface
+│   │   └── ...                 # Badge, BentoGrid, Connect, etc.
+│   ├── hooks/                  # Custom React hooks
+│   │   ├── useSpeechRecognition.ts
+│   │   └── useSpeechSynthesis.ts
+│   ├── lib/
+│   │   ├── chat-api.ts         # Gemini client utilities
+│   │   └── linkedin/           # LinkedIn API client
 │   ├── data/
 │   │   └── AiSystemInformation.tsx  # RAG context/system prompt
-│   ├── lib/                    # Utility functions
 │   └── docs/                   # Resume and documentation
 ├── backend/                    # Python ML models
 │   ├── main.py                 # Entry point
@@ -218,19 +241,28 @@ thomas-to-bcheme/
 │   └── requirements.txt
 ├── my_marketplace/             # Claude Code plugins
 │   ├── plugins/
+│   │   ├── tto-init/
+│   │   ├── git-commit/
 │   │   ├── git-push/
 │   │   ├── git-push-agentic/
 │   │   └── git-README/
 │   └── README.md
-├── system_design_docs/         # Architecture documentation (8 docs)
-│   ├── README.md               # Documentation index
+├── genAI/                      # AI-generated content
+│   └── linkedin-posts/         # Pre-written LinkedIn posts
+│       ├── validated/          # Ready to publish
+│       └── posted/             # Archived after publishing
+├── system_design_docs/         # Architecture documentation (10 docs)
 │   ├── architecture.md         # Platform KPIs & constraints
 │   ├── api.md                  # Chat API specification
 │   ├── database.md             # GitHub-as-warehouse pattern
 │   ├── deployment.md           # CI/CD pipeline
 │   ├── frontend.md             # React component architecture
+│   ├── github-api.md           # GitHub Actions & CRON patterns
+│   ├── linkedin-api.md         # LinkedIn OAuth & Share API
 │   ├── ml-models.md            # ML/DL implementation details
 │   └── roadmap.md              # Feature roadmap
+├── .github/workflows/
+│   └── linkedin-scheduler.yml  # CRON: Tuesdays 10 AM PST
 ├── public/                     # Static assets
 ├── CLAUDE.md                   # AI assistant instructions
 ├── package.json
@@ -250,10 +282,17 @@ Create a `.env.local` file in the root directory:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GOOGLE_API_KEY` | Yes | Google Gemini API key for chat functionality |
+| `GOOGLE_API_KEY` | **Yes** | Google Gemini API key for chat functionality |
+| `LINKEDIN_ACCESS_TOKEN` | For LinkedIn | OAuth bearer token (~60 day expiry) |
+| `LINKEDIN_PERSON_URN` | For LinkedIn | Format: `urn:li:person:{sub}` from OAuth id_token |
+| `LINKEDIN_CLIENT_ID` | For token refresh | LinkedIn OAuth app Client ID |
+| `LINKEDIN_CLIENT_SECRET` | For token refresh | LinkedIn OAuth app Client Secret |
+| `LINKEDIN_DRY_RUN` | No | Set `true` to test posting without publishing |
 | `AWS_ACCESS_KEY_ID` | No | AWS credentials for DynamoDB/S3 |
 | `AWS_SECRET_ACCESS_KEY` | No | AWS credentials for DynamoDB/S3 |
 | `VERCEL_API_KEY` | No | Vercel API for deployment automation |
+
+> **Note:** See [system_design_docs/linkedin-api.md](system_design_docs/linkedin-api.md) for detailed LinkedIn OAuth setup.
 
 ### TypeScript Path Aliases
 
@@ -262,6 +301,58 @@ The project uses `@/*` to map to `./src/*`:
 ```typescript
 import { Component } from "@/components/Component";
 ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## API Reference
+
+### Chat API
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/chat` | POST | Streaming chat with Gemini AI + RAG context |
+
+**Request:**
+```json
+{
+  "messages": [
+    { "role": "user", "content": "Tell me about Thomas" }
+  ]
+}
+```
+
+**Response:** Server-Sent Events (SSE) streaming text with correlation ID header.
+
+For detailed documentation, see: [system_design_docs/api.md](system_design_docs/api.md)
+
+### LinkedIn API
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/linkedin/content` | GET | List available pre-written posts |
+| `/api/linkedin/post` | POST | Publish content to LinkedIn |
+
+**POST Request:**
+```json
+{
+  "source": "file",
+  "filename": "2026-02-17-topic-name",
+  "visibility": "PUBLIC"
+}
+```
+
+**Response (201):**
+```json
+{
+  "success": true,
+  "postId": "urn:li:share:...",
+  "correlationId": "uuid"
+}
+```
+
+For detailed documentation, see: [system_design_docs/linkedin-api.md](system_design_docs/linkedin-api.md)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -291,6 +382,8 @@ For detailed technical specifications, refer to the following documentation:
 - [Architecture](system_design_docs/architecture.md)
 - [Database](system_design_docs/database.md)
 - [API](system_design_docs/api.md)
+- [LinkedIn API](system_design_docs/linkedin-api.md)
+- [GitHub Actions](system_design_docs/github-api.md)
 - [Deployment](system_design_docs/deployment.md)
 - [Roadmap](system_design_docs/roadmap.md)
 
