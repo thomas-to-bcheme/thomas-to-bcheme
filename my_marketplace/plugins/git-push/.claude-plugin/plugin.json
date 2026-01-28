@@ -9,7 +9,5 @@
   "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
   "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
   "license": "MIT",
-  "keywords": ["git", "push", "commit", "version-control", "interactive", "workflow"],
-  "category": "developer-tools",
-  "tags": ["git", "workflow", "productivity"]
+  "keywords": ["git", "push", "commit", "version-control", "interactive", "workflow"]
 }

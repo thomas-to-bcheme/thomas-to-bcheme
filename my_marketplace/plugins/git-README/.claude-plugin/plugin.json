@@ -9,7 +9,5 @@
   "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
   "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
   "license": "MIT",
-  "keywords": ["readme", "documentation", "generator", "multi-agent", "ai-powered", "automation"],
-  "category": "documentation",
-  "tags": ["documentation", "readme", "automation"]
+  "keywords": ["readme", "documentation", "generator", "multi-agent", "ai-powered", "automation"]
 }
