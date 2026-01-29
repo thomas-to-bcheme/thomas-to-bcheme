@@ -1,157 +1,84 @@
-<a id="readme-top"></a>
+# Thomas To Portfolio
 
-<div align="center">
+> A fullstack engineering portfolio with an embedded AI chat agent, demonstrating "Show, Don't Tell" through live, interactive technology.
 
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=300&color=gradient&text=Thomas%20To&reversal=true&desc=Fullstack%20Software,%20Biomanufacturing,%20Protein%20Design&descAlignY=65&descSize=30&section=footer" width="100%"/>
-
-  <br />
-
-  <a href="https://thomas-to-bcheme-github-io.vercel.app/">
-    <img src="https://img.shields.io/badge/Portfolio-Visit%20Live%20Site-2ea44f?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio" />
-  </a>
-  <a href="src/docs/Thomas_To_Resume.pdf?raw=true">
-    <img src="https://img.shields.io/badge/Resume-Download%20PDF-0078D4?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Resume" />
-  </a>
-  <a href="https://www.linkedin.com/in/thomas-to-ucdavis/">
-    <img src="https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>
-
-  <br /><br />
-
-  <!-- Tech Stack Badges -->
-  <img src="https://img.shields.io/badge/Next.js-16.1.1-black?logo=next.js" alt="Next.js" />
-  <img src="https://img.shields.io/badge/React-19.2.3-61DAFB?logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind" />
-  <img src="https://img.shields.io/badge/Python-3.8+-3776AB?logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/ESLint-9-4B32C3?logo=eslint&logoColor=white" alt="ESLint" />
-
-  <br />
-
-  <!-- CI/CD Badge -->
-  <a href="https://github.com/thomas-to/thomas-to-bcheme/actions/workflows/linkedin-scheduler.yml">
-    <img src="https://github.com/thomas-to/thomas-to-bcheme/actions/workflows/linkedin-scheduler.yml/badge.svg" alt="LinkedIn Scheduler" />
-  </a>
-
-</div>
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.3-61DAFB?logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python)](https://python.org/)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000?logo=vercel)](https://vercel.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
 ## Features
 
-- **AI Chat Agent** - Live streaming chat powered by Google Gemini with RAG context
-- **LinkedIn Integration** - Automated LinkedIn posting via GitHub Actions CRON scheduler
-- **Voice Controls** - Speech-to-Text input and Text-to-Speech output for AI chat
-- **Project Showcase** - Interactive deep-dives into engineering projects
-- **Architecture Visualization** - Mermaid diagrams with animated system flows
-- **ROI Calculator** - Interactive calculator demonstrating business value
-- **Development Roadmap** - Visual timeline of upcoming features
-- **ML Salary Prediction** - Random Forest + TensorFlow models for job market analysis
-- **Claude Code Plugins** - Distributable AI workflow automation (tto-init, git-commit, git-push, git-push-agentic, git-README)
+- **AI Chat Agent** - Live streaming chat powered by Google Gemini with RAG (Retrieval Augmented Generation) context
+- **Interactive Portfolio** - Project deep-dives with architecture visualizations and animated system flows
+- **ROI Calculator** - Interactive calculator demonstrating business value and impact metrics
+- **ML Salary Prediction** - Backend models using Random Forest (scikit-learn) and Deep Learning (TensorFlow)
+- **LinkedIn Automation** - Scheduled posting via GitHub Actions with content management workflow
+- **Claude Code Plugins** - 15 specialized agent plugins for AI-assisted development workflows
 - **Dark Mode Support** - Automatic theme switching with system preferences
-- **Mobile Responsive** - Optimized UI with collapsible components and touch-friendly navigation
-- **System Status Ticker** - Real-time system health monitoring display
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- **Mobile Responsive** - Optimized UI with touch-friendly navigation
 
 ---
 
-## Claude Code Plugin Marketplace
+## Tech Stack
 
-This repository includes a **[Claude Code Plugin Marketplace](my_marketplace/)** with distributable plugins for AI-assisted development workflows.
-
-> **Note:** This marketplace follows the [Claude Code Plugin Marketplaces schema](https://code.claude.com/docs/en/plugin-marketplaces#host-and-distribute-marketplaces). This schema reference is used to agentically generate tools in this marketplace, ensuring compatibility with Claude Code's expected plugin structure.
-
-### Available Plugins
-
-| Plugin | Description | Install |
-|--------|-------------|---------|
-| **[tto-init](my_marketplace/plugins/tto-init/)** | Initialize CLAUDE.md with programming-agnostic best practices | [Instructions](my_marketplace/README.md#installation) |
-| **[git-commit](my_marketplace/plugins/git-commit/)** | Autonomous commit - auto stages all changes and generates commit message | [Instructions](my_marketplace/README.md#installation) |
-| **[git-push](my_marketplace/plugins/git-push/)** | Interactive git push with manual commit messages | [Instructions](my_marketplace/README.md#installation) |
-| **[git-push-agentic](my_marketplace/plugins/git-push-agentic/)** | Autonomous git workflow - auto stages, commits, and pushes | [Instructions](my_marketplace/README.md#installation) |
-| **[git-README](my_marketplace/plugins/git-README/)** | 5-agent README generator with smart merge | [Instructions](my_marketplace/README.md#installation) |
-
-### Quick Install
-
-```bash
-# Set plugin name: tto-init, git-commit, git-push, git-push-agentic, or git-README
-PLUGIN_NAME="git-push"
-
-# One-liner install
-mkdir -p .claude/plugins/${PLUGIN_NAME}/.claude-plugin .claude/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME} && \
-curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/my_marketplace/plugins/${PLUGIN_NAME}/.claude-plugin/plugin.json" -o ".claude/plugins/${PLUGIN_NAME}/.claude-plugin/plugin.json" && \
-curl -sL "https://raw.githubusercontent.com/thomas-to/thomas-to-bcheme/main/my_marketplace/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md" -o ".claude/plugins/${PLUGIN_NAME}/skills/${PLUGIN_NAME}/SKILL.md"
-```
-
-Then use in Claude Code: `/init`, `/git-commit`, `/git-push`, `/git-push-agentic`, or `/git-README`
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
----
-
-## Executive Summary
-
-This repository showcases data architecture, design considerations, risk assessment, documentation, and roadmap of features in development. This document outlines the strategic design choices to minimize cost while maximizing the capabilities within this constraint. To design this project for the foreseeable future, its longevity and sustainability must remain free of charge. Therefore, the project design will be small-scale, proof of concept showcasing aptitude for designing, developing, and deploying software.
-
-To demonstrate agentic fullstack software engineering, at least one of the following will be implemented using continuous integration and continuous deployment from GitHub acting as our data warehouse backend, to utilizing Vercel for its intended purpose as a frontend as a service:
-* database
-* algorithmic model
-* agentic model
-
-The purpose of this is to ***show, not tell, my personal [portfolio/resume](src/docs/Thomas_To_Resume.pdf?raw=true)*** and serves as an open source resource to others as a learning resource or to continue building on this framework themselves.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+| Category | Technologies |
+|----------|-------------|
+| **Frontend** | Next.js 16, React 19, TypeScript 5, Tailwind CSS v4, Framer Motion |
+| **AI/ML** | Google Gemini API, TensorFlow, scikit-learn, NumPy, Pandas |
+| **Backend** | Python 3.8+, Node.js |
+| **Infrastructure** | Vercel (Edge Functions), GitHub Actions (CI/CD), AWS SDK |
+| **Data** | AWS DynamoDB, S3, Vercel Edge Config, Vercel Blob |
+| **Quality** | ESLint 9, TypeScript strict mode, Zod validation |
 
 ---
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
-
-| Requirement | Version | Purpose |
-|-------------|---------|---------|
-| **Node.js** | 20+ | JavaScript runtime |
-| **npm** | 10+ | Package manager |
-| **Python** | 3.8+ | ML backend |
-| **Git** | Latest | Version control |
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- **Node.js** 18+ (20+ recommended)
+- **npm** 9+ or **yarn** 1.22+
+- **Python** 3.8+ (for ML backend)
+- **Git** 2.30+
 
 ---
 
 ## Installation
 
-### Frontend (Next.js)
+### 1. Clone the repository
 
 ```bash
-# Clone the repository
-git clone https://github.com/thomas-to/thomas-to-bcheme.git
+git clone https://github.com/thomas-to-bcheme/thomas-to-bcheme.git
 cd thomas-to-bcheme
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env .env.local
-# Edit .env.local and add your GOOGLE_API_KEY
 ```
 
-### Backend (Python ML)
+### 2. Install frontend dependencies
 
 ```bash
-# Navigate to backend directory
-cd backend
-
-# Create virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
+npm install
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### 3. Install backend dependencies (optional, for ML models)
+
+```bash
+cd backend
+pip install -r requirements.txt
+cd ..
+```
+
+### 4. Configure environment variables
+
+Create a `.env.local` file in the project root:
+
+```bash
+cp .env .env.local
+```
+
+Add your API keys (see [Configuration](#configuration) section).
 
 ---
 
@@ -160,7 +87,6 @@ pip install -r requirements.txt
 ### Development Server
 
 ```bash
-# Start Next.js development server
 npm run dev
 ```
 
@@ -169,35 +95,40 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Production Build
 
 ```bash
-# Build for production
 npm run build
-
-# Start production server
-npm start
+npm run start
 ```
 
-### Run ML Models
+### Linting
+
+```bash
+npm run lint
+```
+
+### LinkedIn CLI Tools
+
+```bash
+# List available LinkedIn posts
+npm run linkedin:list
+
+# Post to LinkedIn
+npm run linkedin:post
+```
+
+### ML Salary Prediction Models
 
 ```bash
 cd backend
-python main.py                      # Train with sample data
-python main.py --data-path FILE.csv # Train with custom dataset
-python main.py --no-plots           # Skip visualization (headless)
+python main.py                    # Run with sample data
+python main.py --data-path data.csv  # Run with custom data
+python main.py --no-plots         # Run without visualizations
 ```
 
-### Available Scripts
+### Resume PDF Generation
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server with hot reload |
-| `npm run build` | Create production build |
-| `npm start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run linkedin` | LinkedIn CLI for post management |
-| `npm run linkedin:list` | List available LinkedIn posts |
-| `npm run linkedin:post` | Publish post to LinkedIn |
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+```bash
+npm run resume:pdf
+```
 
 ---
 
@@ -206,71 +137,68 @@ python main.py --no-plots           # Skip visualization (headless)
 ```
 thomas-to-bcheme/
 ├── src/
-│   ├── app/                    # Next.js App Router
+│   ├── app/                      # Next.js App Router
 │   │   ├── api/
-│   │   │   ├── chat/           # Gemini streaming API endpoint
-│   │   │   └── linkedin/       # LinkedIn API endpoints
-│   │   │       ├── post/       # POST - publish to LinkedIn
-│   │   │       └── content/    # GET - list available posts
-│   │   ├── layout.tsx          # Root layout
-│   │   └── page.tsx            # Home page
-│   ├── components/             # React components (19 total)
-│   │   ├── HeroSection.tsx     # Landing hero with badges
-│   │   ├── AiGenerator.tsx     # Streaming chat interface
-│   │   ├── ProjectDeepDive.tsx # Project showcase cards
-│   │   ├── ArchitectureDiagram.tsx # System architecture viz
-│   │   ├── ROICalculation.tsx  # Interactive ROI calculator
-│   │   ├── Roadmap.tsx         # Development timeline
-│   │   ├── VoiceControls.tsx   # STT/TTS interface
-│   │   └── ...                 # Badge, BentoGrid, Connect, etc.
-│   ├── hooks/                  # Custom React hooks
-│   │   ├── useSpeechRecognition.ts
-│   │   └── useSpeechSynthesis.ts
-│   ├── lib/
-│   │   ├── chat-api.ts         # Gemini client utilities
-│   │   └── linkedin/           # LinkedIn API client
+│   │   │   ├── chat/route.ts     # Gemini streaming chat endpoint
+│   │   │   └── linkedin/         # LinkedIn API endpoints
+│   │   │       ├── content/route.ts  # List posts
+│   │   │       └── post/route.ts     # Publish posts
+│   │   ├── layout.tsx            # Root layout
+│   │   ├── page.tsx              # Homepage
+│   │   └── globals.css           # Global styles
+│   ├── components/               # React components (18 total)
+│   │   ├── AiGenerator.tsx       # Streaming AI chat interface
+│   │   ├── HeroSection.tsx       # Landing section
+│   │   ├── ProjectDeepDive.tsx   # Project showcases
+│   │   ├── ROICalculation.tsx    # Interactive ROI calculator
+│   │   ├── ArchitectureDiagram.tsx # Animated system diagrams
+│   │   ├── Roadmap.tsx           # Development timeline
+│   │   └── ...                   # Additional components
 │   ├── data/
-│   │   └── AiSystemInformation.tsx  # RAG context/system prompt
-│   └── docs/                   # Resume and documentation
-├── backend/                    # Python ML models
-│   ├── main.py                 # Entry point
-│   ├── ml_model.py             # Random Forest model
-│   ├── dl_model.py             # TensorFlow model
-│   ├── data_preprocessing.py   # Feature engineering
-│   ├── evaluation.py           # Model metrics
-│   └── requirements.txt
-├── my_marketplace/             # Claude Code plugins
-│   ├── plugins/
-│   │   ├── tto-init/
-│   │   ├── git-commit/
-│   │   ├── git-push/
-│   │   ├── git-push-agentic/
-│   │   └── git-README/
-│   └── README.md
-├── genAI/                      # AI-generated content
-│   └── linkedin-posts/         # Pre-written LinkedIn posts
-│       ├── validated/          # Ready to publish
-│       └── posted/             # Archived after publishing
-├── system_design_docs/         # Architecture documentation (10 docs)
-│   ├── architecture.md         # Platform KPIs & constraints
-│   ├── api.md                  # Chat API specification
-│   ├── database.md             # GitHub-as-warehouse pattern
-│   ├── deployment.md           # CI/CD pipeline
-│   ├── frontend.md             # React component architecture
-│   ├── github-api.md           # GitHub Actions & CRON patterns
-│   ├── linkedin-api.md         # LinkedIn OAuth & Share API
-│   ├── ml-models.md            # ML/DL implementation details
-│   └── roadmap.md              # Feature roadmap
-├── .github/workflows/
-│   └── linkedin-scheduler.yml  # CRON: Tuesdays 10 AM PST
-├── public/                     # Static assets
-├── CLAUDE.md                   # AI assistant instructions
+│   │   └── AiSystemInformation.tsx # RAG context for AI agent
+│   ├── lib/                      # Utility libraries
+│   ├── hooks/                    # Custom React hooks
+│   └── types/                    # TypeScript type definitions
+├── backend/                      # Python ML models
+│   ├── main.py                   # Entry point
+│   ├── data_preprocessing.py     # Data cleaning & feature engineering
+│   ├── ml_model.py               # Random Forest model
+│   ├── dl_model.py               # TensorFlow deep learning model
+│   ├── evaluation.py             # Model evaluation utilities
+│   └── requirements.txt          # Python dependencies
+├── plugins/                      # Claude Code agent plugins
+│   ├── git-push/                 # Interactive git push workflow
+│   ├── git-push-agentic/         # Autonomous git workflow
+│   ├── git-commit/               # Commit message generator
+│   ├── git-README/               # Multi-agent README generator
+│   ├── tto-agent-orchestrator/   # Lead coordination agent
+│   ├── tto-agent-frontend/       # Frontend specialist
+│   ├── tto-agent-backend/        # Backend specialist
+│   ├── tto-agent-api/            # API design specialist
+│   ├── tto-agent-ai-ml/          # AI/ML specialist
+│   ├── tto-agent-qa/             # Quality assurance agent
+│   ├── tto-agent-uiux/           # UI/UX specialist
+│   ├── tto-agent-ops/            # DevOps specialist
+│   ├── tto-agent-linkedin/       # LinkedIn content agent
+│   ├── tto-agent-swe/            # Meta-agent coordinator
+│   └── tto-init/                 # Project initialization
+├── system_design_docs/           # Architecture documentation
+│   ├── architecture.md           # System architecture
+│   ├── api.md                    # API documentation
+│   ├── database.md               # Database schema
+│   ├── deployment.md             # Deployment guide
+│   ├── frontend.md               # Frontend architecture
+│   ├── ml-models.md              # ML model documentation
+│   └── roadmap.md                # Feature roadmap
+├── genAI/                        # Generated AI content
+│   └── linkedin-posts/           # LinkedIn post drafts
+├── .github/
+│   └── workflows/
+│       └── linkedin-scheduler.yml # Automated LinkedIn posting
+├── CLAUDE.md                     # AI assistant instructions
 ├── package.json
-├── tsconfig.json
-└── README.md
+└── tsconfig.json
 ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -278,31 +206,32 @@ thomas-to-bcheme/
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory:
-
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GOOGLE_API_KEY` | **Yes** | Google Gemini API key for chat functionality |
-| `LINKEDIN_ACCESS_TOKEN` | For LinkedIn | OAuth bearer token (~60 day expiry) |
-| `LINKEDIN_PERSON_URN` | For LinkedIn | Format: `urn:li:person:{sub}` from OAuth id_token |
-| `LINKEDIN_CLIENT_ID` | For token refresh | LinkedIn OAuth app Client ID |
-| `LINKEDIN_CLIENT_SECRET` | For token refresh | LinkedIn OAuth app Client Secret |
-| `LINKEDIN_DRY_RUN` | No | Set `true` to test posting without publishing |
+| `GOOGLE_API_KEY` | Yes | Google Gemini API key for AI chat |
+| `LINKEDIN_ACCESS_TOKEN` | No | LinkedIn OAuth access token |
+| `LINKEDIN_PERSON_URN` | No | LinkedIn URN (format: `urn:li:person:<id>`) |
+| `LINKEDIN_DRY_RUN` | No | Set to `true` for testing without posting |
 | `AWS_ACCESS_KEY_ID` | No | AWS credentials for DynamoDB/S3 |
-| `AWS_SECRET_ACCESS_KEY` | No | AWS credentials for DynamoDB/S3 |
-| `VERCEL_API_KEY` | No | Vercel API for deployment automation |
+| `AWS_SECRET_ACCESS_KEY` | No | AWS secret key |
+| `AWS_REGION` | No | AWS region (default: us-east-1) |
 
-> **Note:** See [system_design_docs/linkedin-api.md](system_design_docs/linkedin-api.md) for detailed LinkedIn OAuth setup.
+### Example `.env.local`
 
-### TypeScript Path Aliases
+```env
+# Required
+GOOGLE_API_KEY=your_gemini_api_key_here
 
-The project uses `@/*` to map to `./src/*`:
+# Optional - LinkedIn Integration
+LINKEDIN_ACCESS_TOKEN=your_linkedin_token
+LINKEDIN_PERSON_URN=urn:li:person:your_id
+LINKEDIN_DRY_RUN=false
 
-```typescript
-import { Component } from "@/components/Component";
+# Optional - AWS
+AWS_ACCESS_KEY_ID=your_aws_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret
+AWS_REGION=us-east-1
 ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -310,217 +239,159 @@ import { Component } from "@/components/Component";
 
 ### Chat API
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/chat` | POST | Streaming chat with Gemini AI + RAG context |
+**POST** `/api/chat`
 
-**Request:**
+Stream a conversation with the AI agent.
+
+**Request Body:**
 ```json
 {
   "messages": [
-    { "role": "user", "content": "Tell me about Thomas" }
+    { "role": "user", "content": "Tell me about Thomas's experience" }
   ]
 }
 ```
 
-**Response:** Server-Sent Events (SSE) streaming text with correlation ID header.
+**Response:** Text stream (Content-Type: text/plain)
 
-For detailed documentation, see: [system_design_docs/api.md](system_design_docs/api.md)
+**Headers:**
+- `X-Correlation-ID` - Request tracking ID
 
-### LinkedIn API
+---
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/linkedin/content` | GET | List available pre-written posts |
-| `/api/linkedin/post` | POST | Publish content to LinkedIn |
+### LinkedIn Content API
 
-**POST Request:**
+**GET** `/api/linkedin/content`
+
+List available pre-written LinkedIn posts.
+
+**Response:**
 ```json
 {
-  "source": "file",
-  "filename": "2026-02-17-topic-name",
-  "visibility": "PUBLIC"
-}
-```
-
-**Response (201):**
-```json
-{
-  "success": true,
-  "postId": "urn:li:share:...",
+  "posts": [
+    {
+      "filename": "2025-01-28-ai-agents",
+      "date": "2025-01-28",
+      "topic": "AI Agents",
+      "target_audience": "Engineering Leaders",
+      "contentPreview": "...",
+      "characterCount": 1234
+    }
+  ],
+  "count": 5,
   "correlationId": "uuid"
 }
 ```
 
-For detailed documentation, see: [system_design_docs/linkedin-api.md](system_design_docs/linkedin-api.md)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ---
 
-## About Me
+**POST** `/api/linkedin/post`
 
-I am a **(Founding) Engineer** with a formal background in [Biochemical Engineering](https://catalog.ucdavis.edu/departments-programs-degrees/chemical-engineering/biochemical-engineering-bs/#requirementstext), and [research](https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf), applying fullstack software engineering in various fields and usecases on a strong mathematical and emperical foundation to design end-to-end architectures that bridge physical reality with cloud infrastructure. 
+Publish content to LinkedIn.
 
-My experience spans the entire data lifecycle—from capturing empirical data on the manufacturing floor to digitizing it via enterprise ETL/ELT pipelines and digitulizing it through Agentic Machine Learning and automated applications for digital transformation. By architecting data models and pipelines that accurately reflect real-world processes, I deliver tangible value, driving efficiency, revenue generation, and optimization through scalable, reality-grounded software solutions.
+**Request Body (from file):**
+```json
+{
+  "source": "file",
+  "filename": "2025-01-28-ai-agents",
+  "visibility": "PUBLIC"
+}
+```
 
-> **We've seen how even simplistic algorithms can automate manual workflows. Now with Agentic methods, I combine classical fullstack methods with agentic AI/ML solutions to drive reality into the future.**
+**Request Body (custom content):**
+```json
+{
+  "source": "custom",
+  "content": "Your LinkedIn post content here...",
+  "visibility": "CONNECTIONS"
+}
+```
 
-As of Dec 2025, I have taken on reaching out to protein academics to support GenAI of novel designs leveraging my formal background. Working in industry with tech during the day and protein design by night.
-
----
-
-## Summary of System Architecture: ETL & Data Flow
-
-This diagram illustrates the automated pipeline moving data from external sources into Github "database folder" for accumulated (semantic) pre-processing of raw data from sandbox, test, to product with raw, staging, transform, and analyze layers before moving enviornments to Server-side database, Vercel Edge Config for low-latency frontend access.
-
-### System Design Conclusions
-* 30 minute CRON frequency [See KPIs](system_design_docs/architecture.md#system-design-key-performance-indicators-kpi)
-* 1 server-side (vercel) integrated database [See Vercel Limits](system_design_docs/architecture.md#vercel-free-hobby-limitation-specifications)
-
-For detailed technical specifications, refer to the following documentation:
-- [Architecture](system_design_docs/architecture.md)
-- [Database](system_design_docs/database.md)
-- [API](system_design_docs/api.md)
-- [LinkedIn API](system_design_docs/linkedin-api.md)
-- [GitHub Actions](system_design_docs/github-api.md)
-- [Deployment](system_design_docs/deployment.md)
-- [Roadmap](system_design_docs/roadmap.md)
-
-```mermaid
-flowchart BT
-    %% --- Styling Definitions ---
-    classDef external fill:#e1e4e8,stroke:#24292e,stroke-width:2px;
-    classDef github fill:#f6f8fa,stroke:#24292e,stroke-width:2px,stroke-dasharray: 0;
-    classDef dwh fill:#d1e7dd,stroke:#0f5132,stroke-width:1px;
-    classDef vercel fill:#000000,stroke:#fff,stroke-width:2px,color:#fff;
-    classDef huggingface fill:#ffd21e,stroke:#333,stroke-width:2px;
-    classDef db fill:#0070f3,stroke:#fff,stroke-width:2px,color:#fff;
-
-    %% --- 1. External Data Sources (Bottom) ---
-    subgraph Sources ["External Sources"]
-        direction LR
-        Ext_API["3rd Party APIs"]:::external
-        Ext_Web["Web Scrapers"]:::external
-    end
-
-    %% --- 2. GitHub Ecosystem (Center / Monolith) ---
-    subgraph GitHub ["GitHub Monolith & CI/CD"]
-        
-        %% The Codebase
-        Repo[("Monorepo<br/>")]:::github
-        
-        %% The Scheduler
-        Cron(("CRON Scheduler<br/>Every 30m")):::github
-        
-        %% The Data Warehouse Model
-        subgraph DataWarehouse ["Data Warehouse Model (On GitHub)"]
-            direction TB
-            
-            subgraph Env_Sandbox ["Env: Sandbox"]
-                L1_S["Raw / Stage / Transform / Analyze"]:::dwh
-            end
-            
-            subgraph Env_Quality ["Env: Quality"]
-                L1_Q["Raw / Stage / Transform / Analyze"]:::dwh
-            end
-            
-            subgraph Env_Prod ["Env: Production"]
-                L1_P["Raw / Stage / Transform / Analyze"]:::dwh
-            end
-            
-            %% Pipeline Flow inside GitHub
-            Env_Sandbox ==> Env_Quality ==> Env_Prod
-        end
-    end
-
-    %% --- 3. Deployment Targets (Left & Right) ---
-    
-    %% LEFT: Frontend (Vercel)
-    subgraph Vercel_Env ["Vercel Deployment"]
-        FE_Node[("Frontend<br/>Next.js / React / TS")]:::vercel
-    end
-
-    %% RIGHT: Backend (Hugging Face)
-    subgraph HF_Env ["Hugging Face Deployment"]
-        BE_Node[("Backend ML Model<br/>Python / PyTorch / Tensorflow / Huggingface")]:::huggingface
-    end
-
-    %% --- 4. The Bridge (Top) ---
-    subgraph Database_Layer ["Internal Ecosystem Database"]
-        DB[("Vector supported Database<br/>(RAG; Cleaned Data)")]:::db
-    end
-
-    %% --- Connections & Flows ---
-
-    %% 1. Ingestion Flow (Bottom Up)
-    Ext_API & Ext_Web --"Ingest Raw Data"--> Cron
-    Cron --"Trigger Pipeline"--> Env_Sandbox
-    
-    %% 2. Data Processing to DB
-    Env_Prod --"Load Cleaned Data"--> DB
-
-    %% 3. CI/CD Deployment Flow
-    Repo --"Deploy Frontend (Next.js)"--> FE_Node
-    Repo --"Deploy Backend (FastAPI)"--> BE_Node
-
-    %% 4. Application Communication (The Triangle)
-    FE_Node <--"REST API / JSON"--> DB
-    BE_Node <--"REST API / SQL"--> DB
-    
-    %% Optional: Direct Frontend-Backend Link via DB logic or Direct
-    FE_Node -. "Request Predictions" .-> BE_Node
-
-    %% Formatting Layout Hints
-    Sources ~~~ Repo
-```    
-### 🏗️ Built Using
-
-| **Core Infrastructure** | **Frontend** | **Data & Backend** | **AI & Integrations** |
-| :--- | :--- | :--- | :--- |
-| **Git & GitHub** (Version Control + "Database") | **React 19.2.3** (UI Library) | **Vercel Blob** (Object Storage) | **Gemini API** (GenAI Logic) |
-| **Vercel** (Edge Hosting & Deployment) | **TypeScript 5** (Type Safety) | **AWS DynamoDB** (NoSQL / Roadmap) | **Hugging Face** (Model Inference) |
-| **GitHub Actions** (CI/CD & CRON Workers) | **Next.js 16.1.1** (App Router) | **Node.js** (ETL Scripting) | **scikit-learn** (ML Models) |
-| **Markdown** (Documentation as Code) | **Tailwind CSS v4** (Styling) | **Python 3** (ML Backend) | **TensorFlow** (Deep Learning) |
-| | **Framer Motion** (Animations) | **OpenSSH** (Secure Auth) | **RESTful API** (public-apis) |
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+**Response:**
+```json
+{
+  "success": true,
+  "postId": "urn:li:share:123456",
+  "dryRun": false,
+  "correlationId": "uuid"
+}
+```
 
 ---
 
 ## Testing
 
-> **Note:** A formal test framework is not yet configured. Current quality assurance includes:
+### Code Quality
 
-| Tool | Command | Description |
-|------|---------|-------------|
-| ESLint | `npm run lint` | Static code analysis |
-| TypeScript | `npm run build` | Type checking (strict mode) |
+```bash
+# Run ESLint
+npm run lint
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+# TypeScript type checking
+npx tsc --noEmit
+```
+
+### ML Model Evaluation
+
+The backend models include comprehensive evaluation metrics:
+
+- Mean Absolute Error (MAE)
+- Root Mean Squared Error (RMSE)
+- R-squared (R2)
+- Mean Absolute Percentage Error (MAPE)
+
+```bash
+cd backend
+python main.py
+```
+
+---
+
+## CI/CD
+
+### GitHub Actions
+
+| Workflow | Schedule | Description |
+|----------|----------|-------------|
+| `linkedin-scheduler.yml` | Tuesdays 10:07 AM PST | Automated LinkedIn posting |
+
+### Vercel Deployment
+
+- Automatic deployments on push to `main`
+- Preview deployments for pull requests
+- Edge Functions for API routes
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
-
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes following conventional commit format
-4. Push to your branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. Make your changes following the coding standards in `CLAUDE.md`
+4. Run linting (`npm run lint`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
-For Claude Code Plugins, see the [Plugin Marketplace Contributing Guide](my_marketplace/README.md).
+### Development Guidelines
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- Follow the 5 Development Directives in `CLAUDE.md`
+- Use TypeScript strict mode
+- Write structured logs with correlation IDs
+- Use Zod for request validation
+- Follow the Arrange-Act-Assert pattern for tests
 
 ---
 
 ## License
 
-MIT License - This project is provided as an open source learning resource.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This project is licensed under the MIT License.
 
 ---
+
+## Author
+
+**Thomas To**
+- Email: thomas.to.bcheme@gmail.com
+- GitHub: [@thomas-to-bcheme](https://github.com/thomas-to-bcheme)
+- Portfolio: [thomas-to-bcheme.vercel.app](https://thomas-to-bcheme.vercel.app)
