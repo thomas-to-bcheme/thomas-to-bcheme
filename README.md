@@ -206,15 +206,15 @@ thomas-to-bcheme/
 
 ### Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GOOGLE_API_KEY` | Yes | Google Gemini API key for AI chat |
-| `LINKEDIN_ACCESS_TOKEN` | No | LinkedIn OAuth access token |
-| `LINKEDIN_PERSON_URN` | No | LinkedIn URN (format: `urn:li:person:<id>`) |
-| `LINKEDIN_DRY_RUN` | No | Set to `true` for testing without posting |
-| `AWS_ACCESS_KEY_ID` | No | AWS credentials for DynamoDB/S3 |
-| `AWS_SECRET_ACCESS_KEY` | No | AWS secret key |
-| `AWS_REGION` | No | AWS region (default: us-east-1) |
+| Variable | Required | Description | Setup Guide |
+|----------|----------|-------------|-------------|
+| `GOOGLE_API_KEY` | Yes | Google Gemini API key for AI chat | [API Docs](system_design_docs/api.md#environment-variables) |
+| `LINKEDIN_ACCESS_TOKEN` | No | LinkedIn OAuth access token | [OAuth Guide](system_design_docs/linkedin-api.md#oauth-20-setup-walkthrough) |
+| `LINKEDIN_PERSON_URN` | No | LinkedIn URN (format: `urn:li:person:<id>`) | [Extract URN](system_design_docs/linkedin-api.md#step-4-extract-member-id-from-id_token) |
+| `LINKEDIN_DRY_RUN` | No | Set to `true` for testing without posting | [Dry Run](system_design_docs/linkedin-api.md#dry-run-mode) |
+| `AWS_ACCESS_KEY_ID` | No | AWS credentials for DynamoDB/S3 | [Database](system_design_docs/database.md) |
+| `AWS_SECRET_ACCESS_KEY` | No | AWS secret key | [Database](system_design_docs/database.md) |
+| `AWS_REGION` | No | AWS region (default: us-east-1) | [Database](system_design_docs/database.md) |
 
 ### Example `.env.local`
 
@@ -360,6 +360,46 @@ python main.py
 - Automatic deployments on push to `main`
 - Preview deployments for pull requests
 - Edge Functions for API routes
+
+**Platform Limits:** Safe zone is 24 deployments/day (24% capacity). See [Architecture](system_design_docs/architecture.md) for details.
+
+**Workflow Configuration:** For CRON patterns, secrets management, and cross-platform integration, see [GitHub API](system_design_docs/github-api.md).
+
+---
+
+## Documentation
+
+For detailed technical specifications, see the [System Design Documentation](system_design_docs/README.md).
+
+### Architecture & Infrastructure
+
+| Document | Description |
+|----------|-------------|
+| [Architecture](system_design_docs/architecture.md) | Platform KPIs, deployment limits, zero-cost infrastructure pattern |
+| [Deployment](system_design_docs/deployment.md) | CI/CD pipeline, Vercel configuration, rollback procedures |
+| [Database](system_design_docs/database.md) | GitHub-as-warehouse pattern, 3-tier ETL (Sandbox → Quality → Production) |
+
+### API & Integration
+
+| Document | Description |
+|----------|-------------|
+| [API Design](system_design_docs/api.md) | Chat API streaming, RAG context, request/response schemas |
+| [LinkedIn API](system_design_docs/linkedin-api.md) | OAuth 2.0 setup, posting workflow, rate limits, troubleshooting |
+| [GitHub API](system_design_docs/github-api.md) | CRON scheduling, secrets management, workflow patterns |
+
+### Frontend & ML
+
+| Document | Description |
+|----------|-------------|
+| [Frontend](system_design_docs/frontend.md) | Component architecture, state management, Tailwind CSS, accessibility |
+| [ML Models](system_design_docs/ml-models.md) | Random Forest + TensorFlow models, evaluation metrics, training pipeline |
+| [Roadmap](system_design_docs/roadmap.md) | Development timeline, planned features, Edge AI vision |
+
+### Development Standards
+
+| Document | Description |
+|----------|-------------|
+| [CLAUDE.md](CLAUDE.md) | 5 Development Directives, engineering standards, testing strategy |
 
 ---
 
