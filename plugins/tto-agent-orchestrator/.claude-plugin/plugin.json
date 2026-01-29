@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-orchestrator",
+  "description": "Lead orchestrator for code review, integration verification, and architectural integrity tasks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["code-review", "integration", "architecture", "verification", "coordination", "orchestration"]
+}

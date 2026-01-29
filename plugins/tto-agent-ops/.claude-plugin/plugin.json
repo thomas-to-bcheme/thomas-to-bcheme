@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-ops",
+  "description": "Infrastructure/DevOps specialist for CI/CD pipelines, deployment, containers, and infrastructure-as-code",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["cicd", "deployment", "docker", "github-actions", "infrastructure", "devops", "ops"]
+}

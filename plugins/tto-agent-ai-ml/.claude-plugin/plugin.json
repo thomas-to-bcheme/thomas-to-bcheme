@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-ai-ml",
+  "description": "AI/ML specialist for LLM integration, RAG pipelines, vector databases, and ML model training tasks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["llm", "rag", "vector-db", "ml-training", "gemini", "tensorflow", "ai", "machine-learning"]
+}

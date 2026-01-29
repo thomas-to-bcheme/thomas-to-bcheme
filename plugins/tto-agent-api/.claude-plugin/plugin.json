@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-api",
+  "description": "API specialist for REST endpoints, request/response structures, middleware, and serialization tasks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["rest", "endpoints", "middleware", "validation", "http", "serialization", "api"]
+}

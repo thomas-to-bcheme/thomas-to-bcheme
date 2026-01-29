@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-frontend",
+  "description": "Frontend specialist for React/Next.js, Tailwind CSS, and Vercel deployment tasks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["react", "nextjs", "tailwind", "vercel", "typescript", "components", "frontend"]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-linkedin",
+  "description": "LinkedIn post generator for technical project updates with job search announcements",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["content", "social-media", "technical-writing", "job-search", "networking", "linkedin"]
+}

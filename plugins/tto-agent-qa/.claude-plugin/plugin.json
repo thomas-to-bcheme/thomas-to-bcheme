@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-qa",
+  "description": "QA specialist for test strategy, test automation, regression testing, bug triage, and quality gates",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["testing", "automation", "regression", "coverage", "quality-gates", "tdd", "qa"]
+}

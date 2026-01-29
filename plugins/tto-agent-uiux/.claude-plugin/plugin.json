@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-uiux",
+  "description": "UI/UX design specialist for design systems, visual design, accessibility, and design-to-code translation",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["design-system", "accessibility", "wcag", "design-tokens", "atomic-design", "uiux"]
+}

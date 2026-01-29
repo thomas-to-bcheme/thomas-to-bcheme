@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-backend",
+  "description": "Backend specialist for database schema, business logic, data lineage, and ML model integration tasks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["database", "schema", "python", "ml", "data-lineage", "business-logic", "backend"]
+}
