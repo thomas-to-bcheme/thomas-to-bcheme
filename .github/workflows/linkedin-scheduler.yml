@@ -2,8 +2,8 @@ name: LinkedIn Post Scheduler
 
 on:
   schedule:
-    # Every Tuesday at 10:07 AM PST (18:07 UTC) - offset to avoid queue congestion
-    - cron: '7 18 * * 2'
+    # Every Tuesday at 8:07 AM PST (16:07 UTC) - offset to avoid queue congestion
+    - cron: '7 16 * * 2'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -37,24 +37,39 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Get oldest validated post
+      - name: Get next post from rotation
         id: get-post
         run: |
-          # Get the oldest post by date (first to be published)
-          OLDEST_POST=$(ls -1 genAI/linkedin-posts/validated/*.md 2>/dev/null | sort | head -1 | xargs -r basename | sed 's/.md$//')
-          if [ -z "$OLDEST_POST" ]; then
-            echo "No validated posts available"
+          # Read or initialize rotation index
+          INDEX_FILE="genAI/linkedin-7day/.current-index"
+          if [ -f "$INDEX_FILE" ]; then
+            CURRENT_INDEX=$(cat "$INDEX_FILE")
+          else
+            CURRENT_INDEX=0
+          fi
+
+          # Get sorted list of posts
+          POSTS=($(ls -1 genAI/linkedin-7day/*.md 2>/dev/null | sort))
+          TOTAL=${#POSTS[@]}
+
+          if [ $TOTAL -eq 0 ]; then
+            echo "No posts available in linkedin-7day"
             echo "has_post=false" >> $GITHUB_OUTPUT
           else
-            echo "Found post: $OLDEST_POST"
-            echo "filename=$OLDEST_POST" >> $GITHUB_OUTPUT
+            # Wrap index to cycle through posts
+            CURRENT_INDEX=$((CURRENT_INDEX % TOTAL))
+            SELECTED="${POSTS[$CURRENT_INDEX]}"
+            FILENAME=$(basename "$SELECTED" .md)
+            echo "Found post [$((CURRENT_INDEX + 1))/$TOTAL]: $FILENAME"
+            echo "filename=$FILENAME" >> $GITHUB_OUTPUT
             echo "has_post=true" >> $GITHUB_OUTPUT
+            echo "next_index=$((CURRENT_INDEX + 1))" >> $GITHUB_OUTPUT
           fi
 
       - name: Skip if no posts
         if: steps.get-post.outputs.has_post == 'false'
         run: |
-          echo "No validated posts to publish. Skipping."
+          echo "No posts in linkedin-7day rotation. Skipping."
           exit 0
 
       - name: Post to LinkedIn
@@ -63,6 +78,7 @@ jobs:
         env:
           POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
           LINKEDIN_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          LINKEDIN_POSTS_DIR: genAI/linkedin-7day
         run: |
           echo "Posting: $POST_FILENAME"
           echo "Dry run: $LINKEDIN_DRY_RUN"
@@ -89,24 +105,19 @@ jobs:
             exit 1
           fi
 
-      - name: Archive posted content
-        if: steps.get-post.outputs.has_post == 'true' && steps.post.outputs.success == 'true' && github.event.inputs.dry_run != true
-        env:
-          POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
+      - name: Update rotation index
+        if: steps.get-post.outputs.has_post == 'true' && steps.post.outputs.success == 'true' && github.event.inputs.dry_run != 'true'
         run: |
-          echo "Archiving: $POST_FILENAME"
+          echo "Updating rotation index to: ${{ steps.get-post.outputs.next_index }}"
 
-          # Create posted directory if not exists
-          mkdir -p genAI/linkedin-posts/posted
+          # Write next index (will wrap on next run)
+          echo "${{ steps.get-post.outputs.next_index }}" > genAI/linkedin-7day/.current-index
 
-          # Move to posted archive
-          mv "genAI/linkedin-posts/validated/${POST_FILENAME}.md" genAI/linkedin-posts/posted/
-
-          # Commit the change (only if there are changes)
+          # Commit the index update
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add genAI/linkedin-posts/
-          git diff --staged --quiet || git commit -m "Archive posted LinkedIn content: ${POST_FILENAME}"
+          git add genAI/linkedin-7day/.current-index
+          git diff --staged --quiet || git commit -m "Update LinkedIn rotation index"
           git push
 
       - name: Summary
@@ -116,8 +127,9 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ "${{ steps.get-post.outputs.has_post }}" = "true" ]; then
             echo "- **Post:** ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Next Index:** ${{ steps.get-post.outputs.next_index }}" >> $GITHUB_STEP_SUMMARY
             echo "- **Dry Run:** ${{ github.event.inputs.dry_run || 'false' }}" >> $GITHUB_STEP_SUMMARY
             echo "- **Success:** ${{ steps.post.outputs.success || 'N/A' }}" >> $GITHUB_STEP_SUMMARY
           else
-            echo "- **Status:** No validated posts available" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status:** No posts in linkedin-7day rotation" >> $GITHUB_STEP_SUMMARY
           fi

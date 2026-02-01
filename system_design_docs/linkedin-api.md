@@ -15,36 +15,38 @@ The LinkedIn Share API enables publishing content to LinkedIn programmatically v
 ### Architecture
 
 ```
-┌─────────────────┐
-│ CLI / Frontend  │
-└────────┬────────┘
-         │ POST /api/linkedin/post
-         ▼
-┌────────────────────────────┐
-│ route.ts (Handler)         │
-│ • Zod validation           │
-│ • Correlation ID tracking  │
-└────────┬───────────────────┘
-         │
-         ▼
-┌────────────────────────────┐
-│ content-loader.ts          │
-│ • Load markdown files      │
-│ • Parse YAML frontmatter   │
-└────────┬───────────────────┘
-         │
-         ▼
-┌────────────────────────────┐
-│ client.ts                  │
-│ • Build LinkedIn payload   │
-│ • POST to LinkedIn API     │
-└────────┬───────────────────┘
-         │
-         ▼
-┌────────────────────────────┐
-│ LinkedIn UGC Posts API     │
-│ api.linkedin.com/v2/ugcPosts
-└────────────────────────────┘
+┌─────────────────────────────────┐
+│ GitHub Actions CRON / Manual    │
+└────────────┬────────────────────┘
+             │ npm run linkedin post
+             ▼
+┌────────────────────────────────────┐
+│ linkedin-cli.ts                    │
+│ • Argument parsing                 │
+│ • Dry-run mode                     │
+│ • JSON/text output                 │
+└────────────┬───────────────────────┘
+             │
+             ▼
+┌────────────────────────────────────┐
+│ content-loader.ts                  │
+│ • Load markdown files              │
+│ • Parse YAML frontmatter           │
+│ • Configurable directory via env   │
+└────────────┬───────────────────────┘
+             │
+             ▼
+┌────────────────────────────────────┐
+│ client.ts                          │
+│ • Build LinkedIn payload           │
+│ • POST to LinkedIn API             │
+└────────────┬───────────────────────┘
+             │
+             ▼
+┌────────────────────────────────────┐
+│ LinkedIn UGC Posts API             │
+│ api.linkedin.com/v2/ugcPosts       │
+└────────────────────────────────────┘
 ```
 
 ---
@@ -211,90 +213,91 @@ Set these in `.env.local` (local) or Vercel Dashboard (production):
 
 ---
 
-## API Endpoints
+## CLI Commands
 
-### GET /api/linkedin/content
+The LinkedIn CLI (`scripts/linkedin-cli.ts`) provides standalone posting without requiring a development server.
 
-Lists all available pre-written LinkedIn posts.
+### List Available Posts
 
-**Response (200):**
+```bash
+npm run linkedin list
 
-```json
-{
-  "posts": [
-    {
-      "filename": "2026-02-17-constraint-driven-architecture",
-      "date": "2026-02-17",
-      "topic": "Constraint-Driven Architecture",
-      "target_audience": "CTOs, Engineering Managers",
-      "contentPreview": "Hello World, I built...",
-      "characterCount": 1911
-    }
-  ],
-  "count": 14,
-  "correlationId": "550e8400-e29b-41d4-a716-446655440000"
-}
+# JSON output
+npm run linkedin list -- --json
 ```
 
-### POST /api/linkedin/post
+**Output:**
 
-Publishes content to LinkedIn.
+```
+Available LinkedIn Posts (14 total)
+───────────────────────────────────
 
-**Request (File Source):**
-
-```json
-{
-  "source": "file",
-  "filename": "2026-02-17-constraint-driven-architecture",
-  "visibility": "PUBLIC"
-}
+1. 2026-02-17-constraint-driven-architecture
+   Topic: Constraint-Driven Architecture
+   Audience: CTOs, Engineering Managers
+   Characters: 1,911
 ```
 
-**Request (Custom Content):**
+### Post from File
 
-```json
-{
-  "source": "custom",
-  "content": "Your post text here (max 3000 chars)",
-  "visibility": "CONNECTIONS"
-}
+```bash
+# Dry-run (test without posting)
+npm run linkedin post -- --file 2026-02-17-constraint-driven-architecture --dry-run
+
+# Publish for real
+npm run linkedin post -- --file 2026-02-17-constraint-driven-architecture --visibility PUBLIC
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `source` | `"file"` \| `"custom"` | Content source type |
-| `filename` | string | Markdown filename (without .md) |
-| `content` | string | Custom post text (1-3000 chars) |
-| `visibility` | `"PUBLIC"` \| `"CONNECTIONS"` | Post visibility (default: PUBLIC) |
+### Post Custom Content
 
-**Response (201):**
+```bash
+npm run linkedin post -- --content "Your post text here" --visibility PUBLIC
+```
+
+### CLI Options
+
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--file` | `-f` | Post filename (without .md) |
+| `--content` | `-c` | Custom content text |
+| `--dry-run` | `-n` | Test without posting |
+| `--visibility` | `-v` | PUBLIC or CONNECTIONS (default: PUBLIC) |
+| `--json` | `-j` | Output as JSON |
+
+### JSON Output
+
+```bash
+npm run linkedin post -- --file 2026-02-17-constraint-driven-architecture --json
+```
 
 ```json
 {
   "success": true,
   "postId": "urn:li:share:7421988546875592705",
   "dryRun": false,
-  "correlationId": "550e8400-e29b-41d4-a716-446655440000",
   "metadata": {
+    "filename": "2026-02-17-constraint-driven-architecture",
     "topic": "Constraint-Driven Architecture",
-    "date": "2026-02-17",
-    "filename": "2026-02-17-constraint-driven-architecture"
+    "characterCount": 1911,
+    "visibility": "PUBLIC"
   }
 }
 ```
 
-### Error Responses
+### Exit Codes
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_JSON` | Request body is not valid JSON |
-| 400 | `VALIDATION_ERROR` | Schema validation failed |
-| 404 | `POST_NOT_FOUND` | Markdown file not found |
-| 401 | `LINKEDIN_AUTH_EXPIRED` | Access token expired |
-| 429 | `LINKEDIN_QUOTA_EXCEEDED` | Rate limit exceeded (150/day) |
-| 422 | `LINKEDIN_CONTENT_REJECTED` | Content policy violation |
-| 502 | `LINKEDIN_SERVICE_ERROR` | LinkedIn API unavailable |
-| 500 | `INTERNAL_ERROR` | Unexpected server error |
+| Code | Description |
+|------|-------------|
+| 0 | Success |
+| 1 | User error (invalid args, file not found) |
+| 2 | API error (auth, rate limit, service error) |
+
+### Environment Variables
+
+| Variable | Purpose |
+|----------|---------|
+| `LINKEDIN_POSTS_DIR` | Override posts directory (default: `genAI/linkedin-posts/validated`) |
+| `LINKEDIN_DRY_RUN` | Set to `true` for dry-run mode |
 
 ---
 
@@ -340,54 +343,46 @@ Hello World, I built a production AI portfolio on free-tier services...
 
 ---
 
-## CLI Usage Examples
+## GitHub Actions Integration
 
-### Start Development Server
+The LinkedIn scheduler runs via GitHub Actions CRON (Tuesdays at 10:07 AM PST).
 
-```bash
-npm run dev
-```
+### Workflow Location
 
-### List Available Posts
+`.github/workflows/linkedin-scheduler.yml`
 
-```bash
-curl http://localhost:3000/api/linkedin/content
-```
-
-### Post from File
+### Manual Trigger
 
 ```bash
-curl -X POST http://localhost:3000/api/linkedin/post \
-  -H 'Content-Type: application/json' \
-  -d '{"source":"file","filename":"2026-02-17-constraint-driven-architecture"}'
+# Trigger workflow
+gh workflow run linkedin-scheduler.yml
+
+# Dry-run test
+gh workflow run linkedin-scheduler.yml -f dry_run=true
+
+# Specific post
+gh workflow run linkedin-scheduler.yml -f filename=2026-02-17-constraint-driven-architecture
 ```
 
-### Post Custom Content
+### 7-Day Rotation
 
-```bash
-printf '{"source":"custom","content":"Your post text here","visibility":"PUBLIC"}' | \
-  curl -X POST http://localhost:3000/api/linkedin/post \
-  -H 'Content-Type: application/json' -d @-
-```
+Posts in `genAI/linkedin-7day/` are rotated weekly:
+- Index tracked in `.current-index` file
+- Cycles back to first post after last
+- Posts remain in directory (no archival)
 
 ### Dry-Run Mode
 
-Set `LINKEDIN_DRY_RUN=true` in `.env.local` to test without posting.
+Set `LINKEDIN_DRY_RUN=true` in `.env.local` for local testing:
 
-Dry-run response includes the full `payload` that would be sent:
+```bash
+LINKEDIN_DRY_RUN=true npm run linkedin post -- --file test-post
+```
 
-```json
-{
-  "success": true,
-  "postId": "dry-run-1706806440000",
-  "dryRun": true,
-  "payload": {
-    "author": "urn:li:person:...",
-    "lifecycleState": "PUBLISHED",
-    "specificContent": {...},
-    "visibility": {...}
-  }
-}
+Or use the `--dry-run` flag:
+
+```bash
+npm run linkedin post -- --file test-post --dry-run
 ```
 
 ---
@@ -447,12 +442,13 @@ Dry-run response includes the full `payload` that would be sent:
 
 | File | Purpose |
 |------|---------|
-| `src/app/api/linkedin/content/route.ts` | GET endpoint - list posts |
-| `src/app/api/linkedin/post/route.ts` | POST endpoint - publish |
+| `scripts/linkedin-cli.ts` | Standalone CLI for posting |
 | `src/lib/linkedin/client.ts` | LinkedIn API client |
-| `src/lib/linkedin/content-loader.ts` | Markdown parser |
+| `src/lib/linkedin/content-loader.ts` | Markdown parser (configurable directory) |
 | `src/types/linkedin-errors.ts` | Error definitions |
-| `genAI/linkedin-posts/*.md` | Content repository |
+| `genAI/linkedin-posts/validated/*.md` | Validated posts (one-time queue) |
+| `genAI/linkedin-7day/*.md` | Rotating posts (weekly cycle) |
+| `.github/workflows/linkedin-scheduler.yml` | GitHub Actions CRON workflow |
 
 ---
 

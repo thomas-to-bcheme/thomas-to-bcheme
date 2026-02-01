@@ -259,61 +259,41 @@ Stream a conversation with the AI agent.
 
 ---
 
-### LinkedIn Content API
+### LinkedIn CLI
 
-**GET** `/api/linkedin/content`
+Standalone CLI for posting to LinkedIn (no dev server required).
 
-List available pre-written LinkedIn posts.
-
-**Response:**
-```json
-{
-  "posts": [
-    {
-      "filename": "2025-01-28-ai-agents",
-      "date": "2025-01-28",
-      "topic": "AI Agents",
-      "target_audience": "Engineering Leaders",
-      "contentPreview": "...",
-      "characterCount": 1234
-    }
-  ],
-  "count": 5,
-  "correlationId": "uuid"
-}
+**List posts:**
+```bash
+npm run linkedin list
 ```
 
----
-
-**POST** `/api/linkedin/post`
-
-Publish content to LinkedIn.
-
-**Request Body (from file):**
-```json
-{
-  "source": "file",
-  "filename": "2025-01-28-ai-agents",
-  "visibility": "PUBLIC"
-}
+**Post from file:**
+```bash
+npm run linkedin post -- --file 2025-01-28-ai-agents --visibility PUBLIC
 ```
 
-**Request Body (custom content):**
-```json
-{
-  "source": "custom",
-  "content": "Your LinkedIn post content here...",
-  "visibility": "CONNECTIONS"
-}
+**Post custom content:**
+```bash
+npm run linkedin post -- --content "Your LinkedIn post" --visibility PUBLIC
 ```
 
-**Response:**
+**Dry-run test:**
+```bash
+npm run linkedin post -- --file 2025-01-28-ai-agents --dry-run
+```
+
+**JSON output:**
 ```json
 {
   "success": true,
   "postId": "urn:li:share:123456",
   "dryRun": false,
-  "correlationId": "uuid"
+  "metadata": {
+    "filename": "2025-01-28-ai-agents",
+    "characterCount": 1234,
+    "visibility": "PUBLIC"
+  }
 }
 ```
 

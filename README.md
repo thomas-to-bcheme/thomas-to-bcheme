@@ -265,27 +265,28 @@ sequenceDiagram
 
 **Response:** SSE stream with `X-Correlation-ID` header
 
-### LinkedIn API
+### LinkedIn CLI
 
 ```mermaid
 sequenceDiagram
     participant S as GitHub CRON
-    participant A as /api/linkedin/post
-    participant F as genAI/linkedin-posts/
+    participant C as CLI (npm run linkedin)
+    participant F as genAI/linkedin-7day/
     participant L as LinkedIn API
 
-    S->>A: POST {filename}
-    A->>F: Read validated post
-    A->>L: POST ugcPosts
-    L-->>A: 201 Created
-    A->>F: Archive to posted/
-    A-->>S: Success response
+    S->>C: post --file {filename}
+    C->>F: Read post content
+    C->>L: POST ugcPosts
+    L-->>C: 201 Created
+    C->>F: Update rotation index
+    C-->>S: Exit code 0
 ```
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/linkedin/content` | GET | List available posts |
-| `/api/linkedin/post` | POST | Publish to LinkedIn |
+| Command | Description |
+|---------|-------------|
+| `npm run linkedin list` | List available posts |
+| `npm run linkedin post -- --file <name>` | Publish to LinkedIn |
+| `npm run linkedin post -- --dry-run` | Test without posting |
 
 ---
 

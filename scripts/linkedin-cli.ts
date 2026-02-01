@@ -188,7 +188,7 @@ async function handleList(
   } else {
     console.log(formatHeader(`Available LinkedIn Posts (${posts.length} total)`));
     if (posts.length === 0) {
-      console.log('No validated posts found in genAI/linkedin-posts/validated/');
+      console.log(`No posts found in ${process.env.LINKEDIN_POSTS_DIR || 'genAI/linkedin-posts/validated/'}`);
     } else {
       posts.forEach((post, i) => {
         console.log(
@@ -239,7 +239,8 @@ async function handlePost(
         console.log(JSON.stringify({ success: false, error: msg }));
       } else {
         console.error(formatError(msg));
-        console.error(`  Check that the file exists in genAI/linkedin-posts/validated/`);
+        console.error(`  Check that the file exists in ${process.env.LINKEDIN_POSTS_DIR || 'genAI/linkedin-posts/validated/'}`);
+        console.error(`  Hint: Set LINKEDIN_POSTS_DIR env var to use a different directory`);
       }
       return 1;
     }
@@ -339,8 +340,7 @@ async function main(): Promise<void> {
   }
 
   // Dynamic imports (after env is loaded to ensure proper initialization)
-  const { publishToLinkedIn } = await import('@/lib/linkedin/client');
-  const { loadPost, listAvailablePosts } = await import('@/lib/linkedin/content-loader');
+  const { publishToLinkedIn, loadPost, listAvailablePosts } = await import('./lib/linkedin.js');
 
   // Execute command
   let exitCode: number;

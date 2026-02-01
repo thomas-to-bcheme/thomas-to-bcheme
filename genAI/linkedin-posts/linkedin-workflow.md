@@ -224,13 +224,13 @@ Posts move through three directories representing their lifecycle stage:
 
 ### How CRON Automation Works
 
-When the GitHub CRON runs (Tuesdays at 10 AM PST / 18:00 UTC):
+When the GitHub CRON runs (Tuesdays at 10:07 AM PST / 18:07 UTC):
 
 1. **Checkout** repository
-2. **Find oldest file** in `validated/` (sorted by filename date)
-3. **POST** to `/api/linkedin/post` with filename
-4. **On success:** Move `validated/{file}.md` → `posted/{file}.md`
-5. **Git commit & push** (auto-archive)
+2. **Read rotation index** from `genAI/linkedin-7day/.current-index`
+3. **Run CLI**: `npm run linkedin post -- --file {filename}`
+4. **On success:** Increment rotation index and commit
+5. **Git push** (index update only, posts remain in place)
 
 **Key Behavior:**
 - Only ONE post per CRON run (oldest first by filename date)
