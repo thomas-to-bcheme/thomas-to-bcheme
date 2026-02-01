@@ -6,9 +6,7 @@ series: linkedin-7day
 day: 2
 ---
 
-Hello World, this is Day 2 of a 7-day series extracting lessons from building in public demonstrating my "show-not-tell" philosophy. To anyone transitioning from STEM into software: your engineering discipline is an asset, not a hurdle. The frameworks transfer. Build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
-
-I replaced a traditional data warehouse with GitHub monorepo and Actions ETL to avoid paying for enterprise-grade infrastructure during job search.
+Hello World, this is Day 2 of my 7-day series on building in public. To anyone transitioning from STEM into software: your engineering discipline is an asset. The frameworks transfer. Build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
 
 When building my portfolio infrastructure, I needed version control, audit trails, immutable history, and environment promotion. I discovered these are the exact properties enterprises pay thousands monthly for in dedicated data warehouses like Snowflake or BigQuery. GitHub provided all of them for free.
 
@@ -18,12 +16,13 @@ This architecture benefits other developers who need data infrastructure without
 
 At this time, I am actively interviewing for AI/ML Engineering roles as my longitudinal career. I believe the opportunity cost is better spent reinforcing fundamentals of machine learning, deep learning, and system design. If I pass initial screening, preparing for interviews and next steps which may include takehome assignments, leetcode/hackerrank style questions, and system design.
 
-The architecture documentation lives in system_design_docs/database.md [1]. The LinkedIn automation workflow using this pattern runs every Tuesday at 10:07 AM PST via GitHub Actions CRON [2].
+The architecture documentation lives in system_design_docs/database.md [1]. The LinkedIn automation workflow using this pattern runs daily at 8:05 AM PST via GitHub Actions CRON [2]. See my portfolio demonstrating this approach [3].
 
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 
 References:
 [1] Database Architecture - https://github.com/thomas-to/thomas-to-bcheme/blob/main/system_design_docs/database.md
 [2] LinkedIn Scheduler Workflow - https://github.com/thomas-to/thomas-to-bcheme/blob/main/.github/workflows/linkedin-scheduler.yml
+[3] Portfolio - https://thomas-to-bcheme-github-io.vercel.app/
 
-#DataEngineering #OpenToWork #MLOps #BuildInPublic
+#SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer

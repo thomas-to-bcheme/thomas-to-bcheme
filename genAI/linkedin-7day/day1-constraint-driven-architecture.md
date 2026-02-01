@@ -6,7 +6,7 @@ series: linkedin-7day
 day: 1
 ---
 
-Hello World, this is Day 1 of a 7-day series extracting lessons from building in public demonstrating my "show-not-tell" philosophy. To anyone transitioning from STEM into software: your engineering discipline is an asset, not a hurdle. The frameworks transfer. Build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
+Hello World, this is Day 1 of a 7-day series on building in public. To anyone transitioning from STEM into software: your engineering discipline is an asset. The frameworks transfer. Build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
 
 I built production AI infrastructure for $0/month by treating Vercel's 100 deploys/24h limit as an architectural constraint rather than a problem to solve.
 
@@ -21,7 +21,7 @@ The stack: GitHub for orchestration and storage, Vercel for frontend deployment,
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 
 References:
-[1] Project Architecture Documentation - https://github.com/thomas-to-bcheme/architecture.md
-[2] Vercel Platform Limits - https://vercel.com/docs/limits/overview
+[1] Portfolio & Architecture - https://thomas-to-bcheme-github-io.vercel.app/
+[2] Vercel Platform Limits - https://vercel.com/docs/limits
 
-#SoftwareEngineering #SystemDesign #BuildInPublic #MLEngineering
+#SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer

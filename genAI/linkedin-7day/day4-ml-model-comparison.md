@@ -6,7 +6,7 @@ series: linkedin-7day
 day: 4
 ---
 
-Hello World, this is Day 4 of a 7-day series extracting lessons from building in public demonstrating my "show-not-tell" philosophy. To anyone transitioning from STEM into software: your engineering discipline is an asset, not a hurdle. The frameworks transfer. Build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
+Hello World, this is Day 4 of my 7-day series on building in public. To anyone transitioning into software: build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
 
 I trained an ML model on job descriptions to predict salary ranges, deployed it to the Google Chrome Marketplace—then pivoted to building Claude Code's open source ecosystem instead.
 
@@ -22,10 +22,13 @@ Phase 4 is next: taking these patterns into production environments and contribu
 
 One thing I learned: building in public means being transparent about pivots. The ML model comparison taught me that Random Forest beats neural networks for structured data. The pivot taught me that first principles thinking beats sunk cost fallacy.
 
-Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
+To anyone transitioning from STEM into software: your engineering discipline is an asset, not a hurdle. The frameworks transfer. Build something that proves it.
+
+Happy to connect and discuss AI/ML/Software Engineering, career transitions, or open source contributions.
 
 References:
 [1] Salary Prediction Model on Hugging Face - https://huggingface.co/spaces/thomas-to-bcheme/salary-predictor
-[2] Claude Code Plugin Marketplace - https://github.com/thomas-to/thomas-to-bcheme/tree/main/plugins
+[2] Claude Code Plugin Marketplace - https://github.com/thomas-to/thomas-to-bcheme/plugins
+[3] Portfolio - https://thomas-to-bcheme-github-io.vercel.app/
 
-#MachineLearning #DataScience #OpenToWork #MLEngineering
+#SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer

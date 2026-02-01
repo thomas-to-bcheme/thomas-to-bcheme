@@ -6,9 +6,7 @@ series: linkedin-7day
 day: 3
 ---
 
-Hello World, this is Day 3 of a 7-day series extracting lessons from building in public demonstrating my "show-not-tell" philosophy. To anyone transitioning from STEM into software: your engineering discipline is an asset, not a hurdle. The frameworks transfer. Build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
-
-I built a proof-of-concept RAG agent optimized for Gemini's free tier to demonstrate that students can learn agentic AI without spending a dollar.
+Hello World, this is Day 3 of my 7-day series on building in public. To anyone transitioning into software: build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
 
 When I architected this chat agent, tutorials demanded Pinecone, vector DBs, and semantic search infrastructure. But Google's Gemini API offers free-tier access for students and learners [1]. The constraint became the design principle: minimize tokens to stay within free allowances while proving the concept scales.
 
@@ -23,7 +21,7 @@ What I found valuable: the bottleneck shifted from infrastructure to prompt engi
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 
 References:
-[1] Google Gemini Free Tier for Students - https://ai.google.dev/pricing
-[2] AiSystemInformation.tsx Source Code - https://github.com/thomas-to-bcheme/src/data/AiSystemInformation.tsx
+[1] Google Gemini Free Tier - https://ai.google.dev/pricing
+[2] AiSystemInformation.tsx Source Code - https://github.com/thomas-to-bcheme/thomas-to-bcheme/blob/main/src/data/AiSystemInformation.tsx
 
-#MachineLearning #ArtificialIntelligence #BuildInPublic #MLEngineering
+#SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer
