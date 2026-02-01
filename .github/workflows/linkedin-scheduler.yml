@@ -2,8 +2,8 @@ name: LinkedIn Post Scheduler
 
 on:
   schedule:
-    # Every Tuesday at 8:07 AM PST (16:07 UTC) - offset to avoid queue congestion
-    - cron: '7 16 * * 2'
+    # Daily at 8:05 AM PST (16:05 UTC) - 7-day rotation starting Feb 1
+    - cron: '5 16 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
