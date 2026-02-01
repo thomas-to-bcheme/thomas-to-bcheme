@@ -6,7 +6,7 @@ series: linkedin-7day
 day: 2
 ---
 
-Hello World, this is Day 2 of my 7-day series on building in public. To anyone transitioning from STEM into software: your engineering discipline is an asset. The frameworks transfer. Build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
+Hello World, this is Day 2 of a 7-day series on building in public. To anyone transitioning into software: build something that proves it. https://thomas-to-bcheme-github-io.vercel.app/
 
 When building my portfolio infrastructure, I needed version control, audit trails, immutable history, and environment promotion. I discovered these are the exact properties enterprises pay thousands monthly for in dedicated data warehouses like Snowflake or BigQuery. GitHub provided all of them for free.
 
