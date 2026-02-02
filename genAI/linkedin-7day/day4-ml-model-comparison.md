@@ -10,7 +10,7 @@ Hello World, this is Day 4 of my 7-day series on building in public. To anyone t
 
 I trained an ML model on job descriptions to predict salary ranges, deployed it to the Google Chrome Marketplace—then pivoted to building Claude Code's open source ecosystem instead.
 
-The original vision: a Chrome extension that analyzes LinkedIn job postings in real-time, extracts required skills, and predicts expected salary ranges. Random Forest achieved 8% MAPE on the job description dataset while TensorFlow hit 12%. Classical ML won for structured tabular data with moderate samples [1].
+The original vision: a Chrome extension that analyzes LinkedIn job postings in real-time, extracts required skills, and predicts expected salary ranges. Random Forest achieved **8% MAPE** on the job description dataset while TensorFlow hit **12%**. Classical ML won for structured tabular data with moderate samples [1].
 
 I deployed the model to Hugging Face Spaces and started building the Chrome extension. Feature engineering was solid: TF-IDF vectorization, location encoding, seniority classification. The pipeline worked. But applying first principles, I asked: where does the highest leverage lie?
 
@@ -20,15 +20,17 @@ This wasn't abandoning the ML work—it was sequencing priorities. The salary pr
 
 Phase 4 is next: taking these patterns into production environments and contributing to the broader agentic AI ecosystem.
 
-One thing I learned: building in public means being transparent about pivots. The ML model comparison taught me that Random Forest beats neural networks for structured data. The pivot taught me that first principles thinking beats sunk cost fallacy.
+One thing I learned: building in public means being transparent about pivots. The pivot taught me that first principles thinking beats sunk cost fallacy.
 
-To anyone transitioning from STEM into software: your engineering discipline is an asset, not a hurdle. The frameworks transfer. Build something that proves it.
+Have you pivoted mid-project? How did you decide what to prioritize?
 
 Happy to connect and discuss AI/ML/Software Engineering, career transitions, or open source contributions.
 
-References:
-[1] Salary Prediction Model on Hugging Face - https://huggingface.co/spaces/thomas-to-bcheme/salary-predictor
-[2] Claude Code Plugin Marketplace - https://github.com/thomas-to/thomas-to-bcheme/plugins
-[3] Portfolio - https://thomas-to-bcheme-github-io.vercel.app/
+Tomorrow: Multi-agent plugin architecture.
 
-#SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer
+References:
+[1] Salary Prediction Model
+[2] Claude Code Plugin Marketplace
+[3] Portfolio
+
+#MLOps #BuildInPublic #OpenToWork #FirstPrinciples

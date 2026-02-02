@@ -12,16 +12,20 @@ When I architected this chat agent, tutorials demanded Pinecone, vector DBs, and
 
 My approach: embed context directly into the system prompt. The `AiSystemInformation.tsx` file contains my resume and project details as a static 15KB string. Every chat request includes this context—no retrieval step, no vector DB, no infrastructure costs [2].
 
-Token optimization was deliberate. I compressed markdown hierarchies, eliminated redundant descriptions, and structured content for efficient LLM parsing. The result: 8K tokens per request that fits comfortably within Gemini's free quota. Students building portfolios can run hundreds of chat interactions monthly at zero cost.
+Token optimization was deliberate. I compressed markdown hierarchies, eliminated redundant descriptions, and structured content for efficient LLM parsing. The result: **8K tokens per request** that fits comfortably within Gemini's free quota. Students building portfolios can run hundreds of chat interactions monthly at zero cost.
 
 This is a proof of concept that scales. The pattern—static context injection for bounded domains—works identically whether you're on free tier or enterprise. When traffic demands it, the architecture supports chunked retrieval, semantic search, and vector DB integration. But you don't need enterprise infrastructure to learn. Start with free resources, prove the concept, then upscale.
 
 What I found valuable: the bottleneck shifted from infrastructure to prompt engineering. Learning to structure context efficiently transfers directly to production RAG systems. Free-tier constraints taught me token economics that many engineers skip until they hit billing alerts.
 
+What free-tier tools have you discovered that changed your approach to AI? I'd love to hear.
+
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 
-References:
-[1] Google Gemini Free Tier - https://ai.google.dev/pricing
-[2] AiSystemInformation.tsx Source Code - https://github.com/thomas-to-bcheme/thomas-to-bcheme/blob/main/src/data/AiSystemInformation.tsx
+Tomorrow: ML model comparison and pivots.
 
-#SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer
+References:
+[1] Google Gemini Free Tier
+[2] AiSystemInformation.tsx Source Code
+
+#MachineLearning #BuildInPublic #OpenToWork #RAG

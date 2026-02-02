@@ -31,15 +31,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Get next post from rotation
         id: get-post
         run: |
@@ -81,7 +72,6 @@ jobs:
         env:
           POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
           LINKEDIN_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
-          LINKEDIN_POSTS_DIR: genAI/linkedin-7day
         run: |
           echo "Posting: $POST_FILENAME"
           echo "Dry run: $LINKEDIN_DRY_RUN"
@@ -92,8 +82,8 @@ jobs:
             DRY_RUN_FLAG="--dry-run"
           fi
 
-          # Run CLI and capture output
-          npm run linkedin -- post --file "$POST_FILENAME" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json 2>&1 || true
+          # Run bash script and capture output (jq is pre-installed on ubuntu-latest)
+          ./scripts/linkedin-post.sh "genAI/linkedin-7day/${POST_FILENAME}.md" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json 2>&1 || true
 
           cat result.json
 

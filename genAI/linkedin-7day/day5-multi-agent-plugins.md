@@ -20,9 +20,11 @@ What surprised me was how this mirrors microservices architecture. Just as we de
 
 This benefits developers building AI-assisted workflows who need reproducible results. The plugin architecture is open source in my repository. Each agent's scope, tools, and coordination pattern is documented as reusable templates for tool builders working on Claude Code extensions or similar multi-agent systems.
 
-At this time, I am actively interviewing for AI/ML Engineering roles as my longitudinal career. I believe the opportunity cost is better spent reinforcing fundamentals of machine learning, deep learning, and system design during this transition period.
+How do you manage AI hallucinations in your workflows? I'd love to compare notes.
 
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
+
+Tomorrow: LinkedIn automation pipeline.
 
 References:
 [1] Portfolio - https://thomas-to-bcheme-github-io.vercel.app/
@@ -30,3 +32,5 @@ References:
 [3] Claude Code Agent Architecture - https://github.com/thomas-to-bcheme/thomas-to-bcheme/tree/main/.claude/agents
 
 #SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer
+
+#AIEngineering #BuildInPublic #OpenToWork #MultiAgent

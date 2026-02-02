@@ -14,15 +14,17 @@ The pattern maps directly to pharmaceutical GMP validation protocols I used in b
 
 This architecture benefits other developers who need data infrastructure without cloud costs. The repository becomes a queryable data warehouse where branches are environments, commits are batch records, and pull requests enforce data quality gates. For new graduates building portfolios, this pattern demonstrates understanding of enterprise data architecture using tools they already know.
 
-At this time, I am actively interviewing for AI/ML Engineering roles as my longitudinal career. I believe the opportunity cost is better spent reinforcing fundamentals of machine learning, deep learning, and system design. If I pass initial screening, preparing for interviews and next steps which may include takehome assignments, leetcode/hackerrank style questions, and system design.
-
 The architecture documentation lives in system_design_docs/database.md [1]. The LinkedIn automation workflow using this pattern runs daily at 8:05 AM PST via GitHub Actions CRON [2]. See my portfolio demonstrating this approach [3].
+
+Are you using git for data versioning? I'd love to hear what patterns work for you.
 
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 
-References:
-[1] Database Architecture - https://github.com/thomas-to/thomas-to-bcheme/blob/main/system_design_docs/database.md
-[2] LinkedIn Scheduler Workflow - https://github.com/thomas-to/thomas-to-bcheme/blob/main/.github/workflows/linkedin-scheduler.yml
-[3] Portfolio - https://thomas-to-bcheme-github-io.vercel.app/
+Tomorrow: RAG without vector DBs.
 
-#SoftwareEngineering #BuildInPublic #OpenToWork #TechCareer
+References:
+[1] Database Architecture
+[2] LinkedIn Scheduler Workflow
+[3] Portfolio
+
+#DataEngineering #BuildInPublic #OpenToWork #GitOps

@@ -18,11 +18,13 @@ The "Show, Don't Tell" philosophy I learned in lab notebooks became the foundati
 
 What surprised me was realizing domain expertise isn't a constraint—it's a lens. Career transitioners often downplay their previous experience, treating it as irrelevant. I found the opposite. My pharmaceutical background gave me mental models for data integrity, process validation, and regulatory thinking that many software engineers never develop. The technical skills (Python, TypeScript, TensorFlow) were learnable. The structured problem-solving was already there.
 
-At this time, I am actively interviewing for AI/ML Engineering roles. I believe the frameworks transfer.
+What mental models transferred from your previous career? I'd love to hear your story.
 
 Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 
-References:
-[1] Portfolio & Architecture - https://github.com/thomas-to-bcheme/thomas-to-bcheme#readme
+This completes my 7-day series. Over these posts, I've shared constraint-driven architecture, GitHub as a data warehouse, RAG without vector DBs, ML model comparisons, multi-agent systems, and LinkedIn automation. Each pattern emerged from the same principle: solve the problem in front of you with the tools you have. See Day 1 for where it started.
 
-#SoftwareEngineering #BuildInPublic #OpenToWork #STEMtoCoding
+References:
+[1] Portfolio & Architecture
+
+#STEMtoCoding #BuildInPublic #OpenToWork #CareerTransition
