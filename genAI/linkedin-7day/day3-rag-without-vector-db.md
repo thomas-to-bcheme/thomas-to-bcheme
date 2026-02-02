@@ -25,7 +25,7 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 Tomorrow: ML model comparison and pivots.
 
 References:
-[1] Google Gemini Free Tier
-[2] AiSystemInformation.tsx Source Code
+[1] Google Gemini Free Tier https://aistudio.google.com/
+[2] AiSystemInformation.tsx Source Code https://github.com/thomas-to-bcheme/thomas-to-bcheme/blob/main/src/data/AiSystemInformation.tsx
 
 #MachineLearning #BuildInPublic #OpenToWork #RAG

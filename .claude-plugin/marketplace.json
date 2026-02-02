@@ -3,7 +3,7 @@
   "metadata": {
     "description": "AI-powered git workflow automation plugins for Claude Code",
     "version": "1.0.0",
-    "pluginRoot": "./plugins"
+    "pluginRoot": "./claude-marketplace"
   },
   "owner": {
     "name": "Thomas To",
@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "git-push",
-      "source": "./plugins/git-push",
+      "source": "./claude-marketplace/git-push",
       "description": "Smart git push workflow - checks status, stages/commits if needed, then pushes",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -28,7 +28,7 @@
     },
     {
       "name": "git-push-agentic",
-      "source": "./plugins/git-push-agentic",
+      "source": "./claude-marketplace/git-push-agentic",
       "description": "Fully autonomous git workflow - auto stages, generates commit message, and pushes without user input",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -44,7 +44,7 @@
     },
     {
       "name": "git-README",
-      "source": "./plugins/git-README",
+      "source": "./claude-marketplace/git-README",
       "description": "5-agent README generator with smart merge - 4 parallel analyzers + review coordinator",
       "version": "1.0.0",
       "category": "documentation",
@@ -60,7 +60,7 @@
     },
     {
       "name": "git-commit",
-      "source": "./plugins/git-commit",
+      "source": "./claude-marketplace/git-commit",
       "description": "Autonomous git commit - auto stages all changes and generates commit message without pushing",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -76,7 +76,7 @@
     },
     {
       "name": "tto-init",
-      "source": "./plugins/tto-init",
+      "source": "./claude-marketplace/tto-init",
       "description": "Initialize CLAUDE.md with programming-agnostic best practices - establishes project standards and orchestrator role",
       "version": "1.0.0",
       "category": "project-setup",
@@ -92,7 +92,7 @@
     },
     {
       "name": "tto-agent-swe",
-      "source": "./plugins/tto-agent-swe",
+      "source": "./claude-marketplace/tto-agent-swe",
       "description": "Meta-agent for software engineering - routes to specialized agents and coordinates multi-domain workflows",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -108,7 +108,7 @@
     },
     {
       "name": "tto-agent-orchestrator",
-      "source": "./plugins/tto-agent-orchestrator",
+      "source": "./claude-marketplace/tto-agent-orchestrator",
       "description": "Lead orchestrator for code review, integration verification, and architectural integrity tasks",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -124,7 +124,7 @@
     },
     {
       "name": "tto-agent-frontend",
-      "source": "./plugins/tto-agent-frontend",
+      "source": "./claude-marketplace/tto-agent-frontend",
       "description": "Frontend specialist for React/Next.js, Tailwind CSS, and Vercel deployment tasks",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -140,7 +140,7 @@
     },
     {
       "name": "tto-agent-backend",
-      "source": "./plugins/tto-agent-backend",
+      "source": "./claude-marketplace/tto-agent-backend",
       "description": "Backend specialist for database schema, business logic, data lineage, and ML model integration tasks",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -156,7 +156,7 @@
     },
     {
       "name": "tto-agent-api",
-      "source": "./plugins/tto-agent-api",
+      "source": "./claude-marketplace/tto-agent-api",
       "description": "API specialist for REST endpoints, request/response structures, middleware, and serialization tasks",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -172,7 +172,7 @@
     },
     {
       "name": "tto-agent-ai-ml",
-      "source": "./plugins/tto-agent-ai-ml",
+      "source": "./claude-marketplace/tto-agent-ai-ml",
       "description": "AI/ML specialist for LLM integration, RAG pipelines, vector databases, and ML model training tasks",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -188,7 +188,7 @@
     },
     {
       "name": "tto-agent-qa",
-      "source": "./plugins/tto-agent-qa",
+      "source": "./claude-marketplace/tto-agent-qa",
       "description": "QA specialist for test strategy, test automation, regression testing, bug triage, and quality gates",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -204,7 +204,7 @@
     },
     {
       "name": "tto-agent-uiux",
-      "source": "./plugins/tto-agent-uiux",
+      "source": "./claude-marketplace/tto-agent-uiux",
       "description": "UI/UX design specialist for design systems, visual design, accessibility, and design-to-code translation",
       "version": "1.0.0",
       "category": "design",
@@ -220,7 +220,7 @@
     },
     {
       "name": "tto-agent-ops",
-      "source": "./plugins/tto-agent-ops",
+      "source": "./claude-marketplace/tto-agent-ops",
       "description": "Infrastructure/DevOps specialist for CI/CD pipelines, deployment, containers, and infrastructure-as-code",
       "version": "1.0.0",
       "category": "developer-tools",
@@ -236,7 +236,7 @@
     },
     {
       "name": "tto-agent-linkedin",
-      "source": "./plugins/tto-agent-linkedin",
+      "source": "./claude-marketplace/tto-agent-linkedin",
       "description": "LinkedIn post generator for technical project updates with job search announcements",
       "version": "1.0.0",
       "category": "content",

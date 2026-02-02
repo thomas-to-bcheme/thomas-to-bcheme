@@ -30,6 +30,6 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 Tomorrow: How GitHub became my data warehouse.
 
 References:
-[1] Portfolio & Architecture
+[1] Portfolio & Architecture https://github.com/thomas-to-bcheme/thomas-to-bcheme
 
 #SystemDesign #BuildInPublic #OpenToWork #ZeroCostArchitecture

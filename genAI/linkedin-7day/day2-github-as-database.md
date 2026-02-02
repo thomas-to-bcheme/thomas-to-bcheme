@@ -23,8 +23,8 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 Tomorrow: RAG without vector DBs.
 
 References:
-[1] Database Architecture
-[2] LinkedIn Scheduler Workflow
-[3] Portfolio
+[1] Database Architecture https://github.com/thomas-to-bcheme/thomas-to-bcheme/blob/main/system_design_docs/database.md
+[2] LinkedIn Scheduler Workflow https://github.com/thomas-to-bcheme/thomas-to-bcheme/blob/main/.github/workflows/linkedin-scheduler.yml
+[3] Portfolio https://thomas-to-bcheme-github-io.vercel.app/
 
 #DataEngineering #BuildInPublic #OpenToWork #GitOps

@@ -30,7 +30,7 @@ Tomorrow: Multi-agent plugin architecture.
 
 References:
 [1] Salary Prediction Model
-[2] Claude Code Plugin Marketplace
-[3] Portfolio
+[2] Claude Code Plugin Marketplace https://github.com/thomas-to-bcheme/thomas-to-bcheme/tree/main/plugins
+[3] Portfolio https://github.com/thomas-to-bcheme/thomas-to-bcheme
 
 #MLOps #BuildInPublic #OpenToWork #FirstPrinciples
