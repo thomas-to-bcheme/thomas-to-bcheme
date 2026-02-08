@@ -11,7 +11,6 @@
 [![React](https://img.shields.io/badge/React-19.2.3-61DAFB?logo=react)](https://react.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?logo=python)](https://python.org/)
-[![LinkedIn Scheduler](https://github.com/thomas-to/thomas-to-bcheme/actions/workflows/linkedin-scheduler.yml/badge.svg)](https://github.com/thomas-to/thomas-to-bcheme/actions/workflows/linkedin-scheduler.yml)
 
 ---
 
@@ -400,6 +399,311 @@ flowchart LR
 | [Frontend](system_design_docs/frontend.md) | Component architecture |
 | [ML Models](system_design_docs/ml-models.md) | Random Forest + TensorFlow |
 | [Roadmap](system_design_docs/roadmap.md) | Feature timeline |
+
+---
+
+## Roadmap
+
+Three tracks of planned work extending this portfolio into production ML deployment, content automation, and developer tooling.
+
+```mermaid
+gantt
+    title Implementation Roadmap
+    dateFormat YYYY-MM-DD
+    axisFormat %b %d
+
+    section Track A: ML Pipeline
+    Skill Taxonomy & Salary Parser        :a1, 2026-02-10, 2d
+    EDA Notebook (Data Engineering)       :a2, after a1, 3d
+    Linear Regression (Ridge)             :a3, after a2, 3d
+    Hugging Face Deployment (Gradio)      :a4, after a3, 2d
+    Chrome Extension (Manifest V3)        :a5, after a4, 3d
+
+    section Track B: LinkedIn Engine
+    Private Repo Setup                    :b1, 2026-02-10, 2d
+    Anti-Spam Pipeline (4 Layers)         :b2, after b1, 4d
+    Content Migration (20 Posts)          :b3, after b2, 2d
+    GitHub Action CRON Workflow           :b4, after b3, 2d
+    Claude Code Skills                    :b5, after b4, 3d
+
+    section Track C: README & Docs
+    Unified README with Mermaid           :c1, after a3, 2d
+```
+
+### Track A: Data Engineering Salary Prediction
+
+EDA and ML pipeline for predicting data engineering salaries, identifying the AI skills premium.
+
+```mermaid
+flowchart TD
+    subgraph Data["Data Foundation"]
+        CSV[(jobs_dataset.csv<br/>735 rows)]
+        TAX[Skill Taxonomy<br/>DE: 62 keywords<br/>AI: 56 keywords]
+        SAL[Salary Parser<br/>Annual/Hourly/Range]
+    end
+
+    subgraph EDA["Exploratory Data Analysis"]
+        SEG{Skill Classification}
+        CSV --> SAL --> SEG
+        TAX --> SEG
+        SEG -->|No AI skills| PDE["Pure DE<br/>~38 rows"]
+        SEG -->|DE + AI skills| HYB["Hybrid DE+AI<br/>~188 rows"]
+        SEG -->|No DE skills| PAI["Pure AI<br/>~223 rows"]
+    end
+
+    subgraph Models["Dual Ridge Regression"]
+        PDE --> MA["Model A<br/>Lower Bound<br/>Ridge Regression"]
+        HYB --> MB["Model B<br/>Upper Bound<br/>Ridge Regression"]
+        MA --> BAND["Salary Band<br/>$$X - $$Y"]
+        MB --> BAND
+    end
+
+    subgraph Deploy["Deployment"]
+        BAND --> HF["Hugging Face Space<br/>Gradio REST API"]
+        HF --> EXT["Chrome Extension<br/>Manifest V3"]
+        EXT --> JOB["Job Description<br/>LinkedIn / Indeed"]
+    end
+
+    classDef data fill:#1e3a5f,stroke:#4a90d9,color:#fff
+    classDef eda fill:#2d5016,stroke:#5cb85c,color:#fff
+    classDef model fill:#5c3d1e,stroke:#d9a441,color:#fff
+    classDef deploy fill:#3d1e5c,stroke:#9b59b6,color:#fff
+
+    class CSV,TAX,SAL data
+    class SEG,PDE,HYB,PAI eda
+    class MA,MB,BAND model
+    class HF,EXT,JOB deploy
+```
+
+**Why Linear Regression?** The existing Random Forest and TensorFlow models predict general salary. Linear regression serves a different purpose here: **interpretability**. Ridge coefficients directly answer "which skills command a premium?" and two separate models (Pure DE vs Hybrid DE+AI) create a meaningful salary band. With only ~38 Pure DE rows, Ridge regularization prevents overfitting where tree-based methods would.
+
+<details>
+<summary>A1. Skill Taxonomy & Salary Parser</summary>
+
+**Files:** `backend/config/skill_taxonomy.py`, `backend/de_salary/salary_parser.py`
+
+- DE keywords (62): ETL, Spark, Airflow, Kafka, Snowflake, dbt, data warehouse, data lake, etc.
+- AI keywords (56): machine learning, TensorFlow, PyTorch, NLP, LLM, computer vision, etc.
+- `classify_role()` segments each job as "Pure DE", "Hybrid DE+AI", "Pure AI", or "General"
+- `compute_de_score()` / `compute_ai_score()` return continuous 0.0-1.0 scores
+- Salary parser handles all observed formats: annual range/single, hourly range/single
+
+</details>
+
+<details>
+<summary>A2. EDA Jupyter Notebook</summary>
+
+**File:** `backend/notebooks/01_eda_data_engineering.ipynb`
+
+1. Data loading + quality assessment
+2. Salary parsing + distribution (histogram + box plot)
+3. Role classification using skill taxonomy (segment pie chart)
+4. Salary box plot by segment (Pure DE vs Hybrid DE+AI vs Pure AI)
+5. Top 20 keyword frequency per segment
+6. DE-AI skill co-occurrence heatmap
+7. Seniority x segment salary analysis
+8. Geographic salary analysis by segment
+
+</details>
+
+<details>
+<summary>A3. Ridge Regression Models</summary>
+
+**File:** `backend/de_salary/linear_model.py`
+
+| Model | Training Data | Features | Output |
+|-------|--------------|----------|--------|
+| Model A (Lower) | Pure DE (~38 rows) | Seniority, DE skill count, cloud/streaming/orchestration/warehouse flags, location tier | DE baseline salary |
+| Model B (Upper) | Hybrid DE+AI (~188 rows) | Same + AI skill count, ML framework flag, NLP flag | AI premium salary |
+
+- 5-fold cross-validation (mandatory for small samples)
+- Metrics: MAE, RMSE, R2, MAPE via existing `ModelEvaluator`
+- Coefficient bar charts + VIF multicollinearity analysis
+
+</details>
+
+<details>
+<summary>A4. Hugging Face Deployment</summary>
+
+**File:** `backend/hf_space/app.py` (Gradio)
+
+```
+POST /api/predict
+Request:  { "data": ["<job_description>", "<position_name>"] }
+Response: { "segment", "salary_lower", "salary_upper", "de_skills_found", "ai_skills_found" }
+```
+
+- Serialize models with `joblib`
+- Gradio auto-exposes REST API
+- Free tier, CPU-only
+
+</details>
+
+<details>
+<summary>A5. Chrome Extension</summary>
+
+**Directory:** `chrome-extension/` (Manifest V3)
+
+- Content script extracts job descriptions from LinkedIn, Indeed, Greenhouse
+- Configurable selector registry per job board (no hardcoding)
+- Popup sends extracted text to Hugging Face API
+- Displays salary band, segment classification, and matched skills
+
+</details>
+
+### Track B: LinkedIn Content Engine
+
+Private repository (`linkedin-content-engine`) for CI/CD content automation with a 4-layer anti-spam pipeline.
+
+```mermaid
+flowchart LR
+    subgraph Content["Content Lifecycle"]
+        D[drafts/] -->|human review| Q[queue/<br/>not-posted]
+        Q -->|pipeline selects| PIPE
+        A[archive/<br/>posted] -->|"len >= 20<br/>& 30 days"| Q
+    end
+
+    subgraph PIPE["Anti-Spam Pipeline"]
+        direction TB
+        L4["Layer 4<br/>Frequency Guard<br/>archive >= 20?"]
+        L3["Layer 3<br/>Hook Rotation<br/>Hydra Head"]
+        L2["Layer 2<br/>Pixel Mutation<br/>Pillow"]
+        L1["Layer 1<br/>Zero-Width<br/>Injection"]
+        L4 --> L3 --> L2 --> L1
+    end
+
+    L1 --> POST[LinkedIn API]
+    POST --> A
+
+    classDef queue fill:#1e3a5f,stroke:#4a90d9,color:#fff
+    classDef pipe fill:#5c1e1e,stroke:#d94a4a,color:#fff
+    classDef post fill:#2d5016,stroke:#5cb85c,color:#fff
+
+    class D,Q,A queue
+    class L4,L3,L2,L1 pipe
+    class POST post
+```
+
+<details>
+<summary>B1. Repository Structure</summary>
+
+```
+linkedin-content-engine/          (private repo)
+├── .github/workflows/
+│   ├── linkedin-poster.yml       CRON: 7:30 AM PST, Mon-Thu (4/week)
+│   └── content-audit.yml         Weekly Sunday health check
+├── content/
+│   ├── queue/                    Ready to post
+│   ├── archive/                  Published (recycling source)
+│   └── drafts/                   WIP (human review)
+├── assets/carousels/             Image attachments per post
+├── pipeline/
+│   ├── run.py                    Orchestrator entry point
+│   ├── selector.py               Queue selection + frequency guard
+│   ├── assembler.py              Hook rotation (Hydra Head)
+│   ├── image_mutator.py          Pixel mutation (Pillow)
+│   └── antispam.py               Zero-width injection
+├── state/
+│   ├── post-history.json         What posted, when, which hook
+│   ├── queue-manifest.json       Queue/archive sizes
+│   └── hook-tracker.json         Hook rotation tracking
+├── context/
+│   └── portfolio-rag-snapshot.md  Curated RAG context from portfolio
+└── scripts/                      Forked from portfolio
+```
+
+</details>
+
+<details>
+<summary>B2. Post Frontmatter Schema</summary>
+
+```yaml
+---
+date: 2026-02-17
+topic: Constraint-Driven Architecture
+target_audience: CTOs, Engineering Managers
+category: system-design
+
+hooks:                                    # Layer 3: Hydra Head
+  - "Hook variant 1..."
+  - "Hook variant 2..."
+  - "Hook variant 3..."
+
+hashtag_sets:                             # Metadata diversification
+  - ["#SystemDesign", "#OpenToWork"]
+  - ["#MLEngineering", "#BuildInPublic"]
+
+cta_variants:
+  - "Happy to connect and chat!"
+  - "Would love to hear your approach."
+
+carousel: null                            # Optional image folder
+times_posted: 0                           # Pipeline-populated
+last_posted: null
+hooks_used: []
+---
+Body content here...
+```
+
+</details>
+
+<details>
+<summary>B3. Anti-Spam Stack</summary>
+
+| Layer | Threat | Solution | Implementation |
+|-------|--------|----------|----------------|
+| 1 | Exact String Match | Zero-Width Injection (`\u200B` between words at ~5% density) | `antispam.py` |
+| 2 | Image Fingerprinting | Pixel Mutation (bottom-right pixel RGB +1 via Pillow) | `image_mutator.py` |
+| 3 | Semantic Detection | Hook Rotation (3+ intros per post, tracked in `hook-tracker.json`) | `assembler.py` |
+| 4 | Frequency Penalties | Queue Minimum (hard guard: `archive >= 20`, 30-day memory window) | `selector.py` |
+
+**Safety rule:** Auto-recycle is disabled until 20 posts in archive. Mathematical basis: 4 posts/week x 5 weeks (safe margin) = 20 minimum queue size.
+
+</details>
+
+<details>
+<summary>B4. GitHub Action CRON</summary>
+
+- **Schedule:** `30 15 * * 1-4` (7:30 AM PST = 15:30 UTC, Mon-Thu)
+- **PDT drift:** During daylight saving, posts go out at 8:30 AM local (acceptable)
+- **Steps:** Checkout -> Python setup -> Anti-spam pipeline -> LinkedIn API -> Archive file -> Commit state -> Push
+- **Supports:** `workflow_dispatch` with `dry_run` and `specific_post` inputs
+- **State commit:** Atomic `git add content/ state/ && git commit && git push`
+
+</details>
+
+### Track C: Claude Code Skills
+
+<details>
+<summary>C1. /git-commit-linkedin</summary>
+
+Extends `/git-commit` with LinkedIn post drafting:
+1. **Phase 1:** Standard git add + commit
+2. **Phase 2:** Analyze diff, generate LinkedIn post draft with 3 hook variants
+3. **Phase 3:** Save to `content/drafts/YYYY-MM-DD-topic.md` (human review required)
+
+</details>
+
+<details>
+<summary>C2. /git-PRD</summary>
+
+Multi-agent PRD generator:
+1. Inventory all agents (glob `.claude/agents/*.md`)
+2. Draft system design doc per agent (with Mermaid diagrams)
+3. Each agent reviews its own doc as subagent (peer review)
+4. Orchestrator performs final PRD quality gate
+
+</details>
+
+<details>
+<summary>C3. /git-README Mermaid Enhancement</summary>
+
+Extend existing 5-agent README skill:
+- Agent 1: Identify data flows and component relationships for Mermaid diagrams
+- Agent 5: Generate Mermaid flowchart/sequence diagrams
+- Merge rule: Validate Mermaid syntax, prefer `flowchart LR` for architecture
+
+</details>
 
 ---
 
