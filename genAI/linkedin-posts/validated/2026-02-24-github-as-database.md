@@ -4,7 +4,7 @@ topic: GitHub as an Open-Source Monorepo Platform
 target_audience: Fullstack Engineers, Data Engineers, DevOps
 ---
 
-Hello World, I'm open-sourcing my entire development workflow as a GitHub monorepo—every tool, template, and resource I use day-to-day, with automated pipelines that deploy frontend to Vercel and backend ML models to Hugging Face.
+Hello World, I'm open-sourcing my entire development workflow as a GitHub monorepo. Every tool, template, and resource I use day-to-day, with automated pipelines that deploy frontend to Vercel and backend ML models to Hugging Face.
 
 The architecture treats GitHub as a centralized data warehouse with scheduled CRON Actions ingesting raw data every 30 minutes. Before reaching external platforms, data flows through preprocessing stages: Sandbox for raw ingestion, Quality for validation and transforms, and Production for consumer-ready datasets. This mirrors enterprise data pipelines where staging environments ensure data integrity before downstream consumption.
 
@@ -22,5 +22,3 @@ References:
 [1] GitHub Actions for ETL - https://dev.to/alexmercedcoder/a-deep-dive-into-github-actions-from-software-development-to-data-engineering-bki
 [2] Vercel Database Integration - https://vercel.com/docs/storage
 [3] Hugging Face Spaces Deployment - https://huggingface.co/docs/hub/spaces
-
-#MachineLearning #OpenToWork #DataEngineering #DevOps #OpenSource

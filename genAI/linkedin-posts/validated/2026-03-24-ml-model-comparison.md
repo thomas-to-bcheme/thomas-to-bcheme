@@ -21,5 +21,3 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 References:
 [1] Random Forest vs Neural Networks - https://saturncloud.io/blog/tensorflow-random-forest-vs-deep-learning-which-is-better/
 [2] When to Use Random Forest - https://towardsdatascience.com/3-reasons-to-use-random-forest-over-a-neural-network-comparing-machine-learning-versus-deep-f9d65a154d89
-
-#DeepLearning #OpenToWork #DataScience #MLEngineering

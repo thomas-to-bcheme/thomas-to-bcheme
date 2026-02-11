@@ -19,5 +19,3 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 References:
 [1] Model Context Protocol - https://modelcontextprotocol.io/
 [2] GitHub MCP Server - https://github.com/modelcontextprotocol/servers
-
-#ArtificialIntelligence #OpenToWork #MLOps #BuildInPublic

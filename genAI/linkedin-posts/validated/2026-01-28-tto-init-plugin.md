@@ -37,5 +37,3 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 References:
 [1] tto-init Plugin Documentation - https://github.com/thomas-to/thomas-to-bcheme/blob/main/my_marketplace/docs/plugins/tto-init.md
 [2] Claude Code Plugin Marketplace - https://github.com/thomas-to/thomas-to-bcheme/tree/main/my_marketplace
-
-#ArtificialIntelligence #OpenToWork #BuildInPublic #MLEngineering

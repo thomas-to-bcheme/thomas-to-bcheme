@@ -26,5 +26,3 @@ References:
 [1] My Claude Code Plugin Marketplace - https://github.com/thomas-to-bcheme/thomas-to-bcheme/tree/main/my_marketplace
 [2] git-README Plugin - https://github.com/thomas-to-bcheme/thomas-to-bcheme/blob/main/my_marketplace/plugins/git-README/skills/git-README/SKILL.md
 [3] Claude Code Agent Skills - https://data-wise.github.io/claude-plugins/craft/skills-agents/
-
-#SoftwareEngineering #OpenToWork #DevOps #BuildInPublic #Documentation

@@ -23,5 +23,3 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 References:
 [1] Claude Code Documentation - https://docs.anthropic.com/en/docs/build-with-claude/claude-code
 [2] Anthropic Prompt Engineering Guide - https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering
-
-#SoftwareEngineering #OpenToWork #BuildInPublic #AIEngineering

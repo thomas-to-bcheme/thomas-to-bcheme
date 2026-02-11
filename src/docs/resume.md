@@ -1,59 +1,63 @@
+---
+pdf_options:
+  format: Letter
+  margin:
+    top: "0.4in"
+    bottom: "0.4in"
+    left: "0.5in"
+    right: "0.5in"
+  printBackground: true
+stylesheet: /Users/tto/Desktop/github/thomas-to-bcheme/src/docs/resume-style.css
+---
+
 # THOMAS TO
-Oakland, CA | 510-387-5408 | thomas.to.bcheme@gmail.com | [LinkedIn](https://www.linkedin.com/in/thomas-to-ucdavis/) | [Publication](https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf) | [Interactive Portfolio](https://thomas-to-bcheme-github-io.vercel.app/) | [Github](https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io)
+Oakland, CA, 510-387-5408, [thomas.to.bcheme@gmail.com](mailto:thomas.to.bcheme@gmail.com), [LinkedIn](https://www.linkedin.com/in/thomas-to-ucdavis/), [AI/ML Portfolio](https://thomas-to-bcheme-github-io.vercel.app/)
 
-## EXPERIENCE
-**Volunteer Researcher** | Stanford (Dunn Lab) | Stanford, CA | Dec 2025 - Present
-* De novo binder design (Boltzgen, Diffuse) for malaria diagnostics
+## PROFESSIONAL SUMMARY
 
-**Founding Fullstack Engineer** | Canventa Life Sciences | Emeryville, CA | Oct 2023 - Present
-* Architected a revenue optimization system using Snowflake to integrate a predictive machine learning model with a Retrieval Augmented Generative (RAG) AI agent to reduce stakeholder decision-making from hours to minutes.
-* Augmented natural knowledge by enriching RAG fine-tuning with Atlassian (Confluence) to enhance GenAI (data-to-text, text-to-image) context improving learning rate up to 80% (Wright's Law: Stanford-B model).
-* Deployed in-house fullstack DevOps SaaS on GCP via CI/CD, converting serial to concurrent workflows reducing daily calculation time by 87% (-40 min), minimized calculation risk, and forecasted production within 3 of actual.
-* Architected ETL/ELT pipelines with Python and Google Apps Script to digitize 5+ years of tribal knowledge.
-* Reverse engineered data pipelines using Tableau, Snowflake, dbt, fivetran, GCP, SAP, and SQL for gap analysis to deploy stop-gap data pipelines and scope scalable & sustainable long-term cloud architecture process improvements.
-* Driving organizational efficiencies by scaling engineering excellence through junior mentorship and cross-departmental upskilling; communicating value and impact as a technical liaison for executive leadership.
+Senior AI/ML Engineer deploying GenAI solutions on Google Cloud Platform (GCP) with Google Vertex AI for pipeline monitoring and orchestration. Expert in the full model lifecycle from fine-tuning to architecting multi-agentic RAG systems. Collaborates with IT teams to integrate AI into enterprise business systems and with stakeholders to identify requirements for AI-driven workflows. See [AI/ML Portfolio](https://thomas-to-bcheme-github-io.vercel.app/) for demonstration.
 
-**Founder** | Proprietary FinTech | Oakland, CA | Jun 2022 - Present
-* Optimized Python Algorithmic & Agentic trading frequency to Coinbase's allowable public REST API limit.
-* Deployed an Exchange Trade Fund (ETF) solution to market gaps across banks' brokerages to Fidelity or Vanguard.
-* FinTech hosted on secure, headless Raspberry Pi & AntMiner (IoT) integrated to f2pool for crypto mining algorithms.
+## RELEVANT EXPERIENCE
 
-**Laboratory Technician** | Canventa Life Sciences | Emeryville, CA | Jan 2023 - Oct 2023
-* Leveraged hands-on bioprocessing expertise to architect data systems & data models to physical reality.
-* Modeled unknown empirical data using data science methods, scaling validated datasets over 300k datapoints.
-* Engineered in-house Material Management processes to reduce $200k waste and prevented $2M inventory stockout.
-* Identified enterprise pain points equivalent to industry-wide from hands-on market research.
+**Founder | AI/ML Open Source** | Oakland, CA | *Oct 2023 – Present*
+* Created and maintained Claude Code Marketplace plugins for the open-source community.
+* Deployed end-to-end MLOps pipeline: CI/CD RAG frontend on AWS (Vercel: Next.js, TypeScript) and CT/CD Python ML models (scikit-learn, PyTorch, TensorFlow) on Hugging Face (FastAPI, Docker) with Google Vertex AI monitoring.
+* Built multi-agentic orchestration (LangGraph) with tool-use (MCP, LangChain) for RAG-initiated plan-and-execute workflows, optimized through fine-tuning for domain-specific use cases.
 
-**Software Engineer** | Genentech | South San Francisco, CA | Jun 2022 - Dec 2022
-* Engineered scalable full-stack applications using backend Python REST API, frontend Vue.js, and Node.js using git & GitHub for version control to streamline workflows for medical writing teams.
+**Founding Fullstack Engineer | Canventa Life Sciences** | Emeryville, CA | *Oct 2023 – Present*
+* Deployed fullstack DevOps SaaS on GCP via CI/CD, reducing daily calculation time by 87% (-40 min) by converting serial to concurrent workflows. Forecasted production within 3 of actual.
+* Trained ML models on Snowflake to select cell isolates from donor characteristics, reducing stakeholder decision-making from hours to minutes with a RAG AI Agent.
+* Enriched RAG fine-tuning with Atlassian (Confluence) to enhance GenAI (data-to-text, text-to-image) context, improving learning rate by 80% (Wright's Law: Stanford-B model).
+* Fine-tuned Snowflake Arctic-TILT model to extract 5+ years of handwritten documents to cloud infrastructure. Architected ETL/ELT pipelines with Python, Google Apps Script, and dbt to load to Snowflake.
+* Reverse engineered data pipelines using Tableau, Snowflake, dbt, Fivetran, GCP, SAP, and SQL for gap analysis. Deployed stop-gap pipelines and scoped long-term cloud architecture improvements.
+
+**Software Engineer | Genentech** | South San Francisco, CA | *Jun 2022 – Dec 2022*
+* Engineered full-stack applications using Python REST API, Vue.js, and Node.js with git and GitHub, streamlining workflows for medical writing teams.
 * Designed knowledge management platforms using HTML, CSS, JavaScript to incorporate UI/UX feedback.
 
-**Process Engineer** | Genentech | Vacaville, CA | Jun 2021 - Jun 2022
-* Developed automated data consolidation algorithms using Python, R, and SQL, reducing time by over 99%.
+**Process Engineer | Genentech** | Vacaville, CA | *Jun 2021 – Jun 2022*
+* Developed automated data consolidation algorithms using Python, R, and SQL, reducing processing time by over 99%.
 * Deployed data-driven process monitoring tools on Google Cloud Platform (GCP) to track KPIs.
 
-**Research Engineer** | UC Davis (Nandi, McDonald, Wan, Siegel Labs) | Davis, CA | Sep 2019 - Jun 2021
-* Optimized model using Python (numpy, pandas) and numerical methods to reduce costs by $63.2 Million.
+## SUPPLEMENTAL EXPERIENCE
+
+**Research Engineer | Dr. Alex Dunn** | Stanford, CA | *Dec 2025 – Present*
+* Computational de novo protein design targeting malaria.
+
+**Founder | Proprietary FinTech** | Oakland, CA | *Jun 2022 – Present*
+* Optimized Python algorithmic and agentic trading frequency to Coinbase's allowable public REST API limit.
+
+**Laboratory Technician | Canventa Life Sciences** | Emeryville, CA | *Jan 2023 – Oct 2023*
+* Translated bioprocessing expertise into data systems architecture, mapping data models to physical reality.
+* Modeled empirical data using Python (numpy, pandas) to scale validated datasets over 300k datapoints.
+
+**Research Engineer | UC Davis (Nandi, McDonald, Wan, Siegel Labs)** | Davis, CA | *Sep 2019 – Jun 2021*
+* Optimized model using Python (numpy, pandas) and numerical methods, reducing costs by $63.2 Million.
 * Quantified organoid growth using Python (OpenCV, ImageJ, Fiji) for image processing analysis.
-* Published novel variants using pyRosetta, pyMol, and Benchling with wet-lab techniques to biomanufacture.
+* Published novel variants using pyRosetta, pyMol, and Benchling with wet-lab biomanufacturing techniques.
 
 ## EDUCATION
 
-**Bachelor of Science, Biochemical Engineering**
-*University of California, Davis (Graduated) | Davis, CA*
-* McNair Scholar, AvenueE Scholar, Student Outreach Ambassador, Academic Tutor, Genentech Leader Exchange
-
-## CERTIFICATIONS
-
-* HIPAA, Interview Kickstart Machine Learning with Agentic Al and Big Data, AWS Cloud Technical Essentials
-* Independent study of repositories and courses without value-add certifications to support project development
-
-## TECHNICAL SKILLS
-
-* **AI & Machine Learning:** LLMS, RAG, NLP, Computer Vision, LangGraph, LangChain, PyTorch, TensorFlow, Scikit-learn, Hugging Face, AI SDK, n8n, Opal.
-* **API & Web Frameworks:** FastAPI, Django (DRF), Flask, GraphQL, OpenAPI (Swagger), OAuth2, Postman.
-* **Middleware (CTMS/CRM/ERP):** SNPGlue (SAP), MuleSoft (salesforce), Open API (CRIO), dbt, Fivetran, Zapier.
-* **Databases & Backend:** Snowflake, ETL/ELT Data Pipelines, Node.js, Django REST, PostgreSQL.
-* **Cloud & DevOps:** GCP, AWS, Docker, Kubernetes, CI/CD, Git, GitHub, Atlassian, SAP, Raspberry Pi, AntMiner.
-* **Languages:** Python, SQL, R, Java, TypeScript, JavaScript (JSX), MATLAB, HTML/CSS, Google Apps Script.
-* **Frontend & Visualization:** Next.js, React.js, Vue.js, Tableau, Fiji, ImageJ.
+**Bachelor of Science, Biochemical Engineering** University of California, Davis (Graduated) Davis, CA<br>
+Advanced Machine Learning with Agentic AI (on going)<br>
+AWS Cloud Technical Essentials (completed)

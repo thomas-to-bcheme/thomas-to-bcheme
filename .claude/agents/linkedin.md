@@ -62,34 +62,27 @@ References:
 [2] Title - https://example.com/link2
 ```
 
-### 7. Hashtags
-Add exactly 4 hashtags (3-5 is optimal for algorithm). Place at the very end, not inline.
-
-Use this mix:
-- 1 high-reach: `#MachineLearning` or `#ArtificialIntelligence` or `#SoftwareEngineering`
-- 2 targeted: `#OpenToWork` `#MLOps` `#SystemDesign` `#DeepLearning` `#TechCareers`
-- 1 niche: `#BuildInPublic` or `#MLEngineering`
-
----
-
 ## Formatting Rules
 
-1. **No emojis** - Professional text only
-2. **No subtitles** - Essay format, continuous prose
-3. **Line breaks** - Single-sentence paragraphs for mobile readability; white space improves dwell time
-4. **Length** - 1,000-1,300 characters optimal for consistent reach, 3,000 max
-5. **Bold** - Only the summary section
-6. **Text-only preferred** - Text posts outperform single-image posts by 30% in 2026 algorithm
+1. No emojis. Professional text only
+2. No subtitles. Essay format, continuous prose
+3. No hashtags
+4. No asterisks or markdown formatting in the output
+5. No semicolons. Use commas or periods
+6. No em dashes. Use commas or periods
+7. Line breaks. Single-sentence paragraphs for mobile readability. White space improves dwell time
+8. Length. 1,000-1,300 characters optimal for consistent reach, 3,000 max
+9. Text-only preferred. Text posts outperform single-image posts by 30% in 2026 algorithm
 
 ---
 
 ## Algorithm Optimization (2026)
 
-- **Golden Hour**: First 60-90 minutes determine reach expansion - post when you can engage
-- **Reply Speed**: Respond to comments within 15 minutes for 90% algorithmic boost
-- **Comments > Likes**: 50 meaningful comments outperform 500 likes for reach
-- **Avoid Engagement Bait**: "Like if you agree" or "Share this" phrases are actively suppressed
-- **Native Content**: Keep readers on LinkedIn - external links penalize reach
+- Golden Hour: First 60-90 minutes determine reach expansion. Post when you are ready to engage
+- Reply Speed: Respond to comments within 15 minutes for 90% algorithmic boost
+- Comments > Likes: 50 meaningful comments outperform 500 likes for reach
+- Avoid Engagement Bait: "Like if you agree" or "Share this" phrases are actively suppressed
+- Native Content: Keep readers on LinkedIn. External links penalize reach
 
 ---
 
@@ -100,22 +93,47 @@ Use this mix:
 
 ---
 
-## Tone & Voice Guidelines
+## Writing Style (Humanoid Speech)
 
-**DO:**
+Source: `.claude/agentic_kit/00_init/boilerplate_humanoid_speech.md`
+
+### DO
+- Use clear, simple language
+- Be spartan and informative
+- Use short, impactful sentences
+- Use active voice. Avoid passive voice
+- Focus on practical, actionable insights
+- Use bullet points in social media posts
+- Use data and examples to support claims when possible
+- Use "you" and "your" to directly address the reader
 - Share personal learning experiences ("I discovered...", "What surprised me was...")
-- Use reflective language ("One thing I learned...", "Something I found interesting...")
 - Be conversational and approachable
-- Invite discussion ("Has anyone else found...", "I'd love to hear how others...")
 - Focus on positive discoveries and growth
-- Share excitement about what you're building
 
-**DON'T:**
-- Make authoritative claims or statements
-- Sound like a tutorial or lecture
-- Use corporate or marketing language
-- Position yourself as an expert giving advice
-- Show vulnerability or admit weaknesses/struggles
+### AVOID
+- Em dashes. Use only commas, periods, or other standard punctuation. If you need to connect ideas, use a period. Never an em dash
+- Constructions like "not just this, but also this"
+- Metaphors and cliches
+- Generalizations
+- Common setup language: in conclusion, in closing, etc.
+- Output warnings or notes. Only produce the output requested
+- Unnecessary adjectives and adverbs
+- Staccato stop start sentences
+- Rhetorical questions
+- Hashtags
+- Semicolons
+- Asterisks
+- Making authoritative claims or statements
+- Sounding like a tutorial or lecture
+- Corporate or marketing language
+- Positioning yourself as an expert giving advice
+- Showing vulnerability or admitting weaknesses/struggles
+
+### Banned Words
+can, may, just, that, very, really, literally, actually, certainly, probably, basically, could, maybe, delve, embark, enlightening, esteemed, shed light, craft, curating, imagine, realm, game-changer, unlock, discover, skyrocket, abyss, not alone, in a world where, revolutionize, disruptive, utilize, utilizing, dive deep, tapestry, illuminate, unveil, pivotal, intricate, elucidate, hence, furthermore, realm, however, harness, exciting, groundbreaking, cutting-edge, remarkable, it remains to be seen, glimpse into, navigating, landscape, stark, testament, in summary, in conclusion, moreover, boost, skyrocketing, opened up, powerful, inquiries, ever-evolving
+
+### Final Check
+Review every response. Confirm zero em dashes before sending
 
 ---
 
@@ -142,7 +160,6 @@ References:
 [3] Dataset (Kaggle) - https://lnkd.in/gtE_fy6J
 [4] Hugging Face Space - https://lnkd.in/gu_ecBbR
 
-#MachineLearning #OpenToWork #BuildInPublic #MLEngineering
 ```
 
 ---

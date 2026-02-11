@@ -8,7 +8,7 @@ Hello World, I just realized that ML model retraining, code refactoring, and con
 
 Here's what I mean: In machine learning, we talk about the model lifecycle - collect data, train model, deploy to production, monitor performance, retrain on new data. In software engineering, it's write code, ship to users, observe behavior, refactor based on metrics. In content strategy, it's draft, publish, analyze engagement, revise messaging.
 
-The pattern is identical. Build → Measure → Learn → Rebuild. What changes is the artifact being optimized: model weights vs code architecture vs messaging strategy.
+The pattern is identical. Build, Measure, Learn, Rebuild. What changes is the artifact being optimized: model weights vs code architecture vs messaging strategy.
 
 I noticed this while building my ML salary prediction pipeline [1]. The "retrain on drift detection" workflow I designed for TensorFlow models maps 1-to-1 with how I handle technical debt: monitor metrics (model accuracy vs code complexity), detect degradation (prediction drift vs performance regression), trigger intervention (retrain vs refactor), validate improvement (A/B test vs integration test).
 
@@ -25,5 +25,3 @@ Happy to connect, network, and chat about AI/ML/SW Engineering and/or Ops!
 References:
 [1] Machine Learning Model Lifecycle Management - https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
 [2] Monitoring Models in Production - https://cloud.google.com/vertex-ai/docs/model-monitoring/overview
-
-#MachineLearning #SoftwareEngineering #OpenToWork #MLOps #ProductManagement #BuildInPublic
