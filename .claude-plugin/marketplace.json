@@ -249,6 +249,22 @@
       "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
       "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
       "license": "MIT"
+    },
+    {
+      "name": "tto-agent-resume",
+      "source": "./claude-marketplace/tto-agent-resume",
+      "description": "Resume maintenance agent for editing resume.md, content validation, and PDF generation",
+      "version": "1.0.0",
+      "category": "content",
+      "keywords": ["resume", "content", "pdf", "validation", "career"],
+      "tags": ["content", "resume", "career"],
+      "author": {
+        "name": "Thomas To",
+        "email": "thomas.to.bcheme@gmail.com"
+      },
+      "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+      "license": "MIT"
     }
   ]
 }

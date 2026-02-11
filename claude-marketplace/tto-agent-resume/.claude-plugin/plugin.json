@@ -1,0 +1,13 @@
+{
+  "name": "tto-agent-resume",
+  "description": "Resume maintenance agent for editing resume.md, content validation, and PDF generation",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thomas To",
+    "email": "thomas.to.bcheme@gmail.com"
+  },
+  "homepage": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "repository": "https://github.com/thomas-to-bcheme/thomas-to-bcheme",
+  "license": "MIT",
+  "keywords": ["resume", "content", "pdf", "validation", "career"]
+}
