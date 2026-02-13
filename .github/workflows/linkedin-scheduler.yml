@@ -172,9 +172,10 @@ jobs:
             DRY_RUN_FLAG="--dry-run"
           fi
 
-          ./scripts/linkedin-post.sh "$POST_FILE" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json 2>&1 || true
+          ./scripts/linkedin-post.sh "$POST_FILE" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json 2> result_debug.log || true
 
           cat result.json
+          [ -s result_debug.log ] && echo "::warning::Script stderr output:" && cat result_debug.log
 
           if grep -q '"success": *true' result.json; then
             echo "Successfully posted: $(basename "$POST_FILE" .md)"
