@@ -2,8 +2,8 @@ name: LinkedIn Post Scheduler
 
 on:
   schedule:
-    # Daily at 8:05 AM PST (16:05 UTC) - 7-day rotation starting Feb 1
-    - cron: '5 16 * * *'
+    # Tuesday and Thursday at 8:30 AM PST (16:30 UTC)
+    - cron: '30 16 * * 2,4'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -12,16 +12,24 @@ on:
         default: 'false'
         type: boolean
       filename:
-        description: 'Specific post filename (optional, without .md)'
+        description: 'Specific post filename (optional, without .md) - bypasses queue'
         required: false
         type: string
 
 env:
   LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
   LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+  VALIDATED_DIR: genAI/linkedin-posts/validated
+  NOT_POSTED_DIR: genAI/linkedin-posts/not-posted
+  POSTED_DIR: genAI/linkedin-posts/posted
+  QUEUE_FILE: genAI/linkedin-posts/.post-queue
 
 permissions:
   contents: write
+
+concurrency:
+  group: linkedin-post
+  cancel-in-progress: false
 
 jobs:
   post-to-linkedin:
@@ -31,98 +39,192 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get next post from rotation
+      - name: Sync new validated posts into rotation
+        id: sync
+        run: |
+          SYNCED=0
+          for file in "$VALIDATED_DIR"/*.md; do
+            [ -f "$file" ] || continue
+            base=$(basename "$file")
+            if [ ! -f "$NOT_POSTED_DIR/$base" ] && [ ! -f "$POSTED_DIR/$base" ]; then
+              cp "$file" "$NOT_POSTED_DIR/$base"
+              echo "Synced new post: $base"
+              # Insert into queue at random position if queue exists
+              if [ -f "$QUEUE_FILE" ]; then
+                name="${base%.md}"
+                TOTAL=$(wc -l < "$QUEUE_FILE")
+                if [ "$TOTAL" -eq 0 ]; then
+                  echo "$name" > "$QUEUE_FILE"
+                else
+                  POS=$(shuf -i 1-"$((TOTAL + 1))" -n 1)
+                  { head -n "$((POS - 1))" "$QUEUE_FILE"; echo "$name"; tail -n +"$POS" "$QUEUE_FILE"; } > "${QUEUE_FILE}.tmp" && mv "${QUEUE_FILE}.tmp" "$QUEUE_FILE"
+                fi
+              fi
+              SYNCED=$((SYNCED + 1))
+            fi
+          done
+          echo "synced=$SYNCED" >> "$GITHUB_OUTPUT"
+          echo "Synced $SYNCED new post(s)"
+
+      - name: Seed or reshuffle queue
+        id: queue-setup
+        run: |
+          RESHUFFLED=false
+
+          # Count files in not-posted
+          NOT_POSTED_COUNT=$(find "$NOT_POSTED_DIR" -maxdepth 1 -name '*.md' | wc -l)
+
+          if [ "$NOT_POSTED_COUNT" -eq 0 ]; then
+            POSTED_COUNT=$(find "$POSTED_DIR" -maxdepth 1 -name '*.md' | wc -l)
+
+            if [ "$POSTED_COUNT" -gt 0 ]; then
+              # Reshuffle: move all posted back to not-posted
+              echo "Reshuffling: moving $POSTED_COUNT posts back to not-posted"
+              for file in "$POSTED_DIR"/*.md; do
+                [ -f "$file" ] || continue
+                mv "$file" "$NOT_POSTED_DIR/"
+              done
+              RESHUFFLED=true
+            else
+              # Initial seed: copy all from validated
+              echo "Initial seed: copying from validated"
+              for file in "$VALIDATED_DIR"/*.md; do
+                [ -f "$file" ] || continue
+                cp "$file" "$NOT_POSTED_DIR/"
+              done
+            fi
+
+            # Regenerate queue from not-posted (shuffled)
+            ls -1 "$NOT_POSTED_DIR"/*.md 2>/dev/null | xargs -I{} basename {} .md | shuf > "$QUEUE_FILE"
+            echo "Generated new queue with $(wc -l < "$QUEUE_FILE") posts"
+          elif [ ! -f "$QUEUE_FILE" ] || [ ! -s "$QUEUE_FILE" ]; then
+            # Queue missing or empty but not-posted has files: regenerate
+            ls -1 "$NOT_POSTED_DIR"/*.md 2>/dev/null | xargs -I{} basename {} .md | shuf > "$QUEUE_FILE"
+            echo "Regenerated queue from existing not-posted files"
+          fi
+
+          echo "reshuffled=$RESHUFFLED" >> "$GITHUB_OUTPUT"
+          echo "Queue contents:"
+          cat "$QUEUE_FILE" 2>/dev/null || echo "(empty)"
+
+      - name: Get next post from queue
         id: get-post
+        if: ${{ !github.event.inputs.filename }}
         run: |
-          # Read or initialize rotation index
-          INDEX_FILE="genAI/linkedin-7day/.current-index"
-          if [ -f "$INDEX_FILE" ]; then
-            CURRENT_INDEX=$(cat "$INDEX_FILE")
-          else
-            CURRENT_INDEX=0
+          if [ ! -f "$QUEUE_FILE" ] || [ ! -s "$QUEUE_FILE" ]; then
+            echo "::error::Queue file is empty or missing"
+            echo "has_post=false" >> "$GITHUB_OUTPUT"
+            exit 1
           fi
 
-          # Get sorted list of posts
-          POSTS=($(ls -1 genAI/linkedin-7day/*.md 2>/dev/null | sort))
-          TOTAL=${#POSTS[@]}
+          NEXT=$(head -n 1 "$QUEUE_FILE")
+          REMAINING=$(($(wc -l < "$QUEUE_FILE") - 1))
 
-          if [ $TOTAL -eq 0 ]; then
-            echo "No posts available in linkedin-7day"
-            echo "has_post=false" >> $GITHUB_OUTPUT
-          else
-            # Wrap index to cycle through posts
-            CURRENT_INDEX=$((CURRENT_INDEX % TOTAL))
-            SELECTED="${POSTS[$CURRENT_INDEX]}"
-            FILENAME=$(basename "$SELECTED" .md)
-            echo "Found post [$((CURRENT_INDEX + 1))/$TOTAL]: $FILENAME"
-            echo "filename=$FILENAME" >> $GITHUB_OUTPUT
-            echo "has_post=true" >> $GITHUB_OUTPUT
-            echo "next_index=$((CURRENT_INDEX + 1))" >> $GITHUB_OUTPUT
+          if [ ! -f "$NOT_POSTED_DIR/${NEXT}.md" ]; then
+            echo "::error::Queue references missing file: ${NEXT}.md"
+            echo "has_post=false" >> "$GITHUB_OUTPUT"
+            exit 1
           fi
 
-      - name: Skip if no posts
-        if: steps.get-post.outputs.has_post == 'false'
+          echo "Next post: $NEXT ($REMAINING remaining after this)"
+          echo "filename=$NEXT" >> "$GITHUB_OUTPUT"
+          echo "remaining=$REMAINING" >> "$GITHUB_OUTPUT"
+          echo "has_post=true" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve post filename
+        id: resolve
         run: |
-          echo "No posts in linkedin-7day rotation. Skipping."
-          exit 0
+          MANUAL="${{ github.event.inputs.filename }}"
+          QUEUE_PICK="${{ steps.get-post.outputs.filename }}"
+
+          if [ -n "$MANUAL" ]; then
+            # Manual override - check not-posted first, then validated
+            if [ -f "$NOT_POSTED_DIR/${MANUAL}.md" ]; then
+              echo "file_path=$NOT_POSTED_DIR/${MANUAL}.md" >> "$GITHUB_OUTPUT"
+              echo "source=manual (not-posted)" >> "$GITHUB_OUTPUT"
+            elif [ -f "$VALIDATED_DIR/${MANUAL}.md" ]; then
+              echo "file_path=$VALIDATED_DIR/${MANUAL}.md" >> "$GITHUB_OUTPUT"
+              echo "source=manual (validated)" >> "$GITHUB_OUTPUT"
+            else
+              echo "::error::Manual override file not found: ${MANUAL}.md"
+              exit 1
+            fi
+            echo "is_manual=true" >> "$GITHUB_OUTPUT"
+            echo "post_name=$MANUAL" >> "$GITHUB_OUTPUT"
+          else
+            echo "file_path=$NOT_POSTED_DIR/${QUEUE_PICK}.md" >> "$GITHUB_OUTPUT"
+            echo "source=queue" >> "$GITHUB_OUTPUT"
+            echo "is_manual=false" >> "$GITHUB_OUTPUT"
+            echo "post_name=$QUEUE_PICK" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Post to LinkedIn
-        if: steps.get-post.outputs.has_post == 'true'
         id: post
         env:
-          POST_FILENAME: ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}
+          POST_FILE: ${{ steps.resolve.outputs.file_path }}
           LINKEDIN_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: |
-          echo "Posting: $POST_FILENAME"
+          echo "Posting: $POST_FILE"
           echo "Dry run: $LINKEDIN_DRY_RUN"
 
-          # Build dry-run flag if needed
           DRY_RUN_FLAG=""
           if [ "$LINKEDIN_DRY_RUN" = "true" ]; then
             DRY_RUN_FLAG="--dry-run"
           fi
 
-          # Run bash script and capture output (jq is pre-installed on ubuntu-latest)
-          ./scripts/linkedin-post.sh "genAI/linkedin-7day/${POST_FILENAME}.md" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json 2>&1 || true
+          ./scripts/linkedin-post.sh "$POST_FILE" --visibility PUBLIC --json $DRY_RUN_FLAG > result.json 2>&1 || true
 
           cat result.json
 
-          # Check for success
-          if grep -q '"success":true' result.json; then
-            echo "Successfully posted: $POST_FILENAME"
-            echo "success=true" >> $GITHUB_OUTPUT
-            exit 0
+          if grep -q '"success": *true' result.json; then
+            echo "Successfully posted: $(basename "$POST_FILE" .md)"
+            echo "success=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Failed to post"
-            echo "success=false" >> $GITHUB_OUTPUT
+            echo "::error::Failed to post"
+            echo "success=false" >> "$GITHUB_OUTPUT"
             exit 1
           fi
 
-      - name: Update rotation index
-        if: steps.get-post.outputs.has_post == 'true' && steps.post.outputs.success == 'true' && github.event.inputs.dry_run != 'true'
+      - name: Update rotation state
+        if: |
+          steps.post.outputs.success == 'true'
+          && steps.resolve.outputs.is_manual == 'false'
+          && github.event.inputs.dry_run != 'true'
         run: |
-          echo "Updating rotation index to: ${{ steps.get-post.outputs.next_index }}"
+          POST_NAME="${{ steps.resolve.outputs.post_name }}"
 
-          # Write next index (will wrap on next run)
-          echo "${{ steps.get-post.outputs.next_index }}" > genAI/linkedin-7day/.current-index
+          # Move file from not-posted to posted
+          mv "$NOT_POSTED_DIR/${POST_NAME}.md" "$POSTED_DIR/${POST_NAME}.md"
+          echo "Moved ${POST_NAME}.md to posted/"
 
-          # Commit the index update
+          # Pop line 1 from queue
+          tail -n +2 "$QUEUE_FILE" > "${QUEUE_FILE}.tmp" && mv "${QUEUE_FILE}.tmp" "$QUEUE_FILE"
+          echo "Popped from queue. Remaining: $(wc -l < "$QUEUE_FILE")"
+
+      - name: Commit and push
+        if: |
+          steps.post.outputs.success == 'true'
+          && github.event.inputs.dry_run != 'true'
+        run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add genAI/linkedin-7day/.current-index
-          git diff --staged --quiet || git commit -m "Update LinkedIn rotation index"
-          git push
+          git add "$NOT_POSTED_DIR" "$POSTED_DIR" "$QUEUE_FILE"
+          git diff --staged --quiet || {
+            git commit -m "Update LinkedIn post rotation: ${{ steps.resolve.outputs.post_name }}"
+            git push
+          }
 
       - name: Summary
         if: always()
         run: |
-          echo "## LinkedIn Post Scheduler Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.get-post.outputs.has_post }}" = "true" ]; then
-            echo "- **Post:** ${{ github.event.inputs.filename || steps.get-post.outputs.filename }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Next Index:** ${{ steps.get-post.outputs.next_index }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Dry Run:** ${{ github.event.inputs.dry_run || 'false' }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Success:** ${{ steps.post.outputs.success || 'N/A' }}" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "- **Status:** No posts in linkedin-7day rotation" >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "## LinkedIn Post Scheduler Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Post** | ${{ steps.resolve.outputs.post_name || 'N/A' }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Source** | ${{ steps.resolve.outputs.source || 'N/A' }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Remaining** | ${{ steps.get-post.outputs.remaining || 'N/A' }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Reshuffled** | ${{ steps.queue-setup.outputs.reshuffled || 'false' }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Synced** | ${{ steps.sync.outputs.synced || '0' }} new post(s) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Dry Run** | ${{ github.event.inputs.dry_run || 'false' }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Success** | ${{ steps.post.outputs.success || 'N/A' }} |" >> "$GITHUB_STEP_SUMMARY"
