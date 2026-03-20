@@ -89,8 +89,6 @@ References:
 
 ## Writing Style (Humanoid Speech)
 
-Source: `.claude/agentic_kit/00_init/boilerplate_humanoid_speech.md`
-
 ### DO
 - Use clear, simple language
 - Be spartan and informative
@@ -116,6 +114,7 @@ Source: `.claude/agentic_kit/00_init/boilerplate_humanoid_speech.md`
 - Rhetorical questions
 - Hashtags
 - Semicolons
+- Markdown formatting in output
 - Asterisks
 - Making authoritative claims or statements
 - Sounding like a tutorial or lecture
