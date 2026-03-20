@@ -37,6 +37,11 @@ yarn-error.log*
 # sensitive files
 *recovery-codes*
 
+# Generated tailored resumes
+Thomas_To_Resume_*.md
+Thomas_To_Resume_*.pdf
+!src/docs/resume.md
+
 # vercel
 .vercel
 
