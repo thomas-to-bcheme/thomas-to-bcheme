@@ -1,8 +1,9 @@
 import React from 'react';
 import { Mail, ArrowRight, Linkedin, Zap } from 'lucide-react';
-import Badge from '@/components/Badge';
-import { BentoGrid, BentoCard } from '@/components/BentoGrid';
+import Badge from '@/components/ui/Badge';
+import { BentoGrid, BentoCard } from '@/components/layout/BentoGrid';
 import Button from '@/components/ui/Button';
+import { SITE_OWNER_EMAIL, LINKEDIN_URL, IDEAL_ROLES } from '@/constants/site';
 
 // --- Main Component ---
 
@@ -25,7 +26,7 @@ const Connect: React.FC = () => {
                   <Badge 
                     color="green" 
                     pulse 
-                    href="mailto:thomas.to.bcheme@gmail.com" 
+                    href={`mailto:${SITE_OWNER_EMAIL}`} 
                   >
                     AVAILABLE FOR HIRE
                   </Badge>
@@ -42,7 +43,7 @@ const Connect: React.FC = () => {
               <div className="space-y-2">
                 <span className="text-micro font-mono text-zinc-400">Ideal Role Fit</span>
                 <div className="flex flex-wrap gap-2">
-                  {['AI/ML Engineer', 'AI/ML Ops', 'Data Scientist', 'Senior Fullstack Software Engineer'].map((role) => (
+                  {IDEAL_ROLES.map((role) => (
                     <span key={role} className="px-2.5 py-1 rounded-md bg-white border border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700 text-xs font-medium text-zinc-700 dark:text-zinc-300 shadow-sm cursor-default hover:border-blue-400 transition-colors">
                       {role}
                     </span>
@@ -55,7 +56,7 @@ const Connect: React.FC = () => {
             <div className="flex flex-col gap-3 w-full md:w-auto shrink-0">
               <Button
                 variant="primary"
-                href="mailto:thomas.to.bcheme@gmail.com"
+                href={`mailto:${SITE_OWNER_EMAIL}`}
                 className="w-full md:w-48 shadow-xl shadow-blue-200/50 dark:shadow-none group"
               >
                 <Mail size={18} />
@@ -68,7 +69,7 @@ const Connect: React.FC = () => {
 
               <Button
                 variant="secondary"
-                href="https://www.linkedin.com/in/thomas-to-ucdavis/"
+                href={LINKEDIN_URL}
                 external
                 className="w-full md:w-48 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-900/50 hover:border-blue-300"
               >

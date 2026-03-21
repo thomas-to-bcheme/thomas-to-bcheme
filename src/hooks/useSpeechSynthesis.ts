@@ -14,6 +14,10 @@ export interface UseSpeechSynthesisReturn {
 // Sentence boundary pattern for streaming TTS
 const SENTENCE_BOUNDARY = /[.!?]\s+/;
 
+// Speech synthesis defaults
+const DEFAULT_RATE = 1.0;
+const DEFAULT_PITCH = 1.0;
+
 export function useSpeechSynthesis(): UseSpeechSynthesisReturn {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
@@ -53,8 +57,8 @@ export function useSpeechSynthesis(): UseSpeechSynthesisReturn {
     isProcessingRef.current = true;
 
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    utterance.rate = DEFAULT_RATE;
+    utterance.pitch = DEFAULT_PITCH;
 
     utterance.onstart = () => {
       setIsSpeaking(true);

@@ -13,6 +13,8 @@ export interface UseSpeechRecognitionReturn {
   error: string | null;
 }
 
+const DEFAULT_LOCALE = 'en-US';
+
 export function useSpeechRecognition(): UseSpeechRecognitionReturn {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -63,7 +65,7 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
 
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = 'en-US';
+    recognition.lang = DEFAULT_LOCALE;
 
     recognition.onstart = () => {
       setIsListening(true);
@@ -73,8 +75,8 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
       let finalTranscript = '';
       let currentInterim = '';
 
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const result = event.results[i];
+      for (let resultIndex = event.resultIndex; resultIndex < event.results.length; resultIndex++) {
+        const result = event.results[resultIndex];
         if (result.isFinal) {
           finalTranscript += result[0].transcript;
         } else {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Send,
   User,
@@ -9,61 +9,38 @@ import {
   ChevronDown,
   ChevronUp,
   RefreshCw,
-  FileText,
-  Briefcase,
-  Wrench,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import type { ChatError } from '@/types/api-errors';
+import { isRetryableError, isRateLimitError } from '@/lib/chat-api';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis';
-import VoiceControls from '@/components/VoiceControls';
-import {
-  sendChatMessage,
-  getErrorMessage,
-  isRetryableError,
-  isRateLimitError,
-} from '@/lib/chat-api';
-
-type Message = {
-  role: 'user' | 'assistant';
-  content: string;
-};
+import { useChat } from '@/hooks/useChat';
+import VoiceControls from '@/components/voice/VoiceControls';
+import { SUGGESTED_QUESTIONS, CAPABILITY_BADGES } from '@/constants/chat';
 
 interface AiGeneratorProps {
-  /** When true, shows a compact collapsed view (mobile-friendly) */
   collapsed?: boolean;
-  /** Callback when collapsed state should change */
   onToggleCollapse?: () => void;
 }
-
-const SUGGESTED_QUESTIONS = [
-  'What are your strongest technical skills?',
-  'Tell me about your AI/ML experience',
-  'What projects demonstrate your capabilities?',
-  'Are you available for interviews?',
-];
-
-const CAPABILITY_BADGES = [
-  { icon: FileText, label: 'Resume Context', description: 'Full resume access' },
-  {
-    icon: Briefcase,
-    label: 'Career History',
-    description: 'Work experience details',
-  },
-  { icon: Wrench, label: 'Tech Stack', description: 'Technical expertise' },
-];
 
 export default function AiGenerator({
   collapsed = false,
   onToggleCollapse,
 }: AiGeneratorProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingDuration, setLoadingDuration] = useState(0);
-  const [chatError, setChatError] = useState<ChatError | null>(null);
-  const [rateLimitCountdown, setRateLimitCountdown] = useState(0);
+  const {
+    messages,
+    input,
+    setInput,
+    isLoading,
+    loadingDuration,
+    chatError,
+    rateLimitCountdown,
+    chatContainerRef,
+    lastContentLengthRef,
+    handleSubmit,
+    handleRetry,
+  } = useChat();
+
   const [ttsEnabled, setTtsEnabled] = useState(false);
 
   // Voice hooks
@@ -85,56 +62,14 @@ export default function AiGenerator({
     isSupported: ttsSupported,
   } = useSpeechSynthesis();
 
-  // Ref for the container to handle scrolling locally
-  const chatContainerRef = useRef<HTMLDivElement>(null);
-  // Store last prompt for retry functionality
-  const lastPromptRef = useRef<string>('');
-  // Track streaming content for TTS
-  const lastContentLengthRef = useRef<number>(0);
-
-  // Improved Scroll Logic: Only scroll the chat container, not the window
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      const { scrollHeight, clientHeight } = chatContainerRef.current;
-      chatContainerRef.current.scrollTop = scrollHeight - clientHeight;
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
-
-  // Track loading duration for timeout message
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isLoading) {
-      setLoadingDuration(0);
-      interval = setInterval(() => {
-        setLoadingDuration((prev) => prev + 1);
-      }, 1000);
-    } else {
-      setLoadingDuration(0);
-    }
-    return () => clearInterval(interval);
-  }, [isLoading]);
-
-  // Rate limit countdown timer
-  useEffect(() => {
-    if (rateLimitCountdown <= 0) return;
-    const timer = setInterval(() => {
-      setRateLimitCountdown((prev) => Math.max(0, prev - 1));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [rateLimitCountdown]);
-
-  // Handle voice transcript → input sync
+  // Handle voice transcript -> input sync
   useEffect(() => {
     if (transcript) {
       setInput(transcript);
     }
-  }, [transcript]);
+  }, [transcript, setInput]);
 
-  // Auto-submit when user stops speaking (after 1.5s of silence with content)
+  // Auto-submit when user stops speaking
   useEffect(() => {
     if (!isListening && transcript.trim()) {
       const timer = setTimeout(() => {
@@ -143,7 +78,7 @@ export default function AiGenerator({
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [isListening, transcript]);
+  }, [isListening, transcript, handleSubmit, resetTranscript]);
 
   // Handle TTS for streaming responses
   useEffect(() => {
@@ -152,7 +87,6 @@ export default function AiGenerator({
     const lastMessage = messages[messages.length - 1];
     if (lastMessage.role !== 'assistant') return;
 
-    // Get new content since last check
     const newContent = lastMessage.content.slice(lastContentLengthRef.current);
     if (newContent) {
       speakChunk(newContent);
@@ -169,104 +103,6 @@ export default function AiGenerator({
       }
     }
   }, [isLoading, ttsEnabled, cancelSpeech]);
-
-  const handleSubmit = async (e?: React.FormEvent, overridePrompt?: string) => {
-    e?.preventDefault();
-    const promptText = overridePrompt || input;
-
-    if (!promptText.trim() || isLoading) return;
-
-    // Store for retry
-    lastPromptRef.current = promptText;
-    setChatError(null);
-
-    // 1. Add User Message
-    const newHistory: Message[] = [
-      ...messages,
-      { role: 'user', content: promptText },
-    ];
-    setMessages(newHistory);
-    setInput('');
-    setIsLoading(true);
-
-    // 2. Send request with proper error handling
-    const result = await sendChatMessage(newHistory);
-
-    if (!result.success) {
-      // Handle error - show user-friendly message
-      const error = result.error;
-      setChatError(error);
-
-      // Set rate limit countdown if applicable
-      if (isRateLimitError(error) && error.type === 'api' && error.retryAfter) {
-        setRateLimitCountdown(error.retryAfter);
-      }
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: `Error: ${getErrorMessage(error)}`,
-        },
-      ]);
-      setIsLoading(false);
-      return;
-    }
-
-    // 3. Prepare Assistant Message Placeholder
-    setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
-
-    // 4. Stream Response
-    try {
-      const reader = result.response.body!.getReader();
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-
-        // Update last message with new chunk
-        setMessages((prev) => {
-          const last = prev[prev.length - 1];
-          const others = prev.slice(0, -1);
-          return [...others, { ...last, content: last.content + chunk }];
-        });
-      }
-    } catch (streamError) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Stream error:', streamError);
-      }
-      const error: ChatError = {
-        type: 'stream',
-        message: streamError instanceof Error ? streamError.message : 'Stream interrupted',
-      };
-      setChatError(error);
-      // Update the assistant message with error
-      setMessages((prev) => {
-        const last = prev[prev.length - 1];
-        const others = prev.slice(0, -1);
-        return [
-          ...others,
-          {
-            ...last,
-            content: last.content + `\n\n[Error: ${getErrorMessage(error)}]`,
-          },
-        ];
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Retry handler
-  const handleRetry = () => {
-    if (lastPromptRef.current && !isLoading && chatError && isRetryableError(chatError)) {
-      // Remove the error message before retrying
-      setMessages((prev) => prev.slice(0, -1));
-      handleSubmit(undefined, lastPromptRef.current);
-    }
-  };
 
   // Voice control handlers
   const handleToggleListening = () => {
@@ -314,8 +150,6 @@ export default function AiGenerator({
   }
 
   return (
-    // Height is set to min-h-full to ensure it fills the HeroSection container
-    // We use relative positioning to contain the sticky footer
     <div
       ref={chatContainerRef}
       className="flex flex-col min-h-full relative text-sm"
@@ -377,19 +211,17 @@ export default function AiGenerator({
 
       {/* --- MESSAGE HISTORY --- */}
       <div className="flex-1 p-4 space-y-4 pb-20">
-        {messages.map((m, i) => (
+        {messages.map((m) => (
           <div
-            key={i}
+            key={m.id}
             className={`flex gap-3 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            {/* Assistant Avatar */}
             {m.role === 'assistant' && (
               <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center shrink-0 mt-1">
                 <Bot size={14} className="text-indigo-600 dark:text-indigo-400" />
               </div>
             )}
 
-            {/* Message Bubble */}
             <div
               className={m.role === 'user' ? 'message-user' : 'message-assistant'}
             >
@@ -406,7 +238,6 @@ export default function AiGenerator({
               )}
             </div>
 
-            {/* User Avatar */}
             {m.role === 'user' && (
               <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center shrink-0 mt-1">
                 <User size={14} className="text-white" />
@@ -415,7 +246,7 @@ export default function AiGenerator({
           </div>
         ))}
 
-        {/* --- LOADING INDICATOR with timeout message --- */}
+        {/* --- LOADING INDICATOR --- */}
         {isLoading && (
           <div className="flex gap-3 justify-start animate-pulse motion-reduce:animate-none">
             <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center shrink-0">
@@ -439,7 +270,7 @@ export default function AiGenerator({
         )}
 
         {/* --- RETRY BUTTON after error --- */}
-        {chatError && !isLoading && lastPromptRef.current && (
+        {chatError && !isLoading && (
           <div className="flex justify-center">
             {isRateLimitError(chatError) && rateLimitCountdown > 0 ? (
               <div className="flex items-center gap-2 px-3 py-1.5 text-xs bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded-lg border border-amber-200 dark:border-amber-800">
@@ -462,7 +293,6 @@ export default function AiGenerator({
       {/* --- STICKY INPUT AREA --- */}
       <div className="sticky bottom-0 bg-zinc-50/95 dark:bg-zinc-900/95 backdrop-blur-sm p-3 border-t border-zinc-200 dark:border-zinc-800">
         <form onSubmit={(e) => handleSubmit(e)} className="flex gap-2">
-          {/* Voice Controls */}
           <VoiceControls
             isListening={isListening}
             onToggleListening={handleToggleListening}
@@ -475,7 +305,6 @@ export default function AiGenerator({
             disabled={isLoading}
           />
 
-          {/* Input Field */}
           <label htmlFor="chat-message-input" className="sr-only">
             Chat message
           </label>
@@ -491,7 +320,6 @@ export default function AiGenerator({
             aria-label="Chat message input"
           />
 
-          {/* Send Button */}
           <button
             type="submit"
             disabled={isLoading || !input.trim() || isListening}

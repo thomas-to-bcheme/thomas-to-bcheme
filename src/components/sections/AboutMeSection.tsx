@@ -1,6 +1,7 @@
 import React from 'react';
 import { Users, Globe, CheckCircle2, HeartHandshake } from 'lucide-react';
-import Badge from '@/components/Badge';
+import Badge from '@/components/ui/Badge';
+import { SITE_OWNER_EMAIL } from '@/constants/site';
 
 // --- Main Section Component ---
 
@@ -30,12 +31,12 @@ const AboutMeSection: React.FC = () => {
                   Contact
                 </span>
                 <a
-                  href="mailto:thomas.to.bcheme@gmail.com"
+                  href={`mailto:${SITE_OWNER_EMAIL}`}
                   className="inline-block hover:opacity-80 transition-opacity"
                   aria-label="Email Thomas To"
                 >
                   <Badge color="green" pulse icon={Globe}>
-                    thomas.to.bcheme@gmail.com
+                    {SITE_OWNER_EMAIL}
                   </Badge>
                 </a>
               </div>

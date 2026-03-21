@@ -4,20 +4,29 @@
  */
 
 // Layout Components
-export { BentoGrid, BentoCard } from './BentoGrid';
-export { default as HeroSection } from './HeroSection';
+export { BentoGrid, BentoCard } from './layout/BentoGrid';
+export { default as HeroSection } from './sections/HeroSection';
+export { default as MotionProvider } from './layout/MotionProvider';
+export { default as ImpactMetric } from './layout/ImpactMetric';
 
 // UI Components
-export { default as Badge } from './Badge';
-export { default as TrustBadge } from './TrustBadge';
+export { default as Badge } from './ui/Badge';
+export { default as TrustBadge } from './ui/TrustBadge';
+export { default as SkipLink } from './ui/SkipLink';
+export { default as Button } from './ui/Button';
+
 // Feature Components
-export { default as AiGenerator } from './AiGenerator';
-export { default as ArchitectureDiagram } from './ArchitectureDiagram';
-export { default as ROICalculation } from './ROICalculation';
-export { default as ProjectDeepDive } from './ProjectDeepDive';
-export { default as Roadmap } from './Roadmap';
-export { default as SystemStatusTicker } from './SystemStatusTicker';
+export { default as AiGenerator } from './features/AiGenerator';
+export { default as ArchitectureDiagram } from './features/ArchitectureDiagram';
+export { default as ROICalculation } from './roi';
+export { default as ProjectDeepDive } from './features/ProjectDeepDive';
+export { default as SystemStatusTicker } from './features/SystemStatusTicker';
 
 // Section Components
-export { default as AboutMeSection } from './AboutMeSection';
-export { default as Connect } from './Connect';
+export { default as AboutMeSection } from './sections/AboutMeSection';
+export { default as Connect } from './sections/Connect';
+export { default as Footer } from './sections/Footer';
+export { default as Roadmap } from './sections/Roadmap';
+
+// Voice Components
+export { default as VoiceControls } from './voice/VoiceControls';

@@ -20,6 +20,9 @@ export function useActiveSection(
   // Debounce timer ref to prevent rapid state updates
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Stabilize dependency — primitive string is safe for dependency arrays
+  const sectionIdsKey = sectionIds.join(',');
+
   useEffect(() => {
     // Clean up previous observer
     if (observerRef.current) {
@@ -87,7 +90,7 @@ export function useActiveSection(
         clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [sectionIds.join(','), options.threshold, options.rootMargin]);
+  }, [sectionIdsKey, options.threshold, options.rootMargin]);
 
   return activeSection;
 }

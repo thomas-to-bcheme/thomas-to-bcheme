@@ -60,6 +60,7 @@ const Badge = ({
     <Component 
       href={href}
       target={href ? "_blank" : undefined}
+      rel={href ? "noopener noreferrer" : undefined}
       title={title}
       className={cn(
         `px-2.5 py-1 rounded-md text-micro border flex items-center gap-1.5 transition-all`,

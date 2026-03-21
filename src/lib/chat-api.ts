@@ -13,11 +13,7 @@ import {
   ChatError,
   ERROR_MESSAGES,
 } from '@/types/api-errors';
-
-type Message = {
-  role: 'user' | 'assistant';
-  content: string;
-};
+import type { Message } from '@/types/chat';
 
 /** Result of sendChatMessage - either success with response body or failure with error */
 export type ChatApiResult =
@@ -39,7 +35,9 @@ export async function sendChatMessage(
     response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify({
+        messages: messages.map(({ role, content }) => ({ role, content })),
+      }),
     });
   } catch (fetchError) {
     // Network failure (offline, DNS, CORS, etc.)
@@ -109,8 +107,8 @@ async function parseApiError(response: Response): Promise<ChatError> {
 export function getErrorMessage(error: ChatError): string {
   switch (error.type) {
     case 'api': {
-      const code = error.response.error.code as ApiErrorCode;
-      return ERROR_MESSAGES[code] || error.response.error.message;
+      const code = error.response.error.code;
+      return ERROR_MESSAGES[code] ?? error.response.error.message;
     }
     case 'network':
       return 'Could not connect to the server. Please check your connection and try again.';

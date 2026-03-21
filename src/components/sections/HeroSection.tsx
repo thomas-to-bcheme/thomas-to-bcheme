@@ -2,22 +2,15 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  Github,
-  FileText,
-  Cpu,
-  ShieldCheck,
-  TrendingUp,
-  TrendingDown,
-  Dna,
-} from 'lucide-react';
+import { Github, FileText, Cpu } from 'lucide-react';
 
 // --- IMPORTS ---
-import Badge from '@/components/Badge';
-import SystemStatusTicker from '@/components/SystemStatusTicker';
-import AiGenerator from '@/components/AiGenerator';
-import TrustBadge from '@/components/TrustBadge';
+import Badge from '@/components/ui/Badge';
+import SystemStatusTicker from '@/components/features/SystemStatusTicker';
+import AiGenerator from '@/components/features/AiGenerator';
+import TrustBadge from '@/components/ui/TrustBadge';
 import Button from '@/components/ui/Button';
+import { SITE_OWNER_EMAIL, GITHUB_URL, GITHUB_PROFILE_URL, RESUME_PDF_URL, TRUST_SIGNALS } from '@/constants/site';
 
 const HeroSection = () => {
   // Mobile chat collapsed state (U1)
@@ -42,7 +35,7 @@ const HeroSection = () => {
               <Badge
                 color="green"
                 pulse
-                href="mailto:thomas.to.bcheme@gmail.com"
+                href={`mailto:${SITE_OWNER_EMAIL}`}
               >
                 AVAILABLE FOR HIRE
               </Badge>
@@ -63,19 +56,12 @@ const HeroSection = () => {
 
             {/* TRUST SIGNALS */}
             <div className="flex flex-wrap items-center gap-3 mb-8">
-              {[
-                { label: 'Profit', icon: TrendingUp, variant: 'success' },
-                { label: 'Risk', icon: TrendingDown, variant: 'risk' },
-                { label: 'R&D', icon: Dna, variant: 'innovation' },
-                { label: 'ICH', icon: ShieldCheck, variant: 'compliance' },
-                { label: 'GxP', icon: ShieldCheck, variant: 'compliance' },
-                { label: 'HIPAA', icon: ShieldCheck, variant: 'compliance' },
-              ].map((badge) => (
+              {TRUST_SIGNALS.map((badge) => (
                 <TrustBadge
                   key={badge.label}
                   label={badge.label}
                   icon={badge.icon}
-                  variant={badge.variant as 'success' | 'innovation' | 'compliance' | 'risk'}
+                  variant={badge.variant}
                 />
               ))}
             </div>
@@ -84,14 +70,14 @@ const HeroSection = () => {
             <div className="flex flex-wrap gap-4 mt-auto">
               <Button
                 variant="primary"
-                href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io"
+                href={GITHUB_URL}
                 external
               >
                 <Github size={20} /> View Source
               </Button>
               <Button
                 variant="secondary"
-                href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io/blob/main/src/docs/Thomas_To_Resume.pdf?raw=true"
+                href={RESUME_PDF_URL}
                 external
               >
                 <FileText size={20} /> Download Resume
@@ -125,7 +111,7 @@ const HeroSection = () => {
                     </span>
                     <div className="text-xs leading-tight text-zinc-500 dark:text-zinc-400 mt-1">
                       <a
-                        href="https://github.com/thomas-to-bcheme"
+                        href={GITHUB_PROFILE_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 dark:text-blue-400 hover:underline decoration-blue-600/30 transition-all font-medium inline-flex items-center gap-1"

@@ -1,27 +1,21 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { Mail, ArrowRight, Globe, Linkedin, Github, GitBranch } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 // --- LOCAL COMPONENTS ---
-import HeroSection from '@/components/HeroSection';
-import ArchitectureDiagram from '@/components/ArchitectureDiagram';
-import ROICalculation from '@/components/ROICalculation';
-import ProjectDeepDive from '@/components/ProjectDeepDive';
-import { BentoGrid, BentoCard } from '@/components/BentoGrid';
-import AboutMeSection from '@/components/AboutMeSection';
-import Roadmap from '@/components/Roadmap';
-import Connect from '@/components/Connect';
-import SkipLink from '@/components/SkipLink';
+import HeroSection from '@/components/sections/HeroSection';
+import ArchitectureDiagram from '@/components/features/ArchitectureDiagram';
+import ROICalculation from '@/components/roi';
+import ProjectDeepDive from '@/components/features/ProjectDeepDive';
+import { BentoGrid, BentoCard } from '@/components/layout/BentoGrid';
+import AboutMeSection from '@/components/sections/AboutMeSection';
+import Roadmap from '@/components/sections/Roadmap';
+import Connect from '@/components/sections/Connect';
+import SkipLink from '@/components/ui/SkipLink';
+import Footer from '@/components/sections/Footer';
 import { useActiveSection } from '@/hooks/useActiveSection';
-
-// Navigation links with their corresponding section IDs (U2)
-const NAV_LINKS = [
-  { label: 'Live Agent', href: '#agent', sectionId: 'agent' },
-  { label: 'About Me', href: '#about-me', sectionId: 'about-me' },
-  { label: 'Solutions', href: '#proj-1', sectionId: 'proj-1' },
-  { label: 'Lifecycle', href: '#roadmap', sectionId: 'roadmap' },
-] as const;
+import { NAV_LINKS, SITE_OWNER_EMAIL } from '@/constants/site';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -82,7 +76,7 @@ export default function Home() {
           </nav>
 					
 					<a
-						href="mailto:thomas.to.bcheme@gmail.com"
+						href={`mailto:${SITE_OWNER_EMAIL}`}
 						className="flex items-center gap-2 text-xs bg-blue-600 text-white dark:bg-blue-500 px-4 py-2 rounded-full font-bold
 											 hover:bg-blue-700 dark:hover:bg-blue-400 hover:scale-105 active:scale-95
 											 transition-all duration-200 shadow-sm hover:shadow-blue-500/25 group
@@ -140,102 +134,7 @@ export default function Home() {
         <Roadmap />
 
 				{/* --- FOOTER SECTION --- */}
-				<footer className="border-default surface-secondary pt-16 pb-8">
-					<div className="max-w-7xl mx-auto px-6">
-						<div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-
-							{/* COLUMN 1: BRAND IDENTITY */}
-							<div className="col-span-1 md:col-span-2 space-y-4">
-								<div className="font-bold text-xl tracking-tighter flex items-center gap-2">
-									THOMAS<span className="text-blue-600 dark:text-blue-500">TO</span>
-								</div>
-								<p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm leading-relaxed">
-									Operationalizing AI Agents: <br/> Bridging the gap between reality and the matrix.
-								</p>
-								<div className="flex gap-4 pt-2">
-									<a
-										href="https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io"
-										target="_blank"
-										rel="noopener noreferrer"
-										aria-label="GitHub Profile"
-										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
-									>
-										<Github size={18} aria-hidden="true" />
-									</a>
-									<a
-										href="https://www.linkedin.com/in/thomas-to-ucdavis/"
-										target="_blank"
-										rel="noopener noreferrer"
-										aria-label="LinkedIn Profile"
-										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
-									>
-										<Linkedin size={18} aria-hidden="true" />
-									</a>
-									<a
-										href="mailto:thomas.to.bcheme@gmail.com"
-										aria-label="Email Contact"
-										className="p-2 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-200 transition-all hover:scale-110"
-									>
-										<Mail size={18} aria-hidden="true" />
-									</a>
-								</div>
-							</div>
-
-							{/* COLUMN 2: SITEMAP */}
-							<div>
-								<h4 className="text-micro text-zinc-900 dark:text-white mb-6">Navigation</h4>
-								<ul className="space-y-3 text-sm text-zinc-500 dark:text-zinc-400">
-									<li><a href="#agent" className="hover:text-blue-600 transition-colors flex items-center gap-2">Live Agent</a></li>
-									<li><a href="#impact" className="hover:text-blue-600 transition-colors flex items-center gap-2">Business Impact</a></li>
-									<li><a href="#projects" className="hover:text-blue-600 transition-colors flex items-center gap-2">Engineering</a></li>
-									<li><a href="#about-me" className="hover:text-blue-600 transition-colors flex items-center gap-2">About Me</a></li>
-								</ul>
-							</div>
-
-							{/* COLUMN 3: SYSTEM STATUS & LEGAL */}
-							<div>
-								<h4 className="text-micro text-zinc-900 dark:text-white mb-6">System Status</h4>
-								<ul className="space-y-3 text-sm text-zinc-500 dark:text-zinc-400">
-									<li className="flex items-center gap-2">
-										<div className="relative flex h-2 w-2">
-											<span className="status-dot-ping bg-emerald-400"></span>
-											<span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-										</div>
-										<span className="text-emerald-600 dark:text-emerald-400 font-medium">All Systems Nominal</span>
-									</li>
-									<li className="flex items-center gap-2">
-										<GitBranch size={14} aria-hidden="true" />
-										<span>v2.4.0 (Stable)</span>
-									</li>
-									<li className="flex items-center gap-2">
-										<Globe size={14} aria-hidden="true" />
-										<span>Region: US-West (SFO)</span>
-									</li>
-								</ul>
-							</div>
-						</div>
-
-						{/* BOTTOM BAR */}
-						<div className="border-default border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-							<div className="text-xs text-zinc-400 space-y-1">
-								<p>&copy; {new Date().getFullYear()} Thomas To. All rights reserved.</p>
-								<p>Licensed under MIT Open Source.</p>
-							</div>
-
-							<div className="flex items-center gap-6">
-								<div className="text-xs text-zinc-500 font-mono hidden md:block">
-									Built with <span className="text-zinc-700 dark:text-zinc-300">GitHub, Next.js, Vercel, and ~Vibes~ </span>
-								</div>
-								<button
-									onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-									className="flex items-center gap-2 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors bg-blue-50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full hover:scale-105 active:scale-95"
-								>
-									Back to Top <ArrowRight size={12} className="-rotate-90" />
-								</button>
-							</div>
-						</div>
-					</div>
-				</footer>
+				<Footer />
 
 			</main>
 		</div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -27,8 +27,8 @@ export const BentoCard = ({ children, className, colSpan = 1, rowSpan = 1, title
   const Wrapper = href ? 'a' : 'div';
   const wrapperProps = href ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
 
-  // Respect reduced motion preference
-  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Respect reduced motion preference (hydration-safe)
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <motion.div
