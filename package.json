@@ -6,26 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "linkedin": "tsx --tsconfig scripts/tsconfig.cli.json scripts/linkedin-cli.ts",
-    "linkedin:list": "npm run linkedin -- list",
-    "linkedin:post": "npm run linkedin -- post",
-    "resume:pdf": "python3 scripts/resume_pdf.py"
+    "lint": "eslint"
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.1",
-    "@aws-sdk/client-dynamodb": "^3.958.0",
-    "@aws-sdk/client-s3": "^3.958.0",
-    "@aws-sdk/lib-dynamodb": "^3.958.0",
     "@google/generative-ai": "^0.24.1",
-    "@vercel/edge-config": "^1.4.3",
-    "@vercel/functions": "^3.3.4",
-    "@vercel/oidc-aws-credentials-provider": "^3.0.5",
-    "@vercel/sdk": "^1.18.5",
-    "ai": "^6.0.3",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
-    "gray-matter": "^4.0.3",
     "katex": "^0.16.27",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
@@ -35,7 +21,6 @@
     "react-katex": "^3.1.0",
     "react-markdown": "^10.1.0",
     "tailwind-merge": "^3.4.0",
-    "vercel": "^50.1.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {

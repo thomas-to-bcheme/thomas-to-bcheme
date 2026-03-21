@@ -296,7 +296,7 @@ npm run linkedin post -- --file 2026-02-17-constraint-driven-architecture --json
 
 | Variable | Purpose |
 |----------|---------|
-| `LINKEDIN_POSTS_DIR` | Override posts directory (default: `genAI/linkedin-posts/validated`) |
+| `LINKEDIN_POSTS_DIR` | Override posts directory |
 | `LINKEDIN_DRY_RUN` | Set to `true` for dry-run mode |
 
 ---
@@ -305,7 +305,7 @@ npm run linkedin post -- --file 2026-02-17-constraint-driven-architecture --json
 
 ### File Location
 
-Pre-written posts are stored in: `genAI/linkedin-posts/`
+Pre-written posts are managed in a separate content pipeline.
 
 ### File Format
 
@@ -342,48 +342,6 @@ Hello World, I built a production AI portfolio on free-tier services...
 - **Format**: Text-only preferred; no emojis
 
 ---
-
-## GitHub Actions Integration
-
-The LinkedIn scheduler runs via GitHub Actions CRON (Tuesdays at 10:07 AM PST).
-
-### Workflow Location
-
-`.github/workflows/linkedin-scheduler.yml`
-
-### Manual Trigger
-
-```bash
-# Trigger workflow
-gh workflow run linkedin-scheduler.yml
-
-# Dry-run test
-gh workflow run linkedin-scheduler.yml -f dry_run=true
-
-# Specific post
-gh workflow run linkedin-scheduler.yml -f filename=2026-02-17-constraint-driven-architecture
-```
-
-### 7-Day Rotation
-
-Posts in `genAI/linkedin-7day/` are rotated weekly:
-- Index tracked in `.current-index` file
-- Cycles back to first post after last
-- Posts remain in directory (no archival)
-
-### Dry-Run Mode
-
-Set `LINKEDIN_DRY_RUN=true` in `.env.local` for local testing:
-
-```bash
-LINKEDIN_DRY_RUN=true npm run linkedin post -- --file test-post
-```
-
-Or use the `--dry-run` flag:
-
-```bash
-npm run linkedin post -- --file test-post --dry-run
-```
 
 ---
 
@@ -437,18 +395,6 @@ npm run linkedin post -- --file test-post --dry-run
 - All inputs validated with Zod schemas
 
 ---
-
-## Related Files
-
-| File | Purpose |
-|------|---------|
-| `scripts/linkedin-cli.ts` | Standalone CLI for posting |
-| `src/lib/linkedin/client.ts` | LinkedIn API client |
-| `src/lib/linkedin/content-loader.ts` | Markdown parser (configurable directory) |
-| `src/types/linkedin-errors.ts` | Error definitions |
-| `genAI/linkedin-posts/validated/*.md` | Validated posts (one-time queue) |
-| `genAI/linkedin-7day/*.md` | Rotating posts (weekly cycle) |
-| `.github/workflows/linkedin-scheduler.yml` | GitHub Actions CRON workflow |
 
 ---
 

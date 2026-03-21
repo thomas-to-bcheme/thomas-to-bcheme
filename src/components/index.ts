@@ -10,8 +10,6 @@ export { default as HeroSection } from './HeroSection';
 // UI Components
 export { default as Badge } from './Badge';
 export { default as TrustBadge } from './TrustBadge';
-export { default as ImpactMetric } from './ImpactMetric';
-
 // Feature Components
 export { default as AiGenerator } from './AiGenerator';
 export { default as ArchitectureDiagram } from './ArchitectureDiagram';
@@ -23,4 +21,3 @@ export { default as SystemStatusTicker } from './SystemStatusTicker';
 // Section Components
 export { default as AboutMeSection } from './AboutMeSection';
 export { default as Connect } from './Connect';
-export { default as Projects } from './Projects';

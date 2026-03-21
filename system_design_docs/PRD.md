@@ -210,7 +210,7 @@ Key Features:
 - Hook + Moving Forward + Community Impact + CTA structure
 - Formatting rules (no emojis, line breaks, character limits)
 - Reference citation format
-- Output to `genAI/linkedin-posts/drafts/`
+- Output to content drafts directory
 
 ## 5. Implementation Steps
 
