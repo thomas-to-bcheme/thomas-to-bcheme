@@ -29,70 +29,6 @@ const StatusIcon = ({ status }: { status: PhaseStatus }) => {
   return <Circle className="w-6 h-6 text-zinc-300 dark:text-zinc-700" />;
 };
 
-const LifecycleProgress = () => {
-  return (
-    <div className="mb-16">
-      <div className="bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-6 py-5 shadow-sm">
-
-        <div className="flex items-center justify-center gap-2 mb-5 opacity-50">
-          <div className="timeline-connector-h w-8" />
-          <span className="text-micro text-zinc-500 dark:text-zinc-400">
-            Lifecycle Progress
-          </span>
-          <div className="timeline-connector-h w-8" />
-        </div>
-
-        <div className="flex items-center">
-          {PHASES.map((phase, index) => {
-            const isLast = index === PHASES.length - 1;
-            const isFilled = phase.status === 'completed' || phase.status === 'current';
-            const connectorFilled = phase.status === 'completed';
-
-            return (
-              <React.Fragment key={phase.id}>
-                <div className="flex flex-col items-center gap-2 shrink-0">
-                  <div className={cn(
-                    "w-10 h-10 rounded-full flex items-center justify-center bg-white dark:bg-zinc-950",
-                    isFilled
-                      ? "ring-2 ring-blue-200 dark:ring-blue-900/50"
-                      : "ring-1 ring-zinc-200 dark:ring-zinc-800"
-                  )}>
-                    <StatusIcon status={phase.status} />
-                  </div>
-                  <div className="text-center max-w-[72px]">
-                    <span className={cn(
-                      "text-micro block leading-tight",
-                      isFilled ? "text-blue-600 dark:text-blue-400" : "text-zinc-400 dark:text-zinc-600"
-                    )}>
-                      Phase {phase.id}
-                    </span>
-                    <span className={cn(
-                      "hidden sm:block text-xs leading-tight mt-0.5",
-                      isFilled ? "text-zinc-600 dark:text-zinc-400" : "text-zinc-400 dark:text-zinc-600"
-                    )}>
-                      {phase.subtitle}
-                    </span>
-                  </div>
-                </div>
-
-                {!isLast && (
-                  <div className={cn(
-                    "flex-1 h-px transition-colors duration-500",
-                    connectorFilled
-                      ? "bg-blue-500 dark:bg-blue-400"
-                      : "bg-zinc-200 dark:bg-zinc-800"
-                  )} />
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
-
-      </div>
-    </div>
-  );
-};
-
 const LINK_CONFIG: Record<LinkType, { icon: React.ElementType; chipClass: string }> = {
   github: {
     icon: Github,
@@ -293,8 +229,6 @@ const Roadmap = () => {
     </div>
   </div>
 </div>
-
-        <LifecycleProgress />
 
         {/* Timeline Container */}
         <div className="relative">

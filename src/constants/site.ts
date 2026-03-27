@@ -25,7 +25,6 @@ export const SITE_REGION = 'US-West (SFO)';
 
 // --- Navigation ---
 export const NAV_LINKS = [
-  { label: 'Live Agent', href: '#agent', sectionId: 'agent' },
   { label: 'About Me', href: '#about-me', sectionId: 'about-me' },
   { label: 'Pipeline', href: '#pipeline', sectionId: 'pipeline' },
   { label: 'Lifecycle', href: '#roadmap', sectionId: 'roadmap' },
@@ -59,7 +58,6 @@ export const TRUST_SIGNALS: TrustSignal[] = [
 
 // --- Footer Navigation ---
 export const FOOTER_NAV_LINKS = [
-  { label: 'Live Agent', href: '#agent' },
   { label: 'Pipeline', href: '#pipeline' },
   { label: 'Engineering', href: '#projects' },
   { label: 'About Me', href: '#about-me' },
