@@ -13,13 +13,13 @@ import AssumptionItem from './AssumptionItem';
 
 const ROICalculation = () => {
   // --- 1. STATE ---
-  const [userCount, setUserCount] = useState(ROI_DEFAULTS.userCount);
-  const [userSalary, setUserSalary] = useState(ROI_DEFAULTS.userSalary);
-  const [userHours, setUserHours] = useState(ROI_DEFAULTS.userHours);
+  const [userCount, setUserCount] = useState<number>(ROI_DEFAULTS.userCount);
+  const [userSalary, setUserSalary] = useState<number>(ROI_DEFAULTS.userSalary);
+  const [userHours, setUserHours] = useState<number>(ROI_DEFAULTS.userHours);
 
-  const [devSalary, setDevSalary] = useState(ROI_DEFAULTS.devSalary);
-  const [buildWeeks, setBuildWeeks] = useState(ROI_DEFAULTS.buildWeeks);
-  const [runCostWeekly, setRunCostWeekly] = useState(ROI_DEFAULTS.runCostWeekly);
+  const [devSalary, setDevSalary] = useState<number>(ROI_DEFAULTS.devSalary);
+  const [buildWeeks, setBuildWeeks] = useState<number>(ROI_DEFAULTS.buildWeeks);
+  const [runCostWeekly, setRunCostWeekly] = useState<number>(ROI_DEFAULTS.runCostWeekly);
 
   // --- 2. CALCULATIONS ---
   
