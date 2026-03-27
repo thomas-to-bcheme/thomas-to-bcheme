@@ -6,10 +6,13 @@ import {
   Circle,
   Loader2,
   Milestone,
+  Github,
+  Youtube,
+  Linkedin,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PHASES } from '@/constants/roadmap';
-import type { PhaseStatus, RoadmapPhase } from '@/constants/roadmap';
+import type { PhaseStatus, RoadmapPhase, LinkType } from '@/constants/roadmap';
 
 const StatusIcon = ({ status }: { status: PhaseStatus }) => {
   if (status === 'completed') {
@@ -24,6 +27,85 @@ const StatusIcon = ({ status }: { status: PhaseStatus }) => {
     );
   }
   return <Circle className="w-6 h-6 text-zinc-300 dark:text-zinc-700" />;
+};
+
+const LifecycleProgress = () => {
+  return (
+    <div className="mb-16">
+      <div className="bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-6 py-5 shadow-sm">
+
+        <div className="flex items-center justify-center gap-2 mb-5 opacity-50">
+          <div className="timeline-connector-h w-8" />
+          <span className="text-micro text-zinc-500 dark:text-zinc-400">
+            Lifecycle Progress
+          </span>
+          <div className="timeline-connector-h w-8" />
+        </div>
+
+        <div className="flex items-center">
+          {PHASES.map((phase, index) => {
+            const isLast = index === PHASES.length - 1;
+            const isFilled = phase.status === 'completed' || phase.status === 'current';
+            const connectorFilled = phase.status === 'completed';
+
+            return (
+              <React.Fragment key={phase.id}>
+                <div className="flex flex-col items-center gap-2 shrink-0">
+                  <div className={cn(
+                    "w-10 h-10 rounded-full flex items-center justify-center bg-white dark:bg-zinc-950",
+                    isFilled
+                      ? "ring-2 ring-blue-200 dark:ring-blue-900/50"
+                      : "ring-1 ring-zinc-200 dark:ring-zinc-800"
+                  )}>
+                    <StatusIcon status={phase.status} />
+                  </div>
+                  <div className="text-center max-w-[72px]">
+                    <span className={cn(
+                      "text-micro block leading-tight",
+                      isFilled ? "text-blue-600 dark:text-blue-400" : "text-zinc-400 dark:text-zinc-600"
+                    )}>
+                      Phase {phase.id}
+                    </span>
+                    <span className={cn(
+                      "hidden sm:block text-xs leading-tight mt-0.5",
+                      isFilled ? "text-zinc-600 dark:text-zinc-400" : "text-zinc-400 dark:text-zinc-600"
+                    )}>
+                      {phase.subtitle}
+                    </span>
+                  </div>
+                </div>
+
+                {!isLast && (
+                  <div className={cn(
+                    "flex-1 h-px transition-colors duration-500",
+                    connectorFilled
+                      ? "bg-blue-500 dark:bg-blue-400"
+                      : "bg-zinc-200 dark:bg-zinc-800"
+                  )} />
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+const LINK_CONFIG: Record<LinkType, { icon: React.ElementType; chipClass: string }> = {
+  github: {
+    icon: Github,
+    chipClass: 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500',
+  },
+  youtube: {
+    icon: Youtube,
+    chipClass: 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-100 dark:border-red-800 hover:border-red-300 dark:hover:border-red-600',
+  },
+  linkedin: {
+    icon: Linkedin,
+    chipClass: 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-100 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-600',
+  },
 };
 
 const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) => {
@@ -116,6 +198,31 @@ const PhaseCard = ({ phase, isLast }: { phase: RoadmapPhase; isLast: boolean }) 
               {phase.goal}
             </div>
 
+            {/* Links — rendered only when phase has associated resources */}
+            {phase.links && phase.links.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {phase.links.map((link) => {
+                  const { icon: LinkIcon, chipClass } = LINK_CONFIG[link.type];
+                  return (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-colors duration-150',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1',
+                        chipClass,
+                      )}
+                    >
+                      <LinkIcon size={11} />
+                      {link.label}
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+
             {/* Stakeholder Tag */}
             <div className="mt-4 flex items-center gap-2">
               <span className="text-xs text-zinc-400 uppercase font-medium">Target Stakeholder:</span>
@@ -186,6 +293,8 @@ const Roadmap = () => {
     </div>
   </div>
 </div>
+
+        <LifecycleProgress />
 
         {/* Timeline Container */}
         <div className="relative">

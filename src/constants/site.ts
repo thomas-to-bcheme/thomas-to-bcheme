@@ -15,7 +15,7 @@ export const SITE_OWNER_EMAIL = 'thomas.to.bcheme@gmail.com';
 // --- External URLs ---
 export const GITHUB_URL = 'https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io';
 export const GITHUB_PROFILE_URL = 'https://github.com/thomas-to-bcheme';
-export const LINKEDIN_URL = 'https://www.linkedin.com/in/thomas-to-ucdavis/';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/thomas-to-bcheme/';
 export const RESUME_PDF_URL = 'https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io/blob/main/src/docs/Thomas_To_Resume.pdf?raw=true';
 
 // --- Site Metadata ---
@@ -27,7 +27,7 @@ export const SITE_REGION = 'US-West (SFO)';
 export const NAV_LINKS = [
   { label: 'Live Agent', href: '#agent', sectionId: 'agent' },
   { label: 'About Me', href: '#about-me', sectionId: 'about-me' },
-  { label: 'Solutions', href: '#proj-1', sectionId: 'proj-1' },
+  { label: 'Pipeline', href: '#pipeline', sectionId: 'pipeline' },
   { label: 'Lifecycle', href: '#roadmap', sectionId: 'roadmap' },
 ] as const;
 
@@ -60,7 +60,7 @@ export const TRUST_SIGNALS: TrustSignal[] = [
 // --- Footer Navigation ---
 export const FOOTER_NAV_LINKS = [
   { label: 'Live Agent', href: '#agent' },
-  { label: 'Business Impact', href: '#impact' },
+  { label: 'Pipeline', href: '#pipeline' },
   { label: 'Engineering', href: '#projects' },
   { label: 'About Me', href: '#about-me' },
 ] as const;

@@ -9,6 +9,13 @@ import { LayoutTemplate, Server, Layers, GitBranch } from 'lucide-react';
 import type React from 'react';
 
 export type PhaseStatus = 'completed' | 'current' | 'upcoming';
+export type LinkType = 'github' | 'youtube' | 'linkedin';
+
+export interface RoadmapLink {
+  label: string;
+  url: string;
+  type: LinkType;
+}
 
 export interface RoadmapPhase {
   id: number;
@@ -19,6 +26,7 @@ export interface RoadmapPhase {
   goal: string;
   stakeholder: string;
   icon: React.ElementType;
+  links?: RoadmapLink[];
 }
 
 export const PHASES: RoadmapPhase[] = [
@@ -45,21 +53,30 @@ export const PHASES: RoadmapPhase[] = [
   {
     id: 3,
     title: 'Phase 3: E2E ML Infrastructure',
-    subtitle: 'Robust Backend & CI/CD',
+    subtitle: 'Robust Backend & Open Source',
     status: 'upcoming',
     stakeholder: 'Technical Leads',
     icon: Layers,
-    description: 'Complete end-to-end and cross-platform CI/CD of local Python ML models shipped as a FastAPI to GitHub and deployed on Hugging Face. The Vercel frontend will call this custom ecosystem without external platforms.',
-    goal: 'Robust backend development with its own CI/CD pipeline integrated via API. All infrastructure built from scratch to demonstrate fullstack architectural control.',
+    description: 'Complete end-to-end CI/CD of local Python ML models deployed via FastAPI to Hugging Face. Simultaneously, the Claude Code Marketplace plugin ecosystem and three standalone open-source microservices—agentic writer, LinkedIn content loop, and resume tailor—are extracted, hardened, and published as independent distribution-ready tools.',
+    goal: 'Robust backend development with its own CI/CD pipeline integrated via API. All open-source tooling built from scratch to demonstrate fullstack architectural control and real-world distribution.',
+    links: [
+      { label: 'agentic-writer', url: 'https://github.com/thomas-to-bcheme/agentic-writer', type: 'github' },
+      { label: 'linkedin-content-loop', url: 'https://github.com/thomas-to-bcheme/linkedin-content-loop', type: 'github' },
+      { label: 'resume', url: 'https://github.com/thomas-to-bcheme/resume', type: 'github' },
+    ],
   },
   {
     id: 4,
     title: 'Phase 4: Open Source Distribution',
-    subtitle: 'Refactoring & Education',
+    subtitle: 'Education & Community',
     status: 'upcoming',
     stakeholder: 'Community & Developers',
     icon: GitBranch,
-    description: 'Refactoring code, addressing technical debt, and distributing the public portfolio as an open-source learning resource. Creating modules to teach building Agentic methods from code, not low-code solutions.',
-    goal: 'Completeness of a final project. Refactoring to best practices, aligning documentation, and creating educational resources to mentor open collaboration.',
+    description: 'The lifecycle closes with video documentation on YouTube and written technical posts on LinkedIn—explaining how each system was designed, built, and operated using modern software engineering methods. This transforms the portfolio from a private artifact into a public teaching resource for engineers learning to build agentic systems from code, not low-code solutions.',
+    goal: 'Produce a video series and LinkedIn content stream documenting the full 0-to-1 engineering arc: design decisions, architecture tradeoffs, and lessons learned—turning this project into an open-source educational artifact.',
+    links: [
+      { label: '@thomas-to-bcheme', url: 'https://www.youtube.com/@thomas-to-bcheme', type: 'youtube' },
+      { label: 'thomas-to-bcheme', url: 'https://www.linkedin.com/in/thomas-to-bcheme/', type: 'linkedin' },
+    ],
   },
 ];
