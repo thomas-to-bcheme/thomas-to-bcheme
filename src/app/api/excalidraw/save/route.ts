@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
+import https from 'node:https';
 
-const GITHUB_API = 'https://api.github.com';
 const ALLOWED_FILE_PATHS = ['public/excalidraw/technical_prep.excalidraw'] as const;
 type AllowedFilePath = typeof ALLOWED_FILE_PATHS[number];
 
@@ -11,8 +11,72 @@ interface SaveRequestBody {
   filePath: string;
 }
 
+interface GithubResponse {
+  ok: boolean;
+  status: number;
+  json: () => Promise<unknown>;
+  text: () => Promise<string>;
+}
+
+// Uses node:https instead of fetch/undici to avoid the 10s connect timeout
+// that undici enforces on macOS dev environments. Follows 3xx redirects
+// generically so renamed/moved repos resolve to their canonical URL.
+function githubRequest(
+  path: string,
+  options: { method?: string; headers: Record<string, string>; body?: string },
+  timeoutMs = 30_000,
+  redirectsRemaining = 3
+): Promise<GithubResponse> {
+  return new Promise((resolve, reject) => {
+    const req = https.request(
+      {
+        hostname: 'api.github.com',
+        path,
+        method: options.method ?? 'GET',
+        headers: options.headers,
+        timeout: timeoutMs,
+      },
+      (res) => {
+        const status = res.statusCode ?? 500;
+
+        if (status >= 300 && status < 400 && res.headers.location) {
+          res.resume(); // drain body so the socket is released
+          if (redirectsRemaining <= 0) {
+            reject(new Error('Too many redirects from GitHub API'));
+            return;
+          }
+          try {
+            const redirectUrl = new URL(res.headers.location);
+            resolve(githubRequest(redirectUrl.pathname + redirectUrl.search, options, timeoutMs, redirectsRemaining - 1));
+          } catch (err) {
+            reject(err);
+          }
+          return;
+        }
+
+        const chunks: Buffer[] = [];
+        res.on('data', (chunk: Buffer) => chunks.push(chunk));
+        res.on('end', () => {
+          const raw = Buffer.concat(chunks).toString('utf-8');
+          resolve({
+            ok: status >= 200 && status < 300,
+            status,
+            json: () => Promise.resolve(JSON.parse(raw)),
+            text: () => Promise.resolve(raw),
+          });
+        });
+      }
+    );
+    req.on('timeout', () => {
+      req.destroy(new Error(`GitHub API request timed out after ${timeoutMs}ms`));
+    });
+    req.on('error', reject);
+    if (options.body) req.write(options.body);
+    req.end();
+  });
+}
+
 export async function POST(request: Request) {
-  // Authorization: require SAVE_SECRET to match X-Save-Token header
   const saveSecret = process.env.SAVE_SECRET;
   if (!saveSecret) {
     return NextResponse.json({ error: 'Server configuration error: SAVE_SECRET not set' }, { status: 500 });
@@ -41,28 +105,29 @@ export async function POST(request: Request) {
   }
 
   const githubHeaders = {
-    Authorization: `token ${token}`,
+    Authorization: `Bearer ${token}`,
     Accept: 'application/vnd.github.v3+json',
     'Content-Type': 'application/json',
+    'User-Agent': 'thomas-to-bcheme-portfolio',
   };
 
   // Step A: fetch current file SHA
-  const getResponse = await fetch(
-    `${GITHUB_API}/repos/${owner}/${repo}/contents/${filePath}`,
+  const getResponse = await githubRequest(
+    `/repos/${owner}/${repo}/contents/${filePath}`,
     { headers: githubHeaders }
   );
 
   if (!getResponse.ok) {
     const detail = await getResponse.text();
+    console.error('[excalidraw/save] GitHub GET failed', { status: getResponse.status, detail });
     return NextResponse.json(
-      { error: 'Failed to fetch current file from GitHub', detail },
+      { error: 'Failed to fetch current file from GitHub', githubStatus: getResponse.status, detail },
       { status: 502 }
     );
   }
 
   const { sha } = await getResponse.json() as { sha: string };
 
-  // Build updated excalidraw JSON
   const updatedContent = JSON.stringify(
     { type: 'excalidraw', version: 2, source: 'https://excalidraw.com', elements, appState, files },
     null,
@@ -72,8 +137,8 @@ export async function POST(request: Request) {
   const filename = filePath.split('/').pop() ?? filePath;
 
   // Step B: commit updated file
-  const putResponse = await fetch(
-    `${GITHUB_API}/repos/${owner}/${repo}/contents/${filePath}`,
+  const putResponse = await githubRequest(
+    `/repos/${owner}/${repo}/contents/${filePath}`,
     {
       method: 'PUT',
       headers: githubHeaders,
@@ -87,8 +152,9 @@ export async function POST(request: Request) {
 
   if (!putResponse.ok) {
     const detail = await putResponse.text();
+    console.error('[excalidraw/save] GitHub PUT failed', { status: putResponse.status, detail });
     return NextResponse.json(
-      { error: 'Failed to commit file to GitHub', detail },
+      { error: 'Failed to commit file to GitHub', githubStatus: putResponse.status, detail },
       { status: 502 }
     );
   }

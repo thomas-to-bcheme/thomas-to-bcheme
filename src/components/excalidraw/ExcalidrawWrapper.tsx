@@ -21,9 +21,10 @@ interface ExcalidrawWrapperProps {
   initialData: ExcalidrawInitialDataState;
   onSave: (payload: SavePayload) => Promise<void>;
   saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  viewModeEnabled: boolean;
 }
 
-export default function ExcalidrawWrapper({ initialData, onSave, saveStatus }: ExcalidrawWrapperProps) {
+export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled }: ExcalidrawWrapperProps) {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
 
   const handleSave = async () => {
@@ -53,8 +54,16 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus }: E
     <div
       className="relative w-full h-[600px] rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800"
       onKeyDown={(e) => {
-        // Prevent browser page-scroll so Excalidraw's built-in spacebar-to-pan works
-        if (e.code === 'Space') e.preventDefault();
+        if (e.code === 'Space') {
+          // Only block browser page-scroll when NOT typing — Excalidraw creates a
+          // <textarea> for text elements, and unconditional preventDefault swallows spaces.
+          const target = e.target as HTMLElement;
+          const isTextInput =
+            target.tagName === 'TEXTAREA' ||
+            target.tagName === 'INPUT' ||
+            target.isContentEditable;
+          if (!isTextInput) e.preventDefault();
+        }
       }}
       onClickCapture={(e) => {
         // Excalidraw uses <a href="#"> for toolbar/dialog triggers. Without this, the
@@ -66,14 +75,17 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus }: E
       <Excalidraw
         initialData={initialData}
         excalidrawAPI={(api) => setExcalidrawAPI(api)}
+        viewModeEnabled={viewModeEnabled}
       />
-      <button
-        onClick={handleSave}
-        disabled={saveStatus === 'saving'}
-        className={`absolute bottom-4 right-4 z-10 px-4 py-2 rounded-lg text-sm font-semibold shadow-md transition-all duration-200 ${saveClass[saveStatus]}`}
-      >
-        {saveLabel[saveStatus]}
-      </button>
+      {!viewModeEnabled && (
+        <button
+          onClick={handleSave}
+          disabled={saveStatus === 'saving'}
+          className={`absolute bottom-4 right-4 z-10 px-4 py-2 rounded-lg text-sm font-semibold shadow-md transition-all duration-200 ${saveClass[saveStatus]}`}
+        >
+          {saveLabel[saveStatus]}
+        </button>
+      )}
     </div>
   );
 }
