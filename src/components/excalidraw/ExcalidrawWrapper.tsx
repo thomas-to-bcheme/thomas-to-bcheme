@@ -27,10 +27,6 @@ interface ExcalidrawWrapperProps {
 
 export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange }: ExcalidrawWrapperProps) {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
-  // isActive tracks whether the user has clicked to engage the canvas (view mode only).
-  // In edit mode the canvas is always considered active.
-  const [isActive, setIsActive] = useState(false);
-  const isActiveRef = useRef(false);
   const viewModeRef = useRef(viewModeEnabled);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -38,71 +34,70 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     viewModeRef.current = viewModeEnabled;
   }, [viewModeEnabled]);
 
-  const activateCanvas = () => {
-    isActiveRef.current = true;
-    setIsActive(true);
-  };
-
-  const deactivateCanvas = () => {
-    isActiveRef.current = false;
-    setIsActive(false);
-  };
-
-  // Non-passive wheel listener — prevents page scroll when the canvas is engaged or
-  // in edit mode. Gated by refs so the listener is registered once and never stale.
+  // Capture-phase wheel listener — fires before Excalidraw's own canvas listener.
+  // Edit mode: preventDefault blocks page scroll; event still reaches Excalidraw for zoom/pan.
+  // View mode: stopPropagation halts the event before Excalidraw sees it; page scrolls normally.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
     const handler = (e: WheelEvent) => {
-      if (isActiveRef.current || !viewModeRef.current) e.preventDefault();
-    };
-    el.addEventListener('wheel', handler, { passive: false });
-    return () => el.removeEventListener('wheel', handler);
-  }, []);
-
-  // Click outside the canvas (view mode only) → re-arm page scroll.
-  useEffect(() => {
-    const handleDocClick = (e: MouseEvent) => {
-      if (viewModeRef.current && !containerRef.current?.contains(e.target as Node)) {
-        deactivateCanvas();
+      if (!viewModeRef.current) {
+        // Edit mode: canvas captures all scroll for zoom/pan
+        e.preventDefault();
+      } else if (e.ctrlKey || e.metaKey) {
+        // View mode + Ctrl/Meta: let event reach Excalidraw for canvas zoom,
+        // prevent browser's own page-zoom default
+        e.preventDefault();
+      } else {
+        // View mode + plain scroll: page scrolls normally, canvas doesn't zoom
+        e.stopPropagation();
       }
     };
-    document.addEventListener('click', handleDocClick);
-    return () => document.removeEventListener('click', handleDocClick);
+    el.addEventListener('wheel', handler, { passive: false, capture: true });
+    return () => el.removeEventListener('wheel', handler, { capture: true });
   }, []);
 
-  // Prevent Excalidraw's <a href="#"> toolbar triggers from scrolling the page.
-  // A native capture-phase listener fires before Excalidraw's own handlers and
-  // works correctly on SVG child elements that React's onClickCapture misses.
-  // The hashchange handler is a safety net for any anchor navigation that slips through.
+  // Two-layer scroll defence:
+  // 1. Anchor capture: prevents <a href="#"> clicks from triggering hash navigation.
+  // 2. Scroll guard: saves scroll position on any pointerdown inside the container,
+  //    then restores it if a scroll fires within 200ms. This catches focus-triggered
+  //    scrolls from Excalidraw portals/menus that the hashchange listener would miss.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-
-    let savedScrollY: number | null = null;
 
     const onAnchorCapture = (e: MouseEvent) => {
       const anchor = (e.target as Element).closest?.('a[href^="#"]');
       if (anchor) e.preventDefault();
     };
 
-    const onPointerDown = () => { savedScrollY = window.scrollY; };
+    let guardScrollY: number | null = null;
+    let guardTimer: ReturnType<typeof setTimeout> | null = null;
 
-    const onHashChange = () => {
-      if (savedScrollY !== null) {
-        window.scrollTo({ top: savedScrollY, behavior: 'instant' });
-        history.replaceState(null, '', window.location.pathname + window.location.search);
+    const armGuard = () => {
+      if (guardTimer) clearTimeout(guardTimer);
+      guardScrollY = window.scrollY;
+      guardTimer = setTimeout(() => { guardScrollY = null; }, 200);
+    };
+
+    const onScrollGuard = () => {
+      if (guardScrollY !== null) {
+        const y = guardScrollY;
+        guardScrollY = null;
+        if (guardTimer) clearTimeout(guardTimer);
+        window.scrollTo({ top: y, behavior: 'instant' });
       }
     };
 
     el.addEventListener('click', onAnchorCapture, { capture: true });
-    el.addEventListener('pointerdown', onPointerDown);
-    window.addEventListener('hashchange', onHashChange);
+    el.addEventListener('pointerdown', armGuard);
+    window.addEventListener('scroll', onScrollGuard, { capture: true });
 
     return () => {
       el.removeEventListener('click', onAnchorCapture, { capture: true });
-      el.removeEventListener('pointerdown', onPointerDown);
-      window.removeEventListener('hashchange', onHashChange);
+      el.removeEventListener('pointerdown', armGuard);
+      window.removeEventListener('scroll', onScrollGuard, { capture: true });
+      if (guardTimer) clearTimeout(guardTimer);
     };
   }, []);
 
@@ -150,22 +145,6 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
         viewModeEnabled={viewModeEnabled}
         onChange={viewModeEnabled ? undefined : () => { onDiagramChange?.(); }}
       />
-
-      {/* Click-to-activate overlay (view mode only). Matches the Google Maps / Figma
-          embed pattern: plain scroll passes through to the page until the user
-          intentionally engages the canvas with a click. */}
-      {!isActive && viewModeEnabled && (
-        <button
-          type="button"
-          className="absolute inset-0 z-20 flex items-center justify-center w-full group bg-transparent border-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset"
-          onClick={activateCanvas}
-          aria-label="Click to interact with the diagram"
-        >
-          <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none select-none">
-            Click to interact
-          </span>
-        </button>
-      )}
 
       {/* Visually-hidden live region — announces save status to screen readers (WCAG 4.1.3). */}
       <div aria-live="polite" className="sr-only">{saveLabel[saveStatus]}</div>

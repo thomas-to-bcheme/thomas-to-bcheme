@@ -132,8 +132,10 @@ export async function POST(request: Request) {
   // and causes a forEach crash in Excalidraw's production bundle on next load.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { collaborators: _col, ...persistableAppState } = appState;
+  // Strip ephemeral selection elements — they're tool state, not diagram content.
+  const persistableElements = (elements as Array<{ type?: string }>).filter(el => el.type !== 'selection');
   const updatedContent = JSON.stringify(
-    { type: 'excalidraw', version: 2, source: 'https://excalidraw.com', elements, appState: persistableAppState, files },
+    { type: 'excalidraw', version: 2, source: 'https://excalidraw.com', elements: persistableElements, appState: persistableAppState, files },
     null,
     2
   );
