@@ -128,8 +128,12 @@ export async function POST(request: Request) {
 
   const { sha } = await getResponse.json() as { sha: string };
 
+  // Strip collaborators: it's a Map at runtime, serializes to {} via JSON.stringify,
+  // and causes a forEach crash in Excalidraw's production bundle on next load.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { collaborators: _col, ...persistableAppState } = appState;
   const updatedContent = JSON.stringify(
-    { type: 'excalidraw', version: 2, source: 'https://excalidraw.com', elements, appState, files },
+    { type: 'excalidraw', version: 2, source: 'https://excalidraw.com', elements, appState: persistableAppState, files },
     null,
     2
   );

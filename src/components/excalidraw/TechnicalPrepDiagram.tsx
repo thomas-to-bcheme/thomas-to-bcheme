@@ -64,7 +64,18 @@ export default function TechnicalPrepDiagram() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((data) => setInitialData({ ...data, scrollToContent: true }))
+      .then((data) => {
+        // collaborators round-trips through JSON as {} (Map → plain object).
+        // Excalidraw's production bundle calls forEach() on it directly and crashes.
+        const collaborators = new Map(
+          Object.entries(data.appState?.collaborators ?? {})
+        );
+        setInitialData({
+          ...data,
+          appState: data.appState ? { ...data.appState, collaborators } : undefined,
+          scrollToContent: true,
+        });
+      })
       .catch(() => setLoadError(true));
   }, []);
 
