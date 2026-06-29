@@ -11,7 +11,6 @@ export { default as ImpactMetric } from './layout/ImpactMetric';
 
 // UI Components
 export { default as Badge } from './ui/Badge';
-export { default as TrustBadge } from './ui/TrustBadge';
 export { default as SkipLink } from './ui/SkipLink';
 export { default as Button } from './ui/Button';
 
@@ -20,7 +19,6 @@ export { default as AiGenerator } from './features/AiGenerator';
 export { default as ArchitectureDiagram } from './features/ArchitectureDiagram';
 export { default as ROICalculation } from './roi';
 export { default as ProjectDeepDive } from './features/ProjectDeepDive';
-export { default as SystemStatusTicker } from './features/SystemStatusTicker';
 
 // Section Components
 export { default as AboutMeSection } from './sections/AboutMeSection';

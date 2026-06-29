@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import 'katex/dist/katex.min.css';
 import MotionProvider from '@/components/layout/MotionProvider';
@@ -68,6 +69,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black text-zinc-900 dark:text-zinc-100`}
       >
+        <Script id="excalidraw-asset-path" strategy="beforeInteractive">
+          {`window["EXCALIDRAW_ASSET_PATH"] = location.origin;`}
+        </Script>
         {/* A2: MotionConfig wrapper for reduced motion support */}
         <MotionProvider>
           {children}

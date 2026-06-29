@@ -37,6 +37,9 @@ yarn-error.log*
 # sensitive files
 *recovery-codes*
 
+# Private excalidraw working copy — public/excalidraw/ is the committed canonical version
+src/components/excalidraw/technical_prep.excalidraw
+
 # Generated tailored resumes
 Thomas_To_Resume_*.md
 Thomas_To_Resume_*.pdf

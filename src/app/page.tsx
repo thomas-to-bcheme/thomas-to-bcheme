@@ -10,7 +10,7 @@ import ROICalculation from '@/components/roi';
 import AboutMeSection from '@/components/sections/AboutMeSection';
 import Roadmap from '@/components/sections/Roadmap';
 import KanbanBoard from '@/components/features/KanbanBoard';
-import Connect from '@/components/sections/Connect';
+import TechnicalPrepDiagram from '@/components/excalidraw/TechnicalPrepDiagram';
 import SkipLink from '@/components/ui/SkipLink';
 import Footer from '@/components/sections/Footer';
 import { useActiveSection } from '@/hooks/useActiveSection';
@@ -92,12 +92,13 @@ export default function Home() {
         <div id="about-me" className="mt-0 scroll-mt-24">
           <HeroSection />
           <AboutMeSection />
-          <Connect />
         </div>
 
         <section id="pipeline" className="scroll-mt-24">
           <KanbanBoard />
         </section>
+
+        <TechnicalPrepDiagram />
 
         {/* --- PROJECTS & DIAGRAMS --- */}
         <div id="projects" className="mt-0 scroll-mt-24">

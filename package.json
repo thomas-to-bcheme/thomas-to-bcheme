@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "mkdir -p public/excalidraw && cp -r node_modules/@excalidraw/excalidraw/dist/prod/fonts public/"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.1",
     "@google/generative-ai": "^0.24.1",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",

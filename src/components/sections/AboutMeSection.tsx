@@ -1,151 +1,100 @@
 import React from 'react';
-import { Users, Globe, CheckCircle2, HeartHandshake } from 'lucide-react';
-import Badge from '@/components/ui/Badge';
-import { SITE_OWNER_EMAIL } from '@/constants/site';
+import { Users, HeartHandshake, Mic2, GraduationCap, BookOpen, Dumbbell } from 'lucide-react';
 
-// --- Main Section Component ---
+const LEADERSHIP_ACTIVITIES = [
+  {
+    icon: Mic2,
+    text: 'Produce and publish MLOps-focused educational content on YouTube and LinkedIn through an automated CI/CD publishing pipeline, driving developer community engagement and technical thought leadership.',
+  },
+  {
+    icon: GraduationCap,
+    text: 'Student Outreach Ambassador supporting 100,000+ community college transfer students through peer-to-peer mentorship programs, transfer outreach initiatives, and cross-institutional community building.',
+  },
+  {
+    icon: Users,
+    text: 'Active member of AIChE, ISPE, and Rosetta protein engineering community; panelist at the Ipsos AI Insights Community and inaugural Unintentional Consequences of Technology (UCOT) conference.',
+  },
+  {
+    icon: BookOpen,
+    text: 'Organize collaborative workshops and learning initiatives including Interview Kickstart bootcamp peer sessions, Databricks weekly seminars, and enterprise analytics community forums.',
+  },
+  {
+    icon: Dumbbell,
+    text: 'Coach students ages 3 to adult in Brazilian jiu-jitsu, delivering structured athletic training to build discipline, resilience, and community belonging in Oakland.',
+  },
+] as const;
+
+const HONORS = [
+  'AvenueE Engineering Leadership Program',
+  'McNair Scholars TRIO Fellow',
+  'Genentech Leadership Exchange',
+] as const;
 
 const AboutMeSection: React.FC = () => {
   return (
-    <section id="about" className="mb-16 scroll-mt-24">
-      <div className="grid md:grid-cols-3 gap-6">
-        
-        {/* LEFT COLUMN: Profile & Badges */}
-        <div className="md:col-span-1">
-          <div className="bg-white dark:bg-black border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm h-full flex flex-col justify-between">
-            <div>
-              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2 text-zinc-900 dark:text-white">
-                <Users className="text-blue-600" /> About Me
-              </h3>
-              
-              <div className="mb-4">
-                {/* The Closer */}
-                <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                  I am a Fullstack Engineer with a formal background in Biochemical Engineering. 
-                  I apply software engineering principles across diverse use cases, leveraging a strong mathematical and empirical foundation to design end-to-end architectures that bridge physical reality with cloud infrastructure.
-                </p>
-              </div>
+    <section id="about" className="mb-16 scroll-mt-24 space-y-6">
 
-              <div className="mb-6">
-                <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
-                  Contact
-                </span>
-                <a
-                  href={`mailto:${SITE_OWNER_EMAIL}`}
-                  className="inline-block hover:opacity-80 transition-opacity"
-                  aria-label="Email Thomas To"
-                >
-                  <Badge color="green" pulse icon={Globe}>
-                    {SITE_OWNER_EMAIL}
-                  </Badge>
-                </a>
-              </div>
-              
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6 italic leading-relaxed">
-                "We've seen how even simplistic algorithms can automate manual workflows. Now with Agentic methods, I combine classical fullstack methods with agentic AI/ML solutions to drive reality into the future."
-              </p>                  
-            </div>
+      {/* PROFESSIONAL SUMMARY — full width */}
+      <div className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+        <h4 className="font-bold text-lg text-zinc-900 dark:text-white mb-3">Professional Summary</h4>
 
-            {/* Work Authorization Status (Pinned to bottom of card) */}
-            <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
-              <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
-                Work Authorization
+        <div className="space-y-4 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+          <p>
+            Full Stack AI Engineer with <strong className="text-zinc-900 dark:text-white">7+ years of professional experience</strong> designing and deploying production systems across the full software engineering and machine learning lifecycle. Architects end-to-end platforms spanning React and Next.js frontends, Python and Node.js backend services, and RESTful APIs exposing ML capabilities to end users.
+          </p>
+
+          <p>
+            Builds and operates <strong className="text-zinc-900 dark:text-white">containerized MLOps pipelines</strong> on GCP and AWS with CI/CD automation, prompt engineering, and model monitoring for domain-specific LLM accuracy. Owns <strong className="text-zinc-900 dark:text-white">0-to-1 system design</strong> through production observability, collaborating with technical and non-technical stakeholders to evaluate engineering trade-offs and deliver measurable business outcomes.
+          </p>
+
+          {/* Current Focus */}
+          <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="relative flex h-2 w-2">
+                <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              </div>
+              <span className="text-micro font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+                Current Focus (Jun 2026)
               </span>
-              <ul className="space-y-2.5">
-                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-300">
-                  <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-                  <span>Authorized to work in the U.S. for any employer.</span>
-                </li>
-                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-300">
-                  <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-                  <span>No visa sponsorship required (now or future).</span>
-                </li>
-                <li className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-300">
-                  <CheckCircle2 size={14} className="text-emerald-500 mt-0.5 shrink-0" />
-                  <span>Eligible to work in the U.S. without restriction.</span>
-                </li>
-              </ul>
             </div>
-          </div>
-        </div>
-
-        {/* RIGHT COLUMN: The Story */}
-        <div className="md:col-span-2 space-y-6 flex flex-col h-full">
-          
-          {/* 1. PROFESSIONAL SUMMARY */}
-          <div className="bg-zinc-50 dark:bg-zinc-900/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex-1">
-            <h4 className="font-bold text-lg text-zinc-900 dark:text-white mb-3">Professional Summary</h4>
-            
-            {/* Core Identity */}
-            <div className="space-y-4 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-              
-              {/* Paragraph 2: The Data Lifecycle */}
-              <p>
-                My experience spans the entire data lifecycle—from capturing empirical data on the manufacturing floor to digitizing it via <strong className="text-zinc-900 dark:text-white">enterprise ETL/ELT pipelines</strong> and capitalizing on it through <strong className="text-zinc-900 dark:text-white">Agentic Machine Learning</strong>. 
-                By architecting data models that accurately reflect real-world processes, I deliver tangible value: driving efficiency, revenue generation, and optimization through scalable software solutions.
-              </p>
-
-              {/* Section 4: The 'Live' Status Update (Dec 2025) */}
-              <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="relative flex h-2 w-2">
-                    <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                  </div>
-                  <span className="text-micro font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-                    Current Focus (Jan 2026)
-                  </span>
-                </div>
-                <div className="bg-zinc-100 dark:bg-zinc-800/50 p-3 rounded-lg border border-zinc-200 dark:border-zinc-700">
-                    <p className="text-xs text-zinc-700 dark:text-zinc-300 font-medium">
-                      Actively searching for new roles in AI/ML Engineering.
-                    </p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          
-          {/* 2. GRID: Philosophy & Leadership */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
-            
-            {/* Philosophy Card */}
-            <div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-blue-300 transition-colors shadow-sm flex flex-col justify-center">
-              <Globe className="mb-3 text-blue-500" size={20} />
-              <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Philosophy</h5>
-              
-              <div>
-                <h6 className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-2">
-                    The 0→1 Lifecycle
-                </h6>
-                <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono text-zinc-500 dark:text-zinc-400">
-                  <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
-                    Abstraction
-                  </span>
-                  <span className="text-zinc-300">→</span>
-                  <span className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 px-1.5 py-0.5 rounded">
-                    Architecture
-                  </span>
-                  <span className="text-zinc-300">→</span>
-                  <span className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded font-bold">
-                    Deployment
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Leadership Card */}
-            <div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-pink-300 transition-colors shadow-sm flex flex-col justify-center">
-              <HeartHandshake className="mb-3 text-pink-500" size={20} />
-              <h5 className="font-bold text-zinc-900 dark:text-white mb-2">Leadership</h5>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-snug">
-                Scaling engineering excellence through junior mentorship and cross-departmental upskilling. I act as a technical liaison, translating complex constraints into business value.
+            <div className="bg-zinc-100 dark:bg-zinc-800/50 p-3 rounded-lg border border-zinc-200 dark:border-zinc-700">
+              <p className="text-xs text-zinc-700 dark:text-zinc-300 font-medium">
+                Actively searching for new roles in AI/ML Engineering.
               </p>
             </div>
-
           </div>
         </div>
       </div>
+
+      {/* LEADERSHIP — full width */}
+      <div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-pink-300 transition-colors shadow-sm">
+        <div className="flex items-center gap-2 mb-4">
+          <HeartHandshake className="text-pink-500" size={20} />
+          <h5 className="font-bold text-zinc-900 dark:text-white">Leadership</h5>
+        </div>
+
+        <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
+          {LEADERSHIP_ACTIVITIES.map(({ icon: Icon, text }) => (
+            <li key={text.slice(0, 30)} className="flex items-start gap-2 text-xs text-zinc-500 dark:text-zinc-400 leading-snug">
+              <Icon size={12} className="text-pink-400 mt-0.5 shrink-0" />
+              <span>{text}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+          <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-2 block">Honors</span>
+          <div className="flex flex-wrap gap-1.5">
+            {HONORS.map((honor) => (
+              <span key={honor} className="text-xs bg-pink-50 dark:bg-pink-900/10 border border-pink-100 dark:border-pink-900/30 text-pink-700 dark:text-pink-300 px-2 py-0.5 rounded">
+                {honor}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
     </section>
   );
 };
