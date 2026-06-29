@@ -37,6 +37,7 @@ export default function TechnicalPrepDiagram() {
   const [loadError, setLoadError] = useState(false);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
   const [showTokenPrompt, setShowTokenPrompt] = useState(false);
   const [tokenInput, setTokenInput] = useState('');
   const [tokenError, setTokenError] = useState(false);
@@ -54,9 +55,17 @@ export default function TechnicalPrepDiagram() {
 
   useEffect(() => {
     if (!showTokenPrompt) return;
-    const id = requestAnimationFrame(() => tokenInputRef.current?.focus());
+    const id = requestAnimationFrame(() => tokenInputRef.current?.focus({ preventScroll: true }));
     return () => cancelAnimationFrame(id);
   }, [showTokenPrompt]);
+
+  // Warn before the user navigates away with unsaved edits.
+  useEffect(() => {
+    if (!isEditMode || !isDirty) return;
+    const handler = (e: BeforeUnloadEvent) => { e.preventDefault(); };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [isEditMode, isDirty]);
 
   useEffect(() => {
     fetch(PUBLIC_URL)
@@ -98,7 +107,10 @@ export default function TechnicalPrepDiagram() {
       }
       const next: SaveStatus = response.ok ? 'saved' : 'error';
       setSaveStatus(next);
-      if (next === 'saved') setTimeout(() => setSaveStatus('idle'), 3000);
+      if (next === 'saved') {
+        setIsDirty(false);
+        setTimeout(() => setSaveStatus('idle'), 3000);
+      }
     } catch {
       setSaveStatus('error');
     }
@@ -150,13 +162,13 @@ export default function TechnicalPrepDiagram() {
       </div>
 
       {loadError && (
-        <div className="flex items-center justify-center h-40 rounded-xl border border-red-200 dark:border-red-800 text-red-500 text-sm">
+        <div className="flex items-center justify-center h-[420px] sm:h-[500px] lg:h-[600px] rounded-xl border border-red-200 dark:border-red-800 text-red-500 text-sm">
           Failed to load diagram. Make sure the dev server has the diagram in public/excalidraw/.
         </div>
       )}
 
       {!loadError && !initialData && (
-        <div className="flex items-center justify-center h-40 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-400 text-sm animate-pulse">
+        <div className="flex items-center justify-center h-[420px] sm:h-[500px] lg:h-[600px] rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-400 text-sm animate-pulse">
           Loading diagram…
         </div>
       )}
@@ -179,6 +191,7 @@ export default function TechnicalPrepDiagram() {
             onSave={handleSave}
             saveStatus={saveStatus}
             viewModeEnabled={!isEditMode}
+            onDiagramChange={() => setIsDirty(true)}
           />
 
           {showTokenPrompt && (
