@@ -27,32 +27,14 @@ interface ExcalidrawWrapperProps {
 
 export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange }: ExcalidrawWrapperProps) {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
-  const viewModeRef = useRef(viewModeEnabled);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    viewModeRef.current = viewModeEnabled;
-  }, [viewModeEnabled]);
-
   // Capture-phase wheel listener — fires before Excalidraw's own canvas listener.
-  // Edit mode: preventDefault blocks page scroll; event still reaches Excalidraw for zoom/pan.
-  // View mode: stopPropagation halts the event before Excalidraw sees it; page scrolls normally.
+  // preventDefault prevents page scroll in both modes; Excalidraw handles zoom/pan natively.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    const handler = (e: WheelEvent) => {
-      if (!viewModeRef.current) {
-        // Edit mode: canvas captures all scroll for zoom/pan
-        e.preventDefault();
-      } else if (e.ctrlKey || e.metaKey) {
-        // View mode + Ctrl/Meta: let event reach Excalidraw for canvas zoom,
-        // prevent browser's own page-zoom default
-        e.preventDefault();
-      } else {
-        // View mode + plain scroll: page scrolls normally, canvas doesn't zoom
-        e.stopPropagation();
-      }
-    };
+    const handler = (e: WheelEvent) => { e.preventDefault(); };
     el.addEventListener('wheel', handler, { passive: false, capture: true });
     return () => el.removeEventListener('wheel', handler, { capture: true });
   }, []);
@@ -74,17 +56,26 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     let guardScrollY: number | null = null;
     let guardTimer: ReturnType<typeof setTimeout> | null = null;
 
-    const armGuard = () => {
+    const disarmGuard = () => {
+      guardScrollY = null;
+      if (guardTimer) clearTimeout(guardTimer);
+    };
+
+    // Only arm for toolbar/menu clicks — skip raw canvas clicks since menus never open from there.
+    // This prevents the guard from cancelling legitimate scrolls after canvas drawing interactions.
+    const armGuard = (e: PointerEvent) => {
+      if ((e.target as Element).tagName === 'CANVAS') return;
       if (guardTimer) clearTimeout(guardTimer);
       guardScrollY = window.scrollY;
-      guardTimer = setTimeout(() => { guardScrollY = null; }, 200);
+      // Disarm after 200ms — keeps guard armed through the full pointerdown → click
+      // sequence, including portal open and focus-triggered scroll.
+      guardTimer = setTimeout(disarmGuard, 200);
     };
 
     const onScrollGuard = () => {
       if (guardScrollY !== null) {
         const y = guardScrollY;
-        guardScrollY = null;
-        if (guardTimer) clearTimeout(guardTimer);
+        disarmGuard();
         window.scrollTo({ top: y, behavior: 'instant' });
       }
     };
@@ -128,16 +119,6 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     <div
       ref={containerRef}
       className="relative w-full h-[420px] sm:h-[500px] lg:h-[600px] rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800"
-      onKeyDown={(e) => {
-        if (e.code === 'Space') {
-          const target = e.target as HTMLElement;
-          const isTextInput =
-            target.tagName === 'TEXTAREA' ||
-            target.tagName === 'INPUT' ||
-            target.isContentEditable;
-          if (!isTextInput) e.preventDefault();
-        }
-      }}
     >
       <Excalidraw
         initialData={initialData}

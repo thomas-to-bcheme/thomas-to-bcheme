@@ -200,7 +200,6 @@ export default function TechnicalPrepDiagram() {
                 onSubmit={handleTokenSubmit}
                 onKeyDown={(e) => {
                   e.stopPropagation();
-                  e.nativeEvent.stopImmediatePropagation();
                 }}
                 className="bg-white dark:bg-zinc-900 rounded-xl p-6 shadow-2xl border border-zinc-200 dark:border-zinc-700 flex flex-col gap-3 w-80"
               >
