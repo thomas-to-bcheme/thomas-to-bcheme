@@ -228,7 +228,7 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 - **Interactive ROI Calculator** — 3-year financial projection comparing manual labor vs. automation costs with configurable inputs, break-even analysis, KaTeX formula derivations, and live SVG trajectory graph
 - **Architecture Diagram** — 4-level visualization of the data lifecycle (Empirical Data → Infrastructure → Applications → Business Value)
 - **Project Kanban Board** — Embla carousel with three swimlanes (Queue, In Development, Completed) tracking active projects across the open-source ecosystem
-- **Technical Prep Diagram** — Embedded Excalidraw canvas in view-only mode by default; unlock with `SAVE_SECRET` to edit and save directly to the GitHub repo via the Contents API
+- **SWE Study Plan ("Zero to Offer")** — Embedded Excalidraw canvas with 6 named frames (Reading List, Practical Coding, System Design Interview Framework, Architecture Concepts, System Architecture Diagram, Communication Frameworks); view-only by default; unlock with `SAVE_SECRET` to edit and save directly to the GitHub repo via the Contents API
 - **Project Deep Dives** — Case study format with problem/solution narrative, architecture tags, and KPIs
 
 ### UX & Accessibility
@@ -263,7 +263,7 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 
 ### Prerequisites
 
-- **Node.js** 18+ and **npm** 9+
+- **Node.js** 20+ and **npm** 9+
 - **Python** 3.9+ (optional, for ML backend)
 - **Google Gemini API key** ([Get one here](https://aistudio.google.com/))
 
@@ -278,8 +278,8 @@ cd thomas-to-bcheme.github.io
 # postinstall automatically copies Excalidraw fonts to public/excalidraw/
 npm install
 
-# Configure environment
-cp .env.local.example .env.local   # or create the file manually (see Configuration)
+# Configure environment (no template file — create manually; see Configuration section below)
+touch .env.local
 
 # Start development server
 npm run dev
@@ -328,15 +328,16 @@ src/
 │   ├── layout/                 # BentoGrid, MotionProvider, ImpactMetric
 │   ├── voice/                  # VoiceControls
 │   ├── roi/                    # ROICalculation + sub-components
-│   └── excalidraw/             # ExcalidrawWrapper, TechnicalPrepDiagram
+│   └── excalidraw/             # ExcalidrawWrapper, TechnicalPrepDiagram (SWE Study Plan)
 ├── hooks/                      # useChat, useActiveSection, useSpeech*
 ├── constants/                  # site.ts, chat.ts, roi.ts, roadmap.ts
 ├── types/                      # chat.ts, api-errors.ts, roi.ts
-├── lib/                        # chat-api.ts, utils.tsx
+├── lib/                        # chat-api.ts, utils.tsx, fractionalIndex.ts
 └── data/                       # AiSystemInformation.ts (RAG context)
 
 backend/                        # Python ML models
 claude-marketplace/             # Claude Code plugin marketplace (15 plugins)
+scripts/                        # Excalidraw maintenance utilities (analyze-frame, fix-indices, validate)
 system_design_docs/             # Architecture documentation
 ```
 
@@ -394,9 +395,9 @@ Output:     .next
 | Phase | Status | Focus | Stakeholder |
 |-------|--------|-------|-------------|
 | **Phase 1**: MVP | Completed | Frontend architecture as marketing signal | Recruiters |
-| **Phase 2**: Agentic Integration | Current | Proof-of-concept AI features on serverless | Hiring Managers |
-| **Phase 3**: E2E ML Infrastructure | Upcoming | Python ML models deployed via FastAPI + HuggingFace | Technical Leads |
-| **Phase 4**: Open Source Distribution | Upcoming | Refactoring, documentation, educational resources | Community |
+| **Phase 2**: Agentic Integration | Completed | Proof-of-concept AI features on serverless | Hiring Managers |
+| **Phase 3**: E2E ML Infrastructure | Completed | Python ML models deployed via FastAPI + HuggingFace | Technical Leads |
+| **Phase 4**: Open Source Distribution | Completed | Refactoring, documentation, educational resources | Community |
 
 ---
 

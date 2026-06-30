@@ -44,6 +44,9 @@ Personal portfolio website demonstrating fullstack engineering capabilities with
 - `backend/` - Python ML models (Random Forest + TensorFlow for salary prediction)
 - `markdown/` - Architecture documentation (architecture.md, roadmap.md, api.md, database.md)
 
+### Excalidraw Agentic Writes
+When appending or creating elements in `public/excalidraw/technical_prep.excalidraw` programmatically, **omit the `index` field entirely**. Excalidraw assigns valid fractional-indexing keys on first render via `syncInvalidIndices`. Hand-rolled index schemes (e.g. `b0`, `b6`, `a10`) violate the fractional-indexing library's structural rules and cause a crash on load. Validation utility: `src/lib/fractionalIndex.ts`.
+
 ### Data Flow
 GitHub CRON (30-min intervals) → ETL Processing → Data Warehouse (Sandbox → Quality → Production) → Vercel deployment
 

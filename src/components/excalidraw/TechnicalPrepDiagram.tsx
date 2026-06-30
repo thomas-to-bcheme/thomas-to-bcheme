@@ -5,8 +5,23 @@ import { useState, useEffect, useRef } from 'react';
 import { Lock } from 'lucide-react';
 import type { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
 import type { AppState, BinaryFiles, ExcalidrawInitialDataState } from '@excalidraw/excalidraw/types';
+import { isValidFractionalIndex } from '@/lib/fractionalIndex';
 
 const ExcalidrawWrapper = dynamic(() => import('./ExcalidrawWrapper'), { ssr: false });
+
+function sanitizeExcalidrawIndices(elements: unknown[]): unknown[] {
+  const seen = new Set<string>();
+  return elements.map((el) => {
+    const element = el as Record<string, unknown>;
+    const idx = element.index;
+    if (isValidFractionalIndex(idx) && !seen.has(idx)) {
+      seen.add(idx);
+      return element;
+    }
+    const { index: _removed, ...rest } = element;
+    return rest;
+  });
+}
 
 const FILE_PATH = 'public/excalidraw/technical_prep.excalidraw';
 const PUBLIC_URL = '/excalidraw/technical_prep.excalidraw';
@@ -81,6 +96,7 @@ export default function TechnicalPrepDiagram() {
         );
         setInitialData({
           ...data,
+          elements: sanitizeExcalidrawIndices(data.elements ?? []),
           appState: data.appState ? { ...data.appState, collaborators } : undefined,
           scrollToContent: true,
         });

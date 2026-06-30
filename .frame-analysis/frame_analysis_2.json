@@ -1,0 +1,60 @@
+{
+  "frameId": "ffsumuKvuZ2hOPgCfjZA",
+  "frameName": "Practical Coding",
+  "pillar": "Technical Depth",
+  "seq": 2,
+  "elementCount": 45,
+  "elementTypes": {
+    "rectangle": 18,
+    "text": 18,
+    "arrow": 9
+  },
+  "visualPattern": "fan-out",
+  "keyTextNodes": [
+    "Primitives",
+    "Type Systems",
+    "Memory & Mutability",
+    "Control Flow",
+    "Loops & Iteration",
+    "Scope & Execution Blocks"
+  ],
+  "arrowGraph": [
+    {
+      "from": "oj7aQvzLbeqRHzvL0pwSk",
+      "to": "vXu9eDYLCX-HXXFz1oqQM"
+    },
+    {
+      "from": "oj7aQvzLbeqRHzvL0pwSk",
+      "to": "-_U3ysI6AriU6bMaCw-Sp"
+    },
+    {
+      "from": "oj7aQvzLbeqRHzvL0pwSk",
+      "to": "wMAN4X8N5VJwSzjrAHyze"
+    },
+    {
+      "from": "BN96iJS9042xaz7UQpqOz",
+      "to": "n3eLMu6jNjM4A_dT_Tp1A"
+    },
+    {
+      "from": "BN96iJS9042xaz7UQpqOz",
+      "to": "7xBnqXehScbkeFHlRqwXm"
+    },
+    {
+      "from": "BN96iJS9042xaz7UQpqOz",
+      "to": "6PsgGoa5G0qsKqSmvrzEd"
+    },
+    {
+      "from": "BN96iJS9042xaz7UQpqOz",
+      "to": "mA_FFBoSiSlRvwG8IdA1W"
+    },
+    {
+      "from": "X7QfEfL9GUrlm22GkKmfo",
+      "to": "KACoOdcJO_QhT6N6XFAHF"
+    },
+    {
+      "from": "X7QfEfL9GUrlm22GkKmfo",
+      "to": "ADdTkgBovIFi2OdQUNLon"
+    }
+  ],
+  "domainBoxContent": "Practical Coding\n\n• Primitives\n• Type Systems\n• Memory & Mutability\n• Control Flow\n…"
+}

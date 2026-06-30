@@ -1,0 +1,23 @@
+{
+  "frameId": "HnMfl3zUaLJez2eI6LWk",
+  "frameName": "System Architecture Diagram",
+  "pillar": "Systems Thinking",
+  "seq": 4,
+  "elementCount": 12,
+  "elementTypes": {
+    "rectangle": 0,
+    "text": 12,
+    "arrow": 0
+  },
+  "visualPattern": "text-only",
+  "keyTextNodes": [
+    "PRODUCTION ARCHITECTURE ANATOMY",
+    "LAYER-BY-LAYER BREAKDOWN (request flow)",
+    "EVENT-DRIVEN ARCHITECTURE",
+    "PATTERN: Producers → Broker → Consumers → DB",
+    "READ-HEAVY vs WRITE-HEAVY OPTIMIZATION",
+    "READ-HEAVY SYSTEMS (e.g., social feed, search, catalogue)"
+  ],
+  "arrowGraph": [],
+  "domainBoxContent": "System Architecture Diagram\n\n• PRODUCTION ARCHITECTURE ANATOMY\n• LAYER-BY-LAYER BREAKDOWN (request flow)\n• EVENT-DRIVEN ARCHITECTURE\n• PATTERN: Producers → Broker → Consumers → DB\n…"
+}

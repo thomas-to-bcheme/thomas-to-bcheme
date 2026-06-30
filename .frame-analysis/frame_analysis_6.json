@@ -1,0 +1,18 @@
+{
+  "frameId": "w2p0C7PxHocij1rwyX1el",
+  "frameName": "Communication Frameworks",
+  "pillar": "Interview Readiness",
+  "seq": 6,
+  "elementCount": 1,
+  "elementTypes": {
+    "rectangle": 0,
+    "text": 1,
+    "arrow": 0
+  },
+  "visualPattern": "text-only",
+  "keyTextNodes": [
+    "1. Situation, Task, Action Result"
+  ],
+  "arrowGraph": [],
+  "domainBoxContent": "Communication Frameworks\n\n• 1. Situation, Task, Action Result"
+}

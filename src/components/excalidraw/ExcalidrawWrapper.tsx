@@ -92,6 +92,31 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     };
   }, []);
 
+  // Keyboard scroll guard: prevents the browser's default Space-key scroll
+  // while the pointer is physically inside the Excalidraw container.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let pointerInside = false;
+
+    const onPointerEnter = () => { pointerInside = true; };
+    const onPointerLeave = () => { pointerInside = false; };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === ' ' && pointerInside) e.preventDefault();
+    };
+
+    el.addEventListener('pointerenter', onPointerEnter);
+    el.addEventListener('pointerleave', onPointerLeave);
+    window.addEventListener('keydown', onKeyDown, { capture: true });
+
+    return () => {
+      el.removeEventListener('pointerenter', onPointerEnter);
+      el.removeEventListener('pointerleave', onPointerLeave);
+      window.removeEventListener('keydown', onKeyDown, { capture: true });
+    };
+  }, []);
+
   const handleSave = async () => {
     if (!excalidrawAPI) return;
     await onSave({
@@ -104,7 +129,7 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
   const saveLabel: Record<typeof saveStatus, string> = {
     idle: 'Save to GitHub',
     saving: 'Saving…',
-    saved: 'Saved',
+    saved: 'Saved — reload in ~1 min',
     error: 'Save failed — retry',
   };
 

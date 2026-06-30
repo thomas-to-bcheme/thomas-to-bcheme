@@ -1,0 +1,23 @@
+{
+  "frameId": "QOUb4KZXFqglQsoA3RDs",
+  "frameName": "Architecture Concepts",
+  "pillar": "Systems Thinking",
+  "seq": 3,
+  "elementCount": 12,
+  "elementTypes": {
+    "rectangle": 0,
+    "text": 12,
+    "arrow": 0
+  },
+  "visualPattern": "text-only",
+  "keyTextNodes": [
+    "Design",
+    "REQUIREMENTS ENGINEERING",
+    "Data",
+    "RELATIONAL (ACID: Atomicity, Consistency,",
+    "Model",
+    "ARCHITECTURAL EVOLUTION"
+  ],
+  "arrowGraph": [],
+  "domainBoxContent": "Architecture Concepts\n\n• Design\n• REQUIREMENTS ENGINEERING\n• Data\n• RELATIONAL (ACID: Atomicity, Consistency,\n…"
+}

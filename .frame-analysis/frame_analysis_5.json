@@ -1,0 +1,23 @@
+{
+  "frameId": "rEX9ZkQmLMonBL9XY3xl",
+  "frameName": "System Design Interview Framework",
+  "pillar": "Interview Readiness",
+  "seq": 5,
+  "elementCount": 12,
+  "elementTypes": {
+    "rectangle": 0,
+    "text": 12,
+    "arrow": 0
+  },
+  "visualPattern": "text-only",
+  "keyTextNodes": [
+    "STEP 1 — Requirements & Scope (~5 min)",
+    "FUNCTIONAL REQUIREMENTS",
+    "STEP 2 — High-Level Design (~20 min)",
+    "API DESIGN — choose and justify:",
+    "STEP 3 — Deep Dive (~15 min)",
+    "IDENTIFY TOP BOTTLENECKS FIRST"
+  ],
+  "arrowGraph": [],
+  "domainBoxContent": "System Design Interview Framework\n\n• STEP 1 — Requirements & Scope (~5 min)\n• FUNCTIONAL REQUIREMENTS\n• STEP 2 — High-Level Design (~20 min)\n• API DESIGN — choose and justify:\n…"
+}

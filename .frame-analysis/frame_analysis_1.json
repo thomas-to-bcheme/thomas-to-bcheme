@@ -1,0 +1,196 @@
+{
+  "frameId": "AkAD--wNUODkfDX4PQdv",
+  "frameName": "Reading List",
+  "pillar": "Technical Depth",
+  "seq": 1,
+  "elementCount": 131,
+  "elementTypes": {
+    "rectangle": 44,
+    "text": 44,
+    "arrow": 43
+  },
+  "visualPattern": "tree-graph",
+  "keyTextNodes": [
+    "Zero to Offer SWE Learning",
+    "Fundamentals",
+    "Practical Coding",
+    "System Design",
+    "AI/ML (GenAI)",
+    "Interviewing"
+  ],
+  "arrowGraph": [
+    {
+      "from": "rect_root",
+      "to": "rect_cat_fund"
+    },
+    {
+      "from": "rect_root",
+      "to": "rect_cat_prac"
+    },
+    {
+      "from": "rect_root",
+      "to": "rect_cat_sys"
+    },
+    {
+      "from": "rect_root",
+      "to": "rect_cat_ai"
+    },
+    {
+      "from": "rect_root",
+      "to": "rect_cat_int"
+    },
+    {
+      "from": "rect_cat_prac",
+      "to": "rect_sub_py"
+    },
+    {
+      "from": "rect_cat_prac",
+      "to": "rect_sub_cpp"
+    },
+    {
+      "from": "rect_cat_prac",
+      "to": "rect_sub_sql"
+    },
+    {
+      "from": "rect_cat_prac",
+      "to": "rect_sub_ts"
+    },
+    {
+      "from": "rect_cat_fund",
+      "to": "rect_fund_1"
+    },
+    {
+      "from": "rect_fund_1",
+      "to": "rect_fund_2"
+    },
+    {
+      "from": "rect_fund_2",
+      "to": "rect_fund_3"
+    },
+    {
+      "from": "rect_fund_3",
+      "to": "rect_fund_4"
+    },
+    {
+      "from": "rect_fund_4",
+      "to": "rect_fund_5"
+    },
+    {
+      "from": "rect_fund_5",
+      "to": "rect_fund_6"
+    },
+    {
+      "from": "rect_fund_6",
+      "to": "rect_fund_7"
+    },
+    {
+      "from": "rect_sub_py",
+      "to": "rect_py_1"
+    },
+    {
+      "from": "rect_py_1",
+      "to": "rect_py_2"
+    },
+    {
+      "from": "rect_py_2",
+      "to": "rect_py_3"
+    },
+    {
+      "from": "rect_py_3",
+      "to": "rect_py_4"
+    },
+    {
+      "from": "rect_py_4",
+      "to": "rect_py_5"
+    },
+    {
+      "from": "rect_sub_cpp",
+      "to": "rect_cpp_1"
+    },
+    {
+      "from": "rect_cpp_1",
+      "to": "rect_cpp_2"
+    },
+    {
+      "from": "rect_cpp_2",
+      "to": "rect_cpp_3"
+    },
+    {
+      "from": "rect_sub_sql",
+      "to": "rect_sql_1"
+    },
+    {
+      "from": "rect_sql_1",
+      "to": "rect_sql_2"
+    },
+    {
+      "from": "rect_sub_ts",
+      "to": "rect_ts_1"
+    },
+    {
+      "from": "rect_ts_1",
+      "to": "rect_ts_2"
+    },
+    {
+      "from": "rect_cat_sys",
+      "to": "rect_sys_1"
+    },
+    {
+      "from": "rect_sys_1",
+      "to": "rect_sys_2"
+    },
+    {
+      "from": "rect_sys_2",
+      "to": "rect_sys_3"
+    },
+    {
+      "from": "rect_sys_3",
+      "to": "rect_sys_4"
+    },
+    {
+      "from": "rect_sys_4",
+      "to": "rect_sys_5"
+    },
+    {
+      "from": "rect_sys_5",
+      "to": "rect_sys_6"
+    },
+    {
+      "from": "rect_sys_6",
+      "to": "rect_sys_7"
+    },
+    {
+      "from": "rect_cat_ai",
+      "to": "rect_ai_1"
+    },
+    {
+      "from": "rect_ai_1",
+      "to": "rect_ai_2"
+    },
+    {
+      "from": "rect_ai_2",
+      "to": "rect_ai_3"
+    },
+    {
+      "from": "rect_ai_3",
+      "to": "rect_ai_4"
+    },
+    {
+      "from": "rect_cat_int",
+      "to": "rect_int_1"
+    },
+    {
+      "from": "rect_int_1",
+      "to": "rect_int_2"
+    },
+    {
+      "from": "rect_int_2",
+      "to": "rect_int_3"
+    },
+    {
+      "from": "rect_int_3",
+      "to": "rect_int_4"
+    }
+  ],
+  "domainBoxContent": "Reading List\n\n• Zero to Offer SWE Learning\n• Fundamentals\n• Practical Coding\n• System Design\n…"
+}
