@@ -10,6 +10,7 @@ import type {
   BinaryFiles,
 } from '@excalidraw/excalidraw/types';
 import type { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
+import { useSystemTheme } from '@/hooks/useSystemTheme';
 
 interface SavePayload {
   elements: readonly ExcalidrawElement[];
@@ -41,16 +42,47 @@ function isEditableTarget(target: EventTarget | null): boolean {
   );
 }
 
+// Returns true when `target` — or an ancestor between it and `boundary` (exclusive) —
+// is a container that natively handles wheel-scrolling, i.e. one of Excalidraw's own
+// internal panels (shape library list, extra-tools dropdown, command palette, canvas
+// search results, etc.) rendered as ordinary scrollable DOM children of the wrapper.
+// Checked generically via computed overflow + actual scrollability, never by
+// hardcoding Excalidraw's private CSS class names, so this keeps working across
+// versions and automatically covers any panel Excalidraw adds in the future.
+function isNativeScrollTarget(target: EventTarget | null, boundary: HTMLElement): boolean {
+  let node = target instanceof Element ? target : null;
+  while (node && node !== boundary) {
+    const style = getComputedStyle(node);
+    const scrollsVertically =
+      (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
+      node.scrollHeight > node.clientHeight;
+    const scrollsHorizontally =
+      (style.overflowX === 'auto' || style.overflowX === 'scroll') &&
+      node.scrollWidth > node.clientWidth;
+    if (scrollsVertically || scrollsHorizontally) return true;
+    node = node.parentElement;
+  }
+  return false;
+}
+
 export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange, defaultFrameName }: ExcalidrawWrapperProps) {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const theme = useSystemTheme();
 
   // Capture-phase wheel listener — fires before Excalidraw's own canvas listener.
-  // preventDefault prevents page scroll in both modes; Excalidraw handles zoom/pan natively.
+  // Blocks page scroll while the pointer is over the widget (Excalidraw handles
+  // canvas pan/zoom internally via its own wheel handling) — but only when the wheel
+  // target isn't inside one of Excalidraw's own internally-scrollable panels (library
+  // list, dropdown menus, command palette, search results); those keep native
+  // wheel/trackpad scrolling.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    const handler = (e: WheelEvent) => { e.preventDefault(); };
+    const handler = (e: WheelEvent) => {
+      if (isNativeScrollTarget(e.target, el)) return;
+      e.preventDefault();
+    };
     el.addEventListener('wheel', handler, { passive: false, capture: true });
     return () => el.removeEventListener('wheel', handler, { capture: true });
   }, []);
@@ -187,6 +219,7 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
         excalidrawAPI={(api) => setExcalidrawAPI(api)}
         viewModeEnabled={viewModeEnabled}
         onChange={viewModeEnabled ? undefined : () => { onDiagramChange?.(); }}
+        theme={theme}
       />
 
       {/* Visually-hidden live region — announces save status to screen readers (WCAG 4.1.3). */}

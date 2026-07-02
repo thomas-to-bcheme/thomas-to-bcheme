@@ -128,10 +128,26 @@ export async function POST(request: Request) {
 
   const { sha } = await getResponse.json() as { sha: string };
 
-  // Strip collaborators: it's a Map at runtime, serializes to {} via JSON.stringify,
-  // and causes a forEach crash in Excalidraw's production bundle on next load.
+  // Strip collaborators/followedBy (Map/Set at runtime — serialize to {} via
+  // JSON.stringify, then crash when Excalidraw's prod bundle calls .forEach()/.has()
+  // on the restored plain object expecting a Map/Set) and known-transient/incidental
+  // UI state reflecting whatever the editor was mid-doing at save time, not the
+  // diagram's actual persisted structure.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { collaborators: _col, ...persistableAppState } = appState;
+  const {
+    collaborators: _col,
+    followedBy: _fb,
+    contextMenu: _contextMenu,
+    toast: _toast,
+    openDialog: _openDialog,
+    openPopup: _openPopup,
+    openSidebar: _openSidebar,
+    resizingElement: _resizingElement,
+    newElement: _newElement,
+    editingLinearElement: _editingLinearElement,
+    selectionElement: _selectionElement,
+    ...persistableAppState
+  } = appState;
   // Strip ephemeral selection elements — they're tool state, not diagram content.
   const persistableElements = (elements as Array<{ type?: string }>).filter(el => el.type !== 'selection');
   const updatedContent = JSON.stringify(

@@ -93,15 +93,21 @@ export default function TechnicalPrepDiagram() {
         return res.json();
       })
       .then((data) => {
-        // collaborators round-trips through JSON as {} (Map → plain object).
-        // Excalidraw's production bundle calls forEach() on it directly and crashes.
+        // collaborators/followedBy round-trip through JSON as {} (Map/Set → plain
+        // object). Excalidraw's production bundle calls forEach()/has() on them
+        // directly and crashes, so rebuild the real Map/Set before handing off.
         const collaborators = new Map(
           Object.entries(data.appState?.collaborators ?? {})
+        );
+        const followedBy = new Set(
+          Object.values(data.appState?.followedBy ?? {})
         );
         setInitialData({
           ...data,
           elements: sanitizeExcalidrawIndices(data.elements ?? []),
-          appState: data.appState ? { ...data.appState, collaborators } : undefined,
+          appState: data.appState
+            ? { ...data.appState, collaborators, followedBy }
+            : undefined,
           scrollToContent: true,
         });
       })
