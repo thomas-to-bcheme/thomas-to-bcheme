@@ -23,9 +23,25 @@ interface ExcalidrawWrapperProps {
   saveStatus: 'idle' | 'saving' | 'saved' | 'error';
   viewModeEnabled: boolean;
   onDiagramChange?: () => void;
+  defaultFrameName?: string;
 }
 
-export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange }: ExcalidrawWrapperProps) {
+// Returns true when `target` is a focusable, editable surface (text input, textarea,
+// select, or any contentEditable element) — i.e. somewhere a Space keystroke should
+// type a space rather than be intercepted for pan/scroll purposes. Checked generically
+// by DOM semantics (tag name / isContentEditable), not by Excalidraw's private internal
+// class names, so this keeps working across Excalidraw versions.
+function isEditableTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  return (
+    target.tagName === 'TEXTAREA' ||
+    target.tagName === 'INPUT' ||
+    target.tagName === 'SELECT' ||
+    target.isContentEditable
+  );
+}
+
+export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange, defaultFrameName }: ExcalidrawWrapperProps) {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -92,8 +108,10 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     };
   }, []);
 
-  // Keyboard scroll guard: prevents the browser's default Space-key scroll
-  // while the pointer is physically inside the Excalidraw container.
+  // Keyboard scroll guard: prevents the browser's default Space-key scroll while the
+  // pointer is physically inside the Excalidraw container — but never when the actual
+  // key event target is an editable element (e.g. Excalidraw's text-editing textarea,
+  // or a library/search input), so typing a space while editing text isn't swallowed.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -103,7 +121,9 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     const onPointerEnter = () => { pointerInside = true; };
     const onPointerLeave = () => { pointerInside = false; };
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === ' ' && pointerInside) e.preventDefault();
+      if (e.key === ' ' && pointerInside && !isEditableTarget(e.target)) {
+        e.preventDefault();
+      }
     };
 
     el.addEventListener('pointerenter', onPointerEnter);
@@ -116,6 +136,23 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
       window.removeEventListener('keydown', onKeyDown, { capture: true });
     };
   }, []);
+
+  // Once the scene has loaded, default the viewport to the named frame (if provided
+  // and present) instead of leaving it at the fit-all view set by
+  // initialData.scrollToContent. Looked up dynamically by name from the live scene
+  // elements — never hardcoded by id/coordinates — so it stays correct if the frame is
+  // later moved or resized. Depends only on [excalidrawAPI, defaultFrameName], both
+  // stable after first mount, so this fires exactly once and won't reset the user's
+  // pan/zoom on later re-renders (e.g. toggling edit mode).
+  useEffect(() => {
+    if (!excalidrawAPI || !defaultFrameName) return;
+    const frame = excalidrawAPI
+      .getSceneElements()
+      .find((el) => el.type === 'frame' && el.name === defaultFrameName);
+    if (frame) {
+      excalidrawAPI.scrollToContent(frame, { fitToContent: true, animate: false });
+    }
+  }, [excalidrawAPI, defaultFrameName]);
 
   const handleSave = async () => {
     if (!excalidrawAPI) return;

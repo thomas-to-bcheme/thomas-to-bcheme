@@ -26,6 +26,10 @@ function sanitizeExcalidrawIndices(elements: unknown[]): unknown[] {
 const FILE_PATH = 'public/excalidraw/technical_prep.excalidraw';
 const PUBLIC_URL = '/excalidraw/technical_prep.excalidraw';
 const SESSION_TOKEN_KEY = 'excalidraw_save_token';
+// Frame the diagram should default its viewport to on load. Looked up dynamically by
+// name at runtime from the live loaded scene (see ExcalidrawWrapper) — never by cached
+// id/coordinates — so this stays correct if the frame is later moved/resized.
+const DEFAULT_FRAME_NAME = 'Drug Discovery';
 
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';
 
@@ -208,6 +212,7 @@ export default function TechnicalPrepDiagram() {
             saveStatus={saveStatus}
             viewModeEnabled={!isEditMode}
             onDiagramChange={() => setIsDirty(true)}
+            defaultFrameName={DEFAULT_FRAME_NAME}
           />
 
           {showTokenPrompt && (
