@@ -1,21 +1,18 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, FileText, Cpu, Mail, ArrowRight, Linkedin, Youtube, CheckCircle2, Zap } from 'lucide-react';
+import { Github, FileText, Mail, ArrowRight, Linkedin, Youtube, CheckCircle2, Zap } from 'lucide-react';
 
-import Badge from '@/components/ui/Badge';
-import AiGenerator from '@/components/features/AiGenerator';
-import Button from '@/components/ui/Button';
 import {
   SITE_OWNER_NAME,
   SITE_OWNER_EMAIL,
   SITE_OWNER_LOCATION,
   GITHUB_URL,
-  GITHUB_PROFILE_URL,
   LINKEDIN_URL,
   YOUTUBE_URL,
   RESUME_PDF_URL,
+  HERO_PHOTO,
   WORK_AUTH,
 } from '@/constants/site';
 
@@ -26,14 +23,24 @@ const WORK_AUTH_CHIPS = [
   { label: WORK_AUTH.availability },
 ] as const;
 
-const HeroSection = () => {
-  const [isMobileChatCollapsed, setIsMobileChatCollapsed] = useState(true);
+// Secondary "bubble" links beside the primary CTA — mapped to identical pills.
+const SOCIAL_PILLS = [
+  { icon: FileText, label: 'Resume', href: RESUME_PDF_URL },
+  { icon: Github, label: 'GitHub', href: GITHUB_URL },
+  { icon: Linkedin, label: 'LinkedIn', href: LINKEDIN_URL },
+  { icon: Youtube, label: 'YouTube', href: YOUTUBE_URL },
+] as const;
 
+// Shared focus-visible ring, matching the convention used on nav links in page.tsx.
+const FOCUS_RING =
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black';
+
+const HeroSection = () => {
   return (
     <section className="mb-8 pt-2">
       <div className="grid lg:grid-cols-2 gap-8 items-center mt-4">
 
-        {/* --- LEFT COL: Identity, Value Prop, Auth, Actions --- */}
+        {/* --- LEFT COL: Identity, Value Prop, Auth, Pill CTAs --- */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -80,135 +87,54 @@ const HeroSection = () => {
             ))}
           </div>
 
-          {/* Primary CTAs */}
-          <div className="flex flex-wrap gap-3 mb-3">
-            <Button
-              variant="primary"
+          {/* Pill CTA cluster — primary + secondary "bubbles" */}
+          <div className="flex flex-wrap items-center gap-2.5 mb-3">
+            <a
               href={`mailto:${SITE_OWNER_EMAIL}`}
-              className="group shadow-lg shadow-blue-500/20 dark:shadow-blue-900/30"
+              className={`group inline-flex items-center gap-2 rounded-full bg-blue-600 text-white dark:bg-blue-500 px-5 py-2.5 text-sm font-bold hover:bg-blue-700 dark:hover:bg-blue-400 hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/20 dark:shadow-blue-900/30 ${FOCUS_RING}`}
             >
-              <Mail size={18} />
-              <span>Contact</span>
-              <ArrowRight size={16} className="opacity-75 group-hover:translate-x-1 transition-transform duration-200" />
-            </Button>
-            <Button
-              variant="secondary"
-              href={RESUME_PDF_URL}
-              external
-            >
-              <FileText size={18} />
-              <span>Download Resume</span>
-            </Button>
+              <Mail size={16} />
+              <span>Start a Conversation</span>
+              <ArrowRight size={15} className="opacity-80 group-hover:translate-x-1 transition-transform duration-200" />
+            </a>
+
+            {SOCIAL_PILLS.map(({ icon: Icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:border-blue-400 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 hover:scale-105 active:scale-95 transition-all duration-200 ${FOCUS_RING}`}
+              >
+                <Icon size={15} />
+                <span>{label}</span>
+              </a>
+            ))}
           </div>
 
-          {/* Secondary link strip */}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
-            <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-150"
-            >
-              <Github size={13} />
-              View Source
-            </a>
-            <a
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-150"
-            >
-              <Linkedin size={13} />
-              LinkedIn
-            </a>
-            <a
-              href={YOUTUBE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors duration-150"
-            >
-              <Youtube size={13} />
-              YouTube
-            </a>
-            <span className="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500">
-              <Zap size={11} className="text-yellow-500" />
-              &lt; 24h response
-            </span>
+          {/* Response-time caption */}
+          <div className="flex items-center gap-1.5 text-xs text-zinc-400 dark:text-zinc-500">
+            <Zap size={12} className="text-yellow-500" />
+            Typically replies in &lt; 24 hours
           </div>
         </motion.div>
 
-        {/* --- RIGHT COL: Live Agent Card (Desktop) --- */}
+        {/* --- RIGHT COL: Main Photo --- */}
         <motion.div
-          id="agent"
-          className="relative hidden lg:block h-full min-h-[400px] scroll-mt-32"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
+          className="w-full"
         >
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20 animate-pulse" />
-          <div className="relative card-base h-full p-4 shadow-2xl flex flex-col">
-            <div className="flex justify-between items-start mb-4 border-b border-zinc-100 dark:border-zinc-800 pb-3">
-              <div className="flex gap-3">
-                <div className="mt-2 shrink-0">
-                  <Cpu size={20} className="text-blue-600 dark:text-blue-400" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-sm text-zinc-900 dark:text-zinc-100">
-                    Resume RAG Agent
-                  </span>
-                  <div className="text-xs leading-tight text-zinc-500 dark:text-zinc-400 mt-1">
-                    <a
-                      href={GITHUB_PROFILE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 dark:text-blue-400 hover:underline decoration-blue-600/30 transition-all font-medium inline-flex items-center gap-1"
-                    >
-                      See source docs
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <Badge color="green">Online</Badge>
-            </div>
-            <div className="flex-1 overflow-hidden relative rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-              <div className="absolute inset-0 overflow-auto custom-scrollbar">
-                <AiGenerator />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* --- MOBILE: Collapsible AI Chat Card --- */}
-        <motion.div
-          className="lg:hidden mt-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className="relative">
-            {!isMobileChatCollapsed && (
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20 animate-pulse" />
-            )}
-            <div className={`relative card-base shadow-lg overflow-hidden transition-all duration-300 ${
-              isMobileChatCollapsed ? '' : 'min-h-[400px]'
-            }`}>
-              {!isMobileChatCollapsed && (
-                <div className="flex justify-between items-center p-4 border-b border-zinc-100 dark:border-zinc-800">
-                  <div className="flex items-center gap-2">
-                    <Cpu size={18} className="text-blue-600 dark:text-blue-400" />
-                    <span className="font-bold text-sm text-zinc-900 dark:text-zinc-100">
-                      Resume RAG Agent
-                    </span>
-                  </div>
-                  <Badge color="green">Online</Badge>
-                </div>
-              )}
-              <div className={`${isMobileChatCollapsed ? '' : 'h-[350px] overflow-auto custom-scrollbar'}`}>
-                <AiGenerator
-                  collapsed={isMobileChatCollapsed}
-                  onToggleCollapse={() => setIsMobileChatCollapsed(!isMobileChatCollapsed)}
-                />
-              </div>
+          <div className="relative mx-auto max-w-sm lg:max-w-md">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={HERO_PHOTO}
+                alt={`${SITE_OWNER_NAME} — Fullstack AI/ML Engineer`}
+                className="h-full w-full object-cover object-center"
+              />
             </div>
           </div>
         </motion.div>

@@ -23,12 +23,13 @@ const Connect: React.FC = () => {
             </p>
 
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-4 leading-tight">
-              Let&rsquo;s Engineer<br className="hidden sm:block" /> the Future.
+              Have a Role, a Stage, or<br className="hidden sm:block" /> a Program to Talk About?
             </h2>
 
             <p className="text-zinc-600 dark:text-zinc-300 text-base leading-relaxed max-w-lg mb-8">
-              If you are looking for an engineer who can architect 0&rarr;1 systems, automate tribal
-              knowledge, and deploy AI agents, let&rsquo;s talk.
+              Recently featured in International Business Times on how AI-enabled biology is advancing
+              drug discovery &mdash; now open to full-time AI/ML Engineering roles, speaking invites, and
+              mentorship collaborations. What&rsquo;s on your mind?
             </p>
 
             <div className="space-y-2">
@@ -54,7 +55,7 @@ const Connect: React.FC = () => {
               className="w-full justify-center py-4 text-base shadow-lg shadow-blue-500/20 dark:shadow-blue-900/40 group"
             >
               <Mail size={20} />
-              <span>Contact</span>
+              <span>Start a Conversation</span>
               <ArrowRight
                 size={18}
                 className="ml-auto opacity-75 group-hover:translate-x-1 transition-transform duration-200"

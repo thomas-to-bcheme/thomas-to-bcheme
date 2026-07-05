@@ -1,34 +1,12 @@
 import React from 'react';
-import { Users, HeartHandshake, Mic2, GraduationCap, BookOpen, Dumbbell } from 'lucide-react';
+import { HeartHandshake } from 'lucide-react';
 
-const LEADERSHIP_ACTIVITIES = [
-  {
-    icon: Mic2,
-    text: 'Produce and publish MLOps-focused educational content on YouTube and LinkedIn through an automated CI/CD publishing pipeline, driving developer community engagement and technical thought leadership.',
-  },
-  {
-    icon: GraduationCap,
-    text: 'Student Outreach Ambassador supporting 100,000+ community college transfer students through peer-to-peer mentorship programs, transfer outreach initiatives, and cross-institutional community building.',
-  },
-  {
-    icon: Users,
-    text: 'Active member of AIChE, ISPE, and Rosetta protein engineering community; panelist at the Ipsos AI Insights Community and inaugural Unintentional Consequences of Technology (UCOT) conference.',
-  },
-  {
-    icon: BookOpen,
-    text: 'Organize collaborative workshops and learning initiatives including Interview Kickstart bootcamp peer sessions, Databricks weekly seminars, and enterprise analytics community forums.',
-  },
-  {
-    icon: Dumbbell,
-    text: 'Coach students ages 3 to adult in Brazilian jiu-jitsu, delivering structured athletic training to build discipline, resilience, and community belonging in Oakland.',
-  },
-] as const;
+import Badge from '@/components/ui/Badge';
+import { RECOGNITION_ITEMS } from '@/data/credentials';
 
-const HONORS = [
-  'AvenueE Engineering Leadership Program',
-  'McNair Scholars TRIO Fellow',
-  'Genentech Leadership Exchange',
-] as const;
+// Shared focus-visible ring, matching the convention used on nav links in page.tsx.
+const FOCUS_RING =
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black';
 
 const AboutMeSection: React.FC = () => {
   return (
@@ -67,31 +45,43 @@ const AboutMeSection: React.FC = () => {
         </div>
       </div>
 
-      {/* LEADERSHIP — full width */}
+      {/* LEADERSHIP & RECOGNITION — full width */}
       <div className="bg-white dark:bg-black p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:border-pink-300 transition-colors shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <HeartHandshake className="text-pink-500" size={20} />
-          <h5 className="font-bold text-zinc-900 dark:text-white">Leadership</h5>
+          <h5 className="font-bold text-zinc-900 dark:text-white">Leadership &amp; Recognition</h5>
         </div>
 
-        <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
-          {LEADERSHIP_ACTIVITIES.map(({ icon: Icon, text }) => (
-            <li key={text.slice(0, 30)} className="flex items-start gap-2 text-xs text-zinc-500 dark:text-zinc-400 leading-snug">
-              <Icon size={12} className="text-pink-400 mt-0.5 shrink-0" />
-              <span>{text}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800">
-          <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-2 block">Honors</span>
-          <div className="flex flex-wrap gap-1.5">
-            {HONORS.map((honor) => (
-              <span key={honor} className="text-xs bg-pink-50 dark:bg-pink-900/10 border border-pink-100 dark:border-pink-900/30 text-pink-700 dark:text-pink-300 px-2 py-0.5 rounded">
-                {honor}
-              </span>
-            ))}
-          </div>
+        <div>
+          <ul className="grid sm:grid-cols-2 gap-3">
+            {RECOGNITION_ITEMS.map((item) => {
+              const body = (
+                <>
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 leading-snug">{item.program}</span>
+                    <Badge color="rose" variant="outline" className="shrink-0">{item.role}</Badge>
+                  </div>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-snug">
+                    <span className="font-medium text-zinc-600 dark:text-zinc-300">{item.organization}</span> — {item.blurb}
+                  </p>
+                </>
+              );
+              const cardClass = `block p-3 rounded-lg border border-pink-100 dark:border-pink-900/30 bg-pink-50/40 dark:bg-pink-900/10 hover:border-pink-300 dark:hover:border-pink-700 transition-colors ${FOCUS_RING}`;
+              return (
+                <li key={item.id}>
+                  {item.url ? (
+                    <a href={item.url} target="_blank" rel="noopener noreferrer" className={cardClass}>
+                      {body}
+                    </a>
+                  ) : (
+                    <div className="block p-3 rounded-lg border border-pink-100 dark:border-pink-900/30 bg-pink-50/40 dark:bg-pink-900/10">
+                      {body}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
 

@@ -4,6 +4,14 @@ import Script from "next/script";
 import "./globals.css";
 import 'katex/dist/katex.min.css';
 import MotionProvider from '@/components/layout/MotionProvider';
+import { RECOGNITION_ITEMS, PRESS_FEATURES } from '@/data/credentials';
+import {
+  SITE_OWNER_NAME,
+  SITE_URL,
+  GITHUB_PROFILE_URL,
+  LINKEDIN_URL,
+  YOUTUBE_URL,
+} from '@/constants/site';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://thomas-to-bcheme.github.io", // Update this if/when you get a custom domain
+    url: SITE_URL, // Update SITE_URL in constants/site.ts if/when you get a custom domain
     title: "Thomas To | Agentic Systems Architect",
     description: "Operationalizing Agentic Intelligence. Bridging wet-lab data with scalable cloud architecture.",
     siteName: "Thomas To Portfolio",
@@ -59,6 +67,31 @@ export const viewport: Viewport = {
   themeColor: "#000000", // Matches your dark mode aesthetic
 };
 
+// schema.org Person structured data — fed from the same credentials source as the
+// visible page and the RAG prompt, so recruiter-facing SEO can't drift either.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE_OWNER_NAME,
+  url: SITE_URL,
+  jobTitle: "Fullstack AI/ML Engineer",
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "University of California, Davis",
+  },
+  award: RECOGNITION_ITEMS.map((item) => item.program),
+  sameAs: [GITHUB_PROFILE_URL, LINKEDIN_URL, YOUTUBE_URL],
+  subjectOf: PRESS_FEATURES.map((feature) => ({
+    "@type": "NewsArticle",
+    headline: feature.headline,
+    url: feature.url,
+    publisher: {
+      "@type": "Organization",
+      name: feature.publication,
+    },
+  })),
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -69,6 +102,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black text-zinc-900 dark:text-zinc-100`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <Script id="excalidraw-asset-path" strategy="beforeInteractive">
           {`window["EXCALIDRAW_ASSET_PATH"] = location.origin;`}
         </Script>

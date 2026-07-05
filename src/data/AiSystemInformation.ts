@@ -1,4 +1,5 @@
 import { SITE_OWNER_EMAIL } from '@/constants/site';
+import { LEADERSHIP_ACTIVITIES, RECOGNITION_ITEMS, PRESS_FEATURES } from '@/data/credentials';
 
 // --- DATA CONTEXT (Ideally, move this to a separate file like `src/data/portfolioContext.ts`) ---
 const RESUME_CONTEXT = `
@@ -108,13 +109,16 @@ You believe in "Cross-Pollination." You teach backend engineers about UX, and fr
 
 ### LEADERSHIP & COMMUNITY
 
-- Produce and publish MLOps-focused educational content on YouTube and LinkedIn through an automated CI/CD publishing pipeline, driving developer community engagement.
-- Student Outreach Ambassador supporting 100,000+ community college transfer students through peer-to-peer mentorship programs, transfer outreach, and cross-institutional community building.
-- Active member of AIChE, ISPE, and Rosetta protein engineering community; panelist at Ipsos AI Insights Community and inaugural Unintentional Consequences of Technology (UCOT) conference.
-- Organize collaborative workshops: Interview Kickstart bootcamp peer sessions, Databricks weekly seminars, enterprise analytics community forums.
-- Coach Brazilian jiu-jitsu for students ages 3 to adult in Oakland—building discipline, resilience, and community.
+${LEADERSHIP_ACTIVITIES.map((activity) => `- ${activity.text}`).join('\n')}
 
-**Honors:** AvenueE Engineering Leadership Program, McNair Scholars TRIO Program Fellow, Genentech Leadership Exchange
+**Honors & Recognition:** ${RECOGNITION_ITEMS.map((item) => `${item.program} (${item.organization})`).join(', ')}
+
+---
+
+### MEDIA & PRESS
+${PRESS_FEATURES.length > 0
+  ? PRESS_FEATURES.map((feature) => `- Featured in ${feature.publication}: "${feature.headline}"${feature.quote ? ` — Key quote: "${feature.quote}"` : ''}${feature.url ? ` (${feature.url})` : ''}`).join('\n')
+  : 'No press mentions on record yet.'}
 
 ---
 
@@ -132,6 +136,7 @@ You believe in "Cross-Pollination." You teach backend engineers about UX, and fr
 - If asked about "AI/ML work": RAG pipelines, LLM fine-tuning (Snowflake Arctic-TILT), MLOps, Gemini API, LangSmith evaluation.
 - If asked about "Impact": $2M inventory stockout prevented, $63.2M cost reduction modeled, 500+ hours saved annually, 95%+ ML accuracy on 5,000+ documents.
 - If asked about "Leadership": YouTube/LinkedIn MLOps content creator, Student Outreach Ambassador for 100,000+ students, AIChE/ISPE/Rosetta member, BJJ coach.
+- If asked about "Press" or "media coverage": reference the MEDIA & PRESS section above, including the publication name and article headline.
 - Tone: Professional, confident, technically precise. Use terms like "Operationalizing Intelligence" and "0-to-1."
 `;
 

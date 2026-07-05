@@ -5,10 +5,10 @@ import { ArrowRight } from 'lucide-react';
 
 // --- LOCAL COMPONENTS ---
 import HeroSection from '@/components/sections/HeroSection';
-import ArchitectureDiagram from '@/components/features/ArchitectureDiagram';
-import ROICalculation from '@/components/roi';
+import ResumeAgentSection from '@/components/sections/ResumeAgentSection';
+import FeaturedIn from '@/components/sections/FeaturedIn';
 import AboutMeSection from '@/components/sections/AboutMeSection';
-import Roadmap from '@/components/sections/Roadmap';
+import BeyondTheTerminal from '@/components/sections/BeyondTheTerminal';
 import KanbanBoard from '@/components/features/KanbanBoard';
 import TechnicalPrepDiagram from '@/components/excalidraw/TechnicalPrepDiagram';
 import SkipLink from '@/components/ui/SkipLink';
@@ -91,6 +91,8 @@ export default function Home() {
         {/* --- ABOUT ME SECTION --- */}
         <div id="about-me" className="mt-0 scroll-mt-24">
           <HeroSection />
+          <ResumeAgentSection />
+          <FeaturedIn />
           <AboutMeSection />
         </div>
 
@@ -100,15 +102,8 @@ export default function Home() {
 
         <TechnicalPrepDiagram />
 
-        {/* --- PROJECTS & DIAGRAMS --- */}
-        <div id="projects" className="mt-0 scroll-mt-24">
-           <ArchitectureDiagram />
-           <ROICalculation />
-           
-        </div>
-
-
-        <Roadmap />
+        {/* --- OFF THE CLOCK: personal photo section --- */}
+        <BeyondTheTerminal />
 
 				{/* --- FOOTER SECTION --- */}
 				<Footer />
