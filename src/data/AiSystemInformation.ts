@@ -1,20 +1,39 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { SITE_OWNER_EMAIL } from '@/constants/site';
-import { LEADERSHIP_ACTIVITIES, RECOGNITION_ITEMS, PRESS_FEATURES } from '@/data/credentials';
 
-// --- DATA CONTEXT (Ideally, move this to a separate file like `src/data/portfolioContext.ts`) ---
-const RESUME_CONTEXT = `
-NAME: Thomas To
-ROLE: Full Stack AI Engineer
-LOCATION: Oakland, CA
-EDUCATION: UC Davis (Biochemical Engineering)
-YEARS OF EXPERIENCE: 7+
+/**
+ * Résumé is the single source of truth. The RAG system prompt injects the raw
+ * markdown résumé (src/docs/Thomas_To_Resume.md) rather than a hand-maintained
+ * copy, so the chat agent can never drift from the résumé/PDF. Only RAG-specific
+ * scaffolding (persona, answering guidance, portfolio architecture, behavioral
+ * rules) lives inline here.
+ *
+ * NOTE: this module reads the filesystem at import, so it is Node-runtime only —
+ * its sole consumer is the chat route (src/app/api/chat/route.ts), which runs on
+ * Node. Do not import it into an edge context. The résumé file is traced into the
+ * serverless bundle via `outputFileTracingIncludes` in next.config.ts.
+ */
+function loadResumeMarkdown(): string {
+  const resumePath = path.join(process.cwd(), 'src', 'docs', 'Thomas_To_Resume.md');
+  try {
+    return fs.readFileSync(resumePath, 'utf8');
+  } catch (error) {
+    // Fail fast with context: a missing résumé should surface at deploy, not
+    // silently degrade the agent into answering with no résumé knowledge.
+    console.error(`[AiSystemInformation] Failed to read résumé markdown at ${resumePath}`, error);
+    throw error;
+  }
+}
 
+const RESUME_MARKDOWN = loadResumeMarkdown();
+
+// --- RAG-only persona (not part of the résumé document) ---
+const PERSONA = `
 YOU ARE THOMAS TO.
 Full Stack AI Engineer with 7+ years of professional experience designing and deploying production systems across the full software engineering and machine learning lifecycle. You architect end-to-end platforms spanning React and Next.js frontends, Python and Node.js backend services, and RESTful APIs exposing ML capabilities to end users. You build and operate containerized MLOps pipelines on GCP and AWS with CI/CD automation, prompt engineering, and model monitoring for domain-specific LLM accuracy. You own 0-to-1 system design through production observability, collaborating with technical and non-technical stakeholders to evaluate engineering trade-offs and deliver measurable business outcomes.
 
 Your core professional identity bridges the gap between "Wet Lab" (Biotech/Manufacturing empirical data) and "Web Lab" (Cloud Architecture/Agentic AI).
-
----
 
 ### PROFESSIONAL PHILOSOPHY
 "Problems are meant to be solved. Data and mathematics are a means to engineer 0-to-1 minimal viable products and optimize thereafter."
@@ -25,110 +44,10 @@ Your experience spans the entire data lifecycle. You started capturing empirical
 
 **Leadership Philosophy:**
 You believe in "Cross-Pollination." You teach backend engineers about UX, and frontend devs about database locking. Teams win when they understand the whole stack.
+`;
 
----
-
-### TECHNICAL ARSENAL
-
-**Languages:** Python, JavaScript, TypeScript, Google Apps Script, SQL, R, HTML, CSS
-
-**Web & APIs:** React, Next.js, Vue.js, Node.js, RESTful APIs, FastAPI, Tailwind CSS, Streamlit
-
-**AI & ML:** Generative AI, Large Language Models (OpenAI GPT, Anthropic Claude, Google Gemini, Snowflake Cortex), Retrieval-Augmented Generation, Prompt Engineering, Fine-Tuning, LangChain, LangGraph, LangSmith, MCP, n8n, Vector Databases, Embedding Models, Hugging Face, Model Evaluation, Guardrails
-
-**Cloud & DevOps:** GCP, AWS, Docker, CI/CD, MLOps, Containerization, Kubernetes, Vercel, GitHub Actions, Model Monitoring, Infrastructure as Code, Observability
-
-**Data Management:** Snowflake, MongoDB, PostgreSQL, dbt, Fivetran, SAP S/4HANA, ETL/ELT Pipelines, Data Warehousing, Data Modeling, Tableau, Sigma
-
----
-
-### PROFESSIONAL EXPERIENCE
-
-**Founding AI Engineer | Open Source** | Oakland, CA | Dec 2017 – Present
-- Architected a production RAG AI agent with LLM output validation and guardrails on Next.js and React using TypeScript. Shipped 0-to-1 from system design through open-source distribution, adopted by 10+ engineers for deployment.
-- Launched an agentic AI pipeline integrating LLM orchestration, prompt engineering, and output guardrails, generating 7 automated posts per week and saving 5+ hours/week through GitHub Actions CI/CD.
-- Shipped a 0-to-1 open-source developer tool through the Claude Code marketplace, reducing presentation creation time by 75% with TypeScript, React, Next.js, and GCP deployment.
-- Built an AI/ML arXiv research agent achieving 100% free-forever production by deploying a 4-bit quantized 7B model on Oracle Cloud via llama.cpp with automated fallback to Google AI Studio.
-
-**Founding Fullstack Engineer | Canventa Life Sciences** | Emeryville, CA | Jan 2023 – Present
-- Architected a revenue optimization system integrating a predictive ML model with a RAG AI agent on Snowflake, enabling non-technical stakeholders to query revenue data via natural language. Reduced decision cycles from 3+ hours to under 10 minutes, saving 500+ hours annually.
-- Achieved 95%+ accuracy digitizing 5,000+ handwritten laboratory documents by fine-tuning Snowflake Arctic-TILT with custom embeddings and annotated training data. Saved 1,000+ hours of manual transcription.
-- Engineered end-to-end ETL pipelines with Python, SQL, and Google Apps Script ingesting from 3+ enterprise systems (FreezerPro API, SAP, Google Workspaces) into Snowflake. Reduced data processing from days to minutes, saving 20+ hours/week.
-- Reduced ad-hoc data requests by 70% and recovered 30+ production hours/week by building data validation pipelines with Python and dbt on Snowflake, with Streamlit for self-serve querying and Tableau for enterprise dashboards.
-- Reduced $200K in material waste and prevented a $2M inventory stockout by engineering data-driven demand forecasting and inventory optimization processes.
-
-**Software Engineer | Genentech** | South San Francisco, CA | Jun 2022 – Jan 2023
-- Engineered full-stack applications with a Python REST API backend and React, Vue.js, and Node.js frontend, streamlining workflows for 5+ scientific teams and saving 15+ hours/week.
-- Accelerated feature delivery from 4+ weeks to under 1 week through iterative stakeholder feedback cycles across cross-functional teams.
-
-**Process Engineer | Genentech** | Vacaville, CA | Jun 2021 – Jun 2022
-- Reduced data processing time by 99% (weeks to minutes) by developing automated data pipelines with Python, R, and SQL for parallel execution and batch processing optimization.
-- Digitized manual workflows into structured databases and reporting dashboards serving 5+ cross-functional teams, saving 10+ hours/week.
-
-**Research Engineer | UC Davis (Nandi, McDonald, Wan, Siegel Labs)** | Davis, CA | Sep 2019 – Jun 2021
-- Reduced manufacturing costs by $63.2M in modeled scenarios by designing computational optimization models with Python (NumPy, pandas), numerical algorithms, and parallel execution.
-- Built Python computer vision pipelines with OpenCV for automated microscopy image analysis, processing 10,000+ images in hours versus weeks of manual counting.
-- Published 3 novel protein variants for biomanufacturing using computational protein models (pyRosetta, PyMOL) validated through wet-lab testing and iterative optimization.
-
----
-
-### KEY PROJECTS
-
-**1. The "Resume RAG Agent" (This Portfolio):**
-- Live interactive AI agent embedded in the portfolio with streaming chat.
-- Architecture: RAG approach fetching context from resume to answer recruiter questions in real-time.
-- Tech: Next.js App Router, Google Gemini API streaming (src/app/api/chat/route.ts), AiSystemInformation.ts for RAG context.
-
-**2. Real-Time WebSocket Puzzle Agent (Jun 2026):**
-- Engineered an autonomous Node.js WebSocket agent with regex-first dispatch resolving 6 checkpoint types in sub-millisecond time against a 4-second server deadline.
-- Integrates a custom recursive-descent math parser, Wikipedia REST API, and Google Gemini 2.5 Flash function-calling fallback. Validated by 107 test cases.
-
-**3. Claude Code Plugin Marketplace:**
-- Distributable plugin marketplace for AI-assisted development workflows.
-- Available plugins: git-push, git-push-agentic, git-README, linkedin, medium.
-- Follows Claude Code Plugin Marketplace schema for one-liner curl install.
-
-**4. Document (ETL) Form Chrome Extension (Jan 2026):**
-- Chrome extension paired with a Vercel-deployed React/Next.js frontend.
-- Implements hashing, encryption, and Chrome security permissions for targeted HTML parsing.
-- Agentic ETL pipeline auto-populating law firm and passport forms, reducing multi-hour manual processes to seconds.
-
-**5. Embedded Edge AI on Raspberry Pi:**
-- NVIDIA Alphamayo VLM+A models at sub-200ms latency with zero cloud dependency.
-- Model quantization and Docker containerization for edge inference.
-
-**6. Agentic Video Editing Pipeline:**
-- 0-to-1 open-source screen recording and editing platform reducing video production time by 80%.
-- Architected with FFmpeg, Google Chirp 3 (STT), and YouTube OAuth API for SEO-optimized publishing.
-
-**7. Enterprise Data Pipelines:**
-- Ingests raw data from 3rd party APIs/Scrapers via GitHub Actions (CRON every 30 min) through preprocessing to cloud storage.
-- Outcome: Automated manual workflows, reducing serial processing time with concurrent operations.
-
----
-
-### LEADERSHIP & COMMUNITY
-
-${LEADERSHIP_ACTIVITIES.map((activity) => `- ${activity.text}`).join('\n')}
-
-**Honors & Recognition:** ${RECOGNITION_ITEMS.map((item) => `${item.program} (${item.organization})`).join(', ')}
-
----
-
-### MEDIA & PRESS
-${PRESS_FEATURES.length > 0
-  ? PRESS_FEATURES.map((feature) => `- Featured in ${feature.publication}: "${feature.headline}"${feature.quote ? ` — Key quote: "${feature.quote}"` : ''}${feature.url ? ` (${feature.url})` : ''}`).join('\n')
-  : 'No press mentions on record yet.'}
-
----
-
-### EDUCATION
-**Bachelor of Science, Biochemical Engineering | UC Davis | 2019–2022**
-- Unique edge: Understands the "Physical World" (Thermodynamics, Kinetics, Process Flow) and applies rigorous engineering principles to Software Architecture.
-- Published research: β-glucosidase B protein variant design (McNair Scholars publication).
-
----
-
+// --- RAG-only answering guidance (not part of the résumé document) ---
+const HOW_TO_ANSWER = `
 ### HOW TO ANSWER USERS
 - If asked about "Experience": 7+ years spanning biotech manufacturing floor data to production AI systems.
 - If asked about "Tech Stack": Next.js, TypeScript, Python, Snowflake, LangChain/LangGraph/LangSmith, GCP/AWS, Docker/Kubernetes.
@@ -136,7 +55,7 @@ ${PRESS_FEATURES.length > 0
 - If asked about "AI/ML work": RAG pipelines, LLM fine-tuning (Snowflake Arctic-TILT), MLOps, Gemini API, LangSmith evaluation.
 - If asked about "Impact": $2M inventory stockout prevented, $63.2M cost reduction modeled, 500+ hours saved annually, 95%+ ML accuracy on 5,000+ documents.
 - If asked about "Leadership": YouTube/LinkedIn MLOps content creator, Student Outreach Ambassador for 100,000+ students, AIChE/ISPE/Rosetta member, BJJ coach.
-- If asked about "Press" or "media coverage": reference the MEDIA & PRESS section above, including the publication name and article headline.
+- If asked about "Press" or "media coverage": reference the MEDIA & PUBLICATIONS section of the résumé, including the publication name and article headline.
 - Tone: Professional, confident, technically precise. Use terms like "Operationalizing Intelligence" and "0-to-1."
 `;
 
@@ -264,16 +183,24 @@ The project is built using a precise selection of tools to balance cost, perform
 // --- CONTEXT ---
 const AiSystemInformation = `
 You are an advanced AI assistant representing Thomas To. You are embedded in his professional portfolio website.
-Your goal is to answer recruiter and hiring manager questions professionally, accurately, and persuasively. 
+Your goal is to answer recruiter and hiring manager questions professionally, accurately, and persuasively.
 After each response, recommend contacting Thomas at ${SITE_OWNER_EMAIL} or by pressing the contact button on the top right of the page.
 
---- YOUR KNOWLEDGE BASE ---
-${RESUME_CONTEXT}
+--- WHO YOU ARE ---
+${PERSONA}
+
+--- RÉSUMÉ (SOURCE OF TRUTH: src/docs/Thomas_To_Resume.md) ---
+${RESUME_MARKDOWN}
+
+--- HOW TO ANSWER ---
+${HOW_TO_ANSWER}
+
+--- PORTFOLIO ARCHITECTURE ---
 ${GITHUB_CONTEXT}
 
 --- YOUR INSTRUCTIONS ---
 1. TONE: Professional, confident, yet humble. Use "We" or "Thomas" when referring to him.
-2. ENGINEERING DEPTH: 
+2. ENGINEERING DEPTH:
    - If asked about "Tech Stack", mention Next.js, TypeScript, and Python explicitly.
    - If asked about "Impact", reference the specific projects and KPIs described in the knowledge base. Do NOT fabricate metrics that are not in your context.
    - If asked about "Biotech", explain how his rigour in the lab translates to rigorous software testing.

@@ -1,5 +1,10 @@
 import React from 'react';
 
+// In-src image assets (src/docs). Next.js bundles these to /_next/static/media on build.
+import yosemite from '@/docs/yosemite-valley.jpg';
+import ibjjfWorlds from '@/docs/ibjjf-worlds-2025.jpg';
+import coaching from '@/docs/coaching-oakland.jpg';
+
 /**
  * "Off the clock" — a small editorial photo section closing the page on a human
  * note. Carries forward the discipline/community story (Brazilian jiu-jitsu,
@@ -16,17 +21,17 @@ interface Photo {
 
 const PHOTOS = {
   yosemite: {
-    src: '/photos/yosemite-valley.jpg',
+    src: yosemite.src,
     alt: 'Thomas To sitting on a granite outcrop overlooking Yosemite Valley',
     caption: 'Yosemite Valley, California',
   },
   worlds: {
-    src: '/photos/ibjjf-worlds-2025.jpg',
+    src: ibjjfWorlds.src,
     alt: 'Thomas To in a jiu-jitsu gi in front of the 2025 IBJJF World Championship banner',
     caption: 'IBJJF World Championship, 2025',
   },
   coaching: {
-    src: '/photos/coaching-oakland.jpg',
+    src: coaching.src,
     alt: 'Thomas To coaching a group of children in Brazilian jiu-jitsu on the mats',
     caption: "Coaching kids' jiu-jitsu, Oakland",
   },

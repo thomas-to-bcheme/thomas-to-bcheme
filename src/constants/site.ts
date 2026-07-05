@@ -18,10 +18,6 @@ export const GITHUB_PROFILE_URL = 'https://github.com/thomas-to-bcheme';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/thomas-to-bcheme/';
 export const YOUTUBE_URL = 'https://www.youtube.com/@thomas-to-bcheme';
 export const RESUME_PDF_URL = 'https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io/blob/main/src/docs/Thomas_To_Resume.pdf?raw=true';
-
-// Hero portrait. Placeholder = IBJJF portrait; swap by replacing public/photos/headshot.jpg
-// with a professional headshot (same filename → no code change needed).
-export const HERO_PHOTO = '/photos/headshot.jpg';
 export const SLIDES_AS_CODE_URL = 'https://script.google.com/d/1unZvIXxRzGxubxCdgMeAsy9Xg-LDxULdfh7wVgcrxkxI-W5wNI_9lqLH/edit?usp=sharing';
 export const PUBLICATION_URL = 'https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf';
 

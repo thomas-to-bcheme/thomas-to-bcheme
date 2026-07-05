@@ -12,9 +12,11 @@ import {
   LINKEDIN_URL,
   YOUTUBE_URL,
   RESUME_PDF_URL,
-  HERO_PHOTO,
   WORK_AUTH,
 } from '@/constants/site';
+
+// Hero portrait lives in src/docs (swap the photo by replacing this file).
+import heroPortrait from '@/docs/thomas-to-portrait.jpg';
 
 const WORK_AUTH_CHIPS = [
   { label: WORK_AUTH.citizenship },
@@ -131,7 +133,7 @@ const HeroSection = () => {
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={HERO_PHOTO}
+                src={heroPortrait.src}
                 alt={`${SITE_OWNER_NAME} — Fullstack AI/ML Engineer`}
                 className="h-full w-full object-cover object-center"
               />
