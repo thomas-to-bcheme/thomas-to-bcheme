@@ -88,6 +88,21 @@ const SystemDesignCarousel = ({
     };
   }, [emblaApi, onSelect]);
 
+  // Keyboard nav: ←/→ move between slides when the carousel viewport is focused.
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (!emblaApi) return;
+      if (event.key === 'ArrowLeft') {
+        emblaApi.scrollPrev();
+        event.preventDefault();
+      } else if (event.key === 'ArrowRight') {
+        emblaApi.scrollNext();
+        event.preventDefault();
+      }
+    },
+    [emblaApi],
+  );
+
   const current = SYSTEM_DESIGNS[selectedIndex];
 
   return (
@@ -111,70 +126,83 @@ const SystemDesignCarousel = ({
         </header>
       )}
 
-      {/* Counter */}
-      <div className="mb-4 flex items-center justify-between">
+      {/* Counter + navigation hint */}
+      <div className="mb-4 flex items-center justify-between gap-3">
         <span className="text-micro text-zinc-400 font-mono">
           {selectedIndex + 1} / {SYSTEM_DESIGNS.length}
         </span>
+        <span className="hidden sm:block text-micro text-zinc-400 normal-case tracking-normal font-normal">
+          Drag, arrow keys, or dots to navigate
+        </span>
       </div>
 
-      {/* Embla viewport */}
-      <div ref={emblaRef} className="overflow-hidden">
-        <div className="flex">
-          {SYSTEM_DESIGNS.map((design, index) => (
-            <div
-              key={design.projectId}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${index + 1} of ${SYSTEM_DESIGNS.length}: ${design.title}`}
-              className="flex-[0_0_100%] min-w-0 pr-0.5"
-            >
-              <SystemDesignDiagram design={design} />
-            </div>
-          ))}
+      {/* Viewport with vertically-centered side arrows sitting in the gutters */}
+      <div className="relative px-10 sm:px-14">
+        <div
+          ref={emblaRef}
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+          aria-label="System design diagrams. Use the left and right arrow keys to navigate."
+          className="overflow-hidden rounded-xl cursor-grab active:cursor-grabbing select-none
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        >
+          <div className="flex">
+            {SYSTEM_DESIGNS.map((design, index) => (
+              <div
+                key={design.projectId}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${index + 1} of ${SYSTEM_DESIGNS.length}: ${design.title}`}
+                className="flex-[0_0_100%] min-w-0 px-0.5"
+              >
+                <SystemDesignDiagram design={design} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Navigation */}
-      <div className="mt-6 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800 pt-4">
+        {/* Side arrows */}
         <button
           onClick={() => emblaApi?.scrollPrev()}
           disabled={!canScrollPrev}
           aria-label="Previous system design"
-          className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200
-                     disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-150
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 grid place-items-center h-9 w-9 rounded-full
+                     border border-zinc-200 dark:border-zinc-700 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm shadow-sm
+                     text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-600
+                     disabled:opacity-30 disabled:cursor-not-allowed transition
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         >
           <ChevronLeft size={18} />
         </button>
-
-        {/* Dot indicators */}
-        <div className="flex items-center gap-1.5 flex-wrap justify-center">
-          {SYSTEM_DESIGNS.map((design, index) => (
-            <button
-              key={design.projectId}
-              onClick={() => emblaApi?.scrollTo(index)}
-              aria-label={`Go to ${design.title}`}
-              aria-current={index === selectedIndex}
-              className={`rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
-                index === selectedIndex
-                  ? 'w-4 h-1.5 bg-blue-600 dark:bg-blue-400'
-                  : 'w-1.5 h-1.5 bg-zinc-300 dark:bg-zinc-600 hover:bg-zinc-400'
-              }`}
-            />
-          ))}
-        </div>
-
         <button
           onClick={() => emblaApi?.scrollNext()}
           disabled={!canScrollNext}
           aria-label="Next system design"
-          className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200
-                     disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-150
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 grid place-items-center h-9 w-9 rounded-full
+                     border border-zinc-200 dark:border-zinc-700 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm shadow-sm
+                     text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-600
+                     disabled:opacity-30 disabled:cursor-not-allowed transition
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         >
           <ChevronRight size={18} />
         </button>
+      </div>
+
+      {/* Dot indicators */}
+      <div className="mt-6 flex items-center justify-center gap-1.5 flex-wrap">
+        {SYSTEM_DESIGNS.map((design, index) => (
+          <button
+            key={design.projectId}
+            onClick={() => emblaApi?.scrollTo(index)}
+            aria-label={`Go to ${design.title}`}
+            aria-current={index === selectedIndex}
+            className={`rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+              index === selectedIndex
+                ? 'w-4 h-1.5 bg-blue-600 dark:bg-blue-400'
+                : 'w-1.5 h-1.5 bg-zinc-300 dark:bg-zinc-600 hover:bg-zinc-400'
+            }`}
+          />
+        ))}
       </div>
 
       {/* Screen-reader live announcement of the current slide */}

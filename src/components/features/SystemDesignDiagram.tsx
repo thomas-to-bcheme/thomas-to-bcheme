@@ -60,7 +60,7 @@ const NodeCard = ({ node }: { node: DiagramNode }) => {
   const { iconBox } = TIER_CONFIG[node.tier];
   const Icon = node.icon;
   return (
-    <div className="card-base p-3 flex flex-col gap-2 h-full">
+    <div className="card-base p-4 flex flex-col gap-2">
       <div className="flex items-center gap-2.5">
         <span className={cn('icon-container shrink-0', iconBox)}>
           <Icon size={16} aria-hidden="true" />
@@ -116,7 +116,7 @@ const SystemDesignDiagram = ({ design }: { design: SystemDesign }) => {
       </div>
 
       {/* Tiered architecture flow */}
-      <div className="flex flex-col lg:flex-row lg:items-stretch">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-2">
         {tiers.map((group, index) => (
           <React.Fragment key={group.tier}>
             <div
@@ -143,11 +143,11 @@ const SystemDesignDiagram = ({ design }: { design: SystemDesign }) => {
       </div>
 
       {/* Design considerations */}
-      <div className="mt-8">
+      <div className="mt-10 border-t border-zinc-100 dark:border-zinc-800 pt-8">
         <span className="text-micro text-zinc-400 flex items-center gap-1.5 mb-3">
           <Scale size={12} aria-hidden="true" /> Design considerations
         </span>
-        <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {design.considerations.map((consideration: DesignConsideration) => (
             <div key={consideration.label} className="card-base p-4">
               <dt className={cn('text-micro mb-1', considerationAccent(consideration.label))}>
