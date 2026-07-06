@@ -2,7 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, FileText, Mail, ArrowRight, Linkedin, Youtube, CheckCircle2, Zap } from 'lucide-react';
+import { Github, FileText, ArrowRight, Linkedin, Youtube, CheckCircle2, Zap, Bot } from 'lucide-react';
+
+import { useChatWidget } from '@/components/layout/ChatWidgetProvider';
 
 import {
   SITE_OWNER_NAME,
@@ -25,9 +27,9 @@ const WORK_AUTH_CHIPS = [
   { label: WORK_AUTH.availability },
 ] as const;
 
-// Secondary "bubble" links beside the primary CTA — mapped to identical pills.
-const SOCIAL_PILLS = [
-  { icon: FileText, label: 'Resume', href: RESUME_PDF_URL },
+// External profile links — rendered as labeled outlined pills, uniform with the
+// "Ask my AI" / "Resume" secondary actions so the whole CTA row reads as one system.
+const EXTERNAL_LINKS = [
   { icon: Github, label: 'GitHub', href: GITHUB_URL },
   { icon: Linkedin, label: 'LinkedIn', href: LINKEDIN_URL },
   { icon: Youtube, label: 'YouTube', href: YOUTUBE_URL },
@@ -37,7 +39,14 @@ const SOCIAL_PILLS = [
 const FOCUS_RING =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black';
 
+// Outlined "secondary action" pill — shared by "Ask my AI" and "Resume" so they
+// read as a single, uniform group (thin border, subtle hover fill).
+const SECONDARY_PILL =
+  'inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 px-4 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors';
+
 const HeroSection = () => {
+  const { open: openChat } = useChatWidget();
+
   return (
     <section className="mb-8 pt-2">
       <div className="grid lg:grid-cols-2 gap-8 items-center mt-4">
@@ -49,15 +58,14 @@ const HeroSection = () => {
           transition={{ duration: 0.6 }}
           className="flex flex-col justify-center h-full"
         >
-          {/* Identity strip */}
-          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mb-4 text-sm">
-            <span className="font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight">
-              {SITE_OWNER_NAME}
-            </span>
+          {/* Eyebrow — name · location · status, uppercase and letter-spaced so it
+              sits above the headline like a byline (borrowed from the reference hero). */}
+          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400">
+            <span className="text-zinc-900 dark:text-zinc-100">{SITE_OWNER_NAME}</span>
             <span className="text-zinc-300 dark:text-zinc-600 select-none">·</span>
-            <span className="text-zinc-500 dark:text-zinc-400">{SITE_OWNER_LOCATION}</span>
+            <span>{SITE_OWNER_LOCATION}</span>
             <span className="text-zinc-300 dark:text-zinc-600 select-none">·</span>
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400">
+            <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500" />
@@ -67,13 +75,13 @@ const HeroSection = () => {
           </div>
 
           {/* Main title */}
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3 text-zinc-900 dark:text-white leading-[1.1]">
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-3 text-zinc-900 dark:text-white leading-[1.05]">
             Fullstack<br />
             <span className="gradient-text-blue">AI/ML Engineer</span>
           </h1>
 
           <p className="text-base text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl mb-4">
-            Integrating AI to digitally transform software engineering using machine learning methods to enhance workflows.
+            I build production AI systems for agents and manufacturing, scaling TPU/GPU-accelerated compute and turning engineering trade-offs into measurable business impact.
           </p>
 
           {/* Work authorization */}
@@ -89,29 +97,53 @@ const HeroSection = () => {
             ))}
           </div>
 
-          {/* Pill CTA cluster — primary + secondary "bubbles" */}
-          <div className="flex flex-wrap items-center gap-2.5 mb-3">
-            <a
-              href={`mailto:${SITE_OWNER_EMAIL}`}
-              className={`group inline-flex items-center gap-2 rounded-full bg-blue-600 text-white dark:bg-blue-500 px-5 py-2.5 text-sm font-bold hover:bg-blue-700 dark:hover:bg-blue-400 hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/20 dark:shadow-blue-900/30 ${FOCUS_RING}`}
-            >
-              <Mail size={16} />
-              <span>Start a Conversation</span>
-              <ArrowRight size={15} className="opacity-80 group-hover:translate-x-1 transition-transform duration-200" />
-            </a>
-
-            {SOCIAL_PILLS.map(({ icon: Icon, label, href }) => (
+          {/* CTA — two rows: primary + on-site actions, then external profiles on
+              their own line so the three profile pills always stay inline together. */}
+          <div className="flex flex-col gap-2.5 mb-3">
+            {/* Primary action + on-site actions */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              {/* Primary action — trailing-arrow "go" affordance, matching the nav
+                  Contact button so the one primary stands apart from the pills. */}
               <a
-                key={label}
-                href={href}
+                href={`mailto:${SITE_OWNER_EMAIL}`}
+                className={`group inline-flex items-center gap-2 rounded-full bg-blue-600 text-white dark:bg-blue-500 px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors ${FOCUS_RING}`}
+              >
+                <span>Let&apos;s Chat</span>
+                <ArrowRight size={16} className="opacity-80 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
+              </a>
+
+              {/* Opens the same floating RAG chat widget as the corner launcher. */}
+              <button type="button" onClick={openChat} className={`${SECONDARY_PILL} ${FOCUS_RING}`}>
+                <Bot size={16} />
+                <span>Ask my AI</span>
+              </button>
+              <a
+                href={RESUME_PDF_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-1.5 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:border-blue-400 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 hover:scale-105 active:scale-95 transition-all duration-200 ${FOCUS_RING}`}
+                className={`${SECONDARY_PILL} ${FOCUS_RING}`}
               >
-                <Icon size={15} />
-                <span>{label}</span>
+                <FileText size={16} />
+                <span>Resume</span>
               </a>
-            ))}
+            </div>
+
+            {/* External profiles on their own row — labeled pills, uniform with the
+                actions above. The visible text is the accessible name. */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              {EXTERNAL_LINKS.map(({ icon: Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${SECONDARY_PILL} ${FOCUS_RING}`}
+                >
+                  <Icon size={16} />
+                  <span>{label}</span>
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Response-time caption */}

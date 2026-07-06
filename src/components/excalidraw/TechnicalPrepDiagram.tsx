@@ -39,6 +39,14 @@ interface SavePayload {
   files: BinaryFiles;
 }
 
+interface TechnicalPrepDiagramProps {
+  /** Render the "SWE Study Plan" heading block + section anchor. The dedicated
+   *  /study-plan page supplies its own heading, so it passes false for a bare canvas. */
+  showHeading?: boolean;
+  /** Forwarded to ExcalidrawWrapper — lets the dedicated page use a taller canvas. */
+  heightClassName?: string;
+}
+
 async function verifyToken(token: string): Promise<boolean> {
   try {
     const res = await fetch('/api/excalidraw/verify', {
@@ -51,7 +59,7 @@ async function verifyToken(token: string): Promise<boolean> {
   }
 }
 
-export default function TechnicalPrepDiagram() {
+export default function TechnicalPrepDiagram({ showHeading = true, heightClassName }: TechnicalPrepDiagramProps = {}) {
   const [initialData, setInitialData] = useState<ExcalidrawInitialDataState | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
@@ -175,26 +183,32 @@ export default function TechnicalPrepDiagram() {
     }
   };
 
+  // Placeholders (loading / error) mirror the live canvas height so there's no
+  // layout jump when the scene mounts. Falls back to the bounded embed height.
+  const canvasHeightClass = heightClassName ?? 'h-[420px] sm:h-[500px] lg:h-[600px]';
+
   return (
-    <section id="study-plan" className="scroll-mt-24 py-16">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-          SWE Study Plan
-        </h2>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-          Zero to Offer — interactive technical preparation roadmap.{' '}
-          {isEditMode ? 'Edit mode active.' : 'View mode — edit unlocked with save secret.'}
-        </p>
-      </div>
+    <section id={showHeading ? 'study-plan' : undefined} className={showHeading ? 'scroll-mt-24 py-16' : ''}>
+      {showHeading && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            SWE Study Plan
+          </h2>
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+            Zero to Offer — interactive technical preparation roadmap.{' '}
+            {isEditMode ? 'Edit mode active.' : 'View mode — edit unlocked with save secret.'}
+          </p>
+        </div>
+      )}
 
       {loadError && (
-        <div className="flex items-center justify-center h-[420px] sm:h-[500px] lg:h-[600px] rounded-xl border border-red-200 dark:border-red-800 text-red-500 text-sm">
+        <div className={`flex items-center justify-center ${canvasHeightClass} rounded-xl border border-red-200 dark:border-red-800 text-red-500 text-sm`}>
           Failed to load diagram. Make sure the dev server has the diagram in public/excalidraw/.
         </div>
       )}
 
       {!loadError && !initialData && (
-        <div className="flex items-center justify-center h-[420px] sm:h-[500px] lg:h-[600px] rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-400 text-sm animate-pulse">
+        <div className={`flex items-center justify-center ${canvasHeightClass} rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-400 text-sm animate-pulse`}>
           Loading diagram…
         </div>
       )}
@@ -219,6 +233,7 @@ export default function TechnicalPrepDiagram() {
             viewModeEnabled={!isEditMode}
             onDiagramChange={() => setIsDirty(true)}
             defaultFrameName={DEFAULT_FRAME_NAME}
+            heightClassName={heightClassName}
           />
 
           {showTokenPrompt && (

@@ -17,6 +17,7 @@ import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis';
 import { useChat } from '@/hooks/useChat';
 import VoiceControls from '@/components/voice/VoiceControls';
 import { SUGGESTED_QUESTIONS, CAPABILITY_BADGES } from '@/constants/chat';
+import { parseAssistantMessage } from '@/lib/followups';
 
 interface AiGeneratorProps {
   collapsed?: boolean;
@@ -87,10 +88,12 @@ export default function AiGenerator({
     const lastMessage = messages[messages.length - 1];
     if (lastMessage.role !== 'assistant') return;
 
-    const newContent = lastMessage.content.slice(lastContentLengthRef.current);
+    // Speak only the visible answer, never the hidden follow-up control line.
+    const displayText = parseAssistantMessage(lastMessage.content).text;
+    const newContent = displayText.slice(lastContentLengthRef.current);
     if (newContent) {
       speakChunk(newContent);
-      lastContentLengthRef.current = lastMessage.content.length;
+      lastContentLengthRef.current = displayText.length;
     }
   }, [messages, ttsEnabled, speakChunk]);
 
@@ -121,6 +124,13 @@ export default function AiGenerator({
     }
     setTtsEnabled(!ttsEnabled);
   };
+
+  // Contextual follow-up chips: shown under the latest completed answer only.
+  const latestMessage = messages[messages.length - 1];
+  const followUps =
+    latestMessage && latestMessage.role === 'assistant' && !isLoading && !chatError
+      ? parseAssistantMessage(latestMessage.content).followUps
+      : [];
 
   // --- COLLAPSED MOBILE VIEW ---
   if (collapsed) {
@@ -200,7 +210,7 @@ export default function AiGenerator({
               <button
                 key={q}
                 onClick={() => handleSubmit(undefined, q)}
-                className="text-xs border border-zinc-200 dark:border-zinc-700 hover:border-indigo-500 dark:hover:border-indigo-500 bg-white dark:bg-zinc-800 p-2.5 rounded-lg transition-colors text-left line-clamp-2"
+                className="text-xs leading-snug border border-zinc-200 dark:border-zinc-700 hover:border-indigo-500 dark:hover:border-indigo-500 bg-white dark:bg-zinc-800 p-2.5 rounded-lg transition-colors text-left"
               >
                 {q}
               </button>
@@ -233,7 +243,7 @@ export default function AiGenerator({
       prose-p:leading-relaxed prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-900
       prose-li:marker:text-zinc-400"
                 >
-                  <ReactMarkdown>{m.content}</ReactMarkdown>
+                  <ReactMarkdown>{parseAssistantMessage(m.content).text}</ReactMarkdown>
                 </div>
               )}
             </div>
@@ -245,6 +255,21 @@ export default function AiGenerator({
             )}
           </div>
         ))}
+
+        {/* --- FOLLOW-UP SUGGESTIONS (under the latest answer) --- */}
+        {followUps.length > 0 && (
+          <div className="flex flex-wrap gap-2 pl-9">
+            {followUps.map((question) => (
+              <button
+                key={question}
+                onClick={() => handleSubmit(undefined, question)}
+                className="text-xs border border-zinc-200 dark:border-zinc-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 bg-white dark:bg-zinc-800 px-3 py-1.5 rounded-full transition-colors text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-offset-zinc-900"
+              >
+                {question}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* --- LOADING INDICATOR --- */}
         {isLoading && (

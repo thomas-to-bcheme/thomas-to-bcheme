@@ -46,10 +46,9 @@ export const PRESS_FEATURES: PressFeature[] = [
 ];
 
 /**
- * Recognition & leadership programs.
- * TODO(thomas): confirm/edit organization, short role label, and blurb wording
- * for AvenueE, Genentech Leadership, and Transfer Opportunity Program Ambassador
- * (best-effort placeholders). McNair links to the existing publication PDF.
+ * Recognition & leadership programs. Each links to the program's public homepage
+ * so readers can learn more (the McNair publication PDF is surfaced separately in
+ * PRESS_FEATURES / FeaturedIn).
  */
 export const RECOGNITION_ITEMS: RecognitionItem[] = [
   {
@@ -59,7 +58,7 @@ export const RECOGNITION_ITEMS: RecognitionItem[] = [
     role: 'Fellow',
     blurb:
       'Federal TRIO program preparing first-generation and underrepresented students for doctoral research through mentored, publication-track work.',
-    url: PUBLICATION_URL,
+    url: 'https://mcnair.ucdavis.edu/2019-mcnair-scholars-program',
   },
   {
     id: 'avenuee-leadership',
@@ -68,6 +67,7 @@ export const RECOGNITION_ITEMS: RecognitionItem[] = [
     role: 'Participant',
     blurb:
       'Engineering leadership cohort pairing peer mentorship with technical and professional development for underrepresented engineers.',
+    url: 'https://avenuee.engineering.ucdavis.edu/program-overview',
   },
   {
     id: 'genentech-leadership',
@@ -76,6 +76,7 @@ export const RECOGNITION_ITEMS: RecognitionItem[] = [
     role: 'Participant',
     blurb:
       'Cross-functional leadership exchange for early-career scientists and engineers, building stakeholder management and organizational leadership skills.',
+    url: 'https://careers.gene.com/us/en/internships',
   },
   {
     id: 'transfer-ambassador',
@@ -84,6 +85,7 @@ export const RECOGNITION_ITEMS: RecognitionItem[] = [
     role: 'Ambassador',
     blurb:
       'Guided prospective and current community college transfer students through peer mentorship and outreach initiatives.',
+    url: 'https://www.ucdavis.edu/admissions/undergraduate/transfer/transfer-opportunity-program',
   },
 ];
 

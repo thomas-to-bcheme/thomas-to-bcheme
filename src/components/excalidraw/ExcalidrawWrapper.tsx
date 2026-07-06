@@ -25,7 +25,12 @@ interface ExcalidrawWrapperProps {
   viewModeEnabled: boolean;
   onDiagramChange?: () => void;
   defaultFrameName?: string;
+  /** Tailwind height classes for the canvas frame. Defaults to the bounded
+   *  embed height; the dedicated /study-plan page passes a taller value. */
+  heightClassName?: string;
 }
+
+const DEFAULT_HEIGHT_CLASS = 'h-[420px] sm:h-[500px] lg:h-[600px]';
 
 // Returns true when `target` is a focusable, editable surface (text input, textarea,
 // select, or any contentEditable element) — i.e. somewhere a Space keystroke should
@@ -65,7 +70,7 @@ function isNativeScrollTarget(target: EventTarget | null, boundary: HTMLElement)
   return false;
 }
 
-export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange, defaultFrameName }: ExcalidrawWrapperProps) {
+export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange, defaultFrameName, heightClassName = DEFAULT_HEIGHT_CLASS }: ExcalidrawWrapperProps) {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useSystemTheme();
@@ -212,7 +217,7 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[420px] sm:h-[500px] lg:h-[600px] rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800"
+      className={`relative w-full ${heightClassName} rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800`}
     >
       <Excalidraw
         initialData={initialData}

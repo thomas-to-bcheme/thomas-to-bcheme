@@ -1,7 +1,6 @@
 import React from 'react';
-import { HeartHandshake } from 'lucide-react';
+import { HeartHandshake, ExternalLink } from 'lucide-react';
 
-import Badge from '@/components/ui/Badge';
 import { RECOGNITION_ITEMS } from '@/data/credentials';
 
 // Shared focus-visible ring, matching the convention used on nav links in page.tsx.
@@ -58,15 +57,23 @@ const AboutMeSection: React.FC = () => {
               const body = (
                 <>
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 leading-snug">{item.program}</span>
-                    <Badge color="rose" variant="outline" className="shrink-0">{item.role}</Badge>
+                    <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 leading-snug group-hover:text-pink-700 dark:group-hover:text-pink-300 transition-colors">
+                      {item.program}
+                    </span>
+                    {item.url && (
+                      <ExternalLink
+                        size={14}
+                        aria-hidden="true"
+                        className="shrink-0 mt-0.5 text-pink-400 opacity-0 -translate-x-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 motion-reduce:transition-none"
+                      />
+                    )}
                   </div>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-snug">
                     <span className="font-medium text-zinc-600 dark:text-zinc-300">{item.organization}</span> — {item.blurb}
                   </p>
                 </>
               );
-              const cardClass = `block p-3 rounded-lg border border-pink-100 dark:border-pink-900/30 bg-pink-50/40 dark:bg-pink-900/10 hover:border-pink-300 dark:hover:border-pink-700 transition-colors ${FOCUS_RING}`;
+              const cardClass = `group block p-3 rounded-lg border border-pink-100 dark:border-pink-900/30 bg-pink-50/40 dark:bg-pink-900/10 hover:border-pink-300 dark:hover:border-pink-600 hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 motion-reduce:hover:translate-y-0 ${FOCUS_RING}`;
               return (
                 <li key={item.id}>
                   {item.url ? (
@@ -74,7 +81,7 @@ const AboutMeSection: React.FC = () => {
                       {body}
                     </a>
                   ) : (
-                    <div className="block p-3 rounded-lg border border-pink-100 dark:border-pink-900/30 bg-pink-50/40 dark:bg-pink-900/10">
+                    <div className="group block p-3 rounded-lg border border-pink-100 dark:border-pink-900/30 bg-pink-50/40 dark:bg-pink-900/10">
                       {body}
                     </div>
                   )}

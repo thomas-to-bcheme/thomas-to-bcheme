@@ -35,10 +35,13 @@ export const SITE_VERSION = 'v2.4.0';
 export const SITE_REGION = 'US-West (SFO)';
 
 // --- Navigation ---
+// Section links use `/#section` so they work from any route (the System Design
+// page links back to homepage sections). The System Design entry is a real route.
 export const NAV_LINKS = [
-  { label: 'About Me', href: '#about-me', sectionId: 'about-me' },
-  { label: 'Pipeline', href: '#pipeline', sectionId: 'pipeline' },
-  { label: 'Study Plan', href: '#study-plan', sectionId: 'study-plan' },
+  { label: 'About Me', href: '/#about-me', sectionId: 'about-me' },
+  { label: 'Pipeline', href: '/#pipeline', sectionId: 'pipeline' },
+  { label: 'Study Plan', href: '/study-plan' },
+  { label: 'System Design', href: '/system-design' },
 ] as const;
 
 // --- Ideal Roles ---
@@ -51,7 +54,8 @@ export const IDEAL_ROLES = [
 
 // --- Footer Navigation ---
 export const FOOTER_NAV_LINKS = [
-  { label: 'Pipeline', href: '#pipeline' },
-  { label: 'Study Plan', href: '#study-plan' },
-  { label: 'About Me', href: '#about-me' },
+  { label: 'Pipeline', href: '/#pipeline' },
+  { label: 'Study Plan', href: '/study-plan' },
+  { label: 'About Me', href: '/#about-me' },
+  { label: 'System Design', href: '/system-design' },
 ] as const;

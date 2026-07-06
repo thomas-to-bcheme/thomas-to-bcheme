@@ -1,97 +1,51 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { ArrowRight } from 'lucide-react';
 
 // --- LOCAL COMPONENTS ---
 import HeroSection from '@/components/sections/HeroSection';
-import ResumeAgentSection from '@/components/sections/ResumeAgentSection';
 import FeaturedIn from '@/components/sections/FeaturedIn';
 import AboutMeSection from '@/components/sections/AboutMeSection';
 import BeyondTheTerminal from '@/components/sections/BeyondTheTerminal';
 import KanbanBoard from '@/components/features/KanbanBoard';
-import TechnicalPrepDiagram from '@/components/excalidraw/TechnicalPrepDiagram';
+import ChatWidget from '@/components/features/ChatWidget';
+import { ChatWidgetProvider } from '@/components/layout/ChatWidgetProvider';
+import SiteHeader from '@/components/layout/SiteHeader';
+import Link from 'next/link';
+import { PenTool, ArrowRight } from 'lucide-react';
 import SkipLink from '@/components/ui/SkipLink';
 import Footer from '@/components/sections/Footer';
 import { useActiveSection } from '@/hooks/useActiveSection';
-import { NAV_LINKS, SITE_OWNER_EMAIL } from '@/constants/site';
+import { NAV_LINKS } from '@/constants/site';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  // Active section tracking (U2)
-  const sectionIds = useMemo(() => NAV_LINKS.map(link => link.sectionId), []);
+  // Active section tracking (U2) — route links (e.g. System Design) have no
+  // sectionId, so only the scroll-spy sections are tracked here.
+  const sectionIds = useMemo(
+    () => NAV_LINKS.flatMap((link) => ('sectionId' in link ? [link.sectionId] : [])),
+    [],
+  );
   const activeSection = useActiveSection(sectionIds);
 
   if (!mounted) return null;
 
   return (
+    <ChatWidgetProvider>
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">
       {/* Skip Link for keyboard navigation (A1) */}
       <SkipLink />
 
-{/* --- STICKY NAV --- */}
-			<header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-black/80 border-b border-zinc-200 dark:border-zinc-800 transition-all duration-300 supports-[backdrop-filter]:bg-white/60">
-				<div className="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
-					
-					{/* LOGO: UX Value-Add -> Clicking logo resets to top */}
-					<div
-						onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-						onKeyDown={(e) => {
-							if (e.key === 'Enter' || e.key === ' ') {
-								e.preventDefault();
-								window.scrollTo({ top: 0, behavior: 'smooth' });
-							}
-						}}
-						className="font-bold text-xl tracking-tighter flex items-center gap-2 group cursor-pointer select-none"
-						role="button"
-						aria-label="Scroll to top"
-						tabIndex={0}
-					>
-						THOMAS<span className="text-blue-600 dark:text-blue-500 group-hover:text-blue-700 transition-colors duration-300">TO</span>
-					</div>
-					{/* UPDATED NAV: Active section highlighting (U2) */}
-          <nav className="hidden sm:flex gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-            {NAV_LINKS.map((link) => {
-              const isActive = activeSection === link.sectionId;
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`relative hover:text-blue-600 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black rounded-sm ${
-                    isActive ? 'text-blue-600 dark:text-blue-400' : ''
-                  }`}
-                >
-                  {link.label}
-                  {/* Active indicator underline */}
-                  {isActive && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full" />
-                  )}
-                </a>
-              );
-            })}
-          </nav>
-					
-					<a
-						href={`mailto:${SITE_OWNER_EMAIL}`}
-						className="flex items-center gap-2 text-xs bg-blue-600 text-white dark:bg-blue-500 px-4 py-2 rounded-full font-bold
-											 hover:bg-blue-700 dark:hover:bg-blue-400 hover:scale-105 active:scale-95
-											 transition-all duration-200 shadow-sm hover:shadow-blue-500/25 group
-											 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black focus-visible:ring-blue-600"
-					>
-						Contact
-						<ArrowRight size={16} className="opacity-75 group-hover:translate-x-1 transition-transform duration-200" />
-					</a>
-				</div>
-			</header>
+      {/* --- STICKY NAV (shared across routes) --- */}
+      <SiteHeader activeSection={activeSection} />
+
       <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6" role="main">
 
         {/* --- ABOUT ME SECTION --- */}
         <div id="about-me" className="mt-0 scroll-mt-24">
           <HeroSection />
-          <ResumeAgentSection />
           <FeaturedIn />
           <AboutMeSection />
         </div>
@@ -100,7 +54,35 @@ export default function Home() {
           <KanbanBoard />
         </section>
 
-        <TechnicalPrepDiagram />
+        {/* --- STUDY PLAN teaser → dedicated /study-plan page --- */}
+        <section className="scroll-mt-24 py-16">
+          <Link
+            href="/study-plan"
+            className="group block card-base p-6 sm:p-8 transition-colors hover:border-blue-300 dark:hover:border-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-2 block">
+                  Study Plan
+                </span>
+                <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+                  SWE Study Plan — <span className="gradient-text-blue">Zero to Offer</span>
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  A live Excalidraw whiteboard plus written notes on what I&apos;m learning and tracking —
+                  continuous-training MLOps, model drift, and edge AI. Open it full-page for the interactive board.
+                </p>
+              </div>
+              <span className="hidden sm:flex shrink-0 h-11 w-11 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50">
+                <PenTool size={20} className="text-blue-600 dark:text-blue-400" />
+              </span>
+            </div>
+            <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 dark:text-blue-400">
+              Open the Study Plan
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
+            </span>
+          </Link>
+        </section>
 
         {/* --- OFF THE CLOCK: personal photo section --- */}
         <BeyondTheTerminal />
@@ -109,6 +91,10 @@ export default function Home() {
 				<Footer />
 
 			</main>
+
+			{/* --- FLOATING RAG CHAT WIDGET (bottom-right) --- */}
+			<ChatWidget />
 		</div>
+		</ChatWidgetProvider>
 	);
 }
