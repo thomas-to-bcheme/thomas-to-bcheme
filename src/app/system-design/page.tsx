@@ -115,7 +115,7 @@ export default function SystemDesignPage() {
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">
       <SiteHeader />
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         {/* Back link */}
         <Link
           href="/"
