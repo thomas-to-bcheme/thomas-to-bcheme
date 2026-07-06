@@ -16,9 +16,9 @@ interface SiteHeaderProps {
 }
 
 /**
- * SiteHeader — the sticky top nav, shared by the homepage and the System Design
- * route. Section links (#about-me, …) point at `/#section` so they work from any
- * route; the "System Design" route link is highlighted via the current pathname.
+ * SiteHeader — the sticky top nav, shared by the homepage and subpages like the
+ * Study Plan. Section links (#about-me, …) point at `/#section` so they work from
+ * any route; a route link (e.g. "Study Plan") highlights via the current pathname.
  */
 export default function SiteHeader({ activeSection }: SiteHeaderProps) {
   const pathname = usePathname();
@@ -40,8 +40,8 @@ export default function SiteHeader({ activeSection }: SiteHeaderProps) {
 
         <nav className="hidden sm:flex gap-8 text-sm font-medium text-zinc-500 dark:text-zinc-400">
           {NAV_LINKS.map((link) => {
-            // Section links highlight via scroll-spy on the homepage; the route
-            // link ("System Design") highlights when its path is active.
+            // Section links highlight via scroll-spy on the homepage; a route
+            // link (e.g. "Study Plan") highlights when its path is active.
             const isActive =
               'sectionId' in link
                 ? pathname === '/' && activeSection === link.sectionId

@@ -60,7 +60,7 @@ export default function Home() {
           <KanbanBoard />
 
           {/* System design — inline carousel mirroring the pipeline projects */}
-          <div className="mt-12 pt-10 border-t border-zinc-200 dark:border-zinc-800">
+          <div id="system-design" className="scroll-mt-24 mt-12 pt-10 border-t border-zinc-200 dark:border-zinc-800">
             <div className="mb-6">
               <span className="text-micro text-zinc-400 block mb-2">System Design</span>
               <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">

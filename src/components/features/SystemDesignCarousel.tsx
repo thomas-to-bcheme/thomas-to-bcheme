@@ -13,8 +13,8 @@ interface SystemDesignCarouselProps {
   subheading?: string;
   /**
    * When true, reflect the current slide in the URL hash and scroll the
-   * section into view on deep-link. Enable only on the /system-design route so
-   * the homepage inline instance never fights the URL.
+   * section into view on deep-link. Enable only on a dedicated page that owns
+   * the URL, so an inline instance never fights the URL. (Off on the homepage.)
    */
   syncHash?: boolean;
 }

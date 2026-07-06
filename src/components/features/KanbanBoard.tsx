@@ -170,11 +170,12 @@ const KanbanCard = ({ item }: { item: KanbanItem }) => (
       </div>
     )}
 
-    {/* System-design deep link — only when a matching diagram exists (no dead links) */}
+    {/* System-design deep link — only when a matching diagram exists (no dead links).
+        Scrolls to the inline system-design carousel on the homepage. */}
     {SYSTEM_DESIGN_BY_ID[item.id] && (
       <div className="pt-2">
         <Link
-          href={`/system-design#${item.id}`}
+          href="/#system-design"
           className="group inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400
                      hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
