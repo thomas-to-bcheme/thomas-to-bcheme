@@ -17,7 +17,7 @@ const FeaturedIn: React.FC = () => {
   if (PRESS_FEATURES.length === 0) return null;
 
   return (
-    <section aria-label="Press feature" className="mb-8">
+    <section aria-label="Press feature">
       <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
         As Featured In
       </span>
@@ -29,7 +29,7 @@ const FeaturedIn: React.FC = () => {
             href={feature.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group card-base p-5 flex flex-col gap-3 hover:border-blue-300 dark:hover:border-blue-700 transition-colors ${FOCUS_RING}`}
+            className={`group card-base p-6 flex flex-col gap-4 hover:border-blue-300 dark:hover:border-blue-700 transition-colors ${FOCUS_RING}`}
           >
             <div className="flex items-center justify-between gap-3">
               <span className="flex items-center gap-2 text-sm font-semibold text-zinc-800 dark:text-zinc-200">

@@ -57,8 +57,8 @@ const Figure: React.FC<{ photo: Photo; className?: string }> = ({ photo, classNa
 
 const BeyondTheTerminal: React.FC = () => {
   return (
-    <section className="py-16">
-      <div className="mb-8 max-w-2xl">
+    <section>
+      <div className="mb-6 max-w-2xl">
         <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-3 block">
           Off the Clock
         </span>

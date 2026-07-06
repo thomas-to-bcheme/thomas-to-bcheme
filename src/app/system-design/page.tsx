@@ -12,11 +12,13 @@ import {
   AlertTriangle,
   GitCommitHorizontal,
   Layers,
+  Network,
 } from 'lucide-react';
 
 import SiteHeader from '@/components/layout/SiteHeader';
 import Footer from '@/components/sections/Footer';
 import Badge from '@/components/ui/Badge';
+import SystemDesignCarousel from '@/components/features/SystemDesignCarousel';
 import { GITHUB_URL } from '@/constants/site';
 
 export const metadata: Metadata = {
@@ -142,6 +144,20 @@ export default function SystemDesignPage() {
             <Badge color="zinc" variant="outline">Next.js 16 · Vercel · GitHub Actions · Hugging Face</Badge>
           </div>
         </header>
+
+        {/* Per-project system designs — interactive carousel */}
+        <section className="mb-14">
+          <div className="flex items-center gap-2 mb-5">
+            <Network size={18} className="text-blue-600 dark:text-blue-400" />
+            <h2 className="text-xl font-bold tracking-tight">System design, project by project</h2>
+          </div>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6 max-w-3xl">
+            Every project in the pipeline — and this portfolio itself — mapped across the same five
+            tiers: client → frontend → backend → model → data, with the trade-offs behind each
+            decision. Use the arrows or dots to step through every architecture.
+          </p>
+          <SystemDesignCarousel syncHash />
+        </section>
 
         {/* Architecture — the GitHub Monolith */}
         <section className="mb-14">

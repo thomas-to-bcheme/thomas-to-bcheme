@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, FileText, ArrowRight, Linkedin, Youtube, CheckCircle2, Zap, Bot } from 'lucide-react';
+import { Github, FileText, ArrowRight, Linkedin, Youtube, CheckCircle2, Bot } from 'lucide-react';
 
 import { useChatWidget } from '@/components/layout/ChatWidgetProvider';
 
@@ -48,15 +48,15 @@ const HeroSection = () => {
   const { open: openChat } = useChatWidget();
 
   return (
-    <section className="mb-8 pt-2">
-      <div className="grid lg:grid-cols-2 gap-8 items-center mt-4">
+    <section>
+      <div className="grid lg:grid-cols-2 gap-8 items-stretch">
 
         {/* --- LEFT COL: Identity, Value Prop, Auth, Pill CTAs --- */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col justify-center h-full"
+          className="flex flex-col justify-center"
         >
           {/* Eyebrow — name · location · status, uppercase and letter-spaced so it
               sits above the headline like a byline (borrowed from the reference hero). */}
@@ -64,18 +64,10 @@ const HeroSection = () => {
             <span className="text-zinc-900 dark:text-zinc-100">{SITE_OWNER_NAME}</span>
             <span className="text-zinc-300 dark:text-zinc-600 select-none">·</span>
             <span>{SITE_OWNER_LOCATION}</span>
-            <span className="text-zinc-300 dark:text-zinc-600 select-none">·</span>
-            <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500" />
-              </span>
-              Open to Work · Jun 2026
-            </span>
           </div>
 
           {/* Main title */}
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-3 text-zinc-900 dark:text-white leading-[1.05]">
+          <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight mb-3 text-zinc-900 dark:text-white leading-[1.02]">
             Fullstack<br />
             <span className="gradient-text-blue">AI/ML Engineer</span>
           </h1>
@@ -99,7 +91,7 @@ const HeroSection = () => {
 
           {/* CTA — two rows: primary + on-site actions, then external profiles on
               their own line so the three profile pills always stay inline together. */}
-          <div className="flex flex-col gap-2.5 mb-3">
+          <div className="flex flex-col gap-2.5">
             {/* Primary action + on-site actions */}
             <div className="flex flex-wrap items-center gap-2.5">
               {/* Primary action — trailing-arrow "go" affordance, matching the nav
@@ -145,29 +137,30 @@ const HeroSection = () => {
               ))}
             </div>
           </div>
-
-          {/* Response-time caption */}
-          <div className="flex items-center gap-1.5 text-xs text-zinc-400 dark:text-zinc-500">
-            <Zap size={12} className="text-yellow-500" />
-            Typically replies in &lt; 24 hours
-          </div>
         </motion.div>
 
         {/* --- RIGHT COL: Main Photo --- */}
+        {/* Stretches to the left column's height (grid items-stretch) so the photo
+            fills its half edge-to-edge — no centered-card margins, minimal whitespace.
+            On mobile it falls back to a portrait aspect ratio since there is no
+            sibling to match height against. */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="w-full"
+          className="w-full lg:h-full"
         >
-          <div className="relative mx-auto max-w-sm lg:max-w-md">
+          <div className="relative h-full mx-auto w-full max-w-sm lg:max-w-none aspect-[4/5] lg:aspect-auto">
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-2xl blur opacity-20" />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-2xl">
+            <div className="absolute inset-0 overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-2xl">
+              {/* Absolutely positioned so the image never dictates the cell height —
+                  the cell stretches to the left column's height (grid items-stretch)
+                  and the photo fills it via object-cover. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={heroPortrait.src}
                 alt={`${SITE_OWNER_NAME} — Fullstack AI/ML Engineer`}
-                className="h-full w-full object-cover object-center"
+                className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
               />
             </div>
           </div>

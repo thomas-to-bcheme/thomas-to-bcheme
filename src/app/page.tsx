@@ -8,6 +8,7 @@ import FeaturedIn from '@/components/sections/FeaturedIn';
 import AboutMeSection from '@/components/sections/AboutMeSection';
 import BeyondTheTerminal from '@/components/sections/BeyondTheTerminal';
 import KanbanBoard from '@/components/features/KanbanBoard';
+import SystemDesignCarousel from '@/components/features/SystemDesignCarousel';
 import ChatWidget from '@/components/features/ChatWidget';
 import { ChatWidgetProvider } from '@/components/layout/ChatWidgetProvider';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -41,21 +42,41 @@ export default function Home() {
       {/* --- STICKY NAV (shared across routes) --- */}
       <SiteHeader activeSection={activeSection} />
 
-      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6" role="main">
+      {/* Vertical rhythm is centralized here: one consistent 48px (space-y-12) gap
+          between every top-level block, so no section sets its own outer margin. */}
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 space-y-12" role="main">
 
-        {/* --- ABOUT ME SECTION --- */}
-        <div id="about-me" className="mt-0 scroll-mt-24">
+        {/* --- ABOUT ME SECTION — same 48px rhythm between hero, press, and about --- */}
+        <div id="about-me" className="scroll-mt-24 space-y-12">
           <HeroSection />
           <FeaturedIn />
           <AboutMeSection />
         </div>
 
+        {/* --- OFF THE CLOCK: personal photo section (follows Leadership & Recognition) --- */}
+        <BeyondTheTerminal />
+
         <section id="pipeline" className="scroll-mt-24">
           <KanbanBoard />
+
+          {/* System design — inline carousel mirroring the pipeline projects */}
+          <div className="mt-12 pt-10 border-t border-zinc-200 dark:border-zinc-800">
+            <div className="mb-6">
+              <span className="text-micro text-zinc-400 block mb-2">System Design</span>
+              <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
+                Architecture, <span className="gradient-text-blue">tier by tier</span>
+              </h3>
+              <p className="mt-2 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                Each pipeline project mapped across five tiers — client → frontend → backend → model
+                → data — with the design trade-offs behind it.
+              </p>
+            </div>
+            <SystemDesignCarousel />
+          </div>
         </section>
 
         {/* --- STUDY PLAN teaser → dedicated /study-plan page --- */}
-        <section className="scroll-mt-24 py-16">
+        <section className="scroll-mt-24">
           <Link
             href="/study-plan"
             className="group block card-base p-6 sm:p-8 transition-colors hover:border-blue-300 dark:hover:border-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
@@ -83,9 +104,6 @@ export default function Home() {
             </span>
           </Link>
         </section>
-
-        {/* --- OFF THE CLOCK: personal photo section --- */}
-        <BeyondTheTerminal />
 
 				{/* --- FOOTER SECTION --- */}
 				<Footer />

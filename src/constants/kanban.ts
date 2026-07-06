@@ -18,22 +18,13 @@ export interface KanbanItem {
   parameters?: string[];
   status: KanbanStatus;
   githubUrl?: string;
+  /** Internal route (e.g. '/study-plan') surfaced as a same-tab link on the card. */
+  studyPlanUrl?: string;
   priority: number;
 }
 
 export const KANBAN_ITEMS: KanbanItem[] = [
   // --- IN QUEUE ---
-  {
-    id: 'linkedin-api-cicd',
-    title: 'LinkedIn API CI/CD Pipeline',
-    role: 'Content Automation Engineer',
-    problem: 'Manual LinkedIn posting breaks publishing consistency and requires context-switching during deep work.',
-    solution: 'Automate content publishing via LinkedIn API with OAuth 2.0 token refresh, triggered by GitHub Actions on a CRON schedule.',
-    tags: ['LinkedIn API', 'GitHub Actions', 'OAuth 2.0', 'CI/CD', 'TypeScript'],
-    kpis: ['Zero manual post intervention', 'Consistent publishing cadence', 'API-driven content rotation'],
-    status: 'in-queue',
-    priority: 1,
-  },
   {
     id: 'apple-lifestyle-app',
     title: 'Apple Lifestyle App',
@@ -58,16 +49,20 @@ export const KANBAN_ITEMS: KanbanItem[] = [
   },
 
   // --- IN DEVELOPMENT ---
-  // Source: PHASES[1] in src/constants/roadmap.ts (status: 'current')
   {
-    id: 'phase2-agentic',
-    title: 'Phase 2: Agentic Integration',
-    role: 'Fullstack AI Engineer',
-    problem: 'Agentic projects exist only as local prototypes with no live demonstration path for interviews or portfolio visitors.',
-    solution: 'Implement proof-of-concept agentic features using Vercel serverless infrastructure, surfacing live demos on the portfolio homepage.',
-    tags: ['Next.js', 'Vercel Serverless', 'Google Gemini', 'RAG', 'TypeScript'],
-    kpis: ['Demonstrable agentic features live during interviews', 'Serverless architecture on free-tier infrastructure', 'Streaming chat with RAG context'],
+    id: 'accelerated-compute-at-scale',
+    title: 'Accelerated Compute at Scale',
+    role: 'Systems / ML Infra Engineer',
+    problem: 'Scaling ML training across TPU/GPU fleets is bottlenecked by the compiler and orchestration layers most engineers treat as a black box — the low-level hardware-accelerated compute path.',
+    solution: 'Contribute upstream to OpenXLA, JAX, and Kubernetes while studying low-level hardware-accelerated compute, strengthening industry-standard library support such as PyTorch\'s C/C++ and Python bindings.',
+    tags: ['OpenXLA', 'JAX', 'Kubernetes', 'PyTorch', 'C/C++', 'Python'],
+    kpis: [
+      'Upstream contributions to OpenXLA, JAX & Kubernetes',
+      'Fluency in low-level hardware-accelerated compute',
+      'Industry-standard PyTorch C/C++ & Python support',
+    ],
     status: 'in-development',
+    studyPlanUrl: '/study-plan',
     priority: 1,
   },
 
@@ -143,5 +138,28 @@ export const KANBAN_ITEMS: KanbanItem[] = [
     status: 'completed',
     githubUrl: 'https://github.com/thomas-to-bcheme/agentic-writer',
     priority: 5,
+  },
+  // Source: PHASES[1] in src/constants/roadmap.ts (status: 'completed')
+  {
+    id: 'phase2-agentic',
+    title: 'Phase 2: Agentic Integration',
+    role: 'Fullstack AI Engineer',
+    problem: 'Agentic projects exist only as local prototypes with no live demonstration path for interviews or portfolio visitors.',
+    solution: 'Implement proof-of-concept agentic features using Vercel serverless infrastructure, surfacing live demos on the portfolio homepage.',
+    tags: ['Next.js', 'Vercel Serverless', 'Google Gemini', 'RAG', 'TypeScript'],
+    kpis: ['Demonstrable agentic features live during interviews', 'Serverless architecture on free-tier infrastructure', 'Streaming chat with RAG context'],
+    status: 'completed',
+    priority: 6,
+  },
+  {
+    id: 'linkedin-api-cicd',
+    title: 'LinkedIn API CI/CD Pipeline',
+    role: 'Content Automation Engineer',
+    problem: 'Manual LinkedIn posting breaks publishing consistency and requires context-switching during deep work.',
+    solution: 'Automate content publishing via LinkedIn API with OAuth 2.0 token refresh, triggered by GitHub Actions on a CRON schedule.',
+    tags: ['LinkedIn API', 'GitHub Actions', 'OAuth 2.0', 'CI/CD', 'TypeScript'],
+    kpis: ['Zero manual post intervention', 'Consistent publishing cadence', 'API-driven content rotation'],
+    status: 'completed',
+    priority: 7,
   },
 ];

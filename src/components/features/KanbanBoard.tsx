@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import {
   ChevronLeft,
@@ -13,8 +14,12 @@ import {
   Clock,
   Wrench,
   PackageCheck,
+  NotebookPen,
+  Network,
+  ArrowRight,
 } from 'lucide-react';
 import { KANBAN_ITEMS, type KanbanItem, type KanbanStatus } from '@/constants/kanban';
+import { SYSTEM_DESIGN_BY_ID } from '@/constants/systemDesign';
 
 // ---------------------------------------------------------------------------
 // Column display config — status metadata kept out of component logic
@@ -142,6 +147,46 @@ const KanbanCard = ({ item }: { item: KanbanItem }) => (
           <Github size={13} />
           View on GitHub
         </a>
+      </div>
+    )}
+
+    {/* Internal study-plan link — same-tab client navigation */}
+    {item.studyPlanUrl && (
+      <div className="pt-2">
+        <Link
+          href={item.studyPlanUrl}
+          className="group inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400
+                     hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+                     focus-visible:ring-offset-white dark:focus-visible:ring-offset-black rounded-sm"
+        >
+          <NotebookPen size={13} />
+          Open study plan
+          <ArrowRight
+            size={13}
+            className="transition-transform duration-200 group-hover:translate-x-0.5"
+          />
+        </Link>
+      </div>
+    )}
+
+    {/* System-design deep link — only when a matching diagram exists (no dead links) */}
+    {SYSTEM_DESIGN_BY_ID[item.id] && (
+      <div className="pt-2">
+        <Link
+          href={`/system-design#${item.id}`}
+          className="group inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400
+                     hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200
+                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+                     focus-visible:ring-offset-white dark:focus-visible:ring-offset-black rounded-sm"
+        >
+          <Network size={13} />
+          View system design
+          <ArrowRight
+            size={13}
+            className="transition-transform duration-200 group-hover:translate-x-0.5"
+          />
+        </Link>
       </div>
     )}
   </div>
@@ -282,9 +327,9 @@ const KanbanColumn = ({ status, items }: { status: KanbanStatus; items: KanbanIt
 const COLUMN_ORDER: KanbanStatus[] = ['in-queue', 'in-development', 'completed'];
 
 const KanbanBoard: React.FC = () => (
-  <div className="py-16">
+  <div>
     {/* Section Header */}
-    <div className="mb-10">
+    <div className="mb-6">
       <span className="text-micro text-zinc-400 block mb-2">Project Pipeline</span>
       <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">
         Open Source &amp; Content Roadmap
@@ -292,7 +337,7 @@ const KanbanBoard: React.FC = () => (
     </div>
 
     {/* 3-Column Grid */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
       {COLUMN_ORDER.map((status) => (
         <KanbanColumn
           key={status}
