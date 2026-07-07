@@ -171,11 +171,14 @@ const KanbanCard = ({ item }: { item: KanbanItem }) => (
     )}
 
     {/* System-design deep link — only when a matching diagram exists (no dead links).
-        Scrolls to the inline system-design carousel on the homepage. */}
+        Plain <a>, not next/link's <Link>: the carousel lives on this same page, and
+        Link's client-side history.pushState navigation never fires a 'hashchange'
+        event, so the carousel would never see the jump. A native anchor lets the
+        browser perform the in-page fragment navigation, which does fire it. */}
     {SYSTEM_DESIGN_BY_ID[item.id] && (
       <div className="pt-2">
-        <Link
-          href="/#system-design"
+        <a
+          href={`/#${item.id}`}
           className="group inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400
                      hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200
                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
@@ -187,7 +190,7 @@ const KanbanCard = ({ item }: { item: KanbanItem }) => (
             size={13}
             className="transition-transform duration-200 group-hover:translate-x-0.5"
           />
-        </Link>
+        </a>
       </div>
     )}
   </div>

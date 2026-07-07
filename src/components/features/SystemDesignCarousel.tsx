@@ -12,9 +12,12 @@ interface SystemDesignCarouselProps {
   /** Optional section subheading/intro. */
   subheading?: string;
   /**
-   * When true, reflect the current slide in the URL hash and scroll the
-   * section into view on deep-link. Enable only on a dedicated page that owns
-   * the URL, so an inline instance never fights the URL. (Off on the homepage.)
+   * When true, reflect the currently-selected slide back into the URL hash as
+   * the user manually navigates the carousel (arrows/dots/drag). Enable only
+   * on a dedicated page that owns the URL, so an inline instance never fights
+   * it. (Off on the homepage.) Deep-linking to a slide via `#<projectId>` —
+   * jumping to it and scrolling it into view — always works regardless of
+   * this flag.
    */
   syncHash?: boolean;
 }
@@ -65,13 +68,14 @@ const SystemDesignCarousel = ({
       if (index < 0) return;
 
       emblaApi.scrollTo(index, true); // jump=true → no long animated sweep
-      // Bring the carousel into view only on the route that owns the URL.
-      if (syncHash) {
-        sectionRef.current?.scrollIntoView({
-          behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-          block: 'start',
-        });
-      }
+      // Always reveal the matched slide — a deep link (e.g. from a pipeline
+      // project card) is meaningless if the carousel jumps off-screen.
+      // `syncHash` separately controls whether *this* instance writes the
+      // selected slide back into the URL as the user manually navigates.
+      sectionRef.current?.scrollIntoView({
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+        block: 'start',
+      });
     };
 
     scrollToHash();
