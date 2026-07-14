@@ -19030,11 +19030,11 @@
       "index": "bEAV",
       "roundness": null,
       "seed": 784974751,
-      "version": 19,
-      "versionNonce": 2078577503,
+      "version": 21,
+      "versionNonce": 817654751,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1784064122808,
+      "updated": 1784064186714,
       "link": null,
       "locked": false,
       "text": "https://www.oreilly.com/library/view/llmops/9781098154196/\n\nhttps://www.oreilly.com/library/view/introducing-mlops/9781492083283/\n\nhttps://www.oreilly.com/library/view/practical-mlops/9781098103002/\n\nhttps://www.oreilly.com/library/view/beginning-mlops-with/9781484265499/\n\nhttps://www.oreilly.com/library/view/mlops-engineering-at/9781617297762/",
@@ -19054,7 +19054,7 @@
       "y": 7139.7959590222135,
       "width": 4002.079373297717,
       "height": 2819.399088645188,
-      "name": "Data Engineering and Ops",
+      "name": "Data Engineering and Ops (pipelines, infrastructure, and orchestration)",
       "angle": 0,
       "strokeColor": "#868e96",
       "backgroundColor": "transparent",
@@ -19067,11 +19067,11 @@
       "frameId": null,
       "roundness": null,
       "seed": 1667216817,
-      "version": 2351,
-      "versionNonce": 101085297,
+      "version": 2398,
+      "versionNonce": 765698495,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784063767419,
+      "updated": 1784064193556,
       "link": null,
       "locked": false,
       "index": "bEB"
@@ -19130,13 +19130,13 @@
       "shown": false,
       "data": null
     },
-    "previousSelectedElementIds": {
-      "q67gGSx_Rm_rIAy-hkhwI": true
-    },
+    "previousSelectedElementIds": {},
     "scrolledOutside": false,
-    "scrollX": -10701.378923860013,
-    "scrollY": -7363.453594778342,
-    "selectedElementIds": {},
+    "scrollX": -8727.223191569332,
+    "scrollY": -6303.388911575004,
+    "selectedElementIds": {
+      "DVkjFp7V0dj5ytAorKaKK": true
+    },
     "hoveredElementIds": {},
     "selectedGroupIds": {},
     "selectedElementsAreBeingDragged": false,
@@ -19159,7 +19159,7 @@
     "viewBackgroundColor": "#ffffff",
     "zenModeEnabled": false,
     "zoom": {
-      "value": 1.263785
+      "value": 0.174247
     },
     "viewModeEnabled": false,
     "pendingImageElementId": null,
