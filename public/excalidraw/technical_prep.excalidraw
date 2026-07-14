@@ -7124,7 +7124,7 @@
       "version": 36,
       "versionNonce": 1711455903,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [],
       "updated": 1784048381185,
       "link": null,
       "locked": false,
@@ -7161,7 +7161,7 @@
       "version": 55,
       "versionNonce": 252689407,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [],
       "updated": 1784048379768,
       "link": null,
       "locked": false,
@@ -19009,6 +19009,72 @@
       "originalText": "DVC",
       "autoResize": true,
       "lineHeight": 1.6666666666666667
+    },
+    {
+      "id": "q67gGSx_Rm_rIAy-hkhwI",
+      "type": "text",
+      "x": 11143.205373571373,
+      "y": 7484.5122937411215,
+      "width": 728.7193603515625,
+      "height": 225,
+      "angle": 0,
+      "strokeColor": "#2f9e44",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 4,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": "DVkjFp7V0dj5ytAorKaKK",
+      "index": "bEAV",
+      "roundness": null,
+      "seed": 784974751,
+      "version": 19,
+      "versionNonce": 2078577503,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1784064122808,
+      "link": null,
+      "locked": false,
+      "text": "https://www.oreilly.com/library/view/llmops/9781098154196/\n\nhttps://www.oreilly.com/library/view/introducing-mlops/9781492083283/\n\nhttps://www.oreilly.com/library/view/practical-mlops/9781098103002/\n\nhttps://www.oreilly.com/library/view/beginning-mlops-with/9781484265499/\n\nhttps://www.oreilly.com/library/view/mlops-engineering-at/9781617297762/",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "https://www.oreilly.com/library/view/llmops/9781098154196/\n\nhttps://www.oreilly.com/library/view/introducing-mlops/9781492083283/\n\nhttps://www.oreilly.com/library/view/practical-mlops/9781098103002/\n\nhttps://www.oreilly.com/library/view/beginning-mlops-with/9781484265499/\n\nhttps://www.oreilly.com/library/view/mlops-engineering-at/9781617297762/",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "DVkjFp7V0dj5ytAorKaKK",
+      "type": "frame",
+      "x": 10823.063310344882,
+      "y": 7139.7959590222135,
+      "width": 4002.079373297717,
+      "height": 2819.399088645188,
+      "name": "Data Engineering and Ops",
+      "angle": 0,
+      "strokeColor": "#868e96",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1667216817,
+      "version": 2351,
+      "versionNonce": 101085297,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1784063767419,
+      "link": null,
+      "locked": false,
+      "index": "bEB"
     }
   ],
   "appState": {
@@ -19038,12 +19104,7 @@
       "type": "selection",
       "customType": null,
       "locked": true,
-      "lastActiveTool": {
-        "type": "selection",
-        "customType": null,
-        "locked": true,
-        "lastActiveTool": null
-      }
+      "lastActiveTool": null
     },
     "penMode": false,
     "penDetected": false,
@@ -19070,11 +19131,11 @@
       "data": null
     },
     "previousSelectedElementIds": {
-      "LS16TzIp1XvCON4XSZ2_f": true
+      "q67gGSx_Rm_rIAy-hkhwI": true
     },
     "scrolledOutside": false,
-    "scrollX": 3494.74901644265,
-    "scrollY": 1933.8220790027053,
+    "scrollX": -10701.378923860013,
+    "scrollY": -7363.453594778342,
     "selectedElementIds": {},
     "hoveredElementIds": {},
     "selectedGroupIds": {},
@@ -19098,7 +19159,7 @@
     "viewBackgroundColor": "#ffffff",
     "zenModeEnabled": false,
     "zoom": {
-      "value": 1.223587
+      "value": 1.263785
     },
     "viewModeEnabled": false,
     "pendingImageElementId": null,
@@ -19111,10 +19172,10 @@
     "isCropping": false,
     "croppingElementId": null,
     "searchMatches": [],
-    "offsetLeft": 16.80000114440918,
-    "offsetTop": -0.11250000447034836,
-    "width": 935.2000122070312,
-    "height": 581.6000366210938
+    "offsetLeft": 17,
+    "offsetTop": 84,
+    "width": 1458,
+    "height": 520
   },
   "files": {
     "4668c0acc38f0a7db3beab7c9b2ebd0b7f024290": {
