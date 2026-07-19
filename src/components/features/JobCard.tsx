@@ -1,4 +1,5 @@
 import type { JobListing } from '@/types/jobs';
+import { createResumeDownloadUrl } from '@/lib/auth/resumeToken';
 
 function formatPostedDate(postedDate: string | null): string | null {
   if (!postedDate) return null;
@@ -21,8 +22,22 @@ const JobCard = ({ job }: { job: JobListing }) => {
         {job.title}
       </h5>
 
-      {job.description && (
-        <p className="text-sm text-subtle line-clamp-4">{job.description}</p>
+      <a
+        href={job.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black rounded-sm w-fit"
+      >
+        View job →
+      </a>
+
+      {job.resumePdfPath && (
+        <a
+          href={createResumeDownloadUrl(job.id)}
+          className="text-sm font-semibold text-zinc-600 dark:text-zinc-400 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black rounded-sm w-fit"
+        >
+          Download resume (PDF) ↓
+        </a>
       )}
 
       <div className="flex-1" />

@@ -13,6 +13,7 @@
     "@excalidraw/excalidraw": "^0.18.1",
     "@google/generative-ai": "^0.24.1",
     "@neondatabase/serverless": "^1.1.0",
+    "@vercel/blob": "^2.6.1",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.26",

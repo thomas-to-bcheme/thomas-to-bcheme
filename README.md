@@ -232,7 +232,8 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 - **Project Deep Dives** — Case study format with problem/solution narrative, architecture tags, and KPIs
 
 ### Live Data Integration
-- **Job Board** — `/jobs` page (Server Component, ISR every 30 min via `revalidate = 1800`) rendering open roles pulled live from a dedicated Neon serverless Postgres database through `getJobs()`; `JobCard` shows salary (`Intl.NumberFormat`), remote/location badges, skill-tag chips, and an "Apply" external link, with a graceful "No open roles posted right now" empty state; postings are validated at runtime against a Zod `JobPostingSchema`; also exposed as a public `GET /api/jobs` JSON endpoint (structured logging + correlation IDs, matching the chat API's conventions) — a showcase of consuming an external Postgres-backed microservice's data through a dedicated read-only connection string
+- **Job Board** — `/jobs` page (Server Component, ISR every 30 min via `revalidate = 1800`) rendering open roles pulled live from a dedicated Neon serverless Postgres database (`"PORTFOLIO".roles`: `job_id`, `title`, `url`, `posted_date`, `resume_pdf_path`) through `getJobs()`; `JobCard` shows the title, a "View job" external link, posted date, and — when a posting has an attached resume — a "Download resume (PDF)" link, with a graceful "No open roles posted right now" empty state; postings are validated at runtime against a Zod `JobListingSchema`; the page's `getJobListings()` and the public `GET /api/jobs` endpoint (structured logging + correlation IDs, matching the chat API's conventions) both delegate to the same single query so the two paths can't drift apart — a showcase of consuming an external Postgres-backed microservice's data through a dedicated read-only connection string
+- **Resume Downloads (Vercel Blob, private storage)** — PDFs referenced by `resume_pdf_path` live in a private Vercel Blob store, so they're only reachable through `GET /api/jobs/resume`, which streams the file server-side via `@vercel/blob`'s `get(pathname, { access: 'private' })` (never a public blob URL). Access is gated by a signed, per-job, time-limited HMAC token (`src/lib/auth/resumeToken.ts`) rather than a static shared secret — a raw secret embedded in a statically-rendered page's HTML would be visible via view-source to any visitor, defeating the point of gating files that carry PII (name/phone/email). Responses set `Cache-Control: private, no-store`.
 
 ### UX & Accessibility
 - **Roadmap Timeline** — 4-phase project lifecycle with animated status indicators and responsive zig-zag layout
@@ -327,6 +328,7 @@ src/
 │   ├── api/
 │   │   ├── chat/route.ts       # Gemini streaming endpoint (POST)
 │   │   ├── jobs/route.ts       # Job postings JSON endpoint (GET, Neon-backed)
+│   │   ├── jobs/resume/route.ts # Resume PDF download endpoint (GET, private Vercel Blob + signed token auth)
 │   │   └── excalidraw/
 │   │       ├── save/route.ts   # GitHub file commit endpoint (POST, SAVE_SECRET auth)
 │   │       └── verify/route.ts # Token verification endpoint (POST)
@@ -346,7 +348,8 @@ src/
 ├── constants/                  # site.ts, chat.ts, roi.ts, roadmap.ts
 ├── types/                      # chat.ts, api-errors.ts, roi.ts, jobs.ts
 ├── lib/                        # chat-api.ts, utils.tsx, fractionalIndex.ts
-│   └── db/jobs.ts              # Neon Postgres client + getJobs() (Job Board data layer)
+│   ├── db/jobs.ts              # Neon Postgres client + getJobs() (Job Board data layer)
+│   └── auth/resumeToken.ts     # Signed, time-limited HMAC tokens for resume downloads
 └── data/                       # AiSystemInformation.ts (RAG context)
 
 backend/                        # Python ML models
@@ -365,12 +368,14 @@ system_design_docs/             # Architecture documentation
 |----------|----------|-------------|
 | `GOOGLE_API_KEY` | Yes | Google Gemini API key for AI chat |
 | `JOBS_DATABASE_URL` | Yes | Read-only Neon Postgres connection string for the Job Board (`/jobs`, `/api/jobs`). `src/lib/db/jobs.ts` throws a fatal error at module import time if unset |
+| `JOBS_RESUME_SECRET` | Yes | HMAC signing key for resume download links (`src/lib/auth/resumeToken.ts`). Internal-only — generate any random value (e.g. `openssl rand -hex 32`), it doesn't need to match anything external. Throws a fatal error at module import time if unset |
+| `BLOB_READ_WRITE_TOKEN` | For local dev | Read/write token for the private Vercel Blob store backing resume downloads (`/api/jobs/resume`). Only needed outside Vercel — on Vercel, with the store connected to the project, the SDK authenticates via OIDC automatically |
 | `GITHUB_TOKEN` | For Excalidraw save | GitHub Personal Access Token with `contents` scope |
 | `GITHUB_REPO_OWNER` | For Excalidraw save | GitHub username (repository owner) |
 | `GITHUB_REPO_NAME` | For Excalidraw save | Repository name (e.g. `thomas-to-bcheme.github.io`) |
 | `SAVE_SECRET` | For Excalidraw save | Token required by `/api/excalidraw/save` and `/api/excalidraw/verify` |
 
-The four Excalidraw variables are only needed if you want the diagram canvas to unlock edit mode and persist saves back to GitHub. Without them, the canvas is still viewable in read-only mode. `JOBS_DATABASE_URL`, by contrast, is required unconditionally — the Job Board's data layer fails fast at import time without it.
+The four Excalidraw variables are only needed if you want the diagram canvas to unlock edit mode and persist saves back to GitHub. Without them, the canvas is still viewable in read-only mode. `JOBS_DATABASE_URL` and `JOBS_RESUME_SECRET`, by contrast, are required unconditionally — the Job Board's data layer and resume-link signing both fail fast at import time without them.
 
 Create `.env.local` in the project root:
 
@@ -380,6 +385,13 @@ GOOGLE_API_KEY=your_gemini_api_key_here
 
 # Required — read-only Neon Postgres connection string for the Job Board
 JOBS_DATABASE_URL=your_neon_postgres_connection_string_here
+
+# Required — HMAC signing key for resume download links (any random value)
+JOBS_RESUME_SECRET=your_random_secret_here
+
+# Required for local dev only — private Blob store token for resume downloads
+# (on Vercel with the store connected to the project, OIDC is used instead)
+BLOB_READ_WRITE_TOKEN=your_vercel_blob_read_write_token_here
 
 # Optional — required only for the Excalidraw diagram edit + save feature
 GITHUB_TOKEN=your_github_pat_with_contents_scope
@@ -416,7 +428,7 @@ Output:     .next
 | **Phase 2**: Agentic Integration | Completed | Proof-of-concept AI features on serverless | Hiring Managers |
 | **Phase 3**: E2E ML Infrastructure | Completed | Python ML models deployed via FastAPI + HuggingFace | Technical Leads |
 | **Phase 4**: Open Source Distribution | Completed | Refactoring, documentation, educational resources | Community |
-| **Phase 5**: External Data Integrations | In Progress | Live Neon Postgres-backed Job Board consuming an external microservice; schema hardening pending confirmation against the source table | Hiring Managers |
+| **Phase 5**: External Data Integrations | Completed | Live Neon Postgres-backed Job Board consuming an external microservice; schema confirmed against the source table (`"PORTFOLIO".roles`) | Hiring Managers |
 
 ---
 
