@@ -162,4 +162,20 @@ export const KANBAN_ITEMS: KanbanItem[] = [
     status: 'completed',
     priority: 7,
   },
+  {
+    id: 'apply-to-jobs',
+    title: 'Apply-to-Jobs Pipeline',
+    role: 'AI/ML Engineer',
+    problem: 'Manually scraping, tailoring, and tracking job postings does not scale — every role needs its own scraped description, tailored résumé, rendered PDF, and a way for a live job board to serve it.',
+    solution: 'A 5-stage TypeScript pipeline (scrape → describe → tailor → render → sync) scrapes Apple postings across 4 search filters, tailors a résumé per role through a 6-model Gemini fallback cascade, renders Markdown to PDF, and syncs into the same Neon Postgres table and private Vercel Blob store this portfolio\'s Job Board already reads from.',
+    tags: ['TypeScript', 'Google Gemini', 'Neon Postgres', 'Vercel Blob', 'Web Scraping', 'Markdown → PDF'],
+    kpis: [
+      '296/296 roles scraped (100%) across 4 Apple search filters — TPU, GPU, Infrastructure, Backend',
+      '179/296 résumés tailored (60.5%), the pipeline\'s bottleneck stage',
+      'gemini-3.1-flash-lite carries 167/179 tailors (93.3%) at ~4.5s avg — the workhorse despite ranking #2 of 6',
+      'Syncs into the same Neon "PORTFOLIO".roles table & private Vercel Blob store the live Job Board reads from',
+    ],
+    status: 'completed',
+    priority: 8,
+  },
 ];

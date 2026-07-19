@@ -651,6 +651,74 @@ export const SYSTEM_DESIGNS: SystemDesign[] = [
       },
     ],
   },
+  {
+    projectId: 'apply-to-jobs',
+    title: 'Apply-to-Jobs Pipeline',
+    summary:
+      'A 5-stage scrape → describe → tailor → render → sync pipeline that scrapes Apple job postings directly, tailors a résumé per role through a 6-model Gemini fallback cascade, and syncs into the same Neon table and Blob store this portfolio\'s Job Board already serves from.',
+    nodes: [
+      {
+        tier: 'client',
+        label: 'Operator (CLI)',
+        tech: 'npm run extract',
+        note: 'Triggers the 5-stage pipeline: scrape → describe → tailor → render → sync.',
+        icon: Terminal,
+      },
+      {
+        tier: 'backend',
+        label: 'Apple Careers Scraper',
+        tech: 'TypeScript · 4 search filters',
+        note: 'Scrapes TPU / GPU / Infrastructure / Backend postings directly — 296/296 (100%) this run.',
+        icon: Network,
+      },
+      {
+        tier: 'backend',
+        label: 'Render Pipeline',
+        tech: 'Markdown → PDF',
+        note: 'Renders every successfully tailored résumé — 179/179 (100% of tailored).',
+        icon: Workflow,
+      },
+      {
+        tier: 'model',
+        label: 'Gemini Fallback Cascade',
+        tech: '6-model priority chain',
+        note: '167/179 tailors (93.3%) land on the #2-ranked model, not the most capable one.',
+        icon: Sparkles,
+      },
+      {
+        tier: 'data',
+        label: 'Neon "PORTFOLIO".roles',
+        tech: 'Shared Postgres table',
+        note: 'Same table src/lib/db/jobs.ts reads — 296 rows synced, 179 carry a résumé.',
+        icon: Database,
+      },
+      {
+        tier: 'data',
+        label: 'Vercel Blob (private)',
+        tech: 'Shared blob store',
+        note: 'Same private store src/app/api/jobs/resume/route.ts streams from.',
+        icon: HardDrive,
+      },
+    ],
+    considerations: [
+      {
+        label: 'Why fallback by quota, not capability',
+        body: 'Gemini tracks quota independently per model (PerProjectPerModel) — a bulkhead pattern applied across a model portfolio. It lets gemini-3.1-flash-lite, ranked #2, absorb 93.3% of volume once the top-ranked model\'s 20 req/day cap is hit.',
+      },
+      {
+        label: 'Idempotent checkpointing',
+        body: 'Every success is written to data.json immediately; every re-run filters on !role.resume. A crash or quota wall loses at most one in-flight call.',
+      },
+      {
+        label: 'Confirmed bug (P0)',
+        body: 'The fallback only advances on HTTP 429 (quota), not 404 (retired model) — 11 of 19 failed attempts (57.9%) this run were repeat calls to the same dead, retired model instead of skipping it.',
+      },
+      {
+        label: 'Why sync into existing infra',
+        body: 'Writes land in the same Neon "PORTFOLIO".roles table and private Blob store the Job Board already reads/serves — no parallel storage layer, and the /jobs page picks up new rows on its existing 30-min ISR window.',
+      },
+    ],
+  },
 ];
 
 /** Fast lookup by projectId (KanbanItem.id or 'portfolio'). */

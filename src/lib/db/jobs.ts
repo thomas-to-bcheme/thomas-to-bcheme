@@ -27,6 +27,15 @@ export async function getJobs(): Promise<JobListing[]> {
   // Table lives in the "PORTFOLIO" schema, not the default `public` schema —
   // quoting is required to preserve the case, since unquoted identifiers are
   // lowercased by Postgres and won't resolve to this schema.
+  //
+  // posted_date is TEXT (not DATE) in the source table — it's extracted from
+  // job descriptions upstream, and this connection is read-only so the
+  // column type can't be migrated from here. A bare `ORDER BY posted_date`
+  // sorts lexicographically, and Postgres's DESC default is NULLS FIRST,
+  // which pushes rows with a missing/unparsed date to the top ahead of
+  // genuinely recent postings. Casting to `date` for the comparison (with
+  // empty string normalized to NULL first) gives a true chronological sort,
+  // and NULLS LAST keeps unknown dates at the bottom in both directions.
   const rows = await sql`
     SELECT
       job_id,
@@ -35,7 +44,7 @@ export async function getJobs(): Promise<JobListing[]> {
       posted_date AS "postedDate",
       resume_pdf_path AS "resumePdfPath"
     FROM "PORTFOLIO".roles
-    ORDER BY posted_date DESC
+    ORDER BY NULLIF(posted_date, '')::date DESC NULLS LAST
   `;
 
   return rows.map((row) =>

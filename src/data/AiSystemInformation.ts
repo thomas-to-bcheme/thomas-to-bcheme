@@ -178,6 +178,21 @@ The project is built using a precise selection of tools to balance cost, perform
 **Bio-Computation:**
 - pyRosetta, pyMol, Benchling, OpenCV, ImageJ.
 - **Purpose:** These specialized tools reflect Thomas's domain expertise in protein design and biomanufacturing.
+
+---
+
+### 7. THE JOB BOARD & THE "APPLY-TO-JOBS" PIPELINE
+/jobs and /api/jobs serve LIVE rows from a real Neon Postgres table ("PORTFOLIO".roles, via src/lib/db/jobs.ts), refreshed every 30 min (ISR). Résumé PDFs stream from a private Vercel Blob store behind a signed, 24-hour HMAC link (/api/jobs/resume) — never a public URL.
+
+**Data source:** A separate external TypeScript pipeline, "apply-to-jobs" (not in this repo), runs 5 stages — scrape → describe → tailor → render → sync — scraping Apple postings (TPU/GPU/Infrastructure/Backend filters), tailoring résumés per role via a 6-model Gemini fallback cascade, and syncing into this SAME Neon table and Blob store.
+
+**KPI (2026-07-19 run):** 296/296 scraped (100%) → 179/296 tailored (60.5%, the bottleneck) → 179/179 rendered → 296 synced (179 carry a résumé).
+
+**KPI (model cascade):** gemini-3.1-flash-lite (ranked #2 of 6) carried 167/179 tailors (93.3%) — the actual workhorse, ~7x faster than the top-ranked model. Known bug: a retired model (404) isn't recognized as quota-exhausted and gets retried instead of skipped (11 of 19 failed attempts this run).
+
+**KPI (QA layer):** every tailored résumé is auto-checked post-generation against a golden-dataset rubric — weak/no quantifiable metric, unsupported skill claims, missing hyperlinks, banned words, semicolons, 2-page limit.
+
+**Why it matters:** the same ingest → transform (LLM) → persist → serve pattern shows up twice — once as this external batch pipeline, once as this very chat agent — wired together only through shared Postgres/Blob infrastructure, no direct coupling.
 `;
 
 
