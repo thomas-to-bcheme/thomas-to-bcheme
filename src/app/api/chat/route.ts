@@ -122,7 +122,7 @@ export async function POST(req: Request) {
 
     // 3. Initialize Model
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3.1-pro-preview",
       systemInstruction: AiSystemInformation,
     });
 

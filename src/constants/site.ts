@@ -41,6 +41,7 @@ export const NAV_LINKS = [
   { label: 'About Me', href: '/#about-me', sectionId: 'about-me' },
   { label: 'Pipeline', href: '/#pipeline', sectionId: 'pipeline' },
   { label: 'Study Plan', href: '/study-plan' },
+  { label: 'Jobs', href: '/jobs' },
 ] as const;
 
 // --- Ideal Roles ---
@@ -55,5 +56,6 @@ export const IDEAL_ROLES = [
 export const FOOTER_NAV_LINKS = [
   { label: 'Pipeline', href: '/#pipeline' },
   { label: 'Study Plan', href: '/study-plan' },
+  { label: 'Jobs', href: '/jobs' },
   { label: 'About Me', href: '/#about-me' },
 ] as const;
