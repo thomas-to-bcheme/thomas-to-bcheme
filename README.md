@@ -12,7 +12,7 @@
 
 ## Overview
 
-A fullstack portfolio application that demonstrates end-to-end engineering capabilities through an embedded AI chat agent, interactive ROI calculator, Excalidraw technical prep diagram, and ML-powered salary prediction models. Built on a zero-cost architecture using free-tier services (Vercel, GitHub Actions, Hugging Face) with strict TypeScript and modular React component patterns.
+A fullstack portfolio application that demonstrates end-to-end engineering capabilities through an embedded AI chat agent, interactive ROI calculator, Excalidraw technical prep diagram, ML-powered salary prediction models, and a live Job Board backed by Neon serverless Postgres. Built on a zero-cost architecture using free-tier services (Vercel, GitHub Actions, Hugging Face) with strict TypeScript and modular React component patterns.
 
 **[Live Demo](https://thomas-to-bcheme-github-io.vercel.app/)**
 
@@ -220,7 +220,7 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 ## Features
 
 ### AI & Voice
-- **Live AI Chat Agent** — Google Gemini API (`gemini-3-flash-preview`) with RAG context from resume and portfolio data, real-time streaming responses, markdown rendering
+- **Live AI Chat Agent** — Google Gemini API (`gemini-3.1-pro-preview`) with RAG context from resume and portfolio data, real-time streaming responses, markdown rendering
 - **Voice Input (STT)** — Web Speech API for hands-free interaction with auto-submit on silence detection
 - **Voice Output (TTS)** — Speech Synthesis API with sentence-boundary queuing for natural streaming playback
 
@@ -230,6 +230,9 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 - **Project Kanban Board** — Embla carousel with three swimlanes (Queue, In Development, Completed) tracking active projects across the open-source ecosystem
 - **SWE Study Plan ("Zero to Offer")** — Embedded Excalidraw canvas with 6 named frames (Reading List, Practical Coding, System Design Interview Framework, Architecture Concepts, System Architecture Diagram, Communication Frameworks); view-only by default; unlock with `SAVE_SECRET` to edit and save directly to the GitHub repo via the Contents API
 - **Project Deep Dives** — Case study format with problem/solution narrative, architecture tags, and KPIs
+
+### Live Data Integration
+- **Job Board** — `/jobs` page (Server Component, ISR every 30 min via `revalidate = 1800`) rendering open roles pulled live from a dedicated Neon serverless Postgres database through `getJobs()`; `JobCard` shows salary (`Intl.NumberFormat`), remote/location badges, skill-tag chips, and an "Apply" external link, with a graceful "No open roles posted right now" empty state; postings are validated at runtime against a Zod `JobPostingSchema`; also exposed as a public `GET /api/jobs` JSON endpoint (structured logging + correlation IDs, matching the chat API's conventions) — a showcase of consuming an external Postgres-backed microservice's data through a dedicated read-only connection string
 
 ### UX & Accessibility
 - **Roadmap Timeline** — 4-phase project lifecycle with animated status indicators and responsive zig-zag layout
@@ -251,6 +254,7 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 | Carousel | Embla Carousel | Kanban board swimlane navigation |
 | Counters | react-countup | Animated metric counters |
 | AI | Google Gemini API | Streaming chat with RAG context |
+| Database | Neon Serverless Postgres (`@neondatabase/serverless`) | Read-only live data feed for the Job Board |
 | Validation | Zod 4 | Runtime schema validation on API routes |
 | Math | KaTeX | LaTeX rendering for ROI derivations |
 | Icons | Lucide React | SVG icon system |
@@ -266,6 +270,7 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 - **Node.js** 20+ and **npm** 9+
 - **Python** 3.9+ (optional, for ML backend)
 - **Google Gemini API key** ([Get one here](https://aistudio.google.com/))
+- **Neon Postgres connection string** (optional — only needed to run the `/jobs` Job Board locally; see Configuration below)
 
 ### Installation
 
@@ -304,7 +309,13 @@ python main.py
 | `npm run dev` | Start development server (Turbopack) |
 | `npm run build` | Production build |
 | `npm start` | Run production server |
-| `npm run lint` | Run ESLint |
+| `npm run lint` | Run ESLint — **currently broken** on this Next.js version (see note below) |
+
+> **Note on `npm run lint`:** Next.js 16.2.1 removed the `next lint` subcommand entirely, so this script currently exits with an "Invalid project directory" error. Until the script is updated to call ESLint directly, verify changes with:
+> ```bash
+> npx tsc --noEmit && npm run build
+> ```
+> There is no automated test suite in this repository yet (no Jest/Vitest/Playwright configured), so the command above is the current recommended pre-commit check.
 
 ---
 
@@ -315,24 +326,27 @@ src/
 ├── app/                        # Next.js App Router
 │   ├── api/
 │   │   ├── chat/route.ts       # Gemini streaming endpoint (POST)
+│   │   ├── jobs/route.ts       # Job postings JSON endpoint (GET, Neon-backed)
 │   │   └── excalidraw/
 │   │       ├── save/route.ts   # GitHub file commit endpoint (POST, SAVE_SECRET auth)
 │   │       └── verify/route.ts # Token verification endpoint (POST)
+│   ├── jobs/page.tsx           # Job Board page (server component, ISR revalidate=1800)
 │   ├── layout.tsx              # Root layout (server)
 │   ├── page.tsx                # Home page (client)
 │   └── error.tsx               # Error boundary
 ├── components/
 │   ├── ui/                     # Badge, Button, SkipLink
 │   ├── sections/               # HeroSection, AboutMe, Connect, Footer, Roadmap
-│   ├── features/               # AiGenerator, ArchitectureDiagram, ProjectDeepDive, KanbanBoard
+│   ├── features/               # AiGenerator, ArchitectureDiagram, ProjectDeepDive, KanbanBoard, JobBoard, JobCard
 │   ├── layout/                 # BentoGrid, MotionProvider, ImpactMetric
 │   ├── voice/                  # VoiceControls
 │   ├── roi/                    # ROICalculation + sub-components
 │   └── excalidraw/             # ExcalidrawWrapper, TechnicalPrepDiagram (SWE Study Plan)
 ├── hooks/                      # useChat, useActiveSection, useSpeech*
 ├── constants/                  # site.ts, chat.ts, roi.ts, roadmap.ts
-├── types/                      # chat.ts, api-errors.ts, roi.ts
+├── types/                      # chat.ts, api-errors.ts, roi.ts, jobs.ts
 ├── lib/                        # chat-api.ts, utils.tsx, fractionalIndex.ts
+│   └── db/jobs.ts              # Neon Postgres client + getJobs() (Job Board data layer)
 └── data/                       # AiSystemInformation.ts (RAG context)
 
 backend/                        # Python ML models
@@ -350,18 +364,22 @@ system_design_docs/             # Architecture documentation
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `GOOGLE_API_KEY` | Yes | Google Gemini API key for AI chat |
+| `JOBS_DATABASE_URL` | Yes | Read-only Neon Postgres connection string for the Job Board (`/jobs`, `/api/jobs`). `src/lib/db/jobs.ts` throws a fatal error at module import time if unset |
 | `GITHUB_TOKEN` | For Excalidraw save | GitHub Personal Access Token with `contents` scope |
 | `GITHUB_REPO_OWNER` | For Excalidraw save | GitHub username (repository owner) |
 | `GITHUB_REPO_NAME` | For Excalidraw save | Repository name (e.g. `thomas-to-bcheme.github.io`) |
 | `SAVE_SECRET` | For Excalidraw save | Token required by `/api/excalidraw/save` and `/api/excalidraw/verify` |
 
-The four Excalidraw variables are only needed if you want the diagram canvas to unlock edit mode and persist saves back to GitHub. Without them, the canvas is still viewable in read-only mode.
+The four Excalidraw variables are only needed if you want the diagram canvas to unlock edit mode and persist saves back to GitHub. Without them, the canvas is still viewable in read-only mode. `JOBS_DATABASE_URL`, by contrast, is required unconditionally — the Job Board's data layer fails fast at import time without it.
 
 Create `.env.local` in the project root:
 
 ```bash
 # Required — Google Gemini API key for AI chat
 GOOGLE_API_KEY=your_gemini_api_key_here
+
+# Required — read-only Neon Postgres connection string for the Job Board
+JOBS_DATABASE_URL=your_neon_postgres_connection_string_here
 
 # Optional — required only for the Excalidraw diagram edit + save feature
 GITHUB_TOKEN=your_github_pat_with_contents_scope
@@ -398,6 +416,7 @@ Output:     .next
 | **Phase 2**: Agentic Integration | Completed | Proof-of-concept AI features on serverless | Hiring Managers |
 | **Phase 3**: E2E ML Infrastructure | Completed | Python ML models deployed via FastAPI + HuggingFace | Technical Leads |
 | **Phase 4**: Open Source Distribution | Completed | Refactoring, documentation, educational resources | Community |
+| **Phase 5**: External Data Integrations | In Progress | Live Neon Postgres-backed Job Board consuming an external microservice; schema hardening pending confirmation against the source table | Hiring Managers |
 
 ---
 
