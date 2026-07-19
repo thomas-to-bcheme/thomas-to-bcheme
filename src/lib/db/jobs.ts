@@ -11,15 +11,17 @@ if (!JOBS_DATABASE_URL) {
   );
 }
 
-const sql = neon(JOBS_DATABASE_URL);
+// Exported for reuse by other read-only queries against this same database
+// (e.g. src/app/jobs/query.tsx) so the connection is only ever derived once.
+export const sql = neon(JOBS_DATABASE_URL);
 
 /**
  * Fetch all job postings from the shared Neon database.
- *
- * Table/column names are provisional — confirm against the microservice's
- * actual `jobs` table schema and adjust the query below if they differ.
  */
 export async function getJobs(): Promise<JobPosting[]> {
+  // Table lives in the "PORTFOLIO" schema, not the default `public` schema —
+  // quoting is required to preserve the case, since unquoted identifiers are
+  // lowercased by Postgres and won't resolve to this schema.
   const rows = await sql`
     SELECT
       id,
@@ -33,7 +35,7 @@ export async function getJobs(): Promise<JobPosting[]> {
       salary_currency AS "salaryCurrency",
       skills,
       date_posted AS "datePosted"
-    FROM jobs
+    FROM "PORTFOLIO".jobs
     ORDER BY date_posted DESC
   `;
 

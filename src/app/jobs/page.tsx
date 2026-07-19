@@ -5,7 +5,8 @@ import { ArrowLeft } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Footer from '@/components/sections/Footer';
 import JobBoard from '@/components/features/JobBoard';
-import { getJobs } from '@/lib/db/jobs';
+import { getJobListings } from './query';
+import type { JobListing } from '@/types/jobs';
 
 export const revalidate = 1800; // 30 min — matches the site's documented ETL cadence
 
@@ -14,8 +15,25 @@ export const metadata: Metadata = {
   description: 'Open roles sourced live from a private job-matching microservice.',
 };
 
+async function loadJobs(): Promise<JobListing[]> {
+  try {
+    return await getJobListings();
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.log(
+      JSON.stringify({
+        timestamp: new Date().toISOString(),
+        level: 'ERROR',
+        message: 'Failed to fetch jobs from database',
+        error: errorMessage,
+      })
+    );
+    return [];
+  }
+}
+
 export default async function JobsPage() {
-  const jobs = await getJobs();
+  const jobs = await loadJobs();
 
   return (
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">

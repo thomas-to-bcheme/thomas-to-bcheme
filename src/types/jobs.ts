@@ -18,3 +18,15 @@ export const JobPostingSchema = z.object({
 });
 
 export type JobPosting = z.infer<typeof JobPostingSchema>;
+
+// Minimal projection shown on the Job Board page: title, description, posted date only.
+// `id` coerces to string since the primary key's underlying SQL type (serial vs. text/uuid)
+// hasn't been confirmed yet — see src/app/jobs/query.tsx.
+export const JobListingSchema = z.object({
+  id: z.coerce.string(),
+  title: z.string(),
+  description: z.string().nullable(),
+  postedDate: z.string().nullable(),
+});
+
+export type JobListing = z.infer<typeof JobListingSchema>;

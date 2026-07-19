@@ -1,8 +1,8 @@
 import { BentoGrid } from '@/components/layout/BentoGrid';
 import JobCard from '@/components/features/JobCard';
-import type { JobPosting } from '@/types/jobs';
+import type { JobListing } from '@/types/jobs';
 
-const JobBoard = ({ jobs }: { jobs: JobPosting[] }) => {
+const JobBoard = ({ jobs }: { jobs: JobListing[] }) => {
   if (jobs.length === 0) {
     return (
       <div className="card-base p-8 text-center">
