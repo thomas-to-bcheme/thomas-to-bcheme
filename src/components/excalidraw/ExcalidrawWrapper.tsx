@@ -1,6 +1,6 @@
 'use client';
 
-import { Excalidraw } from '@excalidraw/excalidraw';
+import { Excalidraw, MainMenu } from '@excalidraw/excalidraw';
 import '@excalidraw/excalidraw/index.css';
 import { useState, useRef, useEffect } from 'react';
 import type {
@@ -9,8 +9,9 @@ import type {
   AppState,
   BinaryFiles,
 } from '@excalidraw/excalidraw/types';
-import type { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
+import type { ExcalidrawElement, NonDeletedExcalidrawElement } from '@excalidraw/excalidraw/element/types';
 import { useSystemTheme } from '@/hooks/useSystemTheme';
+import { isValidBoardName } from '@/lib/excalidrawBoards';
 
 interface SavePayload {
   elements: readonly ExcalidrawElement[];
@@ -21,13 +22,39 @@ interface SavePayload {
 interface ExcalidrawWrapperProps {
   initialData: ExcalidrawInitialDataState;
   onSave: (payload: SavePayload) => Promise<void>;
-  saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  saveStatus: 'idle' | 'saving' | 'saved' | 'error' | 'too_large';
   viewModeEnabled: boolean;
   onDiagramChange?: () => void;
   defaultFrameName?: string;
   /** Tailwind height classes for the canvas frame. Defaults to the bounded
    *  embed height; the dedicated /study-plan page passes a taller value. */
   heightClassName?: string;
+  boards: string[];
+  activeBoard: string;
+  isEditMode: boolean;
+  onSwitchBoard: (name: string) => void;
+  onCreateBoard: (name: string) => void;
+  onRequestUnlock: () => void;
+}
+
+// Determines whether a clicked element-link points at this app's own
+// /study-plan?board=<name> route. element.link is arbitrary user-authored
+// content (anyone with edit access can type anything into a link field), so
+// origin is checked explicitly rather than trusting the pathname alone —
+// otherwise a link to an external site sharing the same path could be
+// mis-intercepted (open-redirect-shaped bug).
+function resolveInAppBoardLink(link: string | null): string | null {
+  if (!link) return null;
+  let url: URL;
+  try {
+    url = new URL(link, window.location.href);
+  } catch {
+    return null;
+  }
+  if (url.origin !== window.location.origin || url.pathname !== '/study-plan') return null;
+  const boardParam = url.searchParams.get('board');
+  if (!boardParam || !isValidBoardName(boardParam)) return null;
+  return boardParam;
 }
 
 const DEFAULT_HEIGHT_CLASS = 'h-[420px] sm:h-[500px] lg:h-[600px]';
@@ -70,8 +97,24 @@ function isNativeScrollTarget(target: EventTarget | null, boundary: HTMLElement)
   return false;
 }
 
-export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, viewModeEnabled, onDiagramChange, defaultFrameName, heightClassName = DEFAULT_HEIGHT_CLASS }: ExcalidrawWrapperProps) {
+export default function ExcalidrawWrapper({
+  initialData,
+  onSave,
+  saveStatus,
+  viewModeEnabled,
+  onDiagramChange,
+  defaultFrameName,
+  heightClassName = DEFAULT_HEIGHT_CLASS,
+  boards,
+  activeBoard,
+  isEditMode,
+  onSwitchBoard,
+  onCreateBoard,
+  onRequestUnlock,
+}: ExcalidrawWrapperProps) {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
+  const [showNewBoardForm, setShowNewBoardForm] = useState(false);
+  const [newBoardName, setNewBoardName] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useSystemTheme();
 
@@ -200,11 +243,36 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     });
   };
 
+  const handleLinkOpen = (element: NonDeletedExcalidrawElement, event: CustomEvent<{ nativeEvent: MouseEvent | React.PointerEvent<HTMLCanvasElement> }>) => {
+    const boardName = resolveInAppBoardLink(element.link);
+    if (!boardName) return;
+    event.preventDefault();
+    onSwitchBoard(boardName);
+  };
+
+  const handleNewBoardClick = () => {
+    if (!isEditMode) {
+      onRequestUnlock();
+      return;
+    }
+    setShowNewBoardForm(true);
+  };
+
+  const handleNewBoardSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const name = newBoardName.trim();
+    if (!name) return;
+    onCreateBoard(name);
+    setNewBoardName('');
+    setShowNewBoardForm(false);
+  };
+
   const saveLabel: Record<typeof saveStatus, string> = {
-    idle: 'Save to GitHub',
+    idle: `Save "${activeBoard}" to GitHub`,
     saving: 'Saving…',
     saved: 'Saved — reload in ~1 min',
     error: 'Save failed — retry',
+    too_large: 'Board too large — start a new board',
   };
 
   const saveClass: Record<typeof saveStatus, string> = {
@@ -212,6 +280,7 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
     saving: 'bg-zinc-400 text-white cursor-not-allowed',
     saved: 'bg-green-600 text-white',
     error: 'bg-red-600 hover:bg-red-700 text-white',
+    too_large: 'bg-red-600 text-white cursor-not-allowed',
   };
 
   return (
@@ -224,21 +293,99 @@ export default function ExcalidrawWrapper({ initialData, onSave, saveStatus, vie
         excalidrawAPI={(api) => setExcalidrawAPI(api)}
         viewModeEnabled={viewModeEnabled}
         onChange={viewModeEnabled ? undefined : () => { onDiagramChange?.(); }}
+        onLinkOpen={handleLinkOpen}
         theme={theme}
-      />
+      >
+        <MainMenu>
+          <MainMenu.Group title="Boards">
+            {boards.map((board) => (
+              <MainMenu.Item key={board} selected={board === activeBoard} onSelect={() => onSwitchBoard(board)}>
+                {board}
+              </MainMenu.Item>
+            ))}
+            <MainMenu.Item onSelect={handleNewBoardClick}>New board…</MainMenu.Item>
+          </MainMenu.Group>
+          <MainMenu.Separator />
+          {/* Mirrors Excalidraw's own default menu content exactly (verified against
+              the installed package's fallback menu), since rendering a custom
+              MainMenu here replaces that automatic default entirely. */}
+          <MainMenu.DefaultItems.LoadScene />
+          <MainMenu.DefaultItems.SaveToActiveFile />
+          <MainMenu.DefaultItems.Export />
+          <MainMenu.DefaultItems.SaveAsImage />
+          <MainMenu.DefaultItems.SearchMenu />
+          <MainMenu.DefaultItems.Help />
+          <MainMenu.DefaultItems.ClearCanvas />
+          <MainMenu.Separator />
+          <MainMenu.Group title="Excalidraw links">
+            <MainMenu.DefaultItems.Socials />
+          </MainMenu.Group>
+          <MainMenu.Separator />
+          <MainMenu.DefaultItems.ToggleTheme />
+          <MainMenu.DefaultItems.ChangeCanvasBackground />
+        </MainMenu>
+      </Excalidraw>
 
       {/* Visually-hidden live region — announces save status to screen readers (WCAG 4.1.3). */}
       <div aria-live="polite" className="sr-only">{saveLabel[saveStatus]}</div>
 
-      {!viewModeEnabled && (
-        <button
-          onClick={handleSave}
-          disabled={saveStatus === 'saving'}
-          className={`absolute bottom-4 right-4 z-10 px-4 py-2 rounded-lg text-sm font-semibold shadow-md transition-all duration-200 ${saveClass[saveStatus]}`}
-        >
-          {saveLabel[saveStatus]}
-        </button>
-      )}
+      <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2">
+        {boards.length > 1 && (
+          <select
+            value={activeBoard}
+            onChange={(e) => onSwitchBoard(e.target.value)}
+            aria-label="Switch board"
+            className="px-2 py-2 rounded-lg text-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-md"
+          >
+            {boards.map((board) => (
+              <option key={board} value={board}>{board}</option>
+            ))}
+          </select>
+        )}
+
+        {showNewBoardForm ? (
+          <form onSubmit={handleNewBoardSubmit} className="flex items-center gap-1">
+            <input
+              type="text"
+              autoFocus
+              value={newBoardName}
+              onChange={(e) => setNewBoardName(e.target.value)}
+              placeholder="board_name"
+              className="w-32 px-2 py-2 rounded-lg text-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="submit"
+              className="px-3 py-2 rounded-lg text-sm font-semibold shadow-md bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Create
+            </button>
+            <button
+              type="button"
+              onClick={() => { setShowNewBoardForm(false); setNewBoardName(''); }}
+              className="px-3 py-2 rounded-lg text-sm shadow-md border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 bg-white dark:bg-zinc-800"
+            >
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <button
+            onClick={handleNewBoardClick}
+            className="px-3 py-2 rounded-lg text-sm font-semibold shadow-md border border-zinc-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+          >
+            + New
+          </button>
+        )}
+
+        {!viewModeEnabled && (
+          <button
+            onClick={handleSave}
+            disabled={saveStatus === 'saving' || saveStatus === 'too_large'}
+            className={`px-4 py-2 rounded-lg text-sm font-semibold shadow-md transition-all duration-200 ${saveClass[saveStatus]}`}
+          >
+            {saveLabel[saveStatus]}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

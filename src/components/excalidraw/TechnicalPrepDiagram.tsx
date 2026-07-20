@@ -2,10 +2,20 @@
 
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { Lock } from 'lucide-react';
 import type { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
 import type { AppState, BinaryFiles, ExcalidrawInitialDataState } from '@excalidraw/excalidraw/types';
 import { isValidFractionalIndex } from '@/lib/fractionalIndex';
+import {
+  DEFAULT_BOARD_NAME,
+  SAVE_PAYLOAD_WARN_BYTES,
+  SAVE_PAYLOAD_HARD_LIMIT_BYTES,
+  isValidBoardName,
+  boardFilePath,
+  boardPublicUrl,
+  blankBoardScaffold,
+} from '@/lib/excalidrawBoards';
 
 const ExcalidrawWrapper = dynamic(() => import('./ExcalidrawWrapper'), { ssr: false });
 
@@ -23,15 +33,34 @@ function sanitizeExcalidrawIndices(elements: unknown[]): unknown[] {
   });
 }
 
-const FILE_PATH = 'public/excalidraw/technical_prep.excalidraw';
-const PUBLIC_URL = '/excalidraw/technical_prep.excalidraw';
-const SESSION_TOKEN_KEY = 'excalidraw_save_token';
-// Frame the diagram should default its viewport to on load. Looked up dynamically by
-// name at runtime from the live loaded scene (see ExcalidrawWrapper) — never by cached
-// id/coordinates — so this stays correct if the frame is later moved/resized.
-const DEFAULT_FRAME_NAME = 'Drug Discovery';
+// Reconstructs a raw fetched/scaffolded board into the shape Excalidraw's
+// initialData expects: collaborators/followedBy round-trip through JSON as
+// plain objects (Map/Set → {}), but Excalidraw's prod bundle calls
+// forEach()/has() on them directly and crashes if left as plain objects.
+function toInitialData(data: any): ExcalidrawInitialDataState {
+  const collaborators = new Map(Object.entries(data.appState?.collaborators ?? {}));
+  const followedBy = new Set(Object.values(data.appState?.followedBy ?? {}));
+  return {
+    ...data,
+    elements: sanitizeExcalidrawIndices(data.elements ?? []),
+    appState: data.appState
+      ? { ...data.appState, collaborators, followedBy }
+      : undefined,
+    scrollToContent: true,
+  };
+}
 
-type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';
+const SESSION_TOKEN_KEY = 'excalidraw_save_token';
+// Default viewport frame per board — specific to that board's own content, so
+// looked up by board name rather than a single global constant. Frames are
+// resolved dynamically by name from the live loaded scene (see
+// ExcalidrawWrapper) — never by cached id/coordinates — so this stays correct
+// if the frame is later moved/resized.
+const BOARD_DEFAULT_FRAME_NAMES: Partial<Record<string, string>> = {
+  [DEFAULT_BOARD_NAME]: 'Drug Discovery',
+};
+
+type SaveStatus = 'idle' | 'saving' | 'saved' | 'error' | 'too_large';
 
 interface SavePayload {
   elements: readonly ExcalidrawElement[];
@@ -45,6 +74,9 @@ interface TechnicalPrepDiagramProps {
   showHeading?: boolean;
   /** Forwarded to ExcalidrawWrapper — lets the dedicated page use a taller canvas. */
   heightClassName?: string;
+  /** Board to load on first render. Defaults to the original single-board name
+   *  for backward compatibility with existing links/bookmarks. */
+  initialBoard?: string;
 }
 
 async function verifyToken(token: string): Promise<boolean> {
@@ -59,20 +91,35 @@ async function verifyToken(token: string): Promise<boolean> {
   }
 }
 
-export default function TechnicalPrepDiagram({ showHeading = true, heightClassName }: TechnicalPrepDiagramProps = {}) {
+function getStoredToken(): string | null {
+  return sessionStorage.getItem(SESSION_TOKEN_KEY);
+}
+
+export default function TechnicalPrepDiagram({ showHeading = true, heightClassName, initialBoard }: TechnicalPrepDiagramProps = {}) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [activeBoard, setActiveBoard] = useState(
+    initialBoard && isValidBoardName(initialBoard) ? initialBoard : DEFAULT_BOARD_NAME
+  );
+  const [boards, setBoards] = useState<string[]>([activeBoard]);
   const [initialData, setInitialData] = useState<ExcalidrawInitialDataState | null>(null);
   const [loadError, setLoadError] = useState(false);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
+  const [sizeWarningBytes, setSizeWarningBytes] = useState<number | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
   const [showTokenPrompt, setShowTokenPrompt] = useState(false);
   const [tokenInput, setTokenInput] = useState('');
   const [tokenError, setTokenError] = useState(false);
   const tokenInputRef = useRef<HTMLInputElement>(null);
+  // Board name whose data was just set optimistically in-memory (by
+  // createBoard), rather than fetched — read once by the load effect below
+  // to skip an immediate, doomed-to-404 re-fetch of the same board.
+  const optimisticBoardRef = useRef<string | null>(null);
 
   // Auto-unlock edit mode if a valid token is already stored from a prior session
   useEffect(() => {
-    const stored = sessionStorage.getItem(SESSION_TOKEN_KEY);
+    const stored = getStoredToken();
     if (!stored) return;
     verifyToken(stored).then((valid) => {
       if (valid) setIsEditMode(true);
@@ -94,35 +141,56 @@ export default function TechnicalPrepDiagram({ showHeading = true, heightClassNa
     return () => window.removeEventListener('beforeunload', handler);
   }, [isEditMode, isDirty]);
 
+  // Fetch the known board list once. Non-critical — the switcher just falls
+  // back to showing only the active board if this fails.
   useEffect(() => {
-    fetch(PUBLIC_URL)
+    fetch('/api/excalidraw/list')
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data: { boards: string[] }) => setBoards(data.boards))
+      .catch(() => {});
+  }, []);
+
+  // Reloads scene data whenever the active board changes. AbortController
+  // guards against a stale response from a previously-active board landing
+  // after the user has already switched to a different one.
+  //
+  // Skipped when optimisticBoardRef matches: a just-created board's content
+  // was already committed to GitHub and set in-memory by createBoard(), but
+  // its static file won't exist in *this* running deployment until the next
+  // redeploy — fetching boardPublicUrl() here would 404 and immediately
+  // clobber the optimistic data with a load error.
+  useEffect(() => {
+    if (optimisticBoardRef.current === activeBoard) {
+      optimisticBoardRef.current = null;
+      return;
+    }
+    const controller = new AbortController();
+    setInitialData(null);
+    setLoadError(false);
+    fetch(boardPublicUrl(activeBoard), { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((data) => {
-        // collaborators/followedBy round-trip through JSON as {} (Map/Set → plain
-        // object). Excalidraw's production bundle calls forEach()/has() on them
-        // directly and crashes, so rebuild the real Map/Set before handing off.
-        const collaborators = new Map(
-          Object.entries(data.appState?.collaborators ?? {})
-        );
-        const followedBy = new Set(
-          Object.values(data.appState?.followedBy ?? {})
-        );
-        setInitialData({
-          ...data,
-          elements: sanitizeExcalidrawIndices(data.elements ?? []),
-          appState: data.appState
-            ? { ...data.appState, collaborators, followedBy }
-            : undefined,
-          scrollToContent: true,
-        });
-      })
-      .catch(() => setLoadError(true));
-  }, []);
+      .then((data) => setInitialData(toInitialData(data)))
+      .catch((err) => {
+        if (err.name !== 'AbortError') setLoadError(true);
+      });
+    return () => controller.abort();
+  }, [activeBoard]);
 
   const executeSave = async (payload: SavePayload, token: string) => {
+    const filePath = boardFilePath(activeBoard);
+    const serialized = JSON.stringify({ ...payload, filePath });
+    // Byte-accurate — .length on a string counts UTF-16 code units, not bytes.
+    const byteSize = new Blob([serialized]).size;
+
+    if (byteSize > SAVE_PAYLOAD_HARD_LIMIT_BYTES) {
+      setSaveStatus('too_large');
+      return;
+    }
+    setSizeWarningBytes(byteSize > SAVE_PAYLOAD_WARN_BYTES ? byteSize : null);
+
     setSaveStatus('saving');
     try {
       const response = await fetch('/api/excalidraw/save', {
@@ -131,7 +199,7 @@ export default function TechnicalPrepDiagram({ showHeading = true, heightClassNa
           'Content-Type': 'application/json',
           'X-Save-Token': token,
         },
-        body: JSON.stringify({ ...payload, filePath: FILE_PATH }),
+        body: serialized,
       });
       if (response.status === 401) {
         sessionStorage.removeItem(SESSION_TOKEN_KEY);
@@ -139,25 +207,27 @@ export default function TechnicalPrepDiagram({ showHeading = true, heightClassNa
         setSaveStatus('error');
         return;
       }
-      const next: SaveStatus = response.ok ? 'saved' : 'error';
-      setSaveStatus(next);
-      if (next === 'saved') {
-        setIsDirty(false);
-        setTimeout(() => setSaveStatus('idle'), 3000);
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        setSaveStatus(data?.error === 'board_too_large' ? 'too_large' : 'error');
+        return;
       }
+      setSaveStatus('saved');
+      setIsDirty(false);
+      setTimeout(() => setSaveStatus('idle'), 3000);
     } catch {
       setSaveStatus('error');
     }
   };
 
   const handleSave = async (payload: SavePayload) => {
-    const token = sessionStorage.getItem(SESSION_TOKEN_KEY);
+    const token = getStoredToken();
     if (!token) return; // Save button only visible in edit mode, so token always present
     await executeSave(payload, token);
   };
 
   const handleEditClick = () => {
-    const stored = sessionStorage.getItem(SESSION_TOKEN_KEY);
+    const stored = getStoredToken();
     if (stored) {
       setIsEditMode(true);
       return;
@@ -183,6 +253,51 @@ export default function TechnicalPrepDiagram({ showHeading = true, heightClassNa
     }
   };
 
+  const switchBoard = (name: string) => {
+    if (name === activeBoard || !isValidBoardName(name)) return;
+    if (isEditMode && isDirty) {
+      const confirmed = window.confirm('Discard unsaved changes and switch boards?');
+      if (!confirmed) return;
+    }
+    setIsDirty(false);
+    setSaveStatus('idle');
+    setSizeWarningBytes(null);
+    setActiveBoard(name);
+    // Only sync the URL when actually mounted on the dedicated page — this
+    // component is also embeddable elsewhere (see showHeading), where a
+    // /study-plan URL would be wrong.
+    if (pathname === '/study-plan') {
+      router.replace(name === DEFAULT_BOARD_NAME ? '/study-plan' : `/study-plan?board=${name}`, { scroll: false });
+    }
+  };
+
+  const createBoard = async (name: string) => {
+    if (!isValidBoardName(name)) return;
+    const token = getStoredToken();
+    if (!token) {
+      handleEditClick();
+      return;
+    }
+    const response = await fetch('/api/excalidraw/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Save-Token': token },
+      body: JSON.stringify({ name }),
+    });
+    if (!response.ok) return;
+
+    setBoards((prev) => (prev.includes(name) ? prev : [...prev, name]));
+    setIsDirty(false);
+    setSaveStatus('idle');
+    setSizeWarningBytes(null);
+    optimisticBoardRef.current = name;
+    setInitialData(toInitialData(blankBoardScaffold()));
+    setLoadError(false);
+    setActiveBoard(name);
+    if (pathname === '/study-plan') {
+      router.replace(`/study-plan?board=${name}`, { scroll: false });
+    }
+  };
+
   // Placeholders (loading / error) mirror the live canvas height so there's no
   // layout jump when the scene mounts. Falls back to the bounded embed height.
   const canvasHeightClass = heightClassName ?? 'h-[420px] sm:h-[500px] lg:h-[600px]';
@@ -202,8 +317,20 @@ export default function TechnicalPrepDiagram({ showHeading = true, heightClassNa
       )}
 
       {loadError && (
-        <div className={`flex items-center justify-center ${canvasHeightClass} rounded-xl border border-red-200 dark:border-red-800 text-red-500 text-sm`}>
-          Failed to load diagram. Make sure the dev server has the diagram in public/excalidraw/.
+        <div className={`flex flex-col items-center justify-center gap-3 ${canvasHeightClass} rounded-xl border border-red-200 dark:border-red-800 text-red-500 text-sm`}>
+          <p>Failed to load board &ldquo;{activeBoard}&rdquo;. Make sure it exists in public/excalidraw/.</p>
+          {boards.length > 1 && (
+            <select
+              value={activeBoard}
+              onChange={(e) => switchBoard(e.target.value)}
+              aria-label="Switch board"
+              className="px-2 py-1.5 rounded-lg text-sm border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+            >
+              {boards.map((board) => (
+                <option key={board} value={board}>{board}</option>
+              ))}
+            </select>
+          )}
         </div>
       )}
 
@@ -226,14 +353,27 @@ export default function TechnicalPrepDiagram({ showHeading = true, heightClassNa
             </button>
           )}
 
+          {sizeWarningBytes !== null && (
+            <div className="absolute top-3 left-3 right-12 z-10 px-3 py-1.5 rounded-md bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs font-medium">
+              This board is {(sizeWarningBytes / (1024 * 1024)).toFixed(1)}MB, approaching the save size limit. Consider starting a new board for new topics.
+            </div>
+          )}
+
           <ExcalidrawWrapper
+            key={activeBoard}
             initialData={initialData}
             onSave={handleSave}
             saveStatus={saveStatus}
             viewModeEnabled={!isEditMode}
             onDiagramChange={() => setIsDirty(true)}
-            defaultFrameName={DEFAULT_FRAME_NAME}
+            defaultFrameName={BOARD_DEFAULT_FRAME_NAMES[activeBoard]}
             heightClassName={heightClassName}
+            boards={boards}
+            activeBoard={activeBoard}
+            isEditMode={isEditMode}
+            onSwitchBoard={switchBoard}
+            onCreateBoard={createBoard}
+            onRequestUnlock={handleEditClick}
           />
 
           {showTokenPrompt && (

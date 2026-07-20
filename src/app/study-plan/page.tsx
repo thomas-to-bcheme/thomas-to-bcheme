@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Footer from '@/components/sections/Footer';
 import TechnicalPrepDiagram from '@/components/excalidraw/TechnicalPrepDiagram';
+import { isValidBoardName, DEFAULT_BOARD_NAME } from '@/lib/excalidrawBoards';
 
 export const metadata: Metadata = {
   title: 'Study Plan — Thomas To',
@@ -12,7 +13,14 @@ export const metadata: Metadata = {
     "A live Excalidraw whiteboard Thomas To uses to reason through and communicate technical systems — continuous-training MLOps, model drift, and edge AI.",
 };
 
-export default function StudyPlanPage() {
+interface StudyPlanPageProps {
+  searchParams: Promise<{ board?: string }>;
+}
+
+export default async function StudyPlanPage({ searchParams }: StudyPlanPageProps) {
+  const { board } = await searchParams;
+  const initialBoard = isValidBoardName(board) ? board : DEFAULT_BOARD_NAME;
+
   return (
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">
       <SiteHeader />
@@ -47,6 +55,7 @@ export default function StudyPlanPage() {
         <TechnicalPrepDiagram
           showHeading={false}
           heightClassName="h-[calc(100dvh-13rem)] min-h-[520px]"
+          initialBoard={initialBoard}
         />
       </div>
 

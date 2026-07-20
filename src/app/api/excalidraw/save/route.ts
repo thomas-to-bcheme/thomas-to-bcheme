@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
-import https from 'node:https';
-
-const ALLOWED_FILE_PATHS = ['public/excalidraw/technical_prep.excalidraw'] as const;
-type AllowedFilePath = typeof ALLOWED_FILE_PATHS[number];
+import { getFileSha, putFile, GithubApiError } from '@/lib/github/client';
+import { isValidBoardName, boardFilePath, BOARDS_DIR, BOARD_EXTENSION } from '@/lib/excalidrawBoards';
 
 interface SaveRequestBody {
   elements: unknown[];
@@ -11,70 +9,21 @@ interface SaveRequestBody {
   filePath: string;
 }
 
-interface GithubResponse {
-  ok: boolean;
-  status: number;
-  json: () => Promise<unknown>;
-  text: () => Promise<string>;
+const BOARDS_PREFIX = `${BOARDS_DIR}/`;
+
+// Reconstructs the board name a client-supplied filePath claims to point at,
+// validating it against the shared board-name pattern rather than checking
+// against a fixed allowlist. Returns null for anything malformed or that
+// doesn't round-trip back to the exact same path (blocks traversal).
+function resolveBoardName(filePath: string): string | null {
+  if (!filePath.startsWith(BOARDS_PREFIX) || !filePath.endsWith(BOARD_EXTENSION)) return null;
+  const name = filePath.slice(BOARDS_PREFIX.length, -BOARD_EXTENSION.length);
+  if (!isValidBoardName(name)) return null;
+  if (boardFilePath(name) !== filePath) return null;
+  return name;
 }
 
-// Uses node:https instead of fetch/undici to avoid the 10s connect timeout
-// that undici enforces on macOS dev environments. Follows 3xx redirects
-// generically so renamed/moved repos resolve to their canonical URL.
-function githubRequest(
-  path: string,
-  options: { method?: string; headers: Record<string, string>; body?: string },
-  timeoutMs = 30_000,
-  redirectsRemaining = 3
-): Promise<GithubResponse> {
-  return new Promise((resolve, reject) => {
-    const req = https.request(
-      {
-        hostname: 'api.github.com',
-        path,
-        method: options.method ?? 'GET',
-        headers: options.headers,
-        timeout: timeoutMs,
-      },
-      (res) => {
-        const status = res.statusCode ?? 500;
-
-        if (status >= 300 && status < 400 && res.headers.location) {
-          res.resume(); // drain body so the socket is released
-          if (redirectsRemaining <= 0) {
-            reject(new Error('Too many redirects from GitHub API'));
-            return;
-          }
-          try {
-            const redirectUrl = new URL(res.headers.location);
-            resolve(githubRequest(redirectUrl.pathname + redirectUrl.search, options, timeoutMs, redirectsRemaining - 1));
-          } catch (err) {
-            reject(err);
-          }
-          return;
-        }
-
-        const chunks: Buffer[] = [];
-        res.on('data', (chunk: Buffer) => chunks.push(chunk));
-        res.on('end', () => {
-          const raw = Buffer.concat(chunks).toString('utf-8');
-          resolve({
-            ok: status >= 200 && status < 300,
-            status,
-            json: () => Promise.resolve(JSON.parse(raw)),
-            text: () => Promise.resolve(raw),
-          });
-        });
-      }
-    );
-    req.on('timeout', () => {
-      req.destroy(new Error(`GitHub API request timed out after ${timeoutMs}ms`));
-    });
-    req.on('error', reject);
-    if (options.body) req.write(options.body);
-    req.end();
-  });
-}
+const SIZE_ERROR_STATUSES = new Set([403, 413, 422]);
 
 export async function POST(request: Request) {
   const saveSecret = process.env.SAVE_SECRET;
@@ -100,33 +49,26 @@ export async function POST(request: Request) {
   const body: SaveRequestBody = await request.json();
   const { elements, appState, files, filePath } = body;
 
-  if (!filePath || !ALLOWED_FILE_PATHS.includes(filePath as AllowedFilePath)) {
+  const boardName = filePath ? resolveBoardName(filePath) : null;
+  if (!boardName) {
     return NextResponse.json({ error: 'filePath not allowed' }, { status: 400 });
   }
 
-  const githubHeaders = {
-    Authorization: `Bearer ${token}`,
-    Accept: 'application/vnd.github.v3+json',
-    'Content-Type': 'application/json',
-    'User-Agent': 'thomas-to-bcheme-portfolio',
-  };
+  const config = { owner, repo, token };
 
-  // Step A: fetch current file SHA
-  const getResponse = await githubRequest(
-    `/repos/${owner}/${repo}/contents/${filePath}`,
-    { headers: githubHeaders }
-  );
-
-  if (!getResponse.ok) {
-    const detail = await getResponse.text();
-    console.error('[excalidraw/save] GitHub GET failed', { status: getResponse.status, detail });
-    return NextResponse.json(
-      { error: 'Failed to fetch current file from GitHub', githubStatus: getResponse.status, detail },
-      { status: 502 }
-    );
+  let existing;
+  try {
+    existing = await getFileSha(config, filePath);
+  } catch (err) {
+    const detail = err instanceof GithubApiError ? err.detail : String(err);
+    const status = err instanceof GithubApiError ? err.status : 500;
+    console.error('[excalidraw/save] GitHub GET failed', { status, detail });
+    return NextResponse.json({ error: 'Failed to fetch current file from GitHub', githubStatus: status, detail }, { status: 502 });
   }
 
-  const { sha } = await getResponse.json() as { sha: string };
+  if (!existing) {
+    return NextResponse.json({ error: 'Board not found' }, { status: 404 });
+  }
 
   // Strip collaborators/followedBy (Map/Set at runtime — serialize to {} via
   // JSON.stringify, then crash when Excalidraw's prod bundle calls .forEach()/.has()
@@ -158,27 +100,23 @@ export async function POST(request: Request) {
   const contentBase64 = Buffer.from(updatedContent).toString('base64');
   const filename = filePath.split('/').pop() ?? filePath;
 
-  // Step B: commit updated file
-  const putResponse = await githubRequest(
-    `/repos/${owner}/${repo}/contents/${filePath}`,
-    {
-      method: 'PUT',
-      headers: githubHeaders,
-      body: JSON.stringify({
-        message: `Update ${filename} — ${new Date().toISOString()}`,
-        content: contentBase64,
-        sha,
-      }),
+  try {
+    await putFile(config, filePath, contentBase64, existing.sha, `Update ${filename} — ${new Date().toISOString()}`);
+  } catch (err) {
+    if (err instanceof GithubApiError) {
+      console.error('[excalidraw/save] GitHub PUT failed', { status: err.status, detail: err.detail });
+      if (SIZE_ERROR_STATUSES.has(err.status)) {
+        return NextResponse.json(
+          { error: 'board_too_large', githubStatus: err.status, detail: err.detail },
+          { status: 413 }
+        );
+      }
+      return NextResponse.json(
+        { error: 'Failed to commit file to GitHub', githubStatus: err.status, detail: err.detail },
+        { status: 502 }
+      );
     }
-  );
-
-  if (!putResponse.ok) {
-    const detail = await putResponse.text();
-    console.error('[excalidraw/save] GitHub PUT failed', { status: putResponse.status, detail });
-    return NextResponse.json(
-      { error: 'Failed to commit file to GitHub', githubStatus: putResponse.status, detail },
-      { status: 502 }
-    );
+    throw err;
   }
 
   return NextResponse.json({ success: true });
