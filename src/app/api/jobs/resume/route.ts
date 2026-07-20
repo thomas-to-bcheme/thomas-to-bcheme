@@ -84,10 +84,12 @@ export async function GET(request: NextRequest) {
 
     log('INFO', 'Resume download served', { ...logCtx, jobId });
 
+    const filename = resumePdfPath.split('/').pop() || `resume-${jobId}.pdf`;
+
     return new NextResponse(result.stream, {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="resume-${encodeURIComponent(jobId)}.pdf"`,
+        'Content-Disposition': `attachment; filename="${encodeURIComponent(filename)}"`,
         'X-Content-Type-Options': 'nosniff',
         // Resumes carry PII (name/phone/email) — no-store rather than the
         // no-cache Vercel's private-storage docs suggest for private blobs
