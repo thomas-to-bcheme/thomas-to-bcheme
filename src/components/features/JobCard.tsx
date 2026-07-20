@@ -6,11 +6,10 @@ function formatPostedDate(postedDate: string | null): string | null {
   const parsed = new Date(postedDate);
   if (Number.isNaN(parsed.getTime())) return null;
 
-  return parsed.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  // ISO 8601 date (YYYY-MM-DD), e.g. "2026-06-18". Date-only source strings
+  // parse as UTC midnight, so slicing the UTC ISO string back out never
+  // shifts the day across a local timezone boundary.
+  return parsed.toISOString().slice(0, 10);
 }
 
 const JobCard = ({ job }: { job: JobListing }) => {
