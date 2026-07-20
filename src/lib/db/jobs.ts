@@ -28,23 +28,23 @@ export async function getJobs(): Promise<JobListing[]> {
   // quoting is required to preserve the case, since unquoted identifiers are
   // lowercased by Postgres and won't resolve to this schema.
   //
-  // posted_date is TEXT (not DATE) in the source table — it's extracted from
-  // job descriptions upstream, and this connection is read-only so the
-  // column type can't be migrated from here. A bare `ORDER BY posted_date`
-  // sorts lexicographically, and Postgres's DESC default is NULLS FIRST,
-  // which pushes rows with a missing/unparsed date to the top ahead of
-  // genuinely recent postings. Casting to `date` for the comparison (with
-  // empty string normalized to NULL first) gives a true chronological sort,
-  // and NULLS LAST keeps unknown dates at the bottom in both directions.
+  // posted_date is DATE (confirmed live via information_schema.columns) —
+  // sorting the native column is already true chronological order, and
+  // NULLS LAST keeps rows with an unset date at the bottom (DESC's default
+  // is NULLS FIRST). It's cast to ::text in the SELECT because JobListing's
+  // wire/display type is string (see src/types/jobs.ts and the ISO 8601
+  // YYYY-MM-DD formatting in JobCard.tsx) — casting in SQL yields that
+  // canonical form directly, instead of depending on how the driver decodes
+  // a `date` value into a JS type.
   const rows = await sql`
     SELECT
       job_id,
       title,
       url,
-      posted_date AS "postedDate",
+      posted_date::text AS "postedDate",
       resume_pdf_path AS "resumePdfPath"
     FROM "PORTFOLIO".roles
-    ORDER BY NULLIF(posted_date, '')::date DESC NULLS LAST
+    ORDER BY posted_date DESC NULLS LAST
   `;
 
   return rows.map((row) =>
