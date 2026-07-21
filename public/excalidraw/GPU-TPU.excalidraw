@@ -4,10 +4,10 @@
   "source": "https://excalidraw.com",
   "elements": [
     {
-      "id": "Cq1WaeTEekurwQ4cudwWS",
+      "id": "nuqXyGiuu8SXtmDDtzps4",
       "type": "text",
-      "x": -2495.498513459118,
-      "y": -1505.5241364620315,
+      "x": -2535.962098661833,
+      "y": 417.4175795188496,
       "width": 303.3797607421875,
       "height": 25,
       "angle": 0,
@@ -19,15 +19,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a0",
       "roundness": null,
-      "seed": 1770230381,
+      "seed": 2109368437,
       "version": 255,
-      "versionNonce": 22791437,
+      "versionNonce": 1451631637,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "https://github.com/pytorch/xla",
@@ -41,10 +41,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "oPWXVkNFM-peSqqCyGJ85",
+      "id": "9Urqse4E3UD75lLYlqnxE",
       "type": "text",
-      "x": -2493.8750385697467,
-      "y": -1474.2508897169541,
+      "x": -2534.3386237724617,
+      "y": 448.6908262639272,
       "width": 2078.918701171875,
       "height": 550,
       "angle": 0,
@@ -56,15 +56,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a1",
       "roundness": null,
-      "seed": 2040577229,
+      "seed": 597660117,
       "version": 336,
-      "versionNonce": 653827651,
+      "versionNonce": 1466799035,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "**Papers (read, don't skim):**\n- TPU v4 — [arXiv:2304.01433](https://arxiv.org/abs/2304.01433). OCS, twisted torus, SparseCore. Source of truth for your topology question.\n- Jouppi et al., *In-Datacenter Performance Analysis of a TPU* (ISCA 2017). Why a systolic array.\n- FlashAttention / FlashAttention-2. Non-negotiable.\n- *Efficient Memory Management for LLM Serving with PagedAttention* (vLLM, SOSP '23).\n- Orca (OSDI '22) — iteration-level (continuous) batching. The scheduling idea everything else is built on.\n- DistServe / Splitwise — prefill/decode disaggregation.\n\n**Docs that replace books:**\n- JAX Pallas docs, *especially* \"Writing TPU kernels with Pallas → details.\"\n- `openxla.org/xprof` + the XProf Kernel Profiling guide.\n- [Ironwood performance optimizations](https://docs.cloud.google.com/tpu/docs/ironwood-performance) — SparseCore collective offloading, remat policy selection, sharding-strategy-by-workload table.\n- [TPU v4 topology](https://docs.cloud.google.com/tpu/docs/v4) — twisted torus rules.\n- MLX \"Custom Extensions in C++ and Metal.\"\n\n**Books, ranked by marginal value to *this* goal:**\n1. **Programming Massively Parallel Processors, 4th ed.** — you have it. Ch. 5–6, then the FlashAttention-adjacent chapters. The single best book you own for this.\n2. **Designing Data-Intensive Applications** — you have it. Read it for the serving/distributed-systems interview, not for accelerators.\n3. **High Performance Python** — you have it. Profiling discipline.\n4. *Deep Learning with JAX* — you have it. Fine as a JAX on-ramp; it will not teach you Pallas.\n5. **A modern C++ book** — you have none, and you need one. *Effective Modern C++* or *C++ Concurrency in Action*. You cannot write an MLX Primitive or read XLA without this, and no CUDA book substitutes.\n",
@@ -78,10 +78,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "xNmw31R8htU0R2PurKuGU",
+      "id": "EykjIBIP7cNtT8XCnHuwP",
       "type": "text",
-      "x": -2433.958393001598,
-      "y": -899.7702422472021,
+      "x": -2474.421978204313,
+      "y": 1023.1714737336795,
       "width": 1005.0191650390625,
       "height": 175,
       "angle": 0,
@@ -93,15 +93,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a2",
       "roundness": null,
-      "seed": 896113453,
+      "seed": 433622837,
       "version": 230,
-      "versionNonce": 1494850413,
+      "versionNonce": 1320343925,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "https://learning-oreilly-com.opl.idm.oclc.org/library/view/introducing-c/9781098178130/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/gpu-programming-with/9781805124542/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/deep-learning-with/9781835880029/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/ai-systems-performance/9798341627772/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/programming-massively-parallel/9780323984638/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/deep-learning-with/9781633438880/\n",
@@ -115,10 +115,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "ZCGN9zGTDBPqsJG4ojpBm",
+      "id": "PCgzfK7zgU9bUjy2-IIgO",
       "type": "text",
-      "x": 120.87890276508097,
-      "y": -1448.3361408281326,
+      "x": 80.415317562366,
+      "y": 474.60557515274854,
       "width": 791.1995239257812,
       "height": 25,
       "angle": 0,
@@ -130,15 +130,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a3",
       "roundness": null,
-      "seed": 357019021,
+      "seed": 1321918613,
       "version": 222,
-      "versionNonce": 326229475,
+      "versionNonce": 1301898331,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "Open Source Triage (e.g torch_xla -> vllom-tpu-inferencea nd vllm-metal (for mac)",
@@ -152,10 +152,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "KPXruayDWf9TvTlFgh89K",
+      "id": "7NyIRbCYnUWy8CwFkx3W0",
       "type": "text",
-      "x": 187.0217791989753,
-      "y": -1333.2408448597807,
+      "x": 146.55819399626034,
+      "y": 589.7008711211004,
       "width": 909.3192138671875,
       "height": 250,
       "angle": 0,
@@ -167,15 +167,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a4",
       "roundness": null,
-      "seed": 1215591405,
+      "seed": 1210844661,
       "version": 349,
-      "versionNonce": 2072880589,
+      "versionNonce": 2120344277,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "openxla\n    - https://openxla.org/xla/architecture\n    - https://openxla.org/xla/contributing\n    - https://openxla.org/xla/developer_guide\n\npyTorch (inherently numpy for linear algebra)\n    - XLA (accelerated linear algebra) from numpy to JAX and equivalent linear algebra libraries\n    - https://docs.pytorch.org/docs/main/community/contribution_guide.html\n\nTensorflow",
@@ -189,10 +189,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "FcGmSJEtqrDqm-cCiY-pv",
+      "id": "aNkHPxjS3ZcwghDpK7fMC",
       "type": "text",
-      "x": 137.49830732371538,
-      "y": -1397.6106539441043,
+      "x": 97.03472212100041,
+      "y": 525.3310620367772,
       "width": 699.5194702148438,
       "height": 50,
       "angle": 0,
@@ -204,15 +204,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a5",
       "roundness": null,
-      "seed": 1526296141,
+      "seed": 956399445,
       "version": 200,
-      "versionNonce": 165816707,
+      "versionNonce": 2067931387,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "Learning to Contribute, what to know and why C++\n    - https://docs.pytorch.org/xla/master/contribute/cpp_debugger.html",
@@ -226,10 +226,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "OlS0nh3ubYW9-W1HKiLYp",
+      "id": "cipQSG-JE99osnghjODey",
       "type": "text",
-      "x": 180.67992922543363,
-      "y": -1004.430622944245,
+      "x": 140.21634402271866,
+      "y": 918.5110930366363,
       "width": 1365.759033203125,
       "height": 150,
       "angle": 0,
@@ -241,15 +241,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a6",
       "roundness": null,
-      "seed": 464526509,
+      "seed": 1470155957,
       "version": 215,
-      "versionNonce": 466707501,
+      "versionNonce": 1781055541,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "OpenXLA, vllm-tpu-inference, JAX:\nfrom https://github.com/pytorch/xla/issues/9684#issuecomment-4201670803\nto https://developers.googleblog.com/torchtpu-running-pytorch-natively-on-tpus-at-google-scale/\nfor next steps:\n    - Integration with PyTorch’s Helion DSL\n    - Deep integrations with ecosystem pillars like vLLM and TorchTitan, alongside validated linear scaling up to full Pod-size infrastructure.",
@@ -263,10 +263,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "gDcoWIJEwvANZPUcfjOqQ",
+      "id": "gyB4obxnqjNePZzzY1yGG",
       "type": "image",
-      "x": 1836.6424128309682,
-      "y": -1327.2054250864799,
+      "x": 1796.1788276282514,
+      "y": 595.7362908944015,
       "width": 678.8288054043546,
       "height": 658.3513150452488,
       "angle": 0,
@@ -278,15 +278,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a7",
       "roundness": null,
-      "seed": 1111621389,
+      "seed": 1940876821,
       "version": 191,
-      "versionNonce": 1334313251,
+      "versionNonce": 971655579,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -298,10 +298,10 @@
       "crop": null
     },
     {
-      "id": "nNUk7ixR1UAj9aQVsppT7",
+      "id": "w9mA5b6StG7U3LxGCIyaq",
       "type": "text",
-      "x": 1810.9844824194897,
-      "y": -1469.9875680555388,
+      "x": 1770.520897216773,
+      "y": 452.95414792534234,
       "width": 1656.63916015625,
       "height": 125,
       "angle": 0,
@@ -313,15 +313,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a8",
       "roundness": null,
-      "seed": 1428723053,
+      "seed": 1277354869,
       "version": 696,
-      "versionNonce": 1305368205,
+      "versionNonce": 1743581589,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "As of Apr 2026 ... Jul 2026 (as of writing), the Meta/GCP team took a pause supporting torch_xla and focused on native TPU integrations rather than a JAX wrapper\n    - helpful insight for me to focus on openxla at lower absstractions to limit changes\n    - waiting for official TorchTPU integrations ... could I already do this on google TPU via google colab/kaggle?\n    = python and JAX ... learn more about C++ to support compiler and openxla specifically\n    ? stableHLO",
@@ -335,10 +335,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "iasiPaQQ7S44G9DV28fmS",
+      "id": "UiObDKddmdKVaSFb5zlZu",
       "type": "text",
-      "x": -2421.493375437065,
-      "y": -651.9178621431547,
+      "x": -2461.95696063978,
+      "y": 1271.0238538377266,
       "width": 2254.149172654182,
       "height": 964.0874565972223,
       "angle": 0,
@@ -350,15 +350,15 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "a9",
       "roundness": null,
-      "seed": 1336762317,
+      "seed": 624995541,
       "version": 686,
-      "versionNonce": 2110907587,
+      "versionNonce": 247750203,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "text": "The TPU Workflow: Data cleaning is done before reaching the\nTPU using CPU frameworks (like Apache Beam, Spark, or Ray) or\nGPUs (via cuDF). \n\nOnce the data is entirely numerical, it is fed onto the TPU as\nraw tensors (using JAX, TensorFlow, or PyTorch). \n\n[1 (https://developer.nvidia.com/blog/pandas-dataframe-tutorial-\nbeginners-guide-to-gpu-accelerated-dataframes-in-python/), \n2 (https://www.youtube.com/watch?v=Ocql-0B4o5c), \n3 (https://code-b.dev/blog/data-processing-machine-learning)]",
@@ -372,10 +372,10 @@
       "lineHeight": 1.25
     },
     {
-      "id": "yg9U4Th6oF019HEZcJ40X",
+      "id": "gd9yndsLD2yuRK6yMSQ1E",
       "type": "image",
-      "x": 1594.7660160618743,
-      "y": -38.986809165640125,
+      "x": 1554.3024308591575,
+      "y": 1883.9549068152412,
       "width": 124.75998741596801,
       "height": 156.37147071393287,
       "angle": 0,
@@ -387,26 +387,26 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aA",
       "roundness": null,
-      "seed": 132767277,
+      "seed": 513690165,
       "version": 542,
-      "versionNonce": 1816001773,
+      "versionNonce": 1961096949,
       "isDeleted": false,
       "boundElements": [
         {
-          "id": "vmUL4Pldh8Ve9JDn_h6k3",
+          "id": "4suaLAAxO674hkNyqfuWS",
           "type": "arrow"
         },
         {
-          "id": "c-hDMYdkG22zsK_PazkI1",
+          "id": "PIfYFy_gIKT2r3sX7rmUu",
           "type": "arrow"
         }
       ],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -418,10 +418,10 @@
       "crop": null
     },
     {
-      "id": "2z01rId5N9IxrQEDPqpj6",
+      "id": "sBKZqGyQN_1pYyzmfET_A",
       "type": "image",
-      "x": 1470.4752615784764,
-      "y": 135.85437492282836,
+      "x": 1430.0116763757596,
+      "y": 2058.7960909037097,
       "width": 124.75998741596801,
       "height": 163.53674026147158,
       "angle": 0,
@@ -433,26 +433,26 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aB",
       "roundness": null,
-      "seed": 1422364813,
+      "seed": 1226914709,
       "version": 295,
-      "versionNonce": 2086556771,
+      "versionNonce": 884137691,
       "isDeleted": false,
       "boundElements": [
         {
-          "id": "T1HITZ5YzUgzS0amVUk-q",
+          "id": "n0RmnSz60QYEjIt5Gtdc1",
           "type": "arrow"
         },
         {
-          "id": "c-hDMYdkG22zsK_PazkI1",
+          "id": "PIfYFy_gIKT2r3sX7rmUu",
           "type": "arrow"
         }
       ],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -464,10 +464,10 @@
       "crop": null
     },
     {
-      "id": "H2S-99y9Nwwv3ZRvNrw3p",
+      "id": "cYSb8E3RQSlXQb4AU5qe1",
       "type": "image",
-      "x": 1470.0060283321418,
-      "y": -212.75616635891424,
+      "x": 1429.542443129425,
+      "y": 1710.185549621967,
       "width": 124.75998741596801,
       "height": 153.8425520500957,
       "angle": 0,
@@ -479,30 +479,30 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aC",
       "roundness": null,
-      "seed": 1946154733,
+      "seed": 2097086709,
       "version": 431,
-      "versionNonce": 1051318093,
+      "versionNonce": 1267945557,
       "isDeleted": false,
       "boundElements": [
         {
-          "id": "pJtYHwf9zOtANgdsO_8mx",
+          "id": "h_kizRJeF0gsqDjZia9YI",
           "type": "arrow"
         },
         {
-          "id": "zNR09kxaipsRPV9QLEIzE",
+          "id": "xmy8P5EgV_r4FelPQisPm",
           "type": "arrow"
         },
         {
-          "id": "vmUL4Pldh8Ve9JDn_h6k3",
+          "id": "4suaLAAxO674hkNyqfuWS",
           "type": "arrow"
         }
       ],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -514,10 +514,10 @@
       "crop": null
     },
     {
-      "id": "frQsxfec-ji6upxIozw_w",
+      "id": "F2vcZx49FefxR_C9UZ3xs",
       "type": "image",
-      "x": 1345.2460409532414,
-      "y": -40.42849507853407,
+      "x": 1304.7824557505246,
+      "y": 1882.5132209023473,
       "width": 124.75998741596801,
       "height": 153.8425520500957,
       "angle": 0,
@@ -529,26 +529,26 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aD",
       "roundness": null,
-      "seed": 807178573,
+      "seed": 1874664021,
       "version": 421,
-      "versionNonce": 989581315,
+      "versionNonce": 1716013947,
       "isDeleted": false,
       "boundElements": [
         {
-          "id": "zNR09kxaipsRPV9QLEIzE",
+          "id": "xmy8P5EgV_r4FelPQisPm",
           "type": "arrow"
         },
         {
-          "id": "T1HITZ5YzUgzS0amVUk-q",
+          "id": "n0RmnSz60QYEjIt5Gtdc1",
           "type": "arrow"
         }
       ],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -560,10 +560,10 @@
       "crop": null
     },
     {
-      "id": "KRw3_CuNKYBGV0CCBMTM4",
+      "id": "rVPSsf2RKArfom9cV2Oze",
       "type": "image",
-      "x": 1470.006028611866,
-      "y": -407.8929103042519,
+      "x": 1429.5424434091528,
+      "y": 1515.0488056766294,
       "width": 124.75998741596801,
       "height": 163.53674026147158,
       "angle": 0,
@@ -575,22 +575,22 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aE",
       "roundness": null,
-      "seed": 1182195629,
+      "seed": 170985397,
       "version": 301,
-      "versionNonce": 1600873901,
+      "versionNonce": 969964981,
       "isDeleted": false,
       "boundElements": [
         {
-          "id": "pJtYHwf9zOtANgdsO_8mx",
+          "id": "h_kizRJeF0gsqDjZia9YI",
           "type": "arrow"
         }
       ],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -602,10 +602,10 @@
       "crop": null
     },
     {
-      "id": "pJtYHwf9zOtANgdsO_8mx",
+      "id": "h_kizRJeF0gsqDjZia9YI",
       "type": "arrow",
-      "x": 1532.2860220401253,
-      "y": -217.75616635891424,
+      "x": 1491.8224368374085,
+      "y": 1705.185549621967,
       "width": 0,
       "height": 0,
       "angle": 0,
@@ -617,17 +617,17 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aF",
       "roundness": null,
-      "seed": 221798925,
+      "seed": 2122336533,
       "version": 412,
-      "versionNonce": 732485539,
+      "versionNonce": 1741104155,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "points": [
@@ -642,7 +642,7 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "KRw3_CuNKYBGV0CCBMTM4",
+        "elementId": "rVPSsf2RKArfom9cV2Oze",
         "fixedPoint": [
           0.4619421109762796,
           1.0128865984821327
@@ -651,7 +651,7 @@
         "gap": 0
       },
       "endBinding": {
-        "elementId": "H2S-99y9Nwwv3ZRvNrw3p",
+        "elementId": "cYSb8E3RQSlXQb4AU5qe1",
         "fixedPoint": [
           0.4619421109762796,
           -0.013698629558719292
@@ -667,10 +667,10 @@
       "endIsSpecial": null
     },
     {
-      "id": "zNR09kxaipsRPV9QLEIzE",
+      "id": "xmy8P5EgV_r4FelPQisPm",
       "type": "arrow",
-      "x": 1465.0060283321418,
-      "y": -135.9348903338664,
+      "x": 1424.542443129425,
+      "y": 1787.006825647015,
       "width": 57.479993670915064,
       "height": 90.50639525533222,
       "angle": 0,
@@ -682,17 +682,17 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aG",
       "roundness": null,
-      "seed": 1499109485,
+      "seed": 505437813,
       "version": 395,
-      "versionNonce": 1638672397,
+      "versionNonce": 918617877,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "points": [
@@ -711,7 +711,7 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "H2S-99y9Nwwv3ZRvNrw3p",
+        "elementId": "cYSb8E3RQSlXQb4AU5qe1",
         "fixedPoint": [
           -0.016891891891891893,
           0.4997260273972602
@@ -720,7 +720,7 @@
         "gap": 0
       },
       "endBinding": {
-        "elementId": "frQsxfec-ji6upxIozw_w",
+        "elementId": "F2vcZx49FefxR_C9UZ3xs",
         "fixedPoint": [
           0.4996621621621609,
           -0.0136986301369863
@@ -736,10 +736,10 @@
       "endIsSpecial": null
     },
     {
-      "id": "vmUL4Pldh8Ve9JDn_h6k3",
+      "id": "4suaLAAxO674hkNyqfuWS",
       "type": "arrow",
-      "x": 1599.7660157481096,
-      "y": -135.9348903338664,
+      "x": 1559.3024305453928,
+      "y": 1787.006825647015,
       "width": 57.2799940217501,
       "height": 91.94808116822628,
       "angle": 0,
@@ -751,17 +751,17 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aH",
       "roundness": null,
-      "seed": 614925005,
+      "seed": 1876346837,
       "version": 392,
-      "versionNonce": 2090068803,
+      "versionNonce": 1361176763,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "points": [
@@ -780,7 +780,7 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "H2S-99y9Nwwv3ZRvNrw3p",
+        "elementId": "cYSb8E3RQSlXQb4AU5qe1",
         "fixedPoint": [
           1.0168918918918919,
           0.4997260273972602
@@ -789,7 +789,7 @@
         "gap": 0
       },
       "endBinding": {
-        "elementId": "yg9U4Th6oF019HEZcJ40X",
+        "elementId": "gd9yndsLD2yuRK6yMSQ1E",
         "fixedPoint": [
           0.4996621621621609,
           -0.013477088948787063
@@ -805,10 +805,10 @@
       "endIsSpecial": null
     },
     {
-      "id": "T1HITZ5YzUgzS0amVUk-q",
+      "id": "n0RmnSz60QYEjIt5Gtdc1",
       "type": "arrow",
-      "x": 1407.526034661225,
-      "y": 118.41405697156142,
+      "x": 1367.0624494585081,
+      "y": 2041.3557729524427,
       "width": 57.9492269172506,
       "height": 99.10868808200257,
       "angle": 0,
@@ -820,17 +820,17 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aI",
       "roundness": null,
-      "seed": 1941381421,
+      "seed": 96011573,
       "version": 411,
-      "versionNonce": 929406573,
+      "versionNonce": 953832565,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "points": [
@@ -849,7 +849,7 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "frQsxfec-ji6upxIozw_w",
+        "elementId": "F2vcZx49FefxR_C9UZ3xs",
         "fixedPoint": [
           0.4996621621621609,
           1.0136986301369864
@@ -858,7 +858,7 @@
         "gap": 0
       },
       "endBinding": {
-        "elementId": "2z01rId5N9IxrQEDPqpj6",
+        "elementId": "sBKZqGyQN_1pYyzmfET_A",
         "fixedPoint": [
           -0.016891891891891893,
           0.49974226804123734
@@ -874,10 +874,10 @@
       "endIsSpecial": null
     },
     {
-      "id": "c-hDMYdkG22zsK_PazkI1",
+      "id": "PIfYFy_gIKT2r3sX7rmUu",
       "type": "arrow",
-      "x": 1657.0460097698578,
-      "y": 122.3846615482928,
+      "x": 1616.582424567141,
+      "y": 2045.3263775291741,
       "width": 56.810760775414565,
       "height": 95.13808350527131,
       "angle": 0,
@@ -889,17 +889,17 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aJ",
       "roundness": null,
-      "seed": 2079617933,
+      "seed": 321689237,
       "version": 424,
-      "versionNonce": 303794915,
+      "versionNonce": 402331995,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "points": [
@@ -918,7 +918,7 @@
       ],
       "lastCommittedPoint": null,
       "startBinding": {
-        "elementId": "yg9U4Th6oF019HEZcJ40X",
+        "elementId": "gd9yndsLD2yuRK6yMSQ1E",
         "fixedPoint": [
           0.4996621621621609,
           1.013477088948787
@@ -927,7 +927,7 @@
         "gap": 0
       },
       "endBinding": {
-        "elementId": "2z01rId5N9IxrQEDPqpj6",
+        "elementId": "sBKZqGyQN_1pYyzmfET_A",
         "fixedPoint": [
           1.0168918918918919,
           0.49974226804123734
@@ -943,10 +943,10 @@
       "endIsSpecial": null
     },
     {
-      "id": "4O6IUTvGxWh2DLIFbEWjX",
+      "id": "eQTO8tFyc-Ep9Y59SH1lA",
       "type": "arrow",
-      "x": 1533.8310853415005,
-      "y": 307.39799762894927,
+      "x": 1493.3675001387837,
+      "y": 2230.3397136098306,
       "width": 0.5000069573743361,
       "height": 33.772954538257565,
       "angle": 0,
@@ -958,17 +958,17 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aK",
       "roundness": null,
-      "seed": 160987629,
+      "seed": 1122434037,
       "version": 370,
-      "versionNonce": 1465993421,
+      "versionNonce": 1273101781,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "points": [
@@ -989,10 +989,10 @@
       "elbowed": false
     },
     {
-      "id": "Jn5ouShhhe_UrwihMPcyO",
+      "id": "NKO9qjAP7efUjgkpb-DNK",
       "type": "image",
-      "x": 1470.0060286402022,
-      "y": 342.02819409356107,
+      "x": 1429.542443437489,
+      "y": 2264.9699100744424,
       "width": 124.75998741596801,
       "height": 166.9086318132545,
       "angle": 0,
@@ -1004,17 +1004,17 @@
       "roughness": 0,
       "opacity": 100,
       "groupIds": [
-        "i6iMO4VY-IVp8pZEYcLtF"
+        "9ySK2BM0MzBiu3JJ20hQq"
       ],
-      "frameId": "7LOYqQ3GlYuGjbJKAB7bC",
+      "frameId": "pUcH8XfE5ng31RYGWNVTk",
       "index": "aL",
       "roundness": null,
-      "seed": 632075341,
+      "seed": 1290646869,
       "version": 666,
-      "versionNonce": 1087256195,
+      "versionNonce": 1503999483,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -1026,10 +1026,10 @@
       "crop": null
     },
     {
-      "id": "7LOYqQ3GlYuGjbJKAB7bC",
+      "id": "pUcH8XfE5ng31RYGWNVTk",
       "type": "frame",
-      "x": -2543.1942838569057,
-      "y": -1636.7231012817801,
+      "x": -2583.6578690596207,
+      "y": 286.21861469910095,
       "width": 6471.747942713812,
       "height": 3869.6649525635607,
       "name": "GPU/TPU",
@@ -1044,12 +1044,12 @@
       "groupIds": [],
       "frameId": null,
       "roundness": null,
-      "seed": 2081071789,
+      "seed": 1284915893,
       "version": 960,
-      "versionNonce": 590915373,
+      "versionNonce": 1726839605,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784652148644,
+      "updated": 1784652232818,
       "link": null,
       "locked": false,
       "index": "aM"
@@ -1102,7 +1102,7 @@
     "isRotating": false,
     "lastPointerDownWith": "mouse",
     "multiElement": null,
-    "name": "Untitled-2026-07-21-0942",
+    "name": "Untitled-2026-07-21-0943",
     "openMenu": null,
     "pasteDialog": {
       "shown": false,
@@ -1110,11 +1110,9 @@
     },
     "previousSelectedElementIds": {},
     "scrolledOutside": false,
-    "scrollX": 6839.306030946505,
-    "scrollY": 2959.0574671653817,
-    "selectedElementIds": {
-      "7LOYqQ3GlYuGjbJKAB7bC": true
-    },
+    "scrollX": 6384.580772702715,
+    "scrollY": 849.6129715191187,
+    "selectedElementIds": {},
     "hoveredElementIds": {},
     "selectedGroupIds": {},
     "selectedElementsAreBeingDragged": false,
