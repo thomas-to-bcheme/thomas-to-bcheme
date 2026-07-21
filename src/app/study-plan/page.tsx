@@ -10,7 +10,7 @@ import { isValidBoardName, DEFAULT_BOARD_NAME } from '@/lib/excalidrawBoards';
 export const metadata: Metadata = {
   title: 'Study Plan — Thomas To',
   description:
-    "A live Excalidraw whiteboard Thomas To uses to reason through and communicate technical systems — continuous-training MLOps, model drift, and edge AI.",
+    "A live Excalidraw whiteboard Thomas To uses to reason through and communicate technical systems — system design, data engineering, ML, backend, frontend, and cloud infrastructure, each with senior-level best practices and curated resources.",
 };
 
 interface StudyPlanPageProps {

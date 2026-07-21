@@ -57,7 +57,7 @@ const SESSION_TOKEN_KEY = 'excalidraw_save_token';
 // ExcalidrawWrapper) — never by cached id/coordinates — so this stays correct
 // if the frame is later moved/resized.
 const BOARD_DEFAULT_FRAME_NAMES: Partial<Record<string, string>> = {
-  [DEFAULT_BOARD_NAME]: 'Drug Discovery',
+  [DEFAULT_BOARD_NAME]: 'Drug Discovery - Deep Learning (8-12)',
 };
 
 type SaveStatus = 'idle' | 'saving' | 'saved' | 'error' | 'too_large';

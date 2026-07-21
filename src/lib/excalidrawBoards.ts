@@ -1,6 +1,6 @@
 const BOARD_NAME_PATTERN = /^[a-zA-Z0-9_-]{1,64}$/;
 
-export const DEFAULT_BOARD_NAME = 'technical_prep';
+export const DEFAULT_BOARD_NAME = 'model';
 
 // Single source of truth for where board files live, used to derive every
 // path below — kept exported so API routes can strip/match against it
