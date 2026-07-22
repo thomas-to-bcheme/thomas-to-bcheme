@@ -23,13 +23,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1605581806,
-      "version": 520,
-      "versionNonce": 300580037,
+      "version": 521,
+      "versionNonce": 788578121,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a0"
     },
     {
       "id": "BRuPXrP-kgrDDei5kW6YX",
@@ -54,13 +55,14 @@
         "type": 3
       },
       "seed": 756554290,
-      "version": 598,
-      "versionNonce": 1198038053,
+      "version": 599,
+      "versionNonce": 1306817991,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a1"
     },
     {
       "id": "TsCcYyaYOGjKiO5XWuozC",
@@ -83,11 +85,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 9861042,
-      "version": 528,
-      "versionNonce": 447467397,
+      "version": 529,
+      "versionNonce": 1226567209,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "(Business) Problem",
@@ -98,7 +100,8 @@
       "containerId": null,
       "originalText": "(Business) Problem",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a2"
     },
     {
       "id": "CyWmkC-JMeGsSfDcbVB2s",
@@ -119,11 +122,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 822767986,
-      "version": 866,
-      "versionNonce": 1411403781,
+      "version": 867,
+      "versionNonce": 1501570279,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836461,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "points": [
@@ -164,7 +167,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "a3"
     },
     {
       "id": "DJvi9Veg4zvaMUzqXRSTM",
@@ -185,11 +189,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 467844462,
-      "version": 324,
-      "versionNonce": 801600069,
+      "version": 325,
+      "versionNonce": 430850313,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Feature Engineering",
@@ -200,7 +204,8 @@
       "containerId": null,
       "originalText": "Feature Engineering",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a4"
     },
     {
       "id": "lp0AFb0650eM8owp-fIpM",
@@ -225,13 +230,14 @@
         "type": 3
       },
       "seed": 2091866162,
-      "version": 905,
-      "versionNonce": 1493885349,
+      "version": 906,
+      "versionNonce": 1343811591,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a5"
     },
     {
       "id": "JdJMJZLrr0LlwMtW0ZRg-",
@@ -254,11 +260,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 2100920818,
-      "version": 798,
-      "versionNonce": 451503365,
+      "version": 799,
+      "versionNonce": 238237673,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Data Collection\nSources?",
@@ -269,7 +275,8 @@
       "containerId": null,
       "originalText": "Data Collection\nSources?",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a6"
     },
     {
       "id": "uz9fh-Aces3a0n_-Q2P_7",
@@ -294,13 +301,14 @@
         "type": 3
       },
       "seed": 786979506,
-      "version": 834,
-      "versionNonce": 1491106917,
+      "version": 835,
+      "versionNonce": 195778343,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a7"
     },
     {
       "id": "Nb-sKik62YEN4DSTPNdN1",
@@ -323,11 +331,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 908997746,
-      "version": 812,
-      "versionNonce": 717072325,
+      "version": 813,
+      "versionNonce": 1488343753,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Data Preparation\nPre-Processing?",
@@ -338,7 +346,8 @@
       "containerId": null,
       "originalText": "Data Preparation\nPre-Processing?",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a8"
     },
     {
       "id": "HdFQNvyvvFwZHgGdPqj7H",
@@ -363,8 +372,8 @@
         "type": 3
       },
       "seed": 1988863346,
-      "version": 997,
-      "versionNonce": 1386112805,
+      "version": 998,
+      "versionNonce": 1923340871,
       "isDeleted": false,
       "boundElements": [
         {
@@ -372,9 +381,10 @@
           "type": "arrow"
         }
       ],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a9"
     },
     {
       "id": "nGyEB3tUGEuJ3OuiZHmLR",
@@ -397,11 +407,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 681191218,
-      "version": 1050,
-      "versionNonce": 74490341,
+      "version": 1051,
+      "versionNonce": 1574113705,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Exploratory Data\nAnalaysis",
@@ -412,7 +422,8 @@
       "containerId": null,
       "originalText": "Exploratory Data Analaysis",
       "autoResize": false,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aA"
     },
     {
       "id": "FviDZ6_iQNk4XcynKD0wt",
@@ -437,13 +448,14 @@
         "type": 3
       },
       "seed": 306745842,
-      "version": 1045,
-      "versionNonce": 204283205,
+      "version": 1046,
+      "versionNonce": 1776220519,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aB"
     },
     {
       "id": "CpESFIlzhaNoiitZAIbpv",
@@ -466,8 +478,8 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 117801906,
-      "version": 1113,
-      "versionNonce": 293809317,
+      "version": 1114,
+      "versionNonce": 1656026249,
       "isDeleted": false,
       "boundElements": [
         {
@@ -475,7 +487,7 @@
           "type": "arrow"
         }
       ],
-      "updated": 1783983836460,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Data Modeling",
@@ -486,7 +498,8 @@
       "containerId": null,
       "originalText": "Data Modeling",
       "autoResize": false,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aC"
     },
     {
       "id": "1OjmmV0LsbdB5q3B-P77v",
@@ -511,13 +524,14 @@
         "type": 3
       },
       "seed": 961572078,
-      "version": 1070,
-      "versionNonce": 1107429221,
+      "version": 1071,
+      "versionNonce": 111752327,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836461,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aD"
     },
     {
       "id": "i9_sxIyT1r9Wa0izZ2MKP",
@@ -540,11 +554,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 718315310,
-      "version": 1155,
-      "versionNonce": 762696389,
+      "version": 1156,
+      "versionNonce": 2065136489,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836461,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Model Evaluation",
@@ -555,7 +569,8 @@
       "containerId": null,
       "originalText": "Model Evaluation",
       "autoResize": false,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aE"
     },
     {
       "id": "F_vMQJuMP6PbD3Pka_IMh",
@@ -580,13 +595,14 @@
         "type": 3
       },
       "seed": 1720037422,
-      "version": 1171,
-      "versionNonce": 1125724709,
+      "version": 1172,
+      "versionNonce": 12520359,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836461,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aF"
     },
     {
       "id": "SCot_Ao0MxdSpIfo8Setc",
@@ -609,11 +625,11 @@
       "frameId": "i3IsJrGO4qIDuAgWzF2Z-",
       "roundness": null,
       "seed": 1593539182,
-      "version": 1275,
-      "versionNonce": 1071228293,
+      "version": 1276,
+      "versionNonce": 927344201,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983836461,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Model Deployment",
@@ -624,7 +640,8 @@
       "containerId": null,
       "originalText": "Model Deployment",
       "autoResize": false,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aG"
     },
     {
       "id": "1i6hyJktqMEz8sIfT6pZ5",
@@ -646,13 +663,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 912497955,
-      "version": 1305,
-      "versionNonce": 1171674405,
+      "version": 1306,
+      "versionNonce": 1682767559,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983838978,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aH"
     },
     {
       "id": "qVWvqS4uKzWfCWXYepxjV",
@@ -673,11 +691,11 @@
       "frameId": "1i6hyJktqMEz8sIfT6pZ5",
       "roundness": null,
       "seed": 721503619,
-      "version": 1192,
-      "versionNonce": 1425696901,
+      "version": 1193,
+      "versionNonce": 303854889,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983838978,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Chapter 8:\n    - colab TPU requires torch_xla, colab and local limited to CPU/GPU (cuda,mps,xps)\n    - ",
@@ -688,7 +706,8 @@
       "containerId": null,
       "originalText": "Chapter 8:\n    - colab TPU requires torch_xla, colab and local limited to CPU/GPU (cuda,mps,xps)\n    - ",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aI"
     },
     {
       "id": "bst9DWxg3wW6JpGAVCJlp",
@@ -709,11 +728,11 @@
       "frameId": "1i6hyJktqMEz8sIfT6pZ5",
       "roundness": null,
       "seed": 1157523907,
-      "version": 555,
-      "versionNonce": 1090850789,
+      "version": 556,
+      "versionNonce": 66031079,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983838978,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -722,7 +741,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "aJ"
     },
     {
       "id": "awmn4ioGZ-ADtghS-4SH6",
@@ -743,11 +763,11 @@
       "frameId": "1i6hyJktqMEz8sIfT6pZ5",
       "roundness": null,
       "seed": 847934664,
-      "version": 2725,
-      "versionNonce": 1476643653,
+      "version": 2726,
+      "versionNonce": 520480777,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783983838978,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Chapter 9: structure based drug design with active learning\n    - numpy does not have native GPU support, outputs to CPU, torch.to(device) for acceleration\n        - therefore libraries like cupy (numpy for GPU) and JAX (numpy for TPU) were maintained\n    - torch.manual_seed() abstracts hardware specific acceleraetion and source code applies seed to multi/single GPU\n    ? (3)multi-layer-perceptron is used but unclear if minimally effecitve MLP or simple for usecase from author\n\n    9.1: molecular docking\n        - consider active vs. allosteric sites: protein-ligand, protein-protein, and protein-DNA docking types\n        - minimal protein-ligand docking workflow: input, structure preparation, docking\n            - conformational sampling and pose evaluation are two main challenges\n            - scoring and ranking to account for: van der waals, electrostatics, hydrogen bonding, etc.\n            - poses are possible geometries\n        - 9.1.3: data preparation, 9.1.4: running the dock using a rigid protein, flexible ligand with a binding box (mdtraj from pdb)\n\n    9.2: active learning\n        -\n\n    9.3: generalization (hence drop-out 50% as opposed to 20% due to active learning?)\n        -",
@@ -758,7 +778,8 @@
       "containerId": null,
       "originalText": "Chapter 9: structure based drug design with active learning\n    - numpy does not have native GPU support, outputs to CPU, torch.to(device) for acceleration\n        - therefore libraries like cupy (numpy for GPU) and JAX (numpy for TPU) were maintained\n    - torch.manual_seed() abstracts hardware specific acceleraetion and source code applies seed to multi/single GPU\n    ? (3)multi-layer-perceptron is used but unclear if minimally effecitve MLP or simple for usecase from author\n\n    9.1: molecular docking\n        - consider active vs. allosteric sites: protein-ligand, protein-protein, and protein-DNA docking types\n        - minimal protein-ligand docking workflow: input, structure preparation, docking\n            - conformational sampling and pose evaluation are two main challenges\n            - scoring and ranking to account for: van der waals, electrostatics, hydrogen bonding, etc.\n            - poses are possible geometries\n        - 9.1.3: data preparation, 9.1.4: running the dock using a rigid protein, flexible ligand with a binding box (mdtraj from pdb)\n\n    9.2: active learning\n        -\n\n    9.3: generalization (hence drop-out 50% as opposed to 20% due to active learning?)\n        -",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aK"
     },
     {
       "id": "BMdbcjVpKEvnMSw1Xo05I",
@@ -780,13 +801,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 67483120,
-      "version": 1,
-      "versionNonce": 2071889410,
+      "version": 2,
+      "versionNonce": 716388615,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784654220852,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aL"
     },
     {
       "id": "W4mIJ020cn8njJtThSPq0",
@@ -807,11 +829,11 @@
       "frameId": "BMdbcjVpKEvnMSw1Xo05I",
       "roundness": null,
       "seed": 1583183912,
-      "version": 624,
-      "versionNonce": 40008923,
+      "version": 625,
+      "versionNonce": 2013134569,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784308855071,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "Model",
@@ -822,7 +844,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aM"
     },
     {
       "id": "9waL6nvPn0JridcP0vcsY",
@@ -843,11 +866,11 @@
       "frameId": "BMdbcjVpKEvnMSw1Xo05I",
       "roundness": null,
       "seed": 1172268072,
-      "version": 148,
-      "versionNonce": 403305115,
+      "version": 149,
+      "versionNonce": 236224551,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784308855071,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "ML concepts\n    - model inference\n    - evaluation\n    - data pipelines\n\nML frameworks\n    - PyTorch\n    - Huggingface\n    - Langchain",
@@ -858,7 +881,8 @@
       "containerId": null,
       "originalText": "ML concepts\n    - model inference\n    - evaluation\n    - data pipelines\n\nML frameworks\n    - PyTorch\n    - Huggingface\n    - Langchain",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aN"
     },
     {
       "id": "6t9GPioKwrjCNXa7R5itU",
@@ -879,11 +903,11 @@
       "frameId": "BMdbcjVpKEvnMSw1Xo05I",
       "roundness": null,
       "seed": 787787048,
-      "version": 340,
-      "versionNonce": 708613243,
+      "version": 341,
+      "versionNonce": 1804614089,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784308855071,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "LLM Apps\n    - RAG\n    - Prompting\n    - Agentic workflows",
@@ -894,7 +918,8 @@
       "containerId": null,
       "originalText": "LLM Apps\n    - RAG\n    - Prompting\n    - Agentic workflows",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aO"
     },
     {
       "id": "yu7BNWqjVi6X6-zIkYTWG",
@@ -916,13 +941,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1676614785,
-      "version": 1,
-      "versionNonce": 174729207,
+      "version": 2,
+      "versionNonce": 2147476295,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655829279,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aP"
     },
     {
       "id": "1JtrJV40sySf3RJcRmdnS",
@@ -943,11 +969,11 @@
       "frameId": "yu7BNWqjVi6X6-zIkYTWG",
       "roundness": null,
       "seed": 1327561549,
-      "version": 1,
-      "versionNonce": 1357147691,
+      "version": 2,
+      "versionNonce": 1792546985,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655829279,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "- Frame the business problem as a measurable ML task first\n  - Pick the target variable and success metric before touching data — a mismatched metric (e.g. accuracy on imbalanced fraud data) invalidates everything downstream\n- Prevent data leakage at the source, not in review\n  - Time-based splits for temporal data, group-aware splits when rows share an entity (user/patient), and fit all scalers/encoders only on the training fold\n- Treat feature engineering as a versioned artifact\n  - A feature store (Feast, Tecton, or a simple point-in-time-correct table) keeps train/serve features consistent and prevents online/offline skew\n- EDA should produce falsifiable hypotheses, not just plots\n  - Check target leakage, class imbalance, missingness patterns (MCAR/MAR/MNAR), and distribution drift between train and expected production data\n- Choose eval metrics by problem type and cost asymmetry, not convention\n  - Precision/recall/F1 or PR-AUC for imbalanced classification, calibration (Brier score) when probabilities drive decisions, quantile loss for uncertainty-aware regression\n- Always beat a trivial baseline before trusting a complex model\n  - Majority class, linear/logistic regression, or a simple heuristic — if a gradient-boosted model barely beats it, the signal may not be there\n- Track every experiment with lineage: code version, data version, hyperparameters, metrics\n  - MLflow, Weights & Biases, or DVC — reproducibility is a debugging and audit requirement, not a nice-to-have\n- Version models and data together, not just code\n  - A model artifact without its training data hash and preprocessing pipeline version is not reproducible and not safely rollback-able\n- Test ML code like software: unit test transforms, contract-test the training pipeline, and add data validation (Great Expectations / pandera) as a CI gate\n- Monitor for drift after deployment, not just uptime\n  - Feature drift (PSI, KL divergence), prediction drift, and label/concept drift once ground truth arrives — alert on threshold breaches, not just crashes\n- Deploy with a rollback path: shadow mode first, then canary, then champion-challenger\n  - Shadow runs the new model silently alongside production to compare outputs before it ever affects a user\n- For LLM-based features, separate system instructions from user input explicitly to prevent prompt injection, and version prompts like code (diffable, reviewable, rollback-able)\n- RAG systems fail in specific, recurring ways: retrieval returns relevant-but-wrong-grain chunks, embeddings drift when the embedding model changes (requires full re-index), and context-stuffing degrades generation quality past a token budget — validate retrieval quality (recall@k) separately from generation quality\n- Agentic workflows need bounded iteration and explicit tool-call validation\n  - Cap retries/steps, validate tool outputs against a schema before feeding them back into the loop, and log every step for observability (Chain of Responsibility: retrieve → grade → generate → validate)\n- Fail fast and gracefully on LLM API limits\n  - Handle rate limits, timeouts, and context-window overflows with explicit fallback logic (smaller model, cached response, truncated context) rather than an unhandled exception reaching the user\n- Senior-level judgment: know when NOT to use ML\n  - A well-tuned heuristic or SQL rule is often more reliable, cheaper, and easier to debug than a model for problems with clear deterministic logic",
@@ -958,7 +984,8 @@
       "containerId": null,
       "originalText": "- Frame the business problem as a measurable ML task first\n  - Pick the target variable and success metric before touching data — a mismatched metric (e.g. accuracy on imbalanced fraud data) invalidates everything downstream\n- Prevent data leakage at the source, not in review\n  - Time-based splits for temporal data, group-aware splits when rows share an entity (user/patient), and fit all scalers/encoders only on the training fold\n- Treat feature engineering as a versioned artifact\n  - A feature store (Feast, Tecton, or a simple point-in-time-correct table) keeps train/serve features consistent and prevents online/offline skew\n- EDA should produce falsifiable hypotheses, not just plots\n  - Check target leakage, class imbalance, missingness patterns (MCAR/MAR/MNAR), and distribution drift between train and expected production data\n- Choose eval metrics by problem type and cost asymmetry, not convention\n  - Precision/recall/F1 or PR-AUC for imbalanced classification, calibration (Brier score) when probabilities drive decisions, quantile loss for uncertainty-aware regression\n- Always beat a trivial baseline before trusting a complex model\n  - Majority class, linear/logistic regression, or a simple heuristic — if a gradient-boosted model barely beats it, the signal may not be there\n- Track every experiment with lineage: code version, data version, hyperparameters, metrics\n  - MLflow, Weights & Biases, or DVC — reproducibility is a debugging and audit requirement, not a nice-to-have\n- Version models and data together, not just code\n  - A model artifact without its training data hash and preprocessing pipeline version is not reproducible and not safely rollback-able\n- Test ML code like software: unit test transforms, contract-test the training pipeline, and add data validation (Great Expectations / pandera) as a CI gate\n- Monitor for drift after deployment, not just uptime\n  - Feature drift (PSI, KL divergence), prediction drift, and label/concept drift once ground truth arrives — alert on threshold breaches, not just crashes\n- Deploy with a rollback path: shadow mode first, then canary, then champion-challenger\n  - Shadow runs the new model silently alongside production to compare outputs before it ever affects a user\n- For LLM-based features, separate system instructions from user input explicitly to prevent prompt injection, and version prompts like code (diffable, reviewable, rollback-able)\n- RAG systems fail in specific, recurring ways: retrieval returns relevant-but-wrong-grain chunks, embeddings drift when the embedding model changes (requires full re-index), and context-stuffing degrades generation quality past a token budget — validate retrieval quality (recall@k) separately from generation quality\n- Agentic workflows need bounded iteration and explicit tool-call validation\n  - Cap retries/steps, validate tool outputs against a schema before feeding them back into the loop, and log every step for observability (Chain of Responsibility: retrieve → grade → generate → validate)\n- Fail fast and gracefully on LLM API limits\n  - Handle rate limits, timeouts, and context-window overflows with explicit fallback logic (smaller model, cached response, truncated context) rather than an unhandled exception reaching the user\n- Senior-level judgment: know when NOT to use ML\n  - A well-tuned heuristic or SQL rule is often more reliable, cheaper, and easier to debug than a model for problems with clear deterministic logic",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aQ"
     },
     {
       "id": "tXdDWD1F2ILZM-Smknc1X",
@@ -980,13 +1007,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1466103697,
-      "version": 1,
-      "versionNonce": 1260053145,
+      "version": 2,
+      "versionNonce": 1624367719,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655829279,
+      "updated": 1784685404189,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aR"
     },
     {
       "id": "E8Fzu_HQZyIAgeEIKtDRP",
@@ -1007,11 +1035,11 @@
       "frameId": "tXdDWD1F2ILZM-Smknc1X",
       "roundness": null,
       "seed": 186481454,
-      "version": 1,
-      "versionNonce": 172876692,
+      "version": 2,
+      "versionNonce": 931208073,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655829279,
+      "updated": 1784685404189,
       "link": null,
       "locked": false,
       "text": "- PyTorch official documentation & tutorials (pytorch.org/tutorials) — canonical reference for training loops, autograd, and torch_xla/device placement\n- Hugging Face documentation & courses (huggingface.co/docs, huggingface.co/learn) — transformers, datasets, and the free NLP/LLM course\n- Made With ML (madewithml.com) — free, widely-used course on production ML engineering: MLOps, testing, and deployment practices\n- Full Stack Deep Learning (fullstackdeeplearning.com) — course and reading materials on the practical engineering side of shipping ML systems\n- \"Machine Learning Engineering\" by Andriy Burkov (mlebook.com) — concise, practitioner-focused complement to more academic ML texts\n- Google's \"Rules of Machine Learning\" (developers.google.com/machine-learning/guides/rules-of-ml) — battle-tested heuristics from Google's internal ML practice\n- \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\" (Lewis et al., 2020, arXiv:2005.11401) — the original RAG paper defining the architecture pattern\n- LangChain official documentation (python.langchain.com) — reference patterns for RAG pipelines and agentic tool-calling workflows\n- Awesome MLOps (github.com/visenger/awesome-mlops) — curated, community-maintained list of MLOps tools, papers, and platforms",
@@ -1022,10 +1050,108 @@
       "containerId": null,
       "originalText": "- PyTorch official documentation & tutorials (pytorch.org/tutorials) — canonical reference for training loops, autograd, and torch_xla/device placement\n- Hugging Face documentation & courses (huggingface.co/docs, huggingface.co/learn) — transformers, datasets, and the free NLP/LLM course\n- Made With ML (madewithml.com) — free, widely-used course on production ML engineering: MLOps, testing, and deployment practices\n- Full Stack Deep Learning (fullstackdeeplearning.com) — course and reading materials on the practical engineering side of shipping ML systems\n- \"Machine Learning Engineering\" by Andriy Burkov (mlebook.com) — concise, practitioner-focused complement to more academic ML texts\n- Google's \"Rules of Machine Learning\" (developers.google.com/machine-learning/guides/rules-of-ml) — battle-tested heuristics from Google's internal ML practice\n- \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\" (Lewis et al., 2020, arXiv:2005.11401) — the original RAG paper defining the architecture pattern\n- LangChain official documentation (python.langchain.com) — reference patterns for RAG pipelines and agentic tool-calling workflows\n- Awesome MLOps (github.com/visenger/awesome-mlops) — curated, community-maintained list of MLOps tools, papers, and platforms",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aS"
     }
   ],
-  "appState": {},
+  "appState": {
+    "showWelcomeScreen": false,
+    "theme": "light",
+    "currentChartType": "bar",
+    "currentItemBackgroundColor": "transparent",
+    "currentItemEndArrowhead": "arrow",
+    "currentItemFillStyle": "solid",
+    "currentItemFontFamily": 5,
+    "currentItemFontSize": 20,
+    "currentItemOpacity": 100,
+    "currentItemRoughness": 1,
+    "currentItemStartArrowhead": null,
+    "currentItemStrokeColor": "#1e1e1e",
+    "currentItemRoundness": "round",
+    "currentItemArrowType": "round",
+    "currentItemStrokeStyle": "solid",
+    "currentItemStrokeWidth": 2,
+    "currentItemTextAlign": "left",
+    "currentHoveredFontFamily": null,
+    "cursorButton": "up",
+    "activeEmbeddable": null,
+    "editingTextElement": null,
+    "editingGroupId": null,
+    "activeTool": {
+      "type": "selection",
+      "customType": null,
+      "locked": false,
+      "lastActiveTool": null
+    },
+    "penMode": false,
+    "penDetected": false,
+    "errorMessage": null,
+    "exportBackground": true,
+    "exportScale": 2,
+    "exportEmbedScene": false,
+    "exportWithDarkMode": false,
+    "fileHandle": null,
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "isBindingEnabled": true,
+    "defaultSidebarDockedPreference": false,
+    "isLoading": false,
+    "isResizing": false,
+    "isRotating": false,
+    "lastPointerDownWith": "mouse",
+    "multiElement": null,
+    "name": "Untitled-2026-07-21-1856",
+    "openMenu": null,
+    "pasteDialog": {
+      "shown": false,
+      "data": null
+    },
+    "previousSelectedElementIds": {},
+    "scrolledOutside": false,
+    "scrollX": 5896.915523830357,
+    "scrollY": 867.9243566116347,
+    "selectedElementIds": {},
+    "hoveredElementIds": {},
+    "selectedGroupIds": {},
+    "selectedElementsAreBeingDragged": false,
+    "shouldCacheIgnoreZoom": false,
+    "stats": {
+      "open": false,
+      "panels": 3
+    },
+    "startBoundElement": null,
+    "suggestedBindings": [],
+    "frameRendering": {
+      "enabled": true,
+      "clip": true,
+      "name": true,
+      "outline": true
+    },
+    "frameToHighlight": null,
+    "editingFrame": null,
+    "elementsToHighlight": null,
+    "viewBackgroundColor": "#ffffff",
+    "zenModeEnabled": false,
+    "zoom": {
+      "value": 1
+    },
+    "viewModeEnabled": false,
+    "pendingImageElementId": null,
+    "showHyperlinkPopup": false,
+    "selectedLinearElement": null,
+    "snapLines": [],
+    "originSnapOffset": null,
+    "objectsSnapModeEnabled": false,
+    "userToFollow": null,
+    "isCropping": false,
+    "croppingElementId": null,
+    "searchMatches": [],
+    "offsetLeft": 17,
+    "offsetTop": 206,
+    "width": 1463,
+    "height": 617
+  },
   "files": {
     "86c5ca0f8cd94ebd3c84df5ded54fed855756358": {
       "mimeType": "image/png",
