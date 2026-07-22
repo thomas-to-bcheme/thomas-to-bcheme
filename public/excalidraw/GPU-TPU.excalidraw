@@ -3623,8 +3623,8 @@
       "acaJmySMKhBrF6vHhMqnE": true
     },
     "scrolledOutside": false,
-    "scrollX": 15726.637004820323,
-    "scrollY": -6263.97436535319,
+    "scrollX": 18764.778311390386,
+    "scrollY": -1931.2456105156452,
     "selectedElementIds": {},
     "hoveredElementIds": {},
     "selectedGroupIds": {},
@@ -3648,7 +3648,7 @@
     "viewBackgroundColor": "#ffffff",
     "zenModeEnabled": false,
     "zoom": {
-      "value": 0.465435
+      "value": 0.1
     },
     "viewModeEnabled": false,
     "pendingImageElementId": null,
