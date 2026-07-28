@@ -1742,9 +1742,7 @@
       "shown": false,
       "data": null
     },
-    "previousSelectedElementIds": {
-      "waESElUWg_4ZTw42OYwXs": true
-    },
+    "previousSelectedElementIds": {},
     "scrolledOutside": false,
     "scrollX": 6629.328799610526,
     "scrollY": -7938.889501311961,
