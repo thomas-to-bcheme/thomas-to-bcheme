@@ -78,11 +78,18 @@ PAGE_CSS = """
 }
 .gradio-container { background: var(--zgpu-bg) !important; }
 #zgpu-doc { background: none !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+/* Gradio's own theme sets a light-mode text color (#27272a) on plain
+   p/h1/dl elements that can win the cascade depending on which theme
+   __theme= resolves to at runtime — observed on the deployed Space even
+   though the background above is forced dark, making text unreadable.
+   This page is a fixed dark readout regardless of viewer theme, so every
+   text color below is forced with !important rather than relying on
+   inheritance Gradio's theme can reassert. */
 .zgpu-page {
     max-width: 44rem;
     margin: 2.5rem auto;
     padding: 0 1.5rem 3rem;
-    color: var(--zgpu-ink);
+    color: var(--zgpu-ink) !important;
     font-family: ui-sans-serif, "Inter", "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
@@ -90,12 +97,12 @@ PAGE_CSS = """
 .zgpu-mono, .zgpu-title, .zgpu-eyebrow, .zgpu-register, .zgpu-page code, .zgpu-page pre, .zgpu-links {
     font-family: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
 }
-.zgpu-title { font-size: 1.05rem; color: var(--zgpu-ink); margin: 0 0 1.5rem; }
+.zgpu-title { font-size: 1.05rem; color: var(--zgpu-ink) !important; margin: 0 0 1.5rem; }
 .zgpu-eyebrow {
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--zgpu-muted);
+    color: var(--zgpu-muted) !important;
     margin: 2.25rem 0 0.6rem;
 }
 .zgpu-eyebrow:first-of-type { margin-top: 0; }
@@ -110,24 +117,24 @@ PAGE_CSS = """
     row-gap: 0.55rem;
     font-size: 0.85rem;
 }
-.zgpu-register dt { color: var(--zgpu-muted); letter-spacing: 0.04em; }
-.zgpu-register dd { margin: 0; color: var(--zgpu-ink); min-width: 0; word-break: break-word; }
-.zgpu-register dd.zgpu-hot { color: var(--zgpu-hot); }
+.zgpu-register dt { color: var(--zgpu-muted) !important; letter-spacing: 0.04em; }
+.zgpu-register dd { margin: 0; color: var(--zgpu-ink) !important; min-width: 0; word-break: break-word; }
+.zgpu-register dd.zgpu-hot { color: var(--zgpu-hot) !important; }
 .zgpu-rule {
-    height: 2px;
+    height: 2px !important;
     margin: 1.6rem 0;
-    background: linear-gradient(90deg, var(--zgpu-cold), var(--zgpu-hot));
-    border: none;
+    background: linear-gradient(90deg, var(--zgpu-cold), var(--zgpu-hot)) !important;
+    border: none !important;
     opacity: 0.65;
 }
-.zgpu-page p { margin: 0 0 0.9rem; color: var(--zgpu-ink); }
+.zgpu-page p { margin: 0 0 0.9rem; color: var(--zgpu-ink) !important; }
 .zgpu-page code {
     background: var(--zgpu-panel);
     border: 1px solid var(--zgpu-line);
     border-radius: 3px;
     padding: 0.1em 0.35em;
     font-size: 0.85em;
-    color: var(--zgpu-ink);
+    color: var(--zgpu-ink) !important;
 }
 .zgpu-page pre {
     background: var(--zgpu-panel);
@@ -137,17 +144,17 @@ PAGE_CSS = """
     font-size: 0.8rem;
     overflow-x: auto;
     line-height: 1.55;
-    color: var(--zgpu-ink);
+    color: var(--zgpu-ink) !important;
 }
 .zgpu-page pre code { border: none; padding: 0; background: none; }
-.zgpu-links { font-size: 0.85rem; color: var(--zgpu-muted); }
+.zgpu-links { font-size: 0.85rem; color: var(--zgpu-muted) !important; }
 .zgpu-links a {
-    color: var(--zgpu-ink);
+    color: var(--zgpu-ink) !important;
     text-decoration: none;
     border-bottom: 1px solid var(--zgpu-line);
     transition: border-color 0.15s ease, color 0.15s ease;
 }
-.zgpu-links a:hover, .zgpu-links a:focus-visible { color: var(--zgpu-hot); border-bottom-color: var(--zgpu-hot); }
+.zgpu-links a:hover, .zgpu-links a:focus-visible { color: var(--zgpu-hot) !important; border-bottom-color: var(--zgpu-hot); }
 @media (max-width: 480px) {
     .zgpu-page { margin: 1.5rem auto; padding: 0 1.1rem 2.5rem; font-size: 15px; }
     .zgpu-register { grid-template-columns: 1fr; row-gap: 0.35rem; }
