@@ -20,6 +20,9 @@ export const YOUTUBE_URL = 'https://www.youtube.com/@thomas-to-bcheme';
 export const RESUME_PDF_URL = 'https://github.com/thomas-to-bcheme/thomas-to-bcheme.github.io/blob/main/src/docs/Thomas_To_Resume.pdf?raw=true';
 export const SLIDES_AS_CODE_URL = 'https://script.google.com/d/1unZvIXxRzGxubxCdgMeAsy9Xg-LDxULdfh7wVgcrxkxI-W5wNI_9lqLH/edit?usp=sharing';
 export const PUBLICATION_URL = 'https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf';
+export const HUGGING_FACE_SPACE_URL = 'https://thomas-to-bcheme-portfolio-zerogpu.hf.space';
+export const GRADIO_SHARING_GUIDE_URL = 'https://gradio.app/guides/sharing-your-app';
+export const MANNING_BOOK_URL = 'https://www.manning.com/books/build-ai-drug-discovery-pipelines';
 
 // --- Work Authorization ---
 export const WORK_AUTH = {
@@ -42,6 +45,7 @@ export const NAV_LINKS = [
   { label: 'Pipeline', href: '/#pipeline', sectionId: 'pipeline' },
   { label: 'Study Plan', href: '/study-plan' },
   { label: 'Jobs', href: '/jobs' },
+  { label: 'Hugging Face', href: '/huggingface' },
 ] as const;
 
 // --- Ideal Roles ---
@@ -57,5 +61,6 @@ export const FOOTER_NAV_LINKS = [
   { label: 'Pipeline', href: '/#pipeline' },
   { label: 'Study Plan', href: '/study-plan' },
   { label: 'Jobs', href: '/jobs' },
+  { label: 'Hugging Face', href: '/huggingface' },
   { label: 'About Me', href: '/#about-me' },
 ] as const;

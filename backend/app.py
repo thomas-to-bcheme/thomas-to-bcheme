@@ -21,10 +21,12 @@ Hardware & allocation model
 
 Quota & refresh accounting
     The daily quota is a fixed 24h TTL starting from the *caller's* first GPU
-    call of the day, not a calendar/UTC reset. Tiers: unauthenticated 2min
-    (low queue priority), free account 5min (medium), PRO/Team 40min
-    (highest), Enterprise 60min (highest); PRO+ tiers can overflow into paid
-    credits at $1/10min once exhausted. Quota is charged to whoever is
+    call of the day, not a calendar/UTC reset. Tiers, minutes and seconds
+    (seconds is the unit `@spaces.GPU(duration=...)` actually takes):
+    unauthenticated 2min/120s (low queue priority), free account 5min/300s
+    (medium), PRO/Team 40min/2400s (highest), Enterprise 60min/3600s
+    (highest); PRO+ tiers can overflow into paid credits at $1/10min once
+    exhausted. Quota is charged to whoever is
     *calling* the Space, not the Space owner. Admission is reserve-then-settle:
     the declared `duration` is checked against remaining quota *before* the
     call runs (a too-large declaration is rejected immediately, no GPU time
@@ -39,6 +41,17 @@ Execution lifecycle & hard caps
     separate from VRAM, fixed per container, and not elastic: an OOM there
     crashes/restarts the whole Space rather than raising a catchable
     per-request exception.
+
+    Practical read, tier by tier: an unauthenticated caller's daily window is
+    the tightest of the four and can be too small for a call to complete at
+    all — not "slower," just infeasible. A free account's window gives it a
+    realistic chance. PRO/Team headroom makes it comfortable. None of this is
+    enforced by code here — quota isn't observable from inside `benchmark()`
+    — it's context for interpreting a failed/aborted call, not a runtime
+    check. Falling back to CPU (see `DEVICE` below) sidesteps GPU quota
+    entirely and always technically works, but is correspondingly much
+    slower — a fallback path when GPU quota is insufficient, not a
+    substitute for having enough of it.
 
 Queue dynamics
     Priority is bucketed by account tier first, then affected by remaining
@@ -60,6 +73,17 @@ Current strategies, and the constraint each one targets:
   - `MIN_BENCHMARK_NUMEL`/`MAX_BENCHMARK_NUMEL` bound the worst-case tensor
     size so a call can't run long or large enough to blow the default 60s
     duration cap or spike host RAM.
+  - `@spaces.GPU` here carries no explicit `duration=`, so every call
+    reserves the implicit 60s/1min default regardless of what `numel`
+    actually needs — quota-safe (admission never rejects for exceeding a
+    ceiling it can't detect) but not quota-efficient. Planned: pass
+    `duration=<seconds>` explicitly — either a manually-tuned constant per
+    workload, or a value computed from `numel` and, longer-term, from the
+    caller's remaining daily quota (see the seconds figures in "Quota &
+    refresh accounting" above) — so admission reserves only what a given
+    call is actually likely to use instead of always the default ceiling,
+    and unnecessary inference isn't run against quota it can't finish
+    within. Not yet implemented.
   - Every GPU-touching operation — including compiling the CUDA extension
     itself, via `load_swish_extension()` — runs inside the single
     `@spaces.GPU`-decorated `benchmark()`, since that's the only place quota
@@ -345,16 +369,23 @@ PAGE_HTML = f"""
     Every call here runs inside Hugging Face's shared, quota-metered GPU
     pool &mdash; currently a slice of an NVIDIA RTX Pro 6000 Blackwell, not
     dedicated hardware. The daily quota is a fixed 24h window from your
-    first GPU call &mdash; 2/5/40/60 minutes across the unauthenticated /
-    free / PRO+Team / Enterprise tiers &mdash; charged to whoever calls the
-    Space, not its owner. Admission checks the declared duration against
-    remaining quota before a call runs; the default 60s cap kills the
+    first GPU call &mdash; 2min/120s, 5min/300s, 40min/2400s, 60min/3600s
+    across the unauthenticated / free / PRO+Team / Enterprise tiers &mdash;
+    charged to whoever calls the Space, not its owner. Admission checks the
+    declared duration &mdash; in seconds, the unit
+    <code>@spaces.GPU(duration=...)</code> takes &mdash; against remaining
+    quota before a call runs; the default 60s cap kills the
     process outright if exceeded, and host RAM is a fixed ceiling separate
     from VRAM. Queue priority stacks on top of all this: account tier
     first, then remaining quota, then how tight the declared duration is
     &mdash; over-declaring &ldquo;to be safe&rdquo; both wastes quota on
     settlement and queues worse. None of this is dedicated infrastructure
-    &mdash; it's free, shared, and bounded on purpose.
+    &mdash; it's free, shared, and bounded on purpose. In practice: an
+    unauthenticated caller's window is the tightest of the four tiers and
+    can be too small for a call to finish at all, a free account's window
+    gives it a realistic chance, and PRO/Team headroom makes it comfortable
+    &mdash; falling back to CPU sidesteps GPU quota entirely and always
+    works, but is correspondingly much slower.
   </p>
 
   <p class="zgpu-eyebrow">design approach</p>
@@ -364,8 +395,14 @@ PAGE_HTML = f"""
     cap or spike host RAM, every GPU-touching step &mdash; including
     compiling the kernel &mdash; runs inside the single metered
     <code>@spaces.GPU</code> call, and the compiled kernel is cached on disk
-    per container so only the first call pays nvcc's cost. Next step:
-    prototype and debug the CUDA kernel on free-tier Google Colab (T4)
+    per container so only the first call pays nvcc's cost. Today that call
+    carries no explicit <code>duration=</code>, so it always reserves the
+    implicit 60s default; planned is passing seconds explicitly &mdash;
+    manually tuned per workload, or computed from <code>numel</code> and
+    remaining daily quota &mdash; so admission only reserves what a call is
+    actually likely to use, instead of unnecessarily running inference
+    against a fixed ceiling. Next step: prototype and debug the CUDA kernel
+    on free-tier Google Colab (T4)
     &mdash; no quota pressure, no queue &mdash; then compile it
     ahead-of-time before it ever touches ZeroGPU, so the metered window is
     spent on inference, not compilation. Sources for this and the section

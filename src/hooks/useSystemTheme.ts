@@ -9,7 +9,9 @@ const DARK_QUERY = '(prefers-color-scheme: dark)';
 // automatically via CSS; this lets Excalidraw's own canvas/UI chrome (not styled by
 // our Tailwind dark: classes) follow the same system-driven switching.
 export function useSystemTheme(): 'light' | 'dark' {
-  const [isDark, setIsDark] = useState(() => window.matchMedia(DARK_QUERY).matches);
+  const [isDark, setIsDark] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(DARK_QUERY).matches,
+  );
 
   useEffect(() => {
     const mql = window.matchMedia(DARK_QUERY);
