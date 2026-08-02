@@ -27,7 +27,7 @@ export default function ProjectObjective() {
           The Job Board&apos;s Neon Postgres backend already models versioned records; the next
           step extends that same pattern into a training/inference registry — dataset, model,
           and code versions tracked together — feeding a transformer serving path that,
-          longer-term, adopts vLLM-style paged-attention inference optimizations.
+          longer-term, adopts paged-attention/paged-state serving optimizations.
         </p>
         <p>
           The compute grid below is that plan made concrete: five free tiers spanning CPU, GPU,

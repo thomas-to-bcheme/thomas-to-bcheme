@@ -1,3 +1,5 @@
+import ServingPipelineDiagram from '@/components/features/ServingPipelineDiagram';
+
 type ComputeTierStatus = 'live' | 'planned' | 'exploratory';
 
 type ComputeTier = {
@@ -109,6 +111,52 @@ export default function ComputeStackShowcase() {
         Specs and limits reflect each provider&apos;s published free tier as of now and change
         without notice — treat them as directional, not contractual.
       </p>
+
+      <div className="mt-6">
+        <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-2 block">
+          Paged Attention Note
+        </span>
+        <div className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed space-y-3">
+          <p>
+            vLLM popularized PagedAttention, but it isn&apos;t the only path to it — and
+            it&apos;s a different axis from FlashAttention entirely. FlashAttention is a
+            compute-time optimization: a fused, IO-aware kernel that avoids ever materializing
+            the full attention matrix. PagedAttention is a serving-time one: it manages the KV
+            cache in non-contiguous blocks the way an OS pages virtual memory, so concurrent
+            requests can share GPU memory efficiently. FlashInfer, TGI, SGLang, MLC-LLM, and
+            TensorRT-LLM (with its in-flight batching) all implement or wrap that same
+            block-table mechanic independently of vLLM&apos;s serving stack — for a custom
+            backend, dropping in FlashInfer&apos;s kernels directly is usually lighter than
+            inheriting a full framework.
+          </p>
+          <p>
+            It&apos;s also no longer Transformer-only. Mamba/SSM layers carry a fixed-size
+            recurrent state rather than a growing KV cache, and hybrid architectures like Jamba
+            mix both — which is why vLLM is refactoring its own allocator from
+            &quot;paged attention&quot; into &quot;paged state management,&quot; a block-table
+            abstraction general enough for recurrent state and KV cache alike.
+          </p>
+          <p>
+            For a custom architecture, the practical path is to adapt FlashInfer&apos;s
+            block-sparse and ragged-tensor abstractions where the state resembles a KV cache;
+            where it doesn&apos;t, it&apos;s paged state management from scratch — a
+            pre-allocated GPU memory pool, a block table mapping logical sequence IDs to
+            physical blocks, and a hand-written CUDA/Triton kernel that fetches non-contiguous
+            blocks against it.
+          </p>
+          <p>
+            The broader design principle carries over here: decouple training and compilation
+            from serving — compile once, ahead of time, and serve from that artifact — then,
+            within serving, lean on existing frameworks where they fit and go manual where the
+            goal is understanding, not just throughput. The Colab T4 tier above is reserved for
+            that manual layer: CUDA/Triton first, with an eventual move to Rust and Zig — Rust
+            for compiler-enforced memory safety and more tractable assembly-level debugging, Zig
+            for explicit allocator control — treating the rewrite as a potential improvement on
+            the existing frameworks, not just an exercise.
+          </p>
+        </div>
+        <ServingPipelineDiagram />
+      </div>
     </div>
   );
 }
