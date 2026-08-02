@@ -12,7 +12,7 @@
 
 ## Overview
 
-A fullstack portfolio application that demonstrates end-to-end engineering capabilities through an embedded AI chat agent, interactive ROI calculator, Excalidraw technical prep diagram, ML-powered salary prediction models, and a live Job Board backed by Neon serverless Postgres. Built on a zero-cost architecture using free-tier services (Vercel, GitHub Actions, Hugging Face) with strict TypeScript and modular React component patterns.
+A fullstack portfolio application that demonstrates end-to-end engineering capabilities through a floating RAG-powered AI chat agent, a multi-board Excalidraw study-plan library, tiered system-design architecture diagrams, a Hugging Face ZeroGPU inference backend, and a live Job Board backed by Neon serverless Postgres. Built on a zero-cost architecture using free-tier services (Vercel, GitHub Actions, Hugging Face) with strict TypeScript and modular React component patterns.
 
 **[Live Demo](https://thomas-to-bcheme-github-io.vercel.app/)**
 
@@ -50,7 +50,7 @@ flowchart TB
         P2["AiSystemInformation.ts\n(RAG Context)"]
         P3["Gemini AI Chat Agent"]
         P4["Local Agent Skills"]
-        P5["ROI Calculator\n+ ML Models"]
+        P5["System Design Carousel\n+ Study Plan"]
         P1 --> P2
         P2 --> P3
         P1 --> P4
@@ -177,6 +177,24 @@ flowchart LR
     TC --> GI["GitHub Issues"]
 ```
 
+### Other Public Repos
+
+Standalone projects on [github.com/thomas-to-bcheme](https://github.com/thomas-to-bcheme?tab=repositories) that aren't (yet) wired into the portfolio's data flow above:
+
+| Repo | Description | Language |
+|------|-------------|----------|
+| [predict-job-salary](https://github.com/thomas-to-bcheme/predict-job-salary) | ML/DL project using NLP on job descriptions for salary prediction | Python |
+| [zero-to-offer](https://github.com/thomas-to-bcheme/zero-to-offer) | Community learning resource for non-traditional, first-gen students on job preparation | — |
+| [llm-driven-system-design](https://github.com/thomas-to-bcheme/llm-driven-system-design) | Collection of system designs driven by LLMs | TypeScript |
+| [excalidraw-json-to-google-app-scripts](https://github.com/thomas-to-bcheme/excalidraw-json-to-google-app-scripts) | Full-stack portfolio automation powered by language models and Excalidraw | JavaScript |
+| [learning-cpp](https://github.com/thomas-to-bcheme/learning-cpp) | C++ upskilling through O'Reilly resources to contribute to compiler projects | C++ |
+| [computational-drug-discovery](https://github.com/thomas-to-bcheme/computational-drug-discovery) | Computational drug discovery experiments | Jupyter Notebook |
+| [ml-drug-discovery](https://github.com/thomas-to-bcheme/ml-drug-discovery) | Fork of the official repo for *Machine Learning for Drug Discovery* | Jupyter Notebook |
+| [visualizations](https://github.com/thomas-to-bcheme/visualizations) | Standalone data visualization experiments | — |
+| [pythonProjects](https://github.com/thomas-to-bcheme/pythonProjects) | General Python practice projects | Python |
+| [ECH145](https://github.com/thomas-to-bcheme/ECH145) | UC Davis coursework | Python |
+| [LaTeX](https://github.com/thomas-to-bcheme/LaTeX) | Practice using LaTeX to familiarize with format, styling, and package handling | TeX |
+
 ---
 
 ## Claude Marketplace
@@ -220,23 +238,24 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 ## Features
 
 ### AI & Voice
-- **Live AI Chat Agent** — Google Gemini API (`gemini-3.1-pro-preview`) with RAG context from resume and portfolio data, real-time streaming responses, markdown rendering
+- **Floating AI Chat Agent** — Google Gemini API (`gemini-3.1-pro-preview`) with RAG context from resume and portfolio data, real-time streaming responses, markdown rendering, and up to 2 clickable follow-up-question suggestions (`src/lib/followups.ts`); delivered as a resizable floating widget (bottom-right launcher + teaser bubble via `ChatWidget`/`ChatWidgetProvider`) rather than an inline page section
 - **Voice Input (STT)** — Web Speech API for hands-free interaction with auto-submit on silence detection
 - **Voice Output (TTS)** — Speech Synthesis API with sentence-boundary queuing for natural streaming playback
 
+### Press & Personal
+- **Featured In** — Press-mention cards sourced from portfolio credentials data, shown between the hero and About Me sections
+- **Beyond the Terminal** — "Off the Clock" personal photo section (Yosemite, BJJ competition/coaching) closing the professional narrative on a personal note
+
 ### Data Visualization
-- **Interactive ROI Calculator** — 3-year financial projection comparing manual labor vs. automation costs with configurable inputs, break-even analysis, KaTeX formula derivations, and live SVG trajectory graph
-- **Architecture Diagram** — 4-level visualization of the data lifecycle (Empirical Data → Infrastructure → Applications → Business Value)
-- **Project Kanban Board** — Embla carousel with three swimlanes (Queue, In Development, Completed) tracking active projects across the open-source ecosystem
-- **SWE Study Plan ("Zero to Offer")** — Embedded Excalidraw canvas with 6 named frames (Reading List, Practical Coding, System Design Interview Framework, Architecture Concepts, System Architecture Diagram, Communication Frameworks); view-only by default; unlock with `SAVE_SECRET` to edit and save directly to the GitHub repo via the Contents API
-- **Project Deep Dives** — Case study format with problem/solution narrative, architecture tags, and KPIs
+- **System Design Carousel** — Per-project tiered architecture cards (client → frontend → backend → model → data) with design-trade-off callouts, driven by `src/constants/systemDesign.ts`
+- **Project Kanban Board** — Embla carousel with three swimlanes (Queue, In Development, Completed) tracking active projects across the open-source ecosystem, data-driven from `src/constants/kanban.ts`
+- **Study Plan — Multi-Board Excalidraw Library** — Dedicated `/study-plan` route covering 13 topic boards (system design, backend/frontend/data engineering, ML engineering, CUDA/GPU internals, cloud ops, and general best practices); board switching, creation, and saving persist directly to the GitHub repo via the Contents API — create/save are `SAVE_SECRET`-gated, board listing is unauthenticated read-only
 
 ### Live Data Integration
 - **Job Board** — `/jobs` page (Server Component, ISR every 30 min via `revalidate = 1800`) rendering open roles pulled live from a dedicated Neon serverless Postgres database (`"PORTFOLIO".roles`: `job_id`, `title`, `url`, `posted_date`, `resume_pdf_path`) through `getJobs()`; `JobCard` shows the title, a "View job" external link, posted date, and — when a posting has an attached resume — a "Download resume (PDF)" link, with a graceful "No open roles posted right now" empty state; postings are validated at runtime against a Zod `JobListingSchema`; the page's `getJobListings()` and the public `GET /api/jobs` endpoint (structured logging + correlation IDs, matching the chat API's conventions) both delegate to the same single query so the two paths can't drift apart — a showcase of consuming an external Postgres-backed microservice's data through a dedicated read-only connection string
 - **Resume Downloads (Vercel Blob, private storage)** — PDFs referenced by `resume_pdf_path` live in a private Vercel Blob store, so they're only reachable through `GET /api/jobs/resume`, which streams the file server-side via `@vercel/blob`'s `get(pathname, { access: 'private' })` (never a public blob URL). Access is gated by a signed, per-job, time-limited HMAC token (`src/lib/auth/resumeToken.ts`) rather than a static shared secret — a raw secret embedded in a statically-rendered page's HTML would be visible via view-source to any visitor, defeating the point of gating files that carry PII (name/phone/email). Responses set `Cache-Control: private, no-store`.
 
 ### UX & Accessibility
-- **Roadmap Timeline** — 4-phase project lifecycle with animated status indicators and responsive zig-zag layout
 - **Dark Mode** — Automatic system preference detection
 - **Accessibility** — Skip links, ARIA labels, `aria-live` regions, keyboard navigation, `prefers-reduced-motion` support
 
@@ -259,7 +278,7 @@ The `claude-marketplace/` directory is a self-hosted [Claude Code plugin marketp
 | Validation | Zod 4 | Runtime schema validation on API routes |
 | Math | KaTeX | LaTeX rendering for ROI derivations |
 | Icons | Lucide React | SVG icon system |
-| ML Backend | Python (TensorFlow, scikit-learn) | Salary prediction models |
+| ML Backend | Hugging Face ZeroGPU (Gradio) | GPU inference microservice (`backend/`), deployed independently via GitHub Actions to a Hugging Face Space |
 | Deployment | Vercel (Hobby) | Zero-cost hosting with preview deployments |
 
 ---
@@ -284,8 +303,9 @@ cd thomas-to-bcheme.github.io
 # postinstall automatically copies Excalidraw fonts to public/excalidraw/
 npm install
 
-# Configure environment (no template file — create manually; see Configuration section below)
-touch .env.local
+# Configure environment — .env.example only covers the optional Hugging Face
+# backend vars; add the required Gemini/Neon/Blob vars per Configuration below
+cp .env.example .env.local
 
 # Start development server
 npm run dev
@@ -297,10 +317,16 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ### ML Backend (Optional)
 
+`backend/` is a Hugging Face ZeroGPU Space (Gradio) — currently a placeholder inference
+endpoint used to verify the deploy pipeline and API contract end-to-end. It deploys
+independently from the rest of the monorepo via `.github/workflows/deploy-backend.yml`
+on any push to `main` touching `backend/**` (uploaded via the Hub API, never a git push).
+
 ```bash
 cd backend
-pip install -r requirements.txt
-python main.py
+python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+
+./run.sh   # activates .venv, frees port 7860, starts the Gradio app locally
 ```
 
 ### Available Commands
@@ -330,31 +356,35 @@ src/
 │   │   ├── jobs/route.ts       # Job postings JSON endpoint (GET, Neon-backed)
 │   │   ├── jobs/resume/route.ts # Resume PDF download endpoint (GET, private Vercel Blob + signed token auth)
 │   │   └── excalidraw/
-│   │       ├── save/route.ts   # GitHub file commit endpoint (POST, SAVE_SECRET auth)
+│   │       ├── save/route.ts   # Board commit endpoint (POST, SAVE_SECRET auth)
+│   │       ├── create/route.ts # New board scaffold endpoint (POST, SAVE_SECRET auth)
+│   │       ├── list/route.ts   # Board listing endpoint (GET, unauthenticated)
 │   │       └── verify/route.ts # Token verification endpoint (POST)
 │   ├── jobs/page.tsx           # Job Board page (server component, ISR revalidate=1800)
+│   ├── jobs/query.tsx          # getJobListings() — shared query path for page.tsx + /api/jobs
+│   ├── study-plan/page.tsx     # Multi-board Excalidraw study library (full-page canvas)
 │   ├── layout.tsx              # Root layout (server)
 │   ├── page.tsx                # Home page (client)
 │   └── error.tsx               # Error boundary
 ├── components/
 │   ├── ui/                     # Badge, Button, SkipLink
-│   ├── sections/               # HeroSection, AboutMe, Connect, Footer, Roadmap
-│   ├── features/               # AiGenerator, ArchitectureDiagram, ProjectDeepDive, KanbanBoard, JobBoard, JobCard
-│   ├── layout/                 # BentoGrid, MotionProvider, ImpactMetric
-│   ├── voice/                  # VoiceControls
-│   ├── roi/                    # ROICalculation + sub-components
-│   └── excalidraw/             # ExcalidrawWrapper, TechnicalPrepDiagram (SWE Study Plan)
-├── hooks/                      # useChat, useActiveSection, useSpeech*
-├── constants/                  # site.ts, chat.ts, roi.ts, roadmap.ts
-├── types/                      # chat.ts, api-errors.ts, roi.ts, jobs.ts
-├── lib/                        # chat-api.ts, utils.tsx, fractionalIndex.ts
-│   ├── db/jobs.ts              # Neon Postgres client + getJobs() (Job Board data layer)
-│   └── auth/resumeToken.ts     # Signed, time-limited HMAC tokens for resume downloads
-└── data/                       # AiSystemInformation.ts (RAG context)
+│   ├── sections/                # HeroSection, FeaturedIn, AboutMe, BeyondTheTerminal, Connect, Footer
+│   ├── features/                # AiGenerator, ChatWidget, SystemDesignCarousel, SystemDesignDiagram, KanbanBoard, JobBoard, JobCard
+│   ├── layout/                  # SiteHeader, ChatWidgetProvider, BentoGrid, MotionProvider, ImpactMetric
+│   ├── voice/                   # VoiceControls
+│   └── excalidraw/              # ExcalidrawWrapper, TechnicalPrepDiagram (multi-board switch/create/save UI)
+├── hooks/                      # useChat, useActiveSection, useSystemTheme, useSpeech*
+├── constants/                  # site.ts, chat.ts, roadmap.ts, kanban.ts, systemDesign.ts
+├── types/                      # chat.ts, api-errors.ts, jobs.ts, credentials.ts
+├── lib/                        # chat-api.ts, utils.tsx, fractionalIndex.ts, excalidrawBoards.ts, followups.ts
+│   ├── db/jobs.ts               # Neon Postgres client + getJobs() (Job Board data layer)
+│   ├── auth/resumeToken.ts      # Signed, time-limited HMAC tokens for resume downloads
+│   └── github/client.ts         # Shared GitHub Contents API client (getFileSha, putFile, listDirectory)
+└── data/                       # AiSystemInformation.ts (RAG context), credentials.ts
 
-backend/                        # Python ML models
+backend/                        # Hugging Face ZeroGPU Space (Gradio placeholder inference)
 claude-marketplace/             # Claude Code plugin marketplace (15 plugins)
-scripts/                        # Excalidraw maintenance utilities (analyze-frame, fix-indices, validate)
+public/excalidraw/              # 13 topic boards (system design, backend, frontend, data, ML, CUDA/GPU, ops, ...)
 system_design_docs/             # Architecture documentation
 ```
 
@@ -370,14 +400,16 @@ system_design_docs/             # Architecture documentation
 | `JOBS_DATABASE_URL` | Yes | Read-only Neon Postgres connection string for the Job Board (`/jobs`, `/api/jobs`). `src/lib/db/jobs.ts` throws a fatal error at module import time if unset |
 | `JOBS_RESUME_SECRET` | Yes | HMAC signing key for resume download links (`src/lib/auth/resumeToken.ts`). Internal-only — generate any random value (e.g. `openssl rand -hex 32`), it doesn't need to match anything external. Throws a fatal error at module import time if unset |
 | `BLOB_READ_WRITE_TOKEN` | For local dev | Read/write token for the private Vercel Blob store backing resume downloads (`/api/jobs/resume`). Only needed outside Vercel — on Vercel, with the store connected to the project, the SDK authenticates via OIDC automatically |
-| `GITHUB_TOKEN` | For Excalidraw save | GitHub Personal Access Token with `contents` scope |
-| `GITHUB_REPO_OWNER` | For Excalidraw save | GitHub username (repository owner) |
-| `GITHUB_REPO_NAME` | For Excalidraw save | Repository name (e.g. `thomas-to-bcheme.github.io`) |
-| `SAVE_SECRET` | For Excalidraw save | Token required by `/api/excalidraw/save` and `/api/excalidraw/verify` |
+| `GITHUB_TOKEN` | For Excalidraw save/create | GitHub Personal Access Token with `contents` scope |
+| `GITHUB_REPO_OWNER` | For Excalidraw save/create | GitHub username (repository owner) |
+| `GITHUB_REPO_NAME` | For Excalidraw save/create | Repository name (e.g. `thomas-to-bcheme.github.io`) |
+| `SAVE_SECRET` | For Excalidraw save/create | Token required by `/api/excalidraw/save`, `/create`, and `/verify` (board listing via `/list` is unauthenticated) |
+| `HF_TOKEN_WRITE` | For backend deploy (CI only) | Write-scoped Hugging Face token used by `.github/workflows/deploy-backend.yml` to create/update the ZeroGPU Space. Never set locally |
+| `HF_TOKEN_READ` | For backend calls | Read-scoped Hugging Face token for server-side calls to the deployed Space's `/infer` endpoint via `gradio_client`, attributing usage to your own HF quota. Only used once the frontend actually calls the backend |
 
-The four Excalidraw variables are only needed if you want the diagram canvas to unlock edit mode and persist saves back to GitHub. Without them, the canvas is still viewable in read-only mode. `JOBS_DATABASE_URL` and `JOBS_RESUME_SECRET`, by contrast, are required unconditionally — the Job Board's data layer and resume-link signing both fail fast at import time without them.
+The four Excalidraw variables are only needed if you want the study-plan boards to unlock edit mode and persist saves/creates back to GitHub. Without them, boards are still viewable in read-only mode. `JOBS_DATABASE_URL` and `JOBS_RESUME_SECRET`, by contrast, are required unconditionally — the Job Board's data layer and resume-link signing both fail fast at import time without them. `.env.example` in the project root documents the two Hugging Face variables inline — copy it as a starting point, then add the rest of the variables below.
 
-Create `.env.local` in the project root:
+Create (or extend) `.env.local` in the project root:
 
 ```bash
 # Required — Google Gemini API key for AI chat
@@ -393,11 +425,15 @@ JOBS_RESUME_SECRET=your_random_secret_here
 # (on Vercel with the store connected to the project, OIDC is used instead)
 BLOB_READ_WRITE_TOKEN=your_vercel_blob_read_write_token_here
 
-# Optional — required only for the Excalidraw diagram edit + save feature
+# Optional — required only for the Excalidraw study-plan edit/create/save feature
 GITHUB_TOKEN=your_github_pat_with_contents_scope
 GITHUB_REPO_OWNER=your_github_username
 GITHUB_REPO_NAME=thomas-to-bcheme.github.io
 SAVE_SECRET=your_secret_token_for_save_endpoint
+
+# Optional — required only if you're testing the Hugging Face ZeroGPU backend locally
+HF_TOKEN_WRITE=your_hf_write_token   # CI only — do not set outside GitHub Actions
+HF_TOKEN_READ=your_hf_read_token
 ```
 
 **Local development:** `.env.local` is gitignored.
@@ -417,6 +453,8 @@ Output:     .next
 ```
 
 **Hobby Tier Limits**: 100 deployments/24h, 10s serverless timeout, 100GB bandwidth/month.
+
+`backend/` deploys independently to a Hugging Face ZeroGPU Space via `.github/workflows/deploy-backend.yml`, triggered on any push to `main` that touches `backend/**`. It uploads the folder's contents through the Hub API (`huggingface_hub`), never a git push, so it can't clobber the Space's own git history.
 
 ---
 

@@ -34,9 +34,32 @@ with gr.Blocks(title="Portfolio ZeroGPU Backend") as demo:
         """
         # Portfolio ZeroGPU Backend
 
-        GPU inference backend for the **thomas-to-bcheme portfolio**. API-only — this
-        UI exists to test the `/infer` endpoint directly; see this Space's README
-        (Files tab) for the full API contract (`gradio_client` and raw HTTP examples).
+        GPU inference backend for the **thomas-to-bcheme portfolio** — a personal
+        practice space for:
+
+        - **Deploying models end-to-end** on a real Hugging Face ZeroGPU Space
+          (CI-driven deploy via the Hub API, `@spaces.GPU`-scheduled cold starts).
+        - **Benchmarking PyTorch performance on ZeroGPU** — profiling ops against
+          the shared NVIDIA hardware ZeroGPU allocates on demand, versus local CPU.
+        - **Learning CUDA and C/C++ GPU programming** — ZeroGPU's free, on-demand
+          NVIDIA GPU access doubles as a sandbox for digging under PyTorch's
+          abstractions into CUDA kernels.
+
+        This is currently a **placeholder**: `infer()` runs a trivial tensor op
+        through a randomly-initialized `torch.nn.Linear` layer on `DEVICE`, so the
+        deploy pipeline and API contract can be verified end-to-end before a real
+        model and benchmark harness are wired in.
+
+        **Headless API only** — this page is documentation, not a demo UI. There
+        are no input fields to click through here; call the `infer` endpoint
+        directly instead:
+
+        - `gradio_client`: `Client("thomas-to-bcheme/portfolio-zerogpu").predict(3.5, api_name="/infer")`
+        - Raw HTTP: `POST /gradio_api/call/infer` (call/poll shape)
+
+        See this Space's `README.md` (Files tab) for the full contract — curl
+        examples, the `gradio_client` convention on the leading slash, and the
+        secrets table.
         """
     )
     gr.Button(
@@ -44,9 +67,12 @@ with gr.Blocks(title="Portfolio ZeroGPU Backend") as demo:
         link="https://thomas-to-bcheme-github-io.vercel.app/",
     )
 
-    input_number = gr.Number(label="Input value", value=1.0)
-    output_text = gr.Textbox(label="Result")
-    run_button = gr.Button("Run inference")
+    # Hidden components: not rendered on the page (this Space is a headless API,
+    # not an interactive demo — see the Markdown above), but still wired to an
+    # event with api_name="infer" so gradio_client/HTTP callers can reach them.
+    input_number = gr.Number(label="Input value", value=1.0, visible=False)
+    output_text = gr.Textbox(label="Result", visible=False)
+    run_button = gr.Button("Run inference", visible=False)
 
     run_button.click(
         fn=infer,

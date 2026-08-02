@@ -19,41 +19,52 @@ You are the **Lead Orchestrator**. Your goal is to coordinate changes across the
 
 ## 3. Project Overview
 
-Personal portfolio website demonstrating fullstack engineering capabilities with an embedded AI chat agent. The architecture uses GitHub as a data warehouse backend with Vercel for frontend deployment and Hugging Face for ML model hosting.
+Personal portfolio (thomas-to-bcheme.github.io) demonstrating fullstack engineering capabilities: an embedded Gemini-powered AI chat agent with RAG context, an interactive ROI calculator, Excalidraw technical-prep diagrams, ML-powered salary prediction models, and a live Job Board backed by Neon serverless Postgres. Built on a zero-cost architecture using free-tier services (Vercel, GitHub Actions, Hugging Face).
 
-## 4. Commands
-
-### Operational Standards
-- **Idempotency:** Commands must be runnable multiple times without side effects (e.g., verify resource exists before creating).
-- **Parameters:** Prefer named flags (`--input`) over positional args.
-- **Exit Codes:** Return `0` for success, non-zero for failure.
-
-## 5. Architecture
+## 4. Architecture
 
 ### Tech Stack
 - **Frontend**: Next.js 16 (App Router), React 19, TypeScript 5, Tailwind CSS v4
-- **AI Integration**: Google Gemini API with RAG context from `src/data/AiSystemInformation.tsx`
-- **ML Backend**: Python (TensorFlow, scikit-learn) for salary prediction models
-- **Infrastructure**: Vercel (frontend), GitHub Actions (CI/CD, CRON), AWS SDK (DynamoDB, S3)
+- **AI Integration**: Google Gemini API (`@google/generative-ai`) with RAG context from `src/data/AiSystemInformation.tsx`
+- **Data**: Neon serverless Postgres (`@neondatabase/serverless`), Vercel Blob (`@vercel/blob`) for private resume PDF storage
+- **ML Backend**: Python (`backend/`) — Flask app (`app.py`) with TensorFlow/scikit-learn salary prediction models, deployed via `.github/workflows/deploy-backend.yml`
+- **Infrastructure**: Vercel (frontend), GitHub Actions (CI/CD, CRON)
+- **Diagramming**: Excalidraw (`@excalidraw/excalidraw`) embedded for technical-prep and system-design boards
 
 ### Key Directories
 - `src/app/` - Next.js App Router pages and API routes
 - `src/app/api/chat/route.ts` - Gemini API streaming chat endpoint
+- `src/app/jobs/` - Job Board pages (Neon-backed, signed-HMAC-gated resume downloads)
 - `src/components/` - React components (HeroSection, AiGenerator, ProjectDeepDive, etc.)
 - `src/data/AiSystemInformation.tsx` - RAG context/system prompt for the AI agent
+- `src/docs/Thomas_To_Resume.md` - Résumé source of truth, read via `fs` for RAG chat context
+- `src/lib/fractionalIndex.ts` - Excalidraw fractional-indexing validation utility
 - `backend/` - Python ML models (Random Forest + TensorFlow for salary prediction)
-- `markdown/` - Architecture documentation (architecture.md, roadmap.md, api.md, database.md)
+- `public/excalidraw/` - Excalidraw board JSON (technical_prep, system_design_MLE, transformer-llm)
+- `.github/workflows/` - CI/CD and backend deploy automation
 
 ### Excalidraw Agentic Writes
-When appending or creating elements in `public/excalidraw/technical_prep.excalidraw` programmatically, **omit the `index` field entirely**. Excalidraw assigns valid fractional-indexing keys on first render via `syncInvalidIndices`. Hand-rolled index schemes (e.g. `b0`, `b6`, `a10`) violate the fractional-indexing library's structural rules and cause a crash on load. Validation utility: `src/lib/fractionalIndex.ts`.
-
-### Data Flow
-GitHub CRON (30-min intervals) → ETL Processing → Data Warehouse (Sandbox → Quality → Production) → Vercel deployment
+When appending or creating elements in `public/excalidraw/*.excalidraw` programmatically, **omit the `index` field entirely**. Excalidraw assigns valid fractional-indexing keys on first render via `syncInvalidIndices`. Hand-rolled index schemes (e.g. `b0`, `b6`, `a10`) violate the fractional-indexing library's structural rules and cause a crash on load. Validation utility: `src/lib/fractionalIndex.ts`.
 
 ### Design Constraints
 - Zero-cost architecture using free-tier services
 - Vercel limit: 100 deploys/24h (safe max: hourly = 24/day)
 - GitHub Actions handle scheduled tasks since Vercel Hobby limits CRON to daily
+- **Dev server vs. build**: never run `next build` or `rm -rf .next` while `next dev` is running — it corrupts the Turbopack cache
+
+## 5. Commands
+
+### Operational Standards
+- **Idempotency:** Commands must be runnable multiple times without side effects.
+- **Parameters:** Prefer named flags (`--input`) over positional args.
+- **Exit Codes:** Return `0` for success, non-zero for failure.
+
+### Command List
+- **Dev server**: `npm run dev`
+- **Build**: `npm run build`
+- **Start (prod)**: `npm run start`
+- **Lint**: `npm run lint` — **currently broken** (Next 16 dropped `next lint`; eslint 10 crashes `eslint-plugin-react`). Verify correctness with `npx tsc --noEmit` and `npm run build` instead.
+- **Postinstall**: copies Excalidraw fonts into `public/excalidraw/`
 
 ## 6. Path Aliases
 TypeScript path alias `@/*` maps to `./src/*`

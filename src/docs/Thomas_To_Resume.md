@@ -1,5 +1,5 @@
 # THOMAS TO
-Oakland, CA | 510-387-5408 | [thomas.to.bcheme@gmail.com](mailto:thomas.to.bcheme@gmail.com) | [LinkedIn](https://www.linkedin.com/in/thomas-to-bcheme/) | [Portfolio](https://thomas-to-bcheme-github-io.vercel.app/) | [Slides-as-Code](https://script.google.com/d/1unZvIXxRzGxubxCdgMeAsy9Xg-LDxULdfh7wVgcrxkxI-W5wNI_9lqLH/edit?usp=sharing) | [YouTube](https://www.youtube.com/@thomas-to-bcheme) | [Publication](https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf) | [Media](https://www.ibtimes.com/thomas-how-ai-enabled-biology-advancing-drug-discovery-scientific-innovation-3804756)
+Oakland, CA | 510-387-5408 | [thomas.to.bcheme@gmail.com](mailto:thomas.to.bcheme@gmail.com) | [LinkedIn](https://www.linkedin.com/in/thomas-to-bcheme/) | [Github](https://github.com/thomas-to-bcheme) | [Portfolio](https://thomas-to-bcheme-github-io.vercel.app/) | [YouTube](https://www.youtube.com/@thomas-to-bcheme)
 
 ## PROFESSIONAL SUMMARY
 
@@ -16,11 +16,13 @@ Full Stack AI Engineer with 7+ years of professional experience building end-to-
 ## PROFESSIONAL EXPERIENCE
 
 **Founding AI Engineer | Open Source** | Oakland, CA | *Dec 2017 – Present*
-- Contributes to OpenXLA, JAX, and CuPy open-source projects supporting TPU and GPU-accelerated computation, and Kubernetes for large-scale server orchestration applied to [ml-drug-discovery](https://github.com/nrflynn2/ml-drug-discovery), OpenFold3, and Rosetta Foundry for computational protein modeling.
 - Architected a production Retrieval-Augmented Generation (RAG) AI agent with Large Language Model (LLM) output validation and guardrails on Next.js and React using Typescript. Shipped 0-to-1 from system design through open-source distribution, adopted by 10+ engineers for deployment.
 - Launched an agentic AI pipeline integrating LLM orchestration with prompt engineering, output guardrails, and exploratory data analysis, generating 7 automated posts per week and saving 5+ hours per week through CI/CD automation via GitHub Actions.
 - [Slides-as-Code](https://script.google.com/d/1unZvIXxRzGxubxCdgMeAsy9Xg-LDxULdfh7wVgcrxkxI-W5wNI_9lqLH/edit?usp=sharing) reducing presentation creation time by 75%.
 - Built an AI/ML arXiv research agent and newsletter serving engineers and academics, achieving a 100% free-forever production service by deploying a 4-bit quantized 7B model on Oracle Cloud Infrastructure to eliminate token costs, and engineering an automated fallback to Google AI Studio to handle volume spikes and multimodal inputs.
+- Hardware-Agnostic ML Infrastructure: Migrated PyTorch drug discovery pipelines to the unified torch.accelerator API, enabling seamless, hardware-agnostic execution across CUDA, TPU, and Apple Silicon (MPS). [PR #24](https://github.com/nrflynn2/ml-drug-discovery/pull/24)
+- Cross-Platform Reproducibility: Implemented deterministic seeding and global graph determinism flags tied to device types, ensuring stable model reproducibility across diverse GPU backends.
+- Molecular Data Pipelines: Refactored active learning loops and data ingestion for ml-drug-discovery, adding support for gzip-compressed SDF libraries, centralizing RDKit/Morgan fingerprint extraction, and hardening error handling for OpenBabel and OpenMM dependencies. [PR #25](https://github.com/nrflynn2/ml-drug-discovery/pull/25)
 
 **Founding Fullstack Engineer | Canventa Life Sciences** | Emeryville, CA | *Jan 2023 – Present*
 - Architected a revenue optimization system integrating a predictive machine learning model with a RAG AI agent on Snowflake, enabling non-technical stakeholders to query revenue data via natural language. Reduced decision cycles from 3+ hours to under 10 minutes, saving 500+ hours annually.
@@ -66,15 +68,13 @@ Full Stack AI Engineer with 7+ years of professional experience building end-to-
 
 - Built a Chrome extension as a service paired with a Vercel-deployed React/Next.js frontend, implementing hashing, encryption, and Chrome security permissions for targeted HTML parsing across sheet URLs, in TypeScript with Google ADK and Anthropic Claude Code. Eliminating manual form filling for law firm documents and passport records by shipping an agentic ETL pipeline processing uploads through in-memory storage and auto-populating target ingestion forms, reducing a multi-hour manual process to seconds.
 
-## MEDIA & PUBLICATIONS
+## PUBLICATIONS
 
 **["Thomas To on How AI-Enabled Biology is Advancing Drug Discovery and Scientific Innovation"](https://www.ibtimes.com/thomas-how-ai-enabled-biology-advancing-drug-discovery-scientific-innovation-3804756)** | International Business Times | *Jun 2026*
 
 - Featured as a thought leader on AI in scientific research, discussing AI as a support tool for scientific decision-making rather than a replacement for empirical biology and scientific expertise. Made the case for specialized systems trained on scientific data over general conversational AI.
 
 **["Design to Data for mutants of β-glucosidase B from Paenibacillus polymyxa: L171G, L171V and L171W"](https://mcnair.ucdavis.edu/sites/g/files/dgvnsk476/files/inline-files/Design%20to%20Data%20for%20mutants%20of%20%CE%B2-glucosidase%20B%20from%20Paenibacillus%20polymyxa%20L171G%2C%20L171V%20and%20L171W.pdf)** | McNair Scholars Program, UC Davis Genome Center | Mentored by Dr. Justin Siegel and Ashley Vater
-
-- Designed and characterized three novel single-point enzyme mutants (L171G, L171V, L171W) using Rosetta and FoldIT computational modeling paired with Kunkel mutagenesis. Contributed kinetic and thermal stability data to the Design2Data (D2D) protein engineering database.
 
 ## EDUCATION
 

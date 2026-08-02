@@ -13,13 +13,19 @@ license: mit
 # Portfolio ZeroGPU Backend
 
 GPU inference backend for the [thomas-to-bcheme portfolio](https://thomas-to-bcheme-github-io.vercel.app/)
-site, deployed as a Hugging Face ZeroGPU Space. API-only — the Gradio UI exists just to expose
-the `/infer` endpoint, it isn't meant to be used as a polished interface.
+site, deployed as a Hugging Face ZeroGPU Space. Headless API only — the Gradio page exists
+to document the `/infer` endpoint, not to be clicked through as a demo; its input/output
+components are rendered `visible=False` and reachable only via `gradio_client` or raw HTTP.
+
+Beyond exercising the deploy pipeline, this is a personal practice space for: deploying
+models end-to-end on real ZeroGPU infrastructure, benchmarking PyTorch performance on the
+NVIDIA hardware ZeroGPU allocates on demand, and using that free GPU access as a sandbox
+for learning CUDA and C/C++ GPU programming underneath PyTorch's abstractions.
 
 This is currently a **placeholder**: `infer()` runs a trivial tensor op through a
 randomly-initialized `torch.nn.Linear` layer on `DEVICE` (`"cuda"` on the real Space,
 `"cpu"` in local dev) so the deploy pipeline and API contract can be verified end-to-end
-before a real model is wired in.
+before a real model and benchmark harness are wired in.
 
 ## Local development
 
