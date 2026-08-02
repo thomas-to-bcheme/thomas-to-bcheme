@@ -176,23 +176,25 @@ def benchmark(numel: float) -> str:
 # below owns its own framing instead of sitting inside a "card."
 PAGE_CSS = """
 :root {
-    --zgpu-bg: #0a0c10;
-    --zgpu-panel: #12151b;
-    --zgpu-ink: #d7dbe0;
-    --zgpu-muted: #6b7280;
-    --zgpu-cold: #4fa8d8;
-    --zgpu-hot: #ff7a45;
-    --zgpu-line: #23272e;
+    --zgpu-bg: #ffffff;
+    --zgpu-panel: #f6f7f8;
+    --zgpu-ink: #14161a;
+    --zgpu-muted: #596273;
+    --zgpu-cold: #1d5c9c;
+    --zgpu-hot: #92400e;
+    --zgpu-line: #e2e4e8;
 }
 .gradio-container { background: var(--zgpu-bg) !important; }
 #zgpu-doc { background: none !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
-/* Gradio's own theme sets a light-mode text color (#27272a) on plain
-   p/h1/dl elements that can win the cascade depending on which theme
-   __theme= resolves to at runtime — observed on the deployed Space even
-   though the background above is forced dark, making text unreadable.
-   This page is a fixed dark readout regardless of viewer theme, so every
+/* Gradio's own theme sets its own text color on plain p/h1/dl elements —
+   light gray/white in dark mode, near-black in light mode — that can win
+   the cascade depending on which theme __theme= resolves to at runtime.
+   This page is a fixed light, black-on-white readout regardless of viewer
+   theme (like a printed datasheet, not a themed app surface), so every
    text color below is forced with !important rather than relying on
-   inheritance Gradio's theme can reassert. */
+   inheritance Gradio's theme can reassert. Previously this page was dark
+   and fought Gradio's light-mode text color leaking through; now it's
+   inverted, but the same cascade risk applies in both directions. */
 .zgpu-page {
     max-width: 44rem;
     margin: 2.5rem auto;
@@ -200,12 +202,12 @@ PAGE_CSS = """
     color: var(--zgpu-ink) !important;
     font-family: ui-sans-serif, "Inter", "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.65;
 }
 .zgpu-mono, .zgpu-title, .zgpu-eyebrow, .zgpu-register, .zgpu-page code, .zgpu-page pre, .zgpu-links {
     font-family: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
 }
-.zgpu-title { font-size: 1.05rem; color: var(--zgpu-ink) !important; margin: 0 0 1.5rem; }
+.zgpu-title { font-size: 1.15rem; letter-spacing: -0.01em; color: var(--zgpu-ink) !important; margin: 0 0 1.75rem; }
 .zgpu-eyebrow {
     font-size: 0.75rem;
     letter-spacing: 0.08em;
@@ -224,18 +226,41 @@ PAGE_CSS = """
     column-gap: 1.5rem;
     row-gap: 0.55rem;
     font-size: 0.85rem;
+    counter-reset: zgpu-reg;
 }
-.zgpu-register dt { color: var(--zgpu-muted) !important; letter-spacing: 0.04em; }
+/* Register-file numbering (r0, r1, r2...) generated purely from a CSS
+   counter, not hardcoded per row — it tracks however many dt/dd pairs are
+   in the markup automatically. A small nod to how GPU/CPU general-purpose
+   registers are actually named, on a block that's already called
+   ".zgpu-register". */
+.zgpu-register dt {
+    counter-increment: zgpu-reg;
+    position: relative;
+    padding-left: 1.75rem;
+    color: var(--zgpu-muted) !important;
+    letter-spacing: 0.04em;
+}
+.zgpu-register dt::before {
+    content: "r" counter(zgpu-reg);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--zgpu-cold) !important;
+    opacity: 0.8;
+}
 .zgpu-register dd { margin: 0; color: var(--zgpu-ink) !important; min-width: 0; word-break: break-word; }
 .zgpu-register dd.zgpu-hot { color: var(--zgpu-hot) !important; }
+/* A mostly-neutral hairline with a short colored tab at the left edge,
+   like a title-block accent on an engineering drawing — quieter than a
+   full-width gradient bar, which read as more "dashboard" than "report". */
 .zgpu-rule {
-    height: 2px !important;
-    margin: 1.6rem 0;
-    background: linear-gradient(90deg, var(--zgpu-cold), var(--zgpu-hot)) !important;
+    height: 1px !important;
+    margin: 1.75rem 0;
+    background: linear-gradient(90deg, var(--zgpu-cold) 0, var(--zgpu-cold) 2.5rem, var(--zgpu-line) 2.5rem, var(--zgpu-line) 100%) !important;
     border: none !important;
-    opacity: 0.65;
+    opacity: 0.9;
 }
-.zgpu-page p { margin: 0 0 0.9rem; color: var(--zgpu-ink) !important; }
+.zgpu-page p { margin: 0 0 1rem; color: var(--zgpu-ink) !important; }
 .zgpu-page code {
     background: var(--zgpu-panel);
     border: 1px solid var(--zgpu-line);
@@ -256,13 +281,13 @@ PAGE_CSS = """
 }
 .zgpu-page pre code { border: none; padding: 0; background: none; }
 .zgpu-links { font-size: 0.85rem; color: var(--zgpu-muted) !important; }
-.zgpu-links a {
+.zgpu-page a {
     color: var(--zgpu-ink) !important;
     text-decoration: none;
     border-bottom: 1px solid var(--zgpu-line);
     transition: border-color 0.15s ease, color 0.15s ease;
 }
-.zgpu-links a:hover, .zgpu-links a:focus-visible { color: var(--zgpu-hot) !important; border-bottom-color: var(--zgpu-hot); }
+.zgpu-page a:hover, .zgpu-page a:focus-visible { color: var(--zgpu-hot) !important; border-bottom-color: var(--zgpu-hot); }
 @media (max-width: 480px) {
     .zgpu-page { margin: 1.5rem auto; padding: 0 1.1rem 2.5rem; font-size: 15px; }
     .zgpu-register { grid-template-columns: 1fr; row-gap: 0.35rem; }
@@ -290,13 +315,15 @@ PAGE_HTML = f"""
 
   <p class="zgpu-eyebrow">what this is</p>
   <p>
-    A personal GPU backend for the portfolio site linked below, and a sandbox
-    for learning what PyTorch does for you automatically. The deploy pipeline
-    is real, and so is the benchmark: <code>benchmark()</code> compiles a
-    hand-written CUDA Swish/SiLU kernel on first call (cached per container)
-    and times it against PyTorch's built-in <code>F.silu</code>, on whichever
-    GPU ZeroGPU schedules the call onto. What's still missing is a reporting
-    layer &mdash; this page doesn't track or display results across calls yet.
+    A personal GPU backend for the portfolio site linked below, and a running
+    writeup of what free-tier GPU infrastructure actually lets you do. The
+    deploy pipeline is real, and so is the benchmark: <code>benchmark()</code>
+    compiles a hand-written CUDA Swish/SiLU kernel on first call (cached per
+    container) and times it against PyTorch's built-in <code>F.silu</code>,
+    on whichever GPU ZeroGPU schedules the call onto. The sections below are
+    that writeup &mdash; constraints, the strategies used against them, how
+    this backend fits the rest of the portfolio, and how to read what it
+    reports.
   </p>
 
   <p class="zgpu-eyebrow">what's being measured</p>
@@ -313,6 +340,64 @@ PAGE_HTML = f"""
     jump.
   </p>
 
+  <p class="zgpu-eyebrow">zerogpu constraints</p>
+  <p>
+    Every call here runs inside Hugging Face's shared, quota-metered GPU
+    pool &mdash; currently a slice of an NVIDIA RTX Pro 6000 Blackwell, not
+    dedicated hardware. The daily quota is a fixed 24h window from your
+    first GPU call &mdash; 2/5/40/60 minutes across the unauthenticated /
+    free / PRO+Team / Enterprise tiers &mdash; charged to whoever calls the
+    Space, not its owner. Admission checks the declared duration against
+    remaining quota before a call runs; the default 60s cap kills the
+    process outright if exceeded, and host RAM is a fixed ceiling separate
+    from VRAM. Queue priority stacks on top of all this: account tier
+    first, then remaining quota, then how tight the declared duration is
+    &mdash; over-declaring &ldquo;to be safe&rdquo; both wastes quota on
+    settlement and queues worse. None of this is dedicated infrastructure
+    &mdash; it's free, shared, and bounded on purpose.
+  </p>
+
+  <p class="zgpu-eyebrow">design approach</p>
+  <p>
+    This backend is built against those ceilings first, not around them:
+    <code>numel</code> is bounds-checked so a call can't blow the duration
+    cap or spike host RAM, every GPU-touching step &mdash; including
+    compiling the kernel &mdash; runs inside the single metered
+    <code>@spaces.GPU</code> call, and the compiled kernel is cached on disk
+    per container so only the first call pays nvcc's cost. Next step:
+    prototype and debug the CUDA kernel on free-tier Google Colab (T4)
+    &mdash; no quota pressure, no queue &mdash; then compile it
+    ahead-of-time before it ever touches ZeroGPU, so the metered window is
+    spent on inference, not compilation. Sources for this and the section
+    above are listed under &ldquo;references&rdquo; below.
+  </p>
+
+  <p class="zgpu-eyebrow">portfolio integration</p>
+  <p>
+    This Space is one piece of a zero-cost architecture, not a standalone
+    demo. It deploys independently from the rest of the portfolio via
+    GitHub Actions, triggered on pushes that touch <code>backend/**</code>,
+    and uploads straight to the Space &mdash; never a git push, so it can't
+    collide with this Space's own history. The portfolio's Next.js frontend
+    calls it server-side with a read-scoped HF token, so requests are
+    attributed to an authenticated account's quota instead of the small
+    anonymous bucket described above. Hardware tier is the one thing still
+    set by hand, once, in the Space's settings &mdash; everything else in
+    this pipeline is automated.
+  </p>
+
+  <p class="zgpu-eyebrow">reading the results</p>
+  <p>
+    Each call reports four numbers that function as this benchmark's KPIs:
+    <code>pytorch_ms</code> and <code>cuda_kernel_ms</code> are the two
+    timings being compared, <code>speedup</code> is the headline ratio
+    between them, and <code>max_abs_diff</code> is the correctness gate
+    &mdash; a fast kernel that computes the wrong answer is a bug, not a
+    win, so a result only counts if that number stays near zero. Read them
+    per call: this page doesn't aggregate results across requests yet, so
+    treat each response as its own data point, not a running average.
+  </p>
+
   <p class="zgpu-eyebrow">why headless</p>
   <p>
     There's nothing to click here on purpose. Every input and output on this
@@ -322,6 +407,14 @@ PAGE_HTML = f"""
   </p>
   <pre><code>Client("thomas-to-bcheme/portfolio-zerogpu").predict(10_000_000, api_name="/benchmark")</code></pre>
   <pre><code>POST /gradio_api/call/benchmark   (call/poll shape &mdash; see README.md)</code></pre>
+
+  <p class="zgpu-eyebrow">references</p>
+  <p class="zgpu-links">
+    <a href="https://github.com/thomas-to-bcheme/thomas-to-bcheme/blob/main/system_design_docs/huggingface-zerogpu.md">this project's zerogpu study</a> &middot;
+    <a href="https://huggingface.co/docs/hub/en/spaces-zerogpu">official zerogpu docs</a> &middot;
+    <a href="https://huggingface.co/blog/zerogpu-aoti">aot compilation on zerogpu</a> &middot;
+    <a href="https://github.com/huggingface/skills/blob/main/skills/huggingface-zerogpu/references/how-quota-works.md">quota accounting mechanics</a>
+  </p>
 
   <p class="zgpu-eyebrow">elsewhere</p>
   <p class="zgpu-links">
