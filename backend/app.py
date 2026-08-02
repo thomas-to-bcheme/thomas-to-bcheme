@@ -1,6 +1,114 @@
-# Import order matters: `spaces` patches torch.cuda.* at import time, so it
-# must be imported before `torch` for ZeroGPU's CUDA visibility shim to take
-# effect in production.
+"""Portfolio ZeroGPU backend — Swish/SiLU CUDA kernel benchmark.
+
+This file's shape is a direct response to Hugging Face ZeroGPU's free-tier
+limits, not a generic Gradio app that happens to run on ZeroGPU. The four
+sections below are, in order: what ZeroGPU actually constrains, how this
+codebase is designed against those constraints today, how that ties back to
+the project's zero-cost architecture, and where the numbers come from.
+
+## 1. ZeroGPU constraints
+
+Hardware & allocation model
+    Spaces are backed by an NVIDIA RTX Pro 6000 Blackwell, split into `large`
+    (default; half a card, 48GB VRAM, 1x quota cost) or `xlarge` (full card,
+    96GB VRAM, 2x quota cost). Outside an `@spaces.GPU`-decorated call, CUDA
+    calls are intercepted by an emulation layer (no physical GPU attached) —
+    this is why model/tensor placement code can safely call `.to("cuda")` at
+    import time. A real device is attached only for the duration of a
+    decorated call, then detached back to the shared pool. Backing hardware
+    has already changed generations more than once (A100 -> H200 -> current);
+    treat these numbers as current, not permanent.
+
+Quota & refresh accounting
+    The daily quota is a fixed 24h TTL starting from the *caller's* first GPU
+    call of the day, not a calendar/UTC reset. Tiers: unauthenticated 2min
+    (low queue priority), free account 5min (medium), PRO/Team 40min
+    (highest), Enterprise 60min (highest); PRO+ tiers can overflow into paid
+    credits at $1/10min once exhausted. Quota is charged to whoever is
+    *calling* the Space, not the Space owner. Admission is reserve-then-settle:
+    the declared `duration` is checked against remaining quota *before* the
+    call runs (a too-large declaration is rejected immediately, no GPU time
+    spent), then actual elapsed seconds are what get deducted on completion.
+    `xlarge` doubles the accounted cost for identical wall-clock time.
+
+Execution lifecycle & hard caps
+    Admission check -> queue -> GPU attach -> function body executes -> GPU
+    detach + settlement. The hard wall-clock cap is the declared `duration`
+    (60s if unspecified, as in this file today) — exceeding it kills the
+    process outright (`GPU task aborted`), it does not just warn. Host RAM is
+    separate from VRAM, fixed per container, and not elastic: an OOM there
+    crashes/restarts the whole Space rather than raising a catchable
+    per-request exception.
+
+Queue dynamics
+    Priority is bucketed by account tier first, then affected by remaining
+    quota (a tier member who's burned more quota queues worse within their
+    tier), then by declared `duration` (tighter/shorter declarations queue
+    better; over-declaring "to be safe" both wastes quota on settlement and
+    pushes you back in line). No exact formula is published — this is an
+    observed fair-share model, not precise math to optimize against.
+
+## 2. How we approach these constraints
+
+The philosophy: design against the hard ceilings — quota seconds, host RAM,
+the per-call duration cap — before optimizing for capability. ZeroGPU is
+shared free-tier infrastructure, not a dedicated GPU; that's why the
+constraints above are written down before any discussion of what this file
+can do with them.
+
+Current strategies, and the constraint each one targets:
+  - `MIN_BENCHMARK_NUMEL`/`MAX_BENCHMARK_NUMEL` bound the worst-case tensor
+    size so a call can't run long or large enough to blow the default 60s
+    duration cap or spike host RAM.
+  - Every GPU-touching operation — including compiling the CUDA extension
+    itself, via `load_swish_extension()` — runs inside the single
+    `@spaces.GPU`-decorated `benchmark()`, since that's the only place quota
+    is charged and the only place a real device exists. Nothing GPU-related
+    runs speculatively outside it.
+  - `cuda_ext.py`'s fixed on-disk `build_directory` avoids paying nvcc
+    compile cost more than once per container's lifetime — first call pays
+    it, later calls reuse the cached build.
+  - The API is headless (see `PAGE_HTML` below): no interactive UI
+    polling/re-renders that could burn quota on incidental invocations.
+
+Planned workflow — Colab for debugging, ahead-of-time compiling for
+inference: develop and debug the CUDA/C++ kernel on free-tier Google Colab
+(T4), where there's no ZeroGPU quota pressure, no shared queue, and full
+nvcc/cuda-gdb access for the lower-level compiling and correctness/perf
+iteration that's expensive to do under a metered, queued, per-call-killed
+environment. Once a kernel is validated there, compile it ahead-of-time
+rather than relying on ZeroGPU's per-call JIT path (today's
+`load_swish_extension()` behavior), so the metered ZeroGPU window is spent on
+inference time, not compilation — targeting the two resources the quota
+actually meters (declared/settled *time* and container *memory*), not raw
+throughput. This is a plan, not yet implemented: `benchmark()` still
+JIT-compiles via `cuda_ext.py` today. It's the reason `PAGE_HTML` already
+lists "google colab (t4) — planned" alongside the live ZeroGPU hardware, and
+it's the expected workflow for future kernel work on this Space.
+
+## 3. Zero-cost architecture
+
+This project runs entirely on free-tier services (see root CLAUDE.md). ZeroGPU's
+limits above aren't an obstacle worked around despite that goal — they're the
+direct consequence of it: free GPU access is inherently shared, quota-metered,
+and queued. The Colab-for-debug -> AOT-for-inference plan in section 2 is how
+this project keeps doing real GPU/CUDA work without leaving the $0 architecture.
+
+## 4. References
+
+  - system_design_docs/huggingface-zerogpu.md (this project's own study; primary
+    source for every number and mechanism above)
+  - https://huggingface.co/docs/hub/en/spaces-zerogpu (official ZeroGPU docs)
+  - https://huggingface.co/blog/zerogpu-aoti (ahead-of-time compilation on ZeroGPU)
+  - https://github.com/huggingface/skills/blob/main/skills/huggingface-zerogpu/references/how-quota-works.md
+    (quota accounting mechanics)
+
+---
+
+Import order matters: `spaces` patches torch.cuda.* at import time, so it
+must be imported before `torch` for ZeroGPU's CUDA visibility shim to take
+effect in production.
+"""
 import spaces
 import torch
 import torch.nn.functional as F
