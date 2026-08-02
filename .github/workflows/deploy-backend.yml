@@ -39,15 +39,12 @@ jobs:
           repo_id = "thomas-to-bcheme/portfolio-zerogpu"
           sha = os.environ.get("GITHUB_SHA", "")[:7]
 
-          # Idempotent: creates the Space with the gradio SDK on first run,
-          # no-ops on every subsequent run. upload_folder() alone doesn't
-          # reliably bootstrap a brand-new Space repo with the right SDK.
-          api.create_repo(
-              repo_id=repo_id,
-              repo_type="space",
-              space_sdk="gradio",
-              exist_ok=True,
-          )
+          # Assumes the Space already exists (create it once via the HF web
+          # UI if starting fresh). create_repo() is deliberately not called
+          # here: HF's API gates *creating* new Gradio/Docker Space repos
+          # behind a PRO subscription (402 Payment Required), even with
+          # exist_ok=True on an already-existing repo. upload_folder() only
+          # commits to an existing repo and isn't subject to that gate.
 
           # Uploads folder contents via the Hub API commit, never a git push,
           # so this can never clobber the Space's own git history.
