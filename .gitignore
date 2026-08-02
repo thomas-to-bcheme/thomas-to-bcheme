@@ -33,6 +33,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # sensitive files
 *recovery-codes*
@@ -51,3 +52,10 @@ Thomas_To_Resume_*.pdf
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python (backend/)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
