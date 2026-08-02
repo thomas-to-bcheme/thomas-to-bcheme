@@ -60,11 +60,12 @@ with gr.Blocks(title="Portfolio ZeroGPU Backend") as demo:
         See this Space's `README.md` (Files tab) for the full contract — curl
         examples, the `gradio_client` convention on the leading slash, and the
         secrets table.
+
+        The portfolio landing page can be found on my [vercel page](https://thomas-to-bcheme-github-io.vercel.app/)
+        [Github](https://github.com/thomas-to-bcheme)
+        [Linkedin](https://www.linkedin.com/in/thomas-to-bcheme/)
+        [YouTube](https://www.youtube.com/@thomas-to-bcheme)
         """
-    )
-    gr.Button(
-        "← Back to portfolio",
-        link="https://thomas-to-bcheme-github-io.vercel.app/",
     )
 
     # Hidden components: not rendered on the page (this Space is a headless API,
