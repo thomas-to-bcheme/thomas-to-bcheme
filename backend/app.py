@@ -3,30 +3,61 @@
 # effect in production.
 import spaces
 import torch
+import torch.nn.functional as F
 import gradio as gr
+import time
+
+from cuda_ext import load_swish_extension
 
 DEVICE = torch.accelerator.current_accelerator() if torch.accelerator.is_available() else "cpu"
 
-# Placeholder model, loaded once at module level (never inside the
-# @spaces.GPU-decorated function below). On a real ZeroGPU Space, the worker
-# process is a fork of this main process, so a module-level load is inherited
-# by every call for free instead of being re-loaded (or re-downloaded) each
-# time. Swap this out for a real `from_pretrained(...)` / `torch.load(...)`
-# call when a real model is ready.
-_placeholder_model = torch.nn.Linear(4, 1).to(DEVICE)
-_placeholder_model.eval()
+# 100M float32 elements is ~400MB per tensor, ~1.2GB across the input/
+# reference/custom tensors in flight at once — safe even on a modest shared
+# ZeroGPU allocation.
+MIN_BENCHMARK_NUMEL = 1
+MAX_BENCHMARK_NUMEL = 100_000_000
 
 
 @spaces.GPU
-def infer(value: float) -> str:
-    """Placeholder inference: runs a trivial tensor op through the
-    placeholder model on DEVICE. Returns the resolved device alongside the
-    output so callers can visually confirm whether a given call landed on
-    cuda (production) or cpu (local dev without a GPU)."""
-    with torch.no_grad():
-        input_tensor = torch.full((1, 4), float(value), device=DEVICE)
-        output = _placeholder_model(input_tensor)
-    return f"device={DEVICE} output={output.item():.6f}"
+def benchmark(numel: float) -> str:
+    """Benchmarks a hand-written CUDA Swish/SiLU kernel against PyTorch's
+    built-in F.silu on whichever GPU ZeroGPU schedules this call onto.
+
+    The extension is compiled (or loaded from its on-disk build cache) here,
+    since this is the only place a physical GPU is attached and its
+    architecture can be detected — see cuda_ext.py."""
+    numel = int(numel)
+    if not (MIN_BENCHMARK_NUMEL <= numel <= MAX_BENCHMARK_NUMEL):
+        raise ValueError(
+            f"numel must be between {MIN_BENCHMARK_NUMEL} and "
+            f"{MAX_BENCHMARK_NUMEL}, got {numel}"
+        )
+
+    ext, arch_tag = load_swish_extension()
+    input_tensor = torch.randn(numel, device=DEVICE, dtype=torch.float32)
+
+    torch.cuda.synchronize()
+    start = time.perf_counter()
+    reference_output = F.silu(input_tensor)
+    torch.cuda.synchronize()  # CUDA kernels launch async; without this the
+                               # CPU timer would stop before the GPU finishes
+    reference_ms = (time.perf_counter() - start) * 1000
+
+    torch.cuda.synchronize()
+    start = time.perf_counter()
+    custom_output = ext.swish_forward(input_tensor)
+    torch.cuda.synchronize()
+    custom_ms = (time.perf_counter() - start) * 1000
+
+    # A fast kernel that computes the wrong answer is a bug, not a win.
+    max_abs_diff = (custom_output - reference_output).abs().max().item()
+    speedup = reference_ms / custom_ms if custom_ms > 0 else float("inf")
+
+    return (
+        f"device={DEVICE} arch={arch_tag} numel={numel} "
+        f"pytorch_ms={reference_ms:.4f} cuda_kernel_ms={custom_ms:.4f} "
+        f"speedup={speedup:.2f}x max_abs_diff={max_abs_diff:.3e}"
+    )
 
 
 with gr.Blocks(title="Portfolio ZeroGPU Backend") as demo:
@@ -45,17 +76,17 @@ with gr.Blocks(title="Portfolio ZeroGPU Backend") as demo:
           NVIDIA GPU access doubles as a sandbox for digging under PyTorch's
           abstractions into CUDA kernels.
 
-        This is currently a **placeholder**: `infer()` runs a trivial tensor op
-        through a randomly-initialized `torch.nn.Linear` layer on `DEVICE`, so the
-        deploy pipeline and API contract can be verified end-to-end before a real
-        model and benchmark harness are wired in.
+        `benchmark()` compiles a hand-written CUDA Swish/SiLU kernel (`csrc/kernel.cu`)
+        on first call and times it against PyTorch's built-in `F.silu`, on whichever
+        GPU ZeroGPU schedules this call onto — the deploy pipeline, API contract, and
+        the actual kernel/benchmark harness are all wired in end-to-end.
 
         **Headless API only** — this page is documentation, not a demo UI. There
-        are no input fields to click through here; call the `infer` endpoint
+        are no input fields to click through here; call the `benchmark` endpoint
         directly instead:
 
-        - `gradio_client`: `Client("thomas-to-bcheme/portfolio-zerogpu").predict(3.5, api_name="/infer")`
-        - Raw HTTP: `POST /gradio_api/call/infer` (call/poll shape)
+        - `gradio_client`: `Client("thomas-to-bcheme/portfolio-zerogpu").predict(10_000_000, api_name="/benchmark")`
+        - Raw HTTP: `POST /gradio_api/call/benchmark` (call/poll shape)
 
         See this Space's `README.md` (Files tab) for the full contract — curl
         examples, the `gradio_client` convention on the leading slash, and the
@@ -70,16 +101,16 @@ with gr.Blocks(title="Portfolio ZeroGPU Backend") as demo:
 
     # Hidden components: not rendered on the page (this Space is a headless API,
     # not an interactive demo — see the Markdown above), but still wired to an
-    # event with api_name="infer" so gradio_client/HTTP callers can reach them.
-    input_number = gr.Number(label="Input value", value=1.0, visible=False)
+    # event with api_name="benchmark" so gradio_client/HTTP callers can reach them.
+    input_number = gr.Number(label="Element count", value=10_000_000, visible=False)
     output_text = gr.Textbox(label="Result", visible=False)
-    run_button = gr.Button("Run inference", visible=False)
+    run_button = gr.Button("Run benchmark", visible=False)
 
     run_button.click(
-        fn=infer,
+        fn=benchmark,
         inputs=input_number,
         outputs=output_text,
-        api_name="infer",
+        api_name="benchmark",
     )
 
 # Required for ZeroGPU: the GPU scheduler hooks into Gradio's queueing
