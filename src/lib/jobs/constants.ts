@@ -14,12 +14,28 @@
 export const RECENT_WINDOW_DAYS = 30;
 
 /**
- * Roles per page. 12 divides evenly across every BentoGrid breakpoint
- * (grid-cols-1 / md:grid-cols-2 / lg:grid-cols-4 — see
- * src/components/layout/BentoGrid.tsx), so a page never ends on a partial,
- * ragged row.
+ * Allowed "results per page" choices for the Job Board's page-size selector.
+ * 'all' means no LIMIT — every matching role on one page. Single source of
+ * truth for both the server-side validation in queryParams.ts (anything not
+ * in this list falls back to DEFAULT_JOBS_PAGE_SIZE) and the <select>
+ * options rendered in JobFilters/JobPagination, so the UI can never offer a
+ * value the server would reject.
+ *
+ * Grid alignment is NOT this array's concern — BentoGrid (see
+ * src/components/layout/BentoGrid.tsx's `fillLastRow` prop) pads any
+ * rendered count up to a full row generically, so page size is free to be
+ * any value here without producing a ragged last row.
  */
-export const JOBS_PAGE_SIZE = 12;
+export const JOBS_PAGE_SIZE_OPTIONS = [12, 24, 48, 'all'] as const;
+export type JobsPageSize = (typeof JOBS_PAGE_SIZE_OPTIONS)[number];
+export const DEFAULT_JOBS_PAGE_SIZE: JobsPageSize = 12;
+
+/**
+ * Delay after the user stops typing in the Job Board search box before the
+ * query re-runs (src/hooks/useDebouncedValue.ts). Single source of truth so
+ * the "feels live" tuning only ever needs to change in one place.
+ */
+export const JOBS_SEARCH_DEBOUNCE_MS = 450;
 
 /**
  * Today minus RECENT_WINDOW_DAYS, as a YYYY-MM-DD date string bound directly

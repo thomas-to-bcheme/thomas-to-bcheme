@@ -5,11 +5,48 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export const BentoGrid = ({ children, className, id }: { children: React.ReactNode, className?: string, id?: string }) => (
-  <div id={id} className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]", className)}>
-    {children}
-  </div>
-);
+// Widest breakpoint's column count, matching the literal `lg:grid-cols-4`
+// class below — Tailwind's static class scanner needs that exact string in
+// the className, so it can't be generated from this constant; the two must
+// be changed together if the grid's column count ever changes. Since
+// md:grid-cols-2 and the base grid-cols-1 both divide evenly into 4, padding
+// the rendered item count up to a multiple of 4 keeps every breakpoint's
+// last row full with one static DOM-level filler count — there's no way to
+// render a different filler count per breakpoint with plain CSS Grid.
+const GRID_COLUMNS_LG = 4;
+
+interface BentoGridProps {
+  children: React.ReactNode;
+  className?: string;
+  id?: string;
+  /**
+   * Pads the rendered child count up to a full row with invisible,
+   * aria-hidden filler cells, computed from the actual child count on every
+   * render — never tied to any particular page size or fixed item count.
+   * Opt-in (default false): only correct when every child is a uniform,
+   * non-spanning 1x1 item, so it's off by default for any consumer mixing
+   * BentoCard's colSpan/rowSpan.
+   */
+  fillLastRow?: boolean;
+}
+
+export const BentoGrid = ({ children, className, id, fillLastRow = false }: BentoGridProps) => {
+  const itemCount = React.Children.count(children);
+  const remainder = itemCount % GRID_COLUMNS_LG;
+  const fillerCount = fillLastRow && remainder > 0 ? GRID_COLUMNS_LG - remainder : 0;
+
+  return (
+    <div id={id} className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]", className)}>
+      {children}
+      {Array.from({ length: fillerCount }).map((_, index) => (
+        // visibility:hidden (Tailwind `invisible`), not display:none — the
+        // cell must still occupy a grid track to pad the row, just render
+        // nothing. aria-hidden removes it from the accessibility tree.
+        <div key={`bento-filler-${index}`} aria-hidden="true" className="invisible" />
+      ))}
+    </div>
+  );
+};
 
 interface BentoCardProps {
   children: React.ReactNode;

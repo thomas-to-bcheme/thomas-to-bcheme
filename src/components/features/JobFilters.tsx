@@ -1,9 +1,12 @@
 'use client';
 
+import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { Search } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { buildJobsSearch, type JobsQueryParams, type JobsDateRange } from '@/lib/jobs/queryParams';
-import { RECENT_WINDOW_DAYS } from '@/lib/jobs/constants';
+import { RECENT_WINDOW_DAYS, JOBS_SEARCH_DEBOUNCE_MS, type JobsPageSize } from '@/lib/jobs/constants';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { cn } from '@/lib/utils';
 
 interface JobFiltersProps {
@@ -17,30 +20,73 @@ const RANGE_OPTIONS: { value: JobsDateRange; label: string }[] = [
 ];
 
 /**
- * Segmented date-range toggle + company filter for the Job Board. Reads its
- * current state entirely from props (range/company already resolved
- * server-side by src/app/jobs/page.tsx) rather than useSearchParams(), so it
- * needs no Suspense boundary. Both controls navigate via router.push(),
- * which re-renders the Server Component page and re-queries Neon with the
- * new filters — any change here resets `page` to 1, since a different
- * range/company invalidates whatever "page 2" meant under the old filter.
+ * Segmented date-range toggle + company filter + search box + page-size
+ * selector for the Job Board. Reads its current state entirely from props
+ * (already resolved server-side by src/app/jobs/page.tsx) rather than
+ * useSearchParams(), so it needs no Suspense boundary. Every control
+ * navigates via router.push() inside a transition, which re-renders the
+ * Server Component page and re-queries Neon with the new filters — any
+ * change here resets `page` to 1, since a different range/company/search
+ * invalidates whatever "page 2" meant under the old filters. `{ scroll:
+ * false }` keeps the visitor's scroll position in place instead of jumping
+ * to the top on every filter change.
  */
 const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
   const router = useRouter();
   const prefersReducedMotion = useReducedMotion();
+  const [isPending, startTransition] = useTransition();
 
-  const navigate = (next: { range?: JobsDateRange; company?: string | null }) => {
-    router.push(
-      buildJobsSearch({
-        range: next.range ?? params.range,
-        company: next.company !== undefined ? next.company : params.company,
-        page: 1,
-      })
-    );
+  const navigate = (next: {
+    range?: JobsDateRange;
+    company?: string | null;
+    search?: string | null;
+    pageSize?: JobsPageSize;
+  }) => {
+    startTransition(() => {
+      router.push(
+        buildJobsSearch({
+          range: next.range ?? params.range,
+          company: next.company !== undefined ? next.company : params.company,
+          search: next.search !== undefined ? next.search : params.search,
+          pageSize: next.pageSize ?? params.pageSize,
+          page: 1,
+        }),
+        { scroll: false }
+      );
+    });
   };
 
+  // Local input state so typing feels instant; the debounced echo below is
+  // what actually triggers navigation, ~JOBS_SEARCH_DEBOUNCE_MS after typing
+  // pauses.
+  const [searchInput, setSearchInput] = useState(params.search ?? '');
+  const debouncedSearch = useDebouncedValue(searchInput, JOBS_SEARCH_DEBOUNCE_MS);
+  // Tracks what THIS component last pushed to the router, so an external URL
+  // change (Clear filters link, browser back/forward) can be told apart from
+  // "our own debounced push just landed" — that distinction is what prevents
+  // the two effects below from ping-ponging each other.
+  const lastSyncedSearchRef = useRef(params.search);
+
+  // External change → sync the input.
+  useEffect(() => {
+    if (params.search === lastSyncedSearchRef.current) return;
+    lastSyncedSearchRef.current = params.search;
+    setSearchInput(params.search ?? '');
+  }, [params.search]);
+
+  // Debounce settled → navigate, but only if it actually differs from what's
+  // already live in the URL (guards both the initial mount and the round
+  // trip back from our own navigate() call).
+  useEffect(() => {
+    const normalized = debouncedSearch.trim() || null;
+    if (normalized === params.search) return;
+    lastSyncedSearchRef.current = normalized;
+    navigate({ search: normalized });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
+
   return (
-    <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6 mb-6">
+    <div className="flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-6 mb-6">
       <div className="flex flex-col gap-1.5">
         <span className="text-micro text-zinc-400">Posted</span>
         <div className="inline-flex p-1 bg-zinc-100 dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800">
@@ -51,9 +97,10 @@ const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
                 key={option.value}
                 type="button"
                 onClick={() => navigate({ range: option.value })}
+                disabled={isPending}
                 aria-pressed={isActive}
                 className={cn(
-                  'relative px-4 py-1.5 text-sm font-semibold rounded-md transition-colors',
+                  'relative px-4 py-1.5 text-sm font-semibold rounded-md transition-colors disabled:cursor-wait',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black',
                   isActive
                     ? 'text-white dark:text-black'
@@ -82,6 +129,7 @@ const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
           id="job-company-filter"
           className="input-base"
           value={params.company ?? ''}
+          disabled={isPending}
           onChange={(event) => navigate({ company: event.target.value === '' ? null : event.target.value })}
         >
           <option value="">All companies</option>
@@ -91,6 +139,29 @@ const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+        <label htmlFor="job-search" className="text-micro text-zinc-400">
+          Search
+        </label>
+        <div className="relative">
+          <Search
+            size={15}
+            aria-hidden="true"
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"
+          />
+          <input
+            id="job-search"
+            type="search"
+            className="input-base pl-9"
+            placeholder="Search title or company…"
+            value={searchInput}
+            // Deliberately never disabled while isPending — disabling mid-
+            // debounce would block further typing, defeating the point.
+            onChange={(event) => setSearchInput(event.target.value)}
+          />
+        </div>
       </div>
     </div>
   );

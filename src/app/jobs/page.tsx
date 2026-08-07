@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 interface JobsPageProps {
-  searchParams: Promise<{ range?: string; company?: string; page?: string }>;
+  searchParams: Promise<{ range?: string; company?: string; q?: string; pageSize?: string; page?: string }>;
 }
 
 function logJobsError(message: string, error: unknown) {
@@ -64,6 +64,8 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   const urlSearchParams = new URLSearchParams();
   if (resolvedSearchParams.range) urlSearchParams.set('range', resolvedSearchParams.range);
   if (resolvedSearchParams.company) urlSearchParams.set('company', resolvedSearchParams.company);
+  if (resolvedSearchParams.q) urlSearchParams.set('q', resolvedSearchParams.q);
+  if (resolvedSearchParams.pageSize) urlSearchParams.set('pageSize', resolvedSearchParams.pageSize);
   if (resolvedSearchParams.page) urlSearchParams.set('page', resolvedSearchParams.page);
   const params = parseJobsQueryParams(urlSearchParams);
 
@@ -83,7 +85,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     redirect(buildJobsSearch({ ...params, page: jobsResult.totalPages }));
   }
 
-  const isFiltered = params.range !== 'recent' || params.company !== null;
+  // pageSize is deliberately excluded — it only changes LIMIT, never which
+  // rows match, so a page-size choice alone shouldn't trigger "Clear filters"
+  // copy that implies the WHERE clause is why results are empty/narrow.
+  const isFiltered = params.range !== 'recent' || params.company !== null || params.search !== null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">

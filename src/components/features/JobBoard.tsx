@@ -31,7 +31,7 @@ const JobBoard = ({ jobs, isFiltered }: JobBoardProps) => {
   }
 
   return (
-    <BentoGrid className="auto-rows-fr">
+    <BentoGrid className="auto-rows-fr" fillLastRow>
       {jobs.map((job) => (
         <JobCard key={job.id} job={job} />
       ))}

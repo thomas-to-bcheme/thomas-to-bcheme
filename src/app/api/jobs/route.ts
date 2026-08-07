@@ -57,6 +57,13 @@ export async function GET(request: NextRequest) {
       jobCount: result.jobs.length,
       range: params.range,
       company: params.company,
+      // Search text is free-form user input (unlike company, which is
+      // constrained to values drawn from the DB's own dropdown) — log
+      // presence/length only, never the raw string, per CLAUDE.md's
+      // "STRICTLY scrub PII and secrets from all logs" standard.
+      hasSearch: params.search !== null,
+      searchLength: params.search?.length ?? 0,
+      pageSize: params.pageSize,
       page: result.page,
       totalPages: result.totalPages,
     });
