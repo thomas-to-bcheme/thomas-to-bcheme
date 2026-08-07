@@ -8391,7 +8391,7 @@
       "version": 871,
       "versionNonce": 106548473,
       "isDeleted": false,
-      "boundElements": null,
+      "boundElements": [],
       "updated": 1785297607769,
       "link": null,
       "locked": false,
@@ -8766,6 +8766,43 @@
       "autoResize": true,
       "lineHeight": 1.25,
       "index": "b2R"
+    },
+    {
+      "id": "khBvObGDNxt371Gx4evvh",
+      "type": "text",
+      "x": 392.61236715599557,
+      "y": -4372.621431559632,
+      "width": 1019.3193359375,
+      "height": 125,
+      "angle": 0,
+      "strokeColor": "#e03131",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": "EGRTFUa88qn5hnskuJZXh",
+      "index": "b2RV",
+      "roundness": null,
+      "seed": 1047536926,
+      "version": 305,
+      "versionNonce": 844198174,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1786064765173,
+      "link": null,
+      "locked": false,
+      "text": "LLM workflow (I define) vs. Agentic (autonomous)\nAI growth and adoption: addressing user fear (of AI and SWE automation) despite 100k and 1M system\nLinkedin Agent (offline) vs. Resume Agent (online)\n    -> RAG vs CAG: retrieval augmented generation vs. cache augmented generation\n",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "LLM workflow (I define) vs. Agentic (autonomous)\nAI growth and adoption: addressing user fear (of AI and SWE automation) despite 100k and 1M system\nLinkedin Agent (offline) vs. Resume Agent (online)\n    -> RAG vs CAG: retrieval augmented generation vs. cache augmented generation\n",
+      "autoResize": true,
+      "lineHeight": 1.25
     },
     {
       "id": "EGRTFUa88qn5hnskuJZXh",
@@ -13730,12 +13767,10 @@
       "shown": false,
       "data": null
     },
-    "previousSelectedElementIds": {
-      "-8_KW8W4E9ak4Igip--HN": true
-    },
+    "previousSelectedElementIds": {},
     "scrolledOutside": false,
-    "scrollX": 11512.140474841417,
-    "scrollY": 2977.5917916449157,
+    "scrollX": 337.11539033655174,
+    "scrollY": 4609.782952744709,
     "selectedElementIds": {},
     "hoveredElementIds": {},
     "selectedGroupIds": {},
@@ -13759,7 +13794,7 @@
     "viewBackgroundColor": "#ffffff",
     "zenModeEnabled": false,
     "zoom": {
-      "value": 0.3
+      "value": 0.740002
     },
     "viewModeEnabled": false,
     "pendingImageElementId": null,
@@ -13774,8 +13809,8 @@
     "searchMatches": [],
     "offsetLeft": 17,
     "offsetTop": 206.5,
-    "width": 1529,
-    "height": 547
+    "width": 1338,
+    "height": 540
   },
   "files": {
     "049b0ee384fc1f9311caaae753e2e92035314fc4": {
