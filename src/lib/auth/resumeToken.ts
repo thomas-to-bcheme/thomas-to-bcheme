@@ -1,8 +1,10 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
-// Comfortably outlives the Jobs page's 30-min ISR window (src/app/jobs/page.tsx
-// revalidate = 1800) so a token embedded in an already-rendered page never
-// expires before the next regeneration produces a fresh one.
+// 24h comfortably outlives a single browsing session (or someone reopening a
+// saved resume link later the same day) while still bounding how long a
+// leaked/shared URL stays valid. src/app/jobs/page.tsx renders fully
+// dynamically per request now — there's no fixed page-refresh window this
+// TTL needs to outlive; it's sized for the token's own lifecycle only.
 const RESUME_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 
 // Fail-fast: validate required environment variables at module load

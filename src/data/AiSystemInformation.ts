@@ -29,6 +29,43 @@ function loadResumeMarkdown(): string {
 
 const RESUME_MARKDOWN = loadResumeMarkdown();
 
+/**
+ * Marks where Section 7's live KPI paragraph gets spliced in at request time
+ * (see src/app/api/chat/route.ts). Kept out of the static GITHUB_CONTEXT
+ * template so that paragraph can be computed per-request from live Postgres
+ * counts (src/lib/db/jobs.ts's getPipelineStats()) instead of hand-copied
+ * from a point-in-time pipeline run.
+ */
+export const LIVE_PIPELINE_KPI_PLACEHOLDER = '{{LIVE_PIPELINE_KPI}}';
+
+// Used when getPipelineStats() fails or hasn't resolved, so the literal
+// placeholder token never ships to Gemini and a transient Neon blip in one
+// paragraph never has to fail the whole chat request.
+export const FALLBACK_PIPELINE_KPI_TEXT =
+  '**KPI:** live counts are temporarily unavailable — describe the pipeline\'s stages and mechanism without citing a specific number.';
+
+export interface PipelineKpiStats {
+  totalRoles: number;
+  syncedRoles: number;
+  byCompany: { company: string; total: number; synced: number }[];
+}
+
+/**
+ * Formats Section 7's live KPI paragraph from freshly-queried Postgres
+ * counts (see getPipelineStats() in src/lib/db/jobs.ts). Deliberately never
+ * reports model-cascade attribution — resume_md/resume_flags (the only
+ * columns that could support that) aren't granted to this repo's DB role
+ * (portfolio_readonly/anonymous), so a per-model percentage here would have
+ * to be hand-copied from an unverifiable source. Only total/synced/
+ * per-company counts — all live-queryable — are ever reported.
+ */
+export function formatLivePipelineKpi(stats: PipelineKpiStats, asOf: Date = new Date()): string {
+  const dateStr = asOf.toISOString().slice(0, 10);
+  const pct = stats.totalRoles > 0 ? Math.round((stats.syncedRoles / stats.totalRoles) * 100) : 0;
+  const byCompany = stats.byCompany.map((c) => `${c.company}: ${c.synced}/${c.total} synced`).join(', ');
+  return `**KPI (live, as of ${dateStr}):** ${stats.syncedRoles}/${stats.totalRoles} roles carry a tailored résumé (${pct}%) — ${byCompany}.`;
+}
+
 // --- RAG-only persona (not part of the résumé document) ---
 const PERSONA = `
 YOU ARE THOMAS TO.
@@ -105,7 +142,7 @@ The repository is organized as follows:
 - **src/app/** - Next.js App Router pages and API routes
 - **src/app/api/chat/route.ts** - Gemini API streaming chat endpoint
 - **src/components/** - 15 React components (HeroSection, AiGenerator, ProjectDeepDive, ArchitectureDiagram, ROICalculation, Roadmap, BentoGrid, AboutMeSection, etc.)
-- **src/data/AiSystemInformation.tsx** - RAG context/system prompt for the AI agent
+- **src/data/AiSystemInformation.ts** - RAG context/system prompt for the AI agent
 - **backend/** - Python ML models (Random Forest + TensorFlow for salary prediction)
 - **my_marketplace/** - Claude Code Plugin Marketplace with distributable plugins
 - **system_design_docs/** - 8 architecture documentation files (architecture.md, api.md, database.md, deployment.md, frontend.md, ml-models.md, roadmap.md)
@@ -182,13 +219,13 @@ The project is built using a precise selection of tools to balance cost, perform
 ---
 
 ### 7. THE JOB BOARD & THE "APPLY-TO-JOBS" PIPELINE
-/jobs and /api/jobs serve LIVE rows from a real Neon Postgres table ("PORTFOLIO".roles, via src/lib/db/jobs.ts), refreshed every 30 min (ISR). Résumé PDFs stream from a private Vercel Blob store behind a signed, 24-hour HMAC link (/api/jobs/resume) — never a public URL.
+/jobs and /api/jobs serve LIVE rows from a real Neon Postgres table ("PORTFOLIO".roles, via src/lib/db/jobs.ts). The page renders fully dynamically per request — no fixed ISR/revalidate window, so a newly-synced row is visible on the very next request. Résumé PDFs stream from a private Vercel Blob store behind a signed, 24-hour HMAC link (/api/jobs/resume) — never a public URL.
 
-**Data source:** A separate external TypeScript pipeline, "apply-to-jobs" (not in this repo), runs 5 stages — scrape → describe → tailor → render → sync — scraping Apple postings (TPU/GPU/Infrastructure/Backend filters), tailoring résumés per role via a 6-model Gemini fallback cascade, and syncing into this SAME Neon table and Blob store.
+**Data source:** A separate external TypeScript pipeline, "apply-to-jobs" (not in this repo), runs 5 stages — scrape → describe → tailor → render → sync — scraping Apple and NVIDIA postings (disambiguated by a company column, disjoint job_id spaces), tailoring résumés per role via a bounded-concurrency Gemini pipeline with quota-vs-rate-limit-aware backoff, and syncing into this SAME Neon table and Blob store. It re-runs on a GitHub Actions cron four times a day.
 
-**KPI (2026-07-19 run):** 296/296 scraped (100%) → 179/296 tailored (60.5%, the bottleneck) → 179/179 rendered → 296 synced (179 carry a résumé).
+**Data lifecycle:** each role's Postgres row moves through three states — discovered (description not yet fetched) → described (fetched, not yet tailored) → synced (tailored, rendered, uploaded) — so how "ready" a row is can always be read straight off its columns.
 
-**KPI (model cascade):** gemini-3.1-flash-lite (ranked #2 of 6) carried 167/179 tailors (93.3%) — the actual workhorse, ~7x faster than the top-ranked model. Known bug: a retired model (404) isn't recognized as quota-exhausted and gets retried instead of skipped (11 of 19 failed attempts this run).
+${LIVE_PIPELINE_KPI_PLACEHOLDER}
 
 **KPI (QA layer):** every tailored résumé is auto-checked post-generation against a golden-dataset rubric — weak/no quantifiable metric, unsupported skill claims, missing hyperlinks, banned words, semicolons, 2-page limit.
 

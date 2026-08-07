@@ -1,6 +1,11 @@
 import { GoogleGenerativeAI, GoogleGenerativeAIFetchError } from "@google/generative-ai";
 import { z } from "zod";
-import AiSystemInformation from "@/data/AiSystemInformation";
+import AiSystemInformation, {
+  formatLivePipelineKpi,
+  FALLBACK_PIPELINE_KPI_TEXT,
+  LIVE_PIPELINE_KPI_PLACEHOLDER,
+} from "@/data/AiSystemInformation";
+import { getPipelineStats, type PipelineStats } from "@/lib/db/jobs";
 
 // =============================================================================
 // CONFIGURATION & VALIDATION
@@ -87,6 +92,43 @@ function isGoogleQuotaError(error: unknown): error is GoogleGenerativeAIFetchErr
 }
 
 // =============================================================================
+// LIVE PIPELINE STATS (KPI paragraph in the system instruction)
+// =============================================================================
+
+// How long a cached getPipelineStats() result is reused before the next
+// chat request pays for a fresh Neon round trip. The pipeline itself only
+// changes up to 4x/day (its GitHub Actions cron), so anything well under
+// that window is "fresh enough" for a KPI paragraph — this value exists
+// purely to bound Neon read volume across a burst of chat messages hitting
+// the same warm serverless instance.
+const PIPELINE_STATS_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
+
+let cachedPipelineStats: PipelineStats | null = null;
+let cachedPipelineStatsAt = 0;
+
+async function getCachedPipelineStats(logCtx: LogContext): Promise<PipelineStats | null> {
+  const isFresh =
+    cachedPipelineStats !== null && Date.now() - cachedPipelineStatsAt < PIPELINE_STATS_CACHE_TTL_MS;
+  if (isFresh) return cachedPipelineStats;
+
+  try {
+    const stats = await getPipelineStats();
+    cachedPipelineStats = stats;
+    cachedPipelineStatsAt = Date.now();
+    return stats;
+  } catch (error) {
+    log("WARN", "Failed to fetch live pipeline stats; falling back to static KPI text", {
+      ...logCtx,
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+    // Deliberately not cached — the next request retries immediately
+    // instead of being stuck on the fallback for a full TTL window over
+    // one transient Neon blip.
+    return null;
+  }
+}
+
+// =============================================================================
 // MAIN HANDLER
 // =============================================================================
 
@@ -121,9 +163,18 @@ export async function POST(req: Request) {
     }));
 
     // 3. Initialize Model
+    const pipelineStats = await getCachedPipelineStats(logCtx);
+    const livePipelineKpiText = pipelineStats
+      ? formatLivePipelineKpi(pipelineStats)
+      : FALLBACK_PIPELINE_KPI_TEXT;
+    const systemInstruction = AiSystemInformation.replace(
+      LIVE_PIPELINE_KPI_PLACEHOLDER,
+      livePipelineKpiText
+    );
+
     const model = genAI.getGenerativeModel({
       model: "gemini-3.1-pro-preview",
-      systemInstruction: AiSystemInformation,
+      systemInstruction,
     });
 
     const chat = model.startChat({

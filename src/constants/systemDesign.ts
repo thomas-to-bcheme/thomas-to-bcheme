@@ -655,7 +655,7 @@ export const SYSTEM_DESIGNS: SystemDesign[] = [
     projectId: 'apply-to-jobs',
     title: 'Apply-to-Jobs Pipeline',
     summary:
-      'A 5-stage scrape → describe → tailor → render → sync pipeline that scrapes Apple job postings directly, tailors a résumé per role through a 6-model Gemini fallback cascade, and syncs into the same Neon table and Blob store this portfolio\'s Job Board already serves from.',
+      'A 5-stage scrape → describe → tailor → render → sync pipeline that scrapes Apple and NVIDIA job postings, tailors a résumé per role through a bounded-concurrency Gemini pipeline with quota-vs-rate-limit-aware backoff, and syncs into the same Neon table and Blob store this portfolio\'s Job Board already serves from.',
     nodes: [
       {
         tier: 'client',
@@ -666,30 +666,30 @@ export const SYSTEM_DESIGNS: SystemDesign[] = [
       },
       {
         tier: 'backend',
-        label: 'Apple Careers Scraper',
-        tech: 'TypeScript · 4 search filters',
-        note: 'Scrapes TPU / GPU / Infrastructure / Backend postings directly — 296/296 (100%) this run.',
+        label: 'Apple + NVIDIA Scrapers',
+        tech: 'TypeScript · dual source',
+        note: 'Scrapes Apple (GPU/TPU/Infrastructure/Backend keyword filter) and NVIDIA (Eightfold\'s /api/pcsx search), disambiguated by a company column with disjoint job_id spaces (Apple \\d+-\\d+, NVIDIA nvidia-<id>).',
         icon: Network,
       },
       {
         tier: 'backend',
         label: 'Render Pipeline',
         tech: 'Markdown → PDF',
-        note: 'Renders every successfully tailored résumé — 179/179 (100% of tailored).',
+        note: 'Renders every successfully tailored résumé to PDF and uploads to Blob, overwriting the same stable pathname on re-tailor.',
         icon: Workflow,
       },
       {
         tier: 'model',
-        label: 'Gemini Fallback Cascade',
-        tech: '6-model priority chain',
-        note: '167/179 tailors (93.3%) land on the #2-ranked model, not the most capable one.',
+        label: 'Gemini Draft + Correction',
+        tech: 'gemini-3.1-flash-lite draft · 4-model correction chain',
+        note: 'Drafts every résumé with one primary model; validation failures escalate through a separate 4-model correction chain, capped at 2 retries per role.',
         icon: Sparkles,
       },
       {
         tier: 'data',
         label: 'Neon "PORTFOLIO".roles',
         tech: 'Shared Postgres table',
-        note: 'Same table src/lib/db/jobs.ts reads — 296 rows synced, 179 carry a résumé.',
+        note: 'Same table src/lib/db/jobs.ts reads. Each row moves through three states — discovered (description NULL) → described (resume_pdf_path NULL) → synced (resume_pdf_path set).',
         icon: Database,
       },
       {
@@ -703,19 +703,23 @@ export const SYSTEM_DESIGNS: SystemDesign[] = [
     considerations: [
       {
         label: 'Why fallback by quota, not capability',
-        body: 'Gemini tracks quota independently per model (PerProjectPerModel) — a bulkhead pattern applied across a model portfolio. It lets gemini-3.1-flash-lite, ranked #2, absorb 93.3% of volume once the top-ranked model\'s 20 req/day cap is hit.',
+        body: 'Gemini tracks quota independently per model. FallbackChainController advances a chain\'s pointer only when classifyGeminiError judges a failure genuine daily-quota exhaustion, not a transient rate limit — the draft pass currently runs a single model (its fallback partner was pruned after retirement), so the real redundancy lives in the separate correction chain used only to fix validation failures.',
       },
       {
-        label: 'Idempotent checkpointing',
-        body: 'Every success is written to data.json immediately; every re-run filters on !role.resume. A crash or quota wall loses at most one in-flight call.',
-      },
-      {
-        label: 'Confirmed bug (P0)',
-        body: 'The fallback only advances on HTTP 429 (quota), not 404 (retired model) — 11 of 19 failed attempts (57.9%) this run were repeat calls to the same dead, retired model instead of skipping it.',
+        label: 'Postgres as the sole state store',
+        body: 'No local checkpoint file — Postgres is the pipeline\'s only state store. Each role\'s row moves through three states in order: description IS NULL (freshly discovered stub) → description set but resume_pdf_path IS NULL (described, not yet tailored) → resume_pdf_path set (fully synced). Every stage writes its transition straight to the row, so a crash or quota wall mid-run loses at most one in-flight write.',
       },
       {
         label: 'Why sync into existing infra',
-        body: 'Writes land in the same Neon "PORTFOLIO".roles table and private Blob store the Job Board already reads/serves — no parallel storage layer, and the /jobs page picks up new rows on its existing 30-min ISR window.',
+        body: 'Writes land in the same Neon "PORTFOLIO".roles table and private Blob store the Job Board already reads/serves — no parallel storage layer. /jobs renders fully dynamically per request (no ISR/revalidate window), so a newly-synced row is visible on the very next page load.',
+      },
+      {
+        label: 'Why 4x/day, not continuous',
+        body: 'A GitHub Actions cron re-runs the full pipeline four times a day (roughly 5am/9am/5pm/9pm Pacific), trading real-time freshness for a predictable, low-volume cadence that stays comfortably inside Gemini\'s daily quota.',
+      },
+      {
+        label: 'Live pipeline snapshot (as of 2026-08-07)',
+        body: '1,168 roles synced across Apple and NVIDIA, 246 carrying a tailored résumé (21%) — Apple: 181/364 synced, NVIDIA: 65/804 synced. A static, dated snapshot — this card is authored at build time, not re-queried on page load. For current numbers, ask the chat agent: it queries the same table live via getPipelineStats().',
       },
     ],
   },
