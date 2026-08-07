@@ -17,9 +17,12 @@ const JobCard = ({ job }: { job: JobListing }) => {
 
   return (
     <div className="card-base p-5 flex flex-col h-full space-y-3">
-      <h5 className="text-base font-bold text-zinc-900 dark:text-white leading-tight">
-        {job.title}
-      </h5>
+      <div>
+        <h5 className="text-base font-bold text-zinc-900 dark:text-white leading-tight">
+          {job.title}
+        </h5>
+        {job.company && <p className="text-sm text-subtle mt-0.5">{job.company}</p>}
+      </div>
 
       <a
         href={job.url}

@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
-import { getJobs } from '@/lib/db/jobs';
+import { NextResponse, type NextRequest } from 'next/server';
+import { getFilteredJobs } from '@/lib/db/jobs';
+import { parseJobsQueryParams } from '@/lib/jobs/queryParams';
 
 // =============================================================================
 // LOGGING & ERROR HANDLING
@@ -37,16 +38,37 @@ function createErrorResponse(
 // MAIN HANDLER
 // =============================================================================
 
-export async function GET() {
+// Accepts the same ?range=recent|older&company=<name>&page=<n> contract as
+// src/app/jobs/page.tsx (both parsed via parseJobsQueryParams, so they can't
+// drift apart). Unlike the page, this route does NOT redirect on an
+// out-of-range page — a GET redirect isn't meaningful to a JSON caller — it
+// returns the true (possibly empty) jobs array alongside accurate
+// page/totalPages/totalCount so a caller can see plainly it asked for a page
+// past the end.
+export async function GET(request: NextRequest) {
   const correlationId = crypto.randomUUID();
   const logCtx: LogContext = { correlationId };
+  const params = parseJobsQueryParams(request.nextUrl.searchParams);
 
   try {
-    const jobs = await getJobs();
-    log('INFO', 'Jobs request served', { ...logCtx, jobCount: jobs.length });
+    const result = await getFilteredJobs(params);
+    log('INFO', 'Jobs request served', {
+      ...logCtx,
+      jobCount: result.jobs.length,
+      range: params.range,
+      company: params.company,
+      page: result.page,
+      totalPages: result.totalPages,
+    });
 
     return NextResponse.json(
-      { jobs, correlationId },
+      {
+        jobs: result.jobs,
+        page: result.page,
+        totalPages: result.totalPages,
+        totalCount: result.totalCount,
+        correlationId,
+      },
       { headers: { 'X-Correlation-ID': correlationId } }
     );
   } catch (error) {
