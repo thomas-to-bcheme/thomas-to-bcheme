@@ -1,39 +1,89 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 
 import SiteHeader from '@/components/layout/SiteHeader';
 import Footer from '@/components/sections/Footer';
 import JobBoard from '@/components/features/JobBoard';
+import JobFilters from '@/components/features/JobFilters';
+import JobPagination from '@/components/features/JobPagination';
 import { getJobListings } from './query';
-import type { JobListing } from '@/types/jobs';
+import { getJobCompanies, type JobsPageResult } from '@/lib/db/jobs';
+import { parseJobsQueryParams, buildJobsSearch, type JobsQueryParams } from '@/lib/jobs/queryParams';
 
-export const revalidate = 1800; // 30 min — matches the site's documented ETL cadence
+// This page reads `searchParams` (the date-range/company/page filters), so
+// Next.js dynamically renders it per request regardless of any `revalidate`
+// export — the previous `export const revalidate = 1800` (ISR) is gone
+// because it would be dead/misleading config now that results vary by
+// visitor-supplied filters. Each request now runs one filtered, paginated
+// query (smaller than the old full-table fetch this replaced), so this is
+// not a regression against the zero-cost/free-tier constraint.
 
 export const metadata: Metadata = {
   title: 'Job Board — Thomas To',
   description: 'Open roles sourced live from a private job-matching microservice.',
 };
 
-async function loadJobs(): Promise<JobListing[]> {
+interface JobsPageProps {
+  searchParams: Promise<{ range?: string; company?: string; page?: string }>;
+}
+
+function logJobsError(message: string, error: unknown) {
+  const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+  console.log(
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      level: 'ERROR',
+      message,
+      error: errorMessage,
+    })
+  );
+}
+
+async function loadJobsPage(params: JobsQueryParams): Promise<JobsPageResult> {
   try {
-    return await getJobListings();
+    return await getJobListings(params);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.log(
-      JSON.stringify({
-        timestamp: new Date().toISOString(),
-        level: 'ERROR',
-        message: 'Failed to fetch jobs from database',
-        error: errorMessage,
-      })
-    );
+    logJobsError('Failed to fetch jobs from database', error);
+    return { jobs: [], page: params.page, totalPages: 1, totalCount: 0 };
+  }
+}
+
+async function loadCompanyOptions(): Promise<string[]> {
+  try {
+    return await getJobCompanies();
+  } catch (error) {
+    logJobsError('Failed to fetch job companies from database', error);
     return [];
   }
 }
 
-export default async function JobsPage() {
-  const jobs = await loadJobs();
+export default async function JobsPage({ searchParams }: JobsPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const urlSearchParams = new URLSearchParams();
+  if (resolvedSearchParams.range) urlSearchParams.set('range', resolvedSearchParams.range);
+  if (resolvedSearchParams.company) urlSearchParams.set('company', resolvedSearchParams.company);
+  if (resolvedSearchParams.page) urlSearchParams.set('page', resolvedSearchParams.page);
+  const params = parseJobsQueryParams(urlSearchParams);
+
+  const [jobsResult, companyOptions] = await Promise.all([
+    loadJobsPage(params),
+    loadCompanyOptions(),
+  ]);
+
+  // Redirect to the real last page when the requested page is out of range —
+  // keeps the address bar honest instead of showing "page 5" while quietly
+  // rendering page 2's content, and self-heals stale/hand-edited links.
+  // Gated on totalCount > 0 so a database failure (which reports totalCount:
+  // 0, page: unclamped, via loadJobsPage's catch above) never gets
+  // misread as "page out of range" and silently redirected away — it falls
+  // through to JobBoard's empty state instead, same as before this change.
+  if (jobsResult.totalCount > 0 && params.page > jobsResult.totalPages) {
+    redirect(buildJobsSearch({ ...params, page: jobsResult.totalPages }));
+  }
+
+  const isFiltered = params.range !== 'recent' || params.company !== null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">
@@ -58,7 +108,14 @@ export default async function JobsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
-        <JobBoard jobs={jobs} />
+        <JobFilters params={params} companyOptions={companyOptions} />
+        <JobBoard jobs={jobsResult.jobs} isFiltered={isFiltered} />
+        <JobPagination
+          params={params}
+          totalPages={jobsResult.totalPages}
+          totalCount={jobsResult.totalCount}
+          resultCount={jobsResult.jobs.length}
+        />
       </div>
 
       <Footer />
