@@ -44,7 +44,6 @@ export const SITE_REGION = 'US-West (SFO)';
 // Study Plan link back to homepage sections). The Study Plan entry is a real route.
 export const NAV_LINKS = [
   { label: 'About Me', href: '/#about-me', sectionId: 'about-me' },
-  { label: 'Pipeline', href: '/#pipeline', sectionId: 'pipeline' },
   { label: 'Study Plan', href: '/study-plan' },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
@@ -61,7 +60,6 @@ export const IDEAL_ROLES = [
 
 // --- Footer Navigation ---
 export const FOOTER_NAV_LINKS = [
-  { label: 'Pipeline', href: '/#pipeline' },
   { label: 'Study Plan', href: '/study-plan' },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },

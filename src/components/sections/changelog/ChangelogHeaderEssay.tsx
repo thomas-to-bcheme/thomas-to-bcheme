@@ -1,5 +1,6 @@
 import React from 'react';
 import SweCompassSection from '@/components/sections/changelog/SweCompassSection';
+import SectionHeading from './SectionHeading';
 
 const PARAGRAPH_CLASS = 'text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed';
 const STRONG_CLASS = 'font-bold text-zinc-900 dark:text-white';
@@ -9,15 +10,6 @@ const NOTE_CLASS =
   'text-xs italic text-zinc-400 dark:text-zinc-600 border-l-2 border-zinc-200 dark:border-zinc-800 pl-3';
 const BULLET_CLASS =
   "text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-zinc-300 dark:before:text-zinc-700";
-
-const SectionHeading = ({ eyebrow, title }: { eyebrow: string; title: string }) => (
-  <div className="mb-4">
-    <span className="text-micro text-zinc-400 block mb-2">{eyebrow}</span>
-    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-      {title}
-    </h2>
-  </div>
-);
 
 /**
  * Full inline essay establishing the portfolio's mental model — mission,

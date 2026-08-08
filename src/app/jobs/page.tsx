@@ -113,14 +113,16 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-12">
-        <JobFilters params={params} companyOptions={companyOptions} />
+        <div className="lg:sticky lg:top-16 lg:z-30 lg:pb-4 lg:border-b lg:border-zinc-200 dark:lg:border-zinc-800 bg-white/90 dark:bg-black/90 lg:backdrop-blur-xl">
+          <JobFilters params={params} companyOptions={companyOptions} />
+          <JobPagination
+            params={params}
+            totalPages={jobsResult.totalPages}
+            totalCount={jobsResult.totalCount}
+            resultCount={jobsResult.jobs.length}
+          />
+        </div>
         <JobBoard jobs={jobsResult.jobs} isFiltered={isFiltered} />
-        <JobPagination
-          params={params}
-          totalPages={jobsResult.totalPages}
-          totalCount={jobsResult.totalCount}
-          resultCount={jobsResult.jobs.length}
-        />
       </div>
 
       <Footer />

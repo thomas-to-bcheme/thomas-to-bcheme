@@ -15,9 +15,12 @@ export interface ChangelogTocItem {
   label: string;
 }
 
-// The 5 essay section ids, in reading order — must match the `id` props
-// rendered by ChangelogHeaderEssay.
+// The "At a Glance" executive-summary id, plus the 5 essay section ids, in
+// reading order — together the sidebar/mobile-toc's "Mental Model" group.
+// 'executive-summary' is rendered by ExecutiveSummary (page.tsx); the
+// remaining 5 ids must match the `id` props rendered by ChangelogHeaderEssay.
 export const MENTAL_MODEL_TOC_ITEMS: ChangelogTocItem[] = [
+  { id: 'executive-summary', label: 'Executive summary' },
   { id: 'mission', label: 'Mission & $0 cost' },
   { id: 'funnel', label: 'The funnel & stakeholders' },
   { id: 'swe-compass', label: 'The SWE Compass' },

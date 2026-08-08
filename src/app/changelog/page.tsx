@@ -8,6 +8,7 @@ import FaqSection from '@/components/sections/FaqSection';
 import ChangelogSidebar from '@/components/sections/changelog/ChangelogSidebar';
 import ChangelogMobileToc from '@/components/sections/changelog/ChangelogMobileToc';
 import ChangelogHeaderEssay from '@/components/sections/changelog/ChangelogHeaderEssay';
+import ExecutiveSummary from '@/components/sections/changelog/ExecutiveSummary';
 import ProjectChangelogSection from '@/components/sections/changelog/ProjectChangelogSection';
 import { CHANGELOG_PROJECTS } from '@/constants/changelog';
 
@@ -51,6 +52,8 @@ export default function ChangelogPage() {
         <ChangelogSidebar />
 
         <main className="min-w-0">
+          <ExecutiveSummary />
+
           <ChangelogMobileToc />
 
           <ChangelogHeaderEssay />
