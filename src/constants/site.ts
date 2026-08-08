@@ -5,6 +5,8 @@
  * used across multiple components.
  */
 
+import { LATEST_CHANGELOG_VERSION } from './changelog';
+
 // --- Identity ---
 export const SITE_OWNER_NAME = 'Thomas To';
 export const SITE_OWNER_EMAIL = 'thomas.to.bcheme@gmail.com';
@@ -34,7 +36,7 @@ export const WORK_AUTH = {
 
 // --- Site Metadata ---
 export const SITE_TAGLINE = 'Operationalizing AI Agents: Bridging the gap between reality and the matrix.';
-export const SITE_VERSION = 'v2.4.0';
+export const SITE_VERSION = LATEST_CHANGELOG_VERSION;
 export const SITE_REGION = 'US-West (SFO)';
 
 // --- Navigation ---
@@ -46,6 +48,7 @@ export const NAV_LINKS = [
   { label: 'Study Plan', href: '/study-plan' },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
+  { label: 'Changelog', href: '/changelog' },
 ] as const;
 
 // --- Ideal Roles ---
@@ -62,5 +65,6 @@ export const FOOTER_NAV_LINKS = [
   { label: 'Study Plan', href: '/study-plan' },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
+  { label: 'Changelog', href: '/changelog' },
   { label: 'About Me', href: '/#about-me' },
 ] as const;
