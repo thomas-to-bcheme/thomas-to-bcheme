@@ -1,4 +1,5 @@
 import React from 'react';
+import { Quote } from 'lucide-react';
 import SweCompassSection from '@/components/sections/changelog/SweCompassSection';
 import SectionHeading from './SectionHeading';
 
@@ -14,9 +15,19 @@ const BULLET_CLASS =
 /**
  * Full inline essay establishing the portfolio's mental model — mission,
  * funnel/stakeholders, SWE Compass, agent definition, system-design
- * philosophy. Copy shipped verbatim from the approved plan (§4) — do not
- * paraphrase or shorten, including the inline notes distinguishing
- * newly-authored synthesis from direct quotes.
+ * philosophy, and effective communication. The original five sections'
+ * copy shipped verbatim from the approved plan (§4) — do not paraphrase or
+ * shorten it, including the inline notes distinguishing newly-authored
+ * synthesis from direct quotes.
+ *
+ * Three additions are deliberate, later exceptions to that rule, made by
+ * explicit user decision outside the original §4 plan: the
+ * business-driven-development paragraphs and "AI Growth & Adoption"
+ * pull-quote appended to system-design-philosophy; the prompt-engineering
+ * paragraphs appended to agent-definition; and the standalone
+ * effective-communication section (plus the non-section
+ * mental-models-synthesis closing block after it). Leave every original
+ * section's pre-existing sentences untouched when editing any of the three.
  */
 const ChangelogHeaderEssay = () => {
   return (
@@ -183,6 +194,40 @@ const ChangelogHeaderEssay = () => {
             repo can see. Point 4&apos;s rubric list restores &quot;semicolons&quot; to match{' '}
             <code className={CODE_CLASS}>GITHUB_CONTEXT</code> §7 exactly.
           </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>
+              Prompt engineering is the actual mechanism behind point 2
+            </strong>{' '}
+            — how the reasoning step above gets steered, not just that it happens. The default
+            template used across this project&apos;s agents is deliberately simple: state the
+            objective, the steps to complete it, at least one explicit constraint, and a known
+            example where one exists — with the balance shifting toward more constraints as a
+            task gets more consequential (a résumé rubric check is constraint-heavy; a chat
+            agent&apos;s tone guidance is not).
+          </p>
+          <div id="agent-definition-prompt-engineering" className="scroll-mt-24 space-y-2">
+            <p className={PARAGRAPH_CLASS}>
+              Zero-shot prompting — intentional ambiguity, no worked example — is the right call
+              when the goal is agentic creativity and flexibility: letting a model find its own
+              path through an underspecified problem. Few-shot prompting, and more structured
+              strategies like chain-of-thought or tree-of-thought, are the right call for
+              deterministic, workflow-shaped tasks, where the intent is a specific, repeatable
+              outcome, not a flexible one. Choosing between them is itself part of the design:
+              apply-to-jobs&apos; résumé-tailoring pipeline needs a deterministic, rubric-checked
+              output, so it leans on few-shot examples and explicit constraints; this site&apos;s
+              chat agent has to handle an open set of recruiter questions, so its prompt leaves
+              more room for zero-shot reasoning inside a bounded system prompt. See{' '}
+              <a
+                href="https://cloud.google.com/discover/what-is-prompt-engineering?hl=en#prompt-engineering-overview-and-guide"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+              >
+                Google Cloud&apos;s prompt-engineering guide
+              </a>{' '}
+              for the underlying strategies.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -190,7 +235,7 @@ const ChangelogHeaderEssay = () => {
       <section id="system-design-philosophy" className="scroll-mt-24">
         <SectionHeading
           eyebrow="Mental Model"
-          title="Reliability, maintainability, adaptability, resilience — not just CAP theorem"
+          title="Reliability, maintainability, adaptability, resilience — not just CAP theorem, and not just for its own sake"
         />
         <div className="space-y-4">
           <p className={PARAGRAPH_CLASS}>
@@ -243,8 +288,146 @@ const ChangelogHeaderEssay = () => {
             above, showing up as real incidents, at zero infrastructure cost, on a system built to
             survive them without a bigger budget to fall back on.
           </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>Business-driven, not academic.</strong> None of the
+            axes above — reliability, maintainability, adaptability, resilience — are chosen
+            because they sound better in a systems-design interview than &quot;pick two of
+            three.&quot; They&apos;re the axes that matter here because this project runs against
+            a rubric borrowed from business, not research: does a design decision drive revenue,
+            reduce risk, save time, or streamline a process? A vertically-scaled, paid Postgres
+            tier doesn&apos;t do any of those four things better than the current $0 architecture
+            does — it just spends money to be marginally more elegant, which is optimizing for
+            the wrong thing. It&apos;s the same rubric that makes the schema-drift, 402-gate, and
+            CSS-cascade bugs above worth writing up at all: each one cost real time to diagnose,
+            and documenting the fix is what keeps the next incident from costing that same time
+            twice. Technology chosen for its own sake — because it&apos;s new, or because a
+            textbook covers it — is research. Technology chosen because it moves one of those four
+            levers is engineering.
+          </p>
+          <div
+            id="system-design-philosophy-ai-growth-adoption"
+            className="scroll-mt-24 rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-900/10 p-5 sm:p-6"
+          >
+            <span className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-3">
+              <Quote size={12} className="stroke-[2.5]" /> AI Growth &amp; Adoption
+            </span>
+            <p className={PARAGRAPH_CLASS + ' mb-3'}>
+              The same rubric applies one level up, before a system is even worth scaling: its
+              users have to be scaled onto it first.
+            </p>
+            <blockquote className="text-sm sm:text-base italic text-emerald-900 dark:text-emerald-200 leading-relaxed border-l-2 border-emerald-300 dark:border-emerald-700 pl-4">
+              &quot;You can design this amazing technology that can support 1M users, but from
+              grassroots, if your users are afraid of the technology, then what&apos;s the point in
+              designing a system that can scale to 1M users when you don&apos;t have that many
+              users?&quot;
+            </blockquote>
+            <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mt-3">
+              — Thomas To
+            </p>
+          </div>
+          <p className={PARAGRAPH_CLASS}>
+            The lesson generalizes past any one system: scale is a hypothesis until real users
+            adopt it, and grassroots trust is earned before headroom is spent building for a user
+            count that may never show up. That&apos;s why this site treats adoption — a résumé PDF
+            a recruiter actually opens, a chat agent a hiring manager actually trusts enough to ask
+            a follow-up question — as the metric that comes before throughput, not after it.
+          </p>
         </div>
       </section>
+
+      {/* --- EFFECTIVE COMMUNICATION --- */}
+      <section id="effective-communication" className="scroll-mt-24">
+        <SectionHeading eyebrow="Mental Model" title="Not just what you say — how you say it" />
+        <div className="space-y-4">
+          <p className={PARAGRAPH_CLASS}>
+            Every explanation on this site — this essay included — assumes a specific reader.
+            Knowing who&apos;s actually in the room decides more than word choice: it decides how
+            much can be assumed. A staff engineer doesn&apos;t need &quot;GitHub Actions&quot;
+            defined; a non-technical hiring manager doesn&apos;t need it left undefined either —
+            they need it translated into what it does (&quot;a free, scheduled job runner&quot;)
+            instead of what it&apos;s called. Reading the audience first, then picking the
+            vocabulary, is the same discipline as reading a job description before tailoring a
+            résumé to it — the content doesn&apos;t change, the framing does.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>
+              Chronological — background, scope, reasons, solution — is the default.
+            </strong>{' '}
+            For a lay or mixed audience, the order that lands is the order a story would use: what
+            problem existed before this (background), how big or specific that problem actually
+            was (scope), why the available options narrowed to this one, introduced only after
+            the business problem is clear (reasons), and only then the built thing itself, backed
+            by a live demonstration (solution). That&apos;s deliberately the same order this
+            changelog uses project by project — problem, then what shipped, then what broke, then
+            what was learned — because most readers arriving at any one entry haven&apos;t
+            already internalized the context a technical peer would bring.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>Reverse-chronological flips it for a technical room.</strong>{' '}
+            Lead with the real, data-driven demonstration — a chat agent citing a live Postgres
+            number, a résumé PDF that actually renders — and let the audience pull the background
+            out with questions, instead of pushing it at them up front. A picture is a thousand
+            words: a demonstration that actually works communicates the unspoken narrative — the
+            debugging, the trade-offs, the constraint that shaped the design — without spelling
+            any of it out first. A technical audience that watches something work will ask
+            &quot;how,&quot; and that question is a better entry point into the architecture than
+            a slide ever is.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            The same chronological/reverse-chronological split governs jargon and humor, not just
+            structure. A lay audience gets plain language first and technical vocabulary only once
+            a concept has already landed; a technical audience gets the term up front, because
+            withholding it reads as padding, not clarity. Humor works the same way — save it for
+            after a technical point lands with a technical room, open with it to lower the stakes
+            for a non-technical one. Neither is more &quot;correct&quot; than the other; both are
+            the same audience-first instinct applied to a different lever.
+          </p>
+          <div id="effective-communication-shared-experiences" className="scroll-mt-24 space-y-2">
+            <p className={PARAGRAPH_CLASS}>
+              <strong className={STRONG_CLASS}>
+                Shared experience builds rapport before either of you says so.
+              </strong>{' '}
+              Grounding a hypothetical or behavioral question in a real experience works in both
+              directions: probing an interviewer&apos;s background — what they built, what broke,
+              what team they came up through — surfaces the overlap, and naming it does more than
+              build likeability. It signals relatability for the role itself, the unspoken
+              &quot;someone who gets it&quot; that no bullet point communicates directly. That
+              affinity isn&apos;t a soft add-on to the technical signal; it&apos;s part of what a
+              hiring team is actually screening for, and often part of what moves a conversation
+              from one round to the next — or to an offer.
+            </p>
+          </div>
+          <p className={PARAGRAPH_CLASS}>
+            Every choice above — order, jargon, humor, which experience to share — is the same
+            instinct pointed at a different lever: read the room first, then decide how to say the
+            thing that&apos;s true anyway.
+          </p>
+        </div>
+      </section>
+
+      {/* --- SYNTHESIS (not one of the models above — how they combine) --- */}
+      <div
+        id="mental-models-synthesis"
+        className="scroll-mt-24 border-t border-zinc-200 dark:border-zinc-800 pt-8 space-y-4"
+      >
+        <p className="text-base sm:text-lg font-medium italic text-zinc-900 dark:text-white leading-relaxed">
+          &quot;There&apos;s too much to know. From lessons learned in university, we apply mental
+          models and derive solutions from first principles — applying what&apos;s needed to the
+          problem we&apos;re actually trying to solve.&quot;
+        </p>
+        <p className={PARAGRAPH_CLASS}>
+          None of the five sections above are meant to be memorized as a checklist. In an actual
+          conversation — working through a problem live, collaboratively, with an interviewer —
+          they get combined on the fly: navigating horizontally, the way the SWE Compass&apos;
+          end-to-end lifecycle moves through design, data, model, backend, frontend, and ops, and
+          vertically, up its abstraction ladder and across its time axis, while applying a
+          business-driven-development rubric to what&apos;s actually worth solving, and
+          communicating that navigation out loud as it happens instead of presenting it after the
+          fact. That combination — not any one model in isolation — is what this page is actually
+          trying to demonstrate. It&apos;s not a rule to follow; it&apos;s a skill to leverage,
+          differently, every time.
+        </p>
+      </div>
     </div>
   );
 };

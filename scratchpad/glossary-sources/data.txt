@@ -1,0 +1,113 @@
+# Source: public/excalidraw/data.excalidraw
+# Text elements: 17
+
+## Frame: Data Engineering and Ops (pipelines, infrastructure, and orchestration)
+
+https://www.oreilly.com/library/view/llmops/9781098154196/
+
+https://www.oreilly.com/library/view/introducing-mlops/9781492083283/
+
+https://www.oreilly.com/library/view/practical-mlops/9781098103002/
+
+https://www.oreilly.com/library/view/beginning-mlops-with/9781484265499/
+
+https://www.oreilly.com/library/view/mlops-engineering-at/9781617297762/
+---
+fullstack: data -> backend -> model -> frontend -> deploy (cloud)
+---
+data engineering
+---
+software engineering
+---
+machine learning engineering
+    - Classical Learning
+    - Deep Learning
+    - Generative AI/LLM
+    - Reinforcement Learning
+---
+pipelines
+---
+compute/server
+---
+visualization
+---
+cloud
+---
+high data and code quality:
+tests, linting, yaml config
+---
+deployment containerization options (not just docker), just be aware
+---
+Ops (yaml configurations and infrastructure as code via terraform/kubernetes/airflow && linux cli to ssh)
+    - Ci/CD (delivery, deployment) + CT
+        - Ci: tests (unit, integration, end-to-end)
+        - CD: strategies
+            - blue-green
+            - canary
+        - CT: drift
+            - online vs. offline
+            - real-world, data
+    - containerization (resourcing efficiency, and reproducibility)
+        - enviornment, os, versioning, dependencies, code
+            - package managers (uv, pip, homebrew, npm)
+                - conda (anaconda vs. miniconda. vs miniforge)
+    - Security
+        -Common Vulnerabilities and Exposures (CVE)
+            - Grype (a container and dependency vulnerability scanner by Anchore)
+
+    - Observability
+        - logging
+        - monitoring
+
+    - Supporting refactors to improve and maintain code/data quality
+        - delint, duplicates, dead code, redundancy
+---
+
+## Frame: Learning Plan: Data Infrastructure
+
+Data
+---
+Data Infrastrucutre
+    - Spark
+    - Kafka
+    - SQL
+---
+Data Pipeline Orchestration
+    - kubernetes
+    - ...flow
+        - Airflow
+        - MLflow
+        - Tensorflow
+---
+
+## Frame: Data Engineering — Senior-Level Best Practices
+
+- Batch vs streaming: choose based on latency requirements and cost, not novelty — batch (hourly/daily) is simpler, cheaper, easier to debug; streaming (Kafka/Flink) only when sub-minute freshness is a real business requirement.
+- Idempotent pipeline design: every task should be safely re-runnable without duplicating or corrupting data — use upserts (MERGE), deterministic partition overwrites, and natural/composite keys instead of blind INSERTs.
+- Delivery semantics: understand at-least-once vs exactly-once vs at-most-once.
+  - At-least-once + idempotent writes is usually the pragmatic default; true exactly-once (e.g. Kafka transactions) adds real cost/complexity — only pay for it when duplicates are unacceptable (billing, inventory).
+- Schema evolution & data contracts: treat producer→consumer schemas as an API — version them, enforce backward/forward compatibility (Avro/Protobuf + schema registry), and fail loudly on breaking changes rather than let them silently corrupt downstream tables.
+- Data quality & validation at the ingestion boundary: validate row counts, null rates, referential integrity, and value ranges before data lands in production — tools like Great Expectations, dbt tests, or Soda catch bad data before it becomes someone else's incident.
+- DAG design: keep tasks small, single-purpose, and independently retryable; avoid monolithic "do everything" tasks — a failed task should never require rerunning the whole pipeline.
+- Backfill strategy: design pipelines to be backfillable from day one — parameterize by execution date/partition, never hardcode "today," and test backfills in a lower environment before running against production history.
+- Dependency management: use explicit data-aware dependencies (sensors/asset dependencies), not just time-based schedules — a downstream job should wait on upstream data availability, not merely "it's probably done by now."
+- Orchestration tool judgment: Airflow (mature, huge ecosystem, task-centric) vs Dagster (asset-centric, strong typing/testing) vs Prefect (lighter-weight, dynamic workflows) — the interview-worthy answer is knowing which tradeoffs justify each choice in a given org.
+- Data modeling for analytics: star schema (fact + dimension tables) for query simplicity and BI-tool compatibility; use slowly changing dimensions (SCD Type 2, effective-dated rows) when history matters, Type 1 (overwrite) when it does not.
+- Partitioning & file layout: partition by the columns queries actually filter on (usually date), keep file sizes in the 100MB-1GB range to avoid the "small files problem," and prefer columnar formats (Parquet/ORC) for analytical workloads.
+- Design for scale and cost, not just correctness: know when to denormalize for read performance, when to pre-aggregate, and when a $50/month scheduled batch job beats a $500/month always-on streaming cluster.
+- Observability: instrument pipelines with row-count/freshness/schema-drift metrics and alerting, not just success/failure logs — a pipeline can "succeed" while producing zero rows.
+- Reliability patterns: build in retries with backoff, dead-letter queues for poison records, and circuit breakers for flaky upstream dependencies rather than letting one bad record halt the whole DAG.
+- Interview signal: seniors talk in tradeoffs ("we chose X because Y constraint, at the cost of Z"), not tool name-dropping — be ready to justify batch-vs-stream, build-vs-buy, and normalization-vs-denormalization decisions with concrete numbers.
+---
+
+## Frame: Data Engineering — Community Resources & Further Reading
+
+- "Fundamentals of Data Engineering" — Joe Reis & Matt Housley (O'Reilly) — the modern go-to book on the discipline's lifecycle and "undercurrents."
+- "Designing Data-Intensive Applications" — Martin Kleppmann (O'Reilly) — canonical deep-dive on distributed systems, consistency, and storage engines underlying every data platform.
+- roadmap.sh/data-engineer — community-maintained, visual step-by-step data engineering learning roadmap.
+- Apache Airflow official documentation (airflow.apache.org/docs) — canonical reference for DAG authoring, scheduling, and orchestration best practices.
+- dbt Labs official docs & "dbt Fundamentals" course (docs.getdbt.com) — the standard reference for analytics engineering, testing, and data modeling in the modern stack.
+- "Kafka: The Definitive Guide" (O'Reilly, Narkhede/Shapira/Palino) plus Confluent's official Kafka docs — canonical resource for streaming semantics and delivery guarantees.
+- The Data Engineering Podcast (dataengineeringpodcast.com) — long-running, well-regarded interview series covering real-world pipeline and orchestration decisions.
+- Awesome Data Engineering (github.com/igorbarinov/awesome-data-engineering) — widely-starred curated GitHub list of tools, papers, and blogs.
+---

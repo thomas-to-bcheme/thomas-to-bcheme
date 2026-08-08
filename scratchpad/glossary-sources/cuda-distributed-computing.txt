@@ -1,0 +1,164 @@
+# Source: public/excalidraw/cuda-distributed-computing.excalidraw
+# Text elements: 46
+
+## Frame: cuda for deep learning - chp 10 - distributed computing
+
+Distributed computing
+This chapter covers
+Mapping multi-GPU interconnects and understanding NCCL collectives
+Implementing tensor parallelism across 8–16 GPUs
+Building pipeline parallel schedules that keep every stage busy
+Coordinating tensor and pipeline parallelism across nodes
+Evaluating scaling behavior and communication trade-offs
+---
+The two main ways GPUs communicate inside a server are over the PCIe bus and
+NVLink.
+---
+PCIe (Peripheral Component Interconnect Express): This is the standard bus
+that connects everything on a motherboard—your GPU, network cards, storage
+drives—to the CPU. It’s a general-purpose interconnect. Think of it like the main
+city roads; they get you anywhere, but they’re shared and can have traffic jams.
+---
+NVLink: This is a proprietary, point-to-point interconnect developed by NVIDIA
+specifically for connecting GPUs to each other and to the CPU. Think of it as a
+private, multi-lane superhighway built exclusively for GPU traffic. It offers
+significantly higher bandwidth and lower latency than PCIe.
+---
+NCCL (NVIDIA Collective Communications Library, pronounced "nickel") is to multi-
+GPU programming what cuBLAS is to matrix multiplication: a highly optimized
+library that handles the hard parts for you.
+---
+NCCL provides collective operations that work across multiple GPUs, called
+"collective" because all GPUs participate simultaneously.
+---
+The key insight about NCCL is topology awareness. When you call any collective
+operation, NCCL doesn’t just blindly send data around. It looks at your hardware
+topology (which GPUs have NVLink, which don’t) and chooses the fastest route.
+On a system with NVLink, NCCL will use ring or tree algorithms that maximize
+NVLink bandwidth. On systems without NVLink, it falls back to PCIe.
+---
+Latency: Requires 2(P-1) steps for AllReduce, where P is the number of GPUs
+---
+Bandwidth optimal: All links active simultaneously, achieving aggregate bandwidth
+of P × link_bandwidth
+---
+10.1.4 Ring versus tree algorithms
+---
+NCCL implements collective operations using two main algorithmic patterns: ring and tree
+---
+Ring algorithm
+---
+The ring algorithm arranges GPUs in a logical ring. Data flows in one direction
+around the ring, with each GPU receiving from its predecessor and sending to its
+successor. This pattern achieves optimal bandwidth utilization because all links
+are active simultaneously.
+---
+Characteristics:
+---
+Best for: Large messages (>1 MB), bandwidth-bound operations
+---
+Used by: AllReduce, ReduceScatter, AllGather
+---
+Tree algorithm
+---
+The tree algorithm arranges GPUs in a logical binary tree. During reduction, data
+flows up from leaves to root: each leaf sends its value to a parent node, which
+sums the inputs and passes the result one level higher. Figure 10.9 shows this
+process with four GPUs. Values [1], [2], [3], [4] combine into partial sums at
+the intermediate nodes, and the root ends up with the total.
+---
+Characteristics:
+---
+Latency optimal: Completes in 2×log(P) steps for AllReduce
+---
+Bandwidth limited: Not all links active simultaneously
+---
+Best for: Small messages (<1 MB), latency-bound operations
+---
+Used by: Broadcast, Reduce, small AllReduce
+---
+NCCL’s adaptive selection
+---
+NCCL automatically chooses between ring and tree based on message size and
+topology. For AllReduce:
+---
+Messages < 256 KB: Tree algorithm (latency-optimal)
+---
+Messages > 1 MB: Ring algorithm (bandwidth-optimal)
+---
+Messages 256 KB - 1 MB: Hybrid approach
+---
+This is why you should always use NCCL instead of implementing your own
+collectives. NCCL’s decision logic accounts for dozens of factors: NVLink
+topology, PCIe switches, message size, data type, and even GPU architecture.
+The library has been tuned by NVIDIA engineers over years to extract maximum
+performance from every hardware configuration.
+---
+The communication cost is O(N) per GPU, where N is the size of the data being
+reduced. For a model with 1 billion parameters, that’s 4 GB of data at FP32
+precision. With NCCL’s ring algorithm, this completes in 2(P-1) communication
+steps for P GPUs, which on an 8-GPU system with NVLink takes about 7-10
+milliseconds.
+---
+AllGather is the opposite of ReduceScatter and the second half of AllReduce.
+Each GPU starts with a unique piece of data, and AllGather collects all the
+pieces and gives the complete set to every GPU. No reduction, no math, just
+collecting and distributing.
+---
+NCCL provides six core collective operations: AllReduce, Broadcast, Gather,
+Reduce, ReduceScatter, and AllGather.
+---
+AllReduce is the workhorse of distributed training, and understanding it is key to
+understanding all distributed deep learning. The name tells you exactly what it
+does: it reduces (combines) data from all GPUs and then gives the result to all
+GPUs.
+---
+Here’s the concrete scenario: You have 4 GPUs, and each GPU has computed a
+partial result. Maybe GPU 0 computed gradients from its batch of training data
+and got the value 1. GPU 1 got 2, GPU 2 got 3, and GPU 3 got 4. You want to
+combine these partial results by summing them (1 + 2 + 3 + 4 = 10) and then give
+that final result (10) to every GPU. That’s exactly what AllReduce does.
+---
+The "reduce" part means we’re applying an operation to combine the values. The
+most common operation is sum, but you can also use max, min, or product. The
+"all" part means every GPU gets the final result. This is different from a regular
+reduce operation where only one GPU would get the answer.
+---
+Why is this so important? In data parallel training, each GPU processes a
+different batch of data and computes gradients. But you want all GPUs to
+update their weights using the average gradient across all batches. AllReduce
+with sum gives you the total gradient, which you then divide by the number of
+GPUs to get the average. Every GPU performs this AllReduce after its backward
+pass, and then every GPU has the same averaged gradients to update its local
+copy of the model.
+---
+In tensor parallelism, we saw this in action: each GPU computed a partial matrix
+multiplication result, and AllReduce summed them to give every GPU the complete
+output matrix. In distributed batch normalization, you’d use AllReduce to
+compute the mean and variance across all GPUs' data, not just one GPU’s batch.
+---
+Broadcast
+---
+Broadcast is simpler than AllReduce. One GPU has some data, and you want to
+copy that exact data to every other GPU. No combining, no reduction, just
+copying.
+---
+Gather
+---
+Gather is the opposite of broadcast. Instead of one GPU sending data to
+everyone, every GPU sends data to one destination GPU. The destination
+collects all the pieces and concatenates them together.
+---
+Reduce
+---
+Reduce is like Gather, but instead of just concatenating the pieces, it combines
+them with an operation. Think of it as Gather with math applied.
+---
+ReduceScatter
+---
+ReduceScatter is more complex, but it’s crucial for understanding modern memory-
+efficient training like Fully Sharded Data Parallel (FSDP). The name describes
+exactly what happens: reduce the data, then scatter the result.
+---
+AllGather
+---

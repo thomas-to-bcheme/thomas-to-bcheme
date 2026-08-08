@@ -1,0 +1,113 @@
+# Source: public/excalidraw/cuda-flash-attention.excalidraw
+# Text elements: 12
+
+## Frame: cuda for deep learning - chp 8 - flash attention
+
+This chapter covers
+Why standard attention becomes memory-bound and how to spot that shift.
+Core ideas behind Flash Attention: tiling, online softmax, and SRAM residency.
+Restructuring loops and work distribution so tiles cooperate efficiently.
+Building a fused Flash Attention kernel with WMMA tensor cores.
+Evaluating Flash Attention across versions and hardware generations.
+Deciding when Flash Attention is the right optimization for your model.
+---
+8.1.1 from compute-bound to memory-bound
+    Tensor core: raw compute throughput
+    Memory bottlenecks attention
+
+Resolving compute-bound: Tesnor Cores (specialized hardware)
+Optimizing attention mechnisms encounter differnt kind of performance barrier (memory bound)
+
+Baseline naive/standard self-attention mechanism relies on the high-bandwidth memory (HBM), moving such large compute in/out outweighs the actual cost of compute
+We are no longer limited by how fast we can do the math, but by how fast we can shuttle data to and from the GPU’s main memory.
+---
+Chp 8 Takeaways
+-> Tensor Core gives raw compute throughput
+-> Attention has a different bottleneck: volume of data between on-chip SRAM and off-chip HBM
+    -> Flash Attention
+---
+8.1.2 The High Bandwidth memory bottleneck in standard attention
+To understand why Flash Attention is necessary, first analyze the standard implementation of the attention mechanism
+
+The core of attention
+    1. calculate the dot product of Query (Q) and Key (K) matrices, Score (S) = Q @ (K) dot (T)
+    2. apply softmax to the score to get weights (P), P = softmax(S)
+    3. multiply the attention weights P by the value (V) matrix to get output, O = P @ V
+
+For a context length, N = 8192, (N, d) (S, P) = (N, N) -> 8192 x 8192 x 4 bytes (32-bit floats) ~~ 268 megabytes
+... for a modern context length N = 128k ... >65GB for a single attention head
+    This is the throughput problem transferring between memory, not the computational throughput
+** the entire S matrix must be written to HBM after the first matrix multiplication, read back from HBM, writes back to HBM, reads again for final matrix multiplication **
+-> fast onchip SRAM and slower offchip HBM is the bottleneck
+---
+Chp 8 Flash Attention: resolves High bandwidth memory bottleneck
+---
+8.2 Designing Flash Attention
+Now understanding standard attention is HBM bound between i/o,
+    The core ideas are tiling (processing the attention matrix in blocks that fit in SRAM)
+    and online softmax (maaintaining running statistics so we never need the full row of scores at once)
+
+8.2.2 (revisit 8.2.1) The flash attention solution: tiling and online softmax
+    -> restructing the computation to avoid writing large N x N to HBM
+    instead of computing at once, we process in smaller blocks or tiles to fit in GPU SRAM
+        ** computing the output of softmax requires global information to HBM **
+    "sliding window" we can compute softmax iteratively, maintaining running statistics that allow processing one tile at a tile while producing mathematically exact results
+
+8.2.3 Tiling: breaking the problem down
+    -> break down the large, Q, K, and V matrices into smaller blocks then compute attention block by block loading only necessary tiles of Q, K, V into SRAM
+    -> for each block output matrix (O), iterate of K and V matrices to accumulate the results
+
+8.2.4 Online softmax: computing global statistics iteratively
+    -> the softmax requires the sum over all elements in a row to normalize
+
+Here’s how it works. As we process each tile of scores, we maintain two running statistics in registers or SRAM: a running maximum m and a running sum of exponentials l. When we
+process the first tile and compute scores for columns 0 through 127, we find the maximum value in those scores and store it as m. We compute the sum of exponentials
+sum(exp(score - m)) and store it as l. Now comes the critical part. When we process the second tile with scores for columns 128 through 255, we might find a new, larger maximum
+value. Let’s call this new local maximum m_new. This new maximum might be larger than our running maximum m.
+
+If the new maximum is larger, we face a problem. All our previous exponentials were computed relative to the old maximum m. To maintain mathematical correctness, we need to
+"rescale" our previous running sum to be consistent with the new maximum m_new. The correction factor is exp(m_old - m_new). We multiply our running sum l by this correction factor,
+then add the new partial sum computed with the new maximum. This ensures that when we finally divide by l at the end, we get exactly the same result as if we had computed the
+softmax over the entire row at once. The algorithm is not an approximation. It produces bit-for-bit identical results to standard softmax, but it never materializes the full row of
+scores in memory.
+
+This iterative calculation is what makes Flash Attention mathematically valid.
+---
+8.3 Implementing Flash Attention
+-> exmaine naive attention before fused Flash Attention to resolve it and see how the work distrubiton strategy, loop hiearchy, and WMMA tesnor cores all fit together
+
+8.3.1 Dissecting the naive implementaiton `book.cu/6_flash/kernels/naive.cu.`
+---
+8.3.2 Understanding the work distribution strategy
+Flash Attention uses a different parallelization strategy. Each thread block is assigned a small "brick" of complete output rows.
+---
+8.4 The evolution of Flash Attention
+Each generation traded simplicity for percentage points of throughput. For
+production systems at scale, those percentage points translate to millions
+of dollars in hardware costs, making the complexity worthwhile.
+---
+Modern kernels are becoming asynchronous, pipelined, and warp-specialized.
+The programming model is shifting from "write a function that a thread
+executes" to "write a state machine where warps handle different pipeline
+stages." This is powerful but challenging, requiring new abstractions and
+tools. The CUDA ecosystem is responding with libraries like CUTLASS for
+Tensor Core programming and domain-specific languages like Triton for
+simpler kernel authorship.
+---
+Flash Attention’s evolution from v1 to v4 shows a consistent pattern: each
+generation exploits more hardware-specific features (TMA, WGMMA, warp
+specialization, FP8) for incremental speedups at increasing implementation
+complexity.
+---
+
+## Frame: cuda for deep learning - chp 9 - quantization
+
+Chp 9 Quantization
+This chapter covers
+How FP32, INT8, and INT4 formats trade memory for accuracy
+Implementing quantize/dequantize steps and reasoning about error
+Choosing granularity schemes that balance hardware cost and fidelity
+Calibrating scales and zero-points with static or dynamic approaches
+Navigating symmetric vs asymmetric choices alongside AWQ refinements
+Stitching these ideas into an end-to-end model quantization workflow
+---

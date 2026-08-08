@@ -1,5 +1,14 @@
 import type { LucideIcon } from 'lucide-react';
-import { ArrowRight, Compass, Handshake, Scale, Target, Users } from 'lucide-react';
+import {
+  ArrowRight,
+  Compass,
+  Handshake,
+  Presentation,
+  Puzzle,
+  Scale,
+  Target,
+  Users,
+} from 'lucide-react';
 import SectionHeading from '@/components/sections/changelog/SectionHeading';
 
 interface ExecutiveSummaryItem {
@@ -38,9 +47,9 @@ const EXECUTIVE_SUMMARY_ITEMS: ExecutiveSummaryItem[] = [
   },
   {
     icon: Compass,
-    label: 'Three mental models, not fixed rules',
+    label: 'Five mental models, not fixed rules',
     blurb:
-      'The SWE Compass, the agent definition, and the system-design philosophy are first-principles lessons from years across domains — tools for scoping ambiguous problems, not dogma.',
+      'The SWE Compass, the agent definition, system-design philosophy, business-driven development, and effective communication are first-principles lessons from years across domains — tools for scoping ambiguous problems, not dogma.',
     anchorId: 'swe-compass',
     anchorLabel: 'The SWE Compass',
   },
@@ -48,18 +57,36 @@ const EXECUTIVE_SUMMARY_ITEMS: ExecutiveSummaryItem[] = [
     icon: Scale,
     label: 'Business-driven, not academic',
     blurb:
-      'Every decision traces back to revenue, time, or margin — not novelty or the wrong KPI. Without that discipline, this is research, not engineering.',
+      "Every decision traces back to revenue, risk, time, or process — not novelty or the wrong KPI. A system that scales to 1M users is pointless if the grassroots users aren't there yet.",
     anchorId: 'system-design-philosophy',
     anchorLabel: 'System design philosophy',
+  },
+  {
+    icon: Presentation,
+    label: 'Not just what you say — how you say it',
+    blurb:
+      "Chronological for a lay audience, reverse-chronological — demo first — for a technical one, and shared experience to build real rapport. All three calibrated to who's actually in the room.",
+    anchorId: 'effective-communication',
+    anchorLabel: 'Effective communication',
+  },
+  {
+    icon: Puzzle,
+    label: "There's too much to know",
+    blurb:
+      "There's too much to know to memorize. The five models above only work combined, live, and applied to whatever problem is actually in front of you.",
+    anchorId: 'mental-models-synthesis',
+    anchorLabel: 'How it all combines',
     wide: true,
   },
 ];
 
 /**
- * Compact "at a glance" grid at the very top of /changelog — 5 scannable
+ * Compact "at a glance" grid at the very top of /changelog — 7 scannable
  * takeaway cards distilling the essay below plus the platform's underlying
  * business framing, each deep-linking into ChangelogHeaderEssay's anchors.
- * The full essay stays intact below for readers who want depth.
+ * The closing card (wide) is the essay's synthesis, not one of the five
+ * mental models itself. The full essay stays intact below for readers who
+ * want depth.
  */
 const ExecutiveSummary = () => (
   <section id="executive-summary" className="scroll-mt-24 mb-16">

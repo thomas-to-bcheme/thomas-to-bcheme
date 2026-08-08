@@ -1,0 +1,50 @@
+# Source: public/excalidraw/dailydoseofds-best-practices.excalidraw
+# Text elements: 1
+
+## Frame: Code Quality & Project Structure
+
+"11 Powerful Techniques to Supercharge your ML Models"
+
+
+#1) Robustify Linear Regression
+    > regression models are sensitive to outliers
+    > Consider "Huber regression" and "Huber loss"
+
+#2-3) Supercharge kNN Models
+    > kNN is highly sensitive to the parameter, k
+    > To address high-dimensional datasets
+        > distanced-weighed kNN
+        > dynamically update the hyperparamter k
+
+#4) Feature Discretization
+    > transform a continous feature into discrete features (one-hot features)
+        > equally sized bins
+        > equal-frequency bins
+
+#5) Label Smoothing
+    > single-label classification datasets, the entire probability mass belongs to a single class, and the rest are zero.
+        > Label smoothing is a lesser-talked regularisation technique
+
+#6) Data Shuffling
+    > Deep learning models may fail to converge due to various reasons. Some causes are obvious and common, and therefore, quickly rectifiable, like too high/low learning rate, no data normalization, no batch normalization, etc.
+        > mini-batch gradient descent (whereas batch gradient descent is the entire dataset rather than subsets)
+`In the context of label-ordered data, where samples of the same class are grouped together, mini-batch gradient descent will lead the model to learn patterns specific to the class it excessively saw early on in training.
+
+In contrast, randomly ordered data ensures that each mini-batch contains a balanced representation of classes. This allows the model to learn a more comprehensive set of features throughout the training process.`
+
+#7) Zero-inflated regression
+    > datasets literally have plenty of zeros with little to no non-zero values to work with
+    > Training using a combination of classificaiton and a regression model
+        > mark all non-zero targets as 1 and the rest as 0
+        > train a binary classifier on this dataset
+        > train a regression model only on the non-zero true target datasets
+
+#8) Cyclical feature encoding
+
+#9) Robusitfy KMeans
+
+#10) Focal loss
+
+#11) Rank consistent classification
+    > most multi classification neural networks trained using cross entropy loss function
+---

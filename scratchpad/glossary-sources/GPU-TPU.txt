@@ -1,0 +1,661 @@
+# Source: public/excalidraw/GPU-TPU.excalidraw
+# Text elements: 62
+
+## Frame: GPU/TPU
+
+https://github.com/pytorch/xla
+---
+**Papers (read, don't skim):**
+- TPU v4 — [arXiv:2304.01433](https://arxiv.org/abs/2304.01433). OCS, twisted torus, SparseCore. Source of truth for your topology question.
+- Jouppi et al., *In-Datacenter Performance Analysis of a TPU* (ISCA 2017). Why a systolic array.
+- FlashAttention / FlashAttention-2. Non-negotiable.
+- *Efficient Memory Management for LLM Serving with PagedAttention* (vLLM, SOSP '23).
+- Orca (OSDI '22) — iteration-level (continuous) batching. The scheduling idea everything else is built on.
+- DistServe / Splitwise — prefill/decode disaggregation.
+
+**Docs that replace books:**
+- JAX Pallas docs, *especially* "Writing TPU kernels with Pallas → details."
+- `openxla.org/xprof` + the XProf Kernel Profiling guide.
+- [Ironwood performance optimizations](https://docs.cloud.google.com/tpu/docs/ironwood-performance) — SparseCore collective offloading, remat policy selection, sharding-strategy-by-workload table.
+- [TPU v4 topology](https://docs.cloud.google.com/tpu/docs/v4) — twisted torus rules.
+- MLX "Custom Extensions in C++ and Metal."
+
+**Books, ranked by marginal value to *this* goal:**
+1. **Programming Massively Parallel Processors, 4th ed.** — you have it. Ch. 5–6, then the FlashAttention-adjacent chapters. The single best book you own for this.
+2. **Designing Data-Intensive Applications** — you have it. Read it for the serving/distributed-systems interview, not for accelerators.
+3. **High Performance Python** — you have it. Profiling discipline.
+4. *Deep Learning with JAX* — you have it. Fine as a JAX on-ramp; it will not teach you Pallas.
+5. **A modern C++ book** — you have none, and you need one. *Effective Modern C++* or *C++ Concurrency in Action*. You cannot write an MLX Primitive or read XLA without this, and no CUDA book substitutes.
+---
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/introducing-c/9781098178130/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/gpu-programming-with/9781805124542/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/deep-learning-with/9781835880029/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/ai-systems-performance/9798341627772/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/programming-massively-parallel/9780323984638/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/deep-learning-with/9781633438880/
+---
+Open Source Triage (e.g torch_xla -> vllom-tpu-inferencea nd vllm-metal (for mac)
+---
+openxla
+    - https://openxla.org/xla/architecture
+    - https://openxla.org/xla/contributing
+    - https://openxla.org/xla/developer_guide
+
+pyTorch (inherently numpy for linear algebra)
+    - XLA (accelerated linear algebra) from numpy to JAX and equivalent linear algebra libraries
+    - https://docs.pytorch.org/docs/main/community/contribution_guide.html
+
+Tensorflow
+---
+Learning to Contribute, what to know and why C++
+    - https://docs.pytorch.org/xla/master/contribute/cpp_debugger.html
+---
+OpenXLA, vllm-tpu-inference, JAX:
+from https://github.com/pytorch/xla/issues/9684#issuecomment-4201670803
+to https://developers.googleblog.com/torchtpu-running-pytorch-natively-on-tpus-at-google-scale/
+for next steps:
+    - Integration with PyTorch’s Helion DSL
+    - Deep integrations with ecosystem pillars like vLLM and TorchTitan, alongside validated linear scaling up to full Pod-size infrastructure.
+---
+As of Apr 2026 ... Jul 2026 (as of writing), the Meta/GCP team took a pause supporting torch_xla and focused on native TPU integrations rather than a JAX wrapper
+    - helpful insight for me to focus on openxla at lower absstractions to limit changes
+    - waiting for official TorchTPU integrations ... could I already do this on google TPU via google colab/kaggle?
+    = python and JAX ... learn more about C++ to support compiler and openxla specifically
+    ? stableHLO
+---
+The TPU Workflow: Data cleaning is done before reaching the
+TPU using CPU frameworks (like Apache Beam, Spark, or Ray) or
+GPUs (via cuDF). 
+
+Once the data is entirely numerical, it is fed onto the TPU as
+raw tensors (using JAX, TensorFlow, or PyTorch). 
+
+[1 (https://developer.nvidia.com/blog/pandas-dataframe-tutorial-
+beginners-guide-to-gpu-accelerated-dataframes-in-python/), 
+2 (https://www.youtube.com/watch?v=Ocql-0B4o5c), 
+3 (https://code-b.dev/blog/data-processing-machine-learning)]
+---
+1. Benchmark with PyTorch -> make equivalent in Cuda
+2. Make improvements all else equal (data, model, hardware)
+    -> train, deploy: inference and serve
+---
+
+## Frame: learning c++
+
+Frequeqntly asked questions
+- how do I import another file (OOP) is it like __init__.py?
+- what are fundamentals?
+    - data types
+        - str
+        - int
+        - float
+        - bool
+    - logic flow
+        - if/else
+        - try/except/finally/else
+    - error handling
+        - assert
+        - try/except/raise
+        - if __name__ == "__main__"
+
+- what are data structures and algorithims
+    - ... machine learning?
+    - ... deep learning?
+    - ... cuda? (NVIDIA GPU)
+    - ... XLA? (Google TPU)
+---
+
+## Frame: GPU/TPU & Accelerator Computing — Senior-Level Best Practices
+
+- Memory hierarchy: SRAM/registers >> HBM in bandwidth and latency — the fastest kernel keeps data resident in on-chip memory (TPU VMEM, GPU shared mem/L2) and minimizes round-trips to HBM. This is
+why fused kernels (FlashAttention) beat naive op-by-op execution even at equal FLOP counts.
+- Host-device transfer overhead: any CPU<->accelerator copy (dataloading, `.item()`/`.cpu()` calls, per-step logging/asserts) is often the real bottleneck, not compute.
+  - Use pinned memory and async copy streams to overlap transfer with compute
+  - Batch/aggregate host-side syncs instead of forcing one every step
+- Mixed precision — bf16 vs fp16: bf16 keeps fp32's dynamic range with fp16's throughput, so it doesn't need loss scaling and is the safer default for large-model training; fp16 is faster on some older
+hardware paths but requires dynamic loss scaling to avoid gradient underflow.
+- fp8: the newest speed tier (NVIDIA H100+, TPU v5p/Trillium+) — needs per-tensor or per-block scaling and is typically reserved for the largest matmuls (attention QK^T, MLP projections) while master
+weights/optimizer state stay in higher precision.
+- Numerics discipline: keep a fp32 (or bf16) master copy of weights/optimizer state even when compute runs in a lower precision — accumulation error compounds over millions of steps and is invisible until a
+loss spike or divergence far into a run.
+- Data parallel (DP): replicate the full model per device, shard the batch — simplest mental model, but activation memory scales with per-device batch size and it needs an all-reduce of gradients every step.
+Hits a wall once the model itself no longer fits on one device.
+- Tensor parallel (TP): shard individual layers' weight matrices across devices (Megatron-style column/row-parallel linear layers). Cuts per-device memory but synchronizes *inside* every forward/backward pass,
+so it needs high-bandwidth, low-latency interconnect (NVLink / TPU ICI) — generally kept within a node/pod.
+- Pipeline parallel (PP): shard the model by layer/stage across devices and stream micro-batches through. Communication is coarser (activations between adjacent stages only), which tolerates slower
+interconnects across nodes, but introduces pipeline-bubble overhead — needs enough micro-batches to keep all stages busy.
+- Choosing a strategy: DP when the model fits per-device and you want throughput/simplicity; TP for within-node scaling when a single layer is too large; PP for scaling across nodes with slower links.
+Production LLM training composes all three ("3D parallelism") plus ZeRO/FSDP-style parameter/optimizer-state sharding to remove redundant memory.
+- Profiling workflow: start from the timeline trace, not intuition — first classify the bottleneck as compute-bound (SM/MXU utilization high, kernels back-to-back), memory-bandwidth-bound, or communication-
+bound (visible gaps waiting on collectives).
+- What to actually look for in a trace:
+  - Idle gaps between kernels — usually host-side Python overhead or unfused ops
+  - Disproportionately long all-reduce/all-gather bars — comm-bound, check whether they overlap with compute
+  - Many small/short kernels dominating wall time — launch-overhead-bound, a fusion candidate
+  - Step-to-step timing variance — a signal of stragglers, thermal throttling, or resource contention
+- Practical tools: PyTorch Profiler + Chrome trace viewer/TensorBoard, NVIDIA Nsight Systems (timeline) and Nsight Compute (per-kernel detail) for CUDA, JAX/XLA's built-in profiler + XProf/TensorBoard
+for TPU. Always profile a few warmed-up steps — the first includes compilation/warmup and skews the numbers.
+- RAII in ML systems: CUDA/C++ runtime code wraps raw resource handles (streams, device memory, cuBLAS/cuDNN handles) in RAII classes so destructors free them on scope exit or exception. Matters
+because accelerator memory leaks degrade a long-running training job silently rather than crashing immediately.
+- Move semantics: avoid unnecessary deep copies of large device-memory-backed buffers passed between C++ layers of a runtime — `std::move` and move constructors transfer ownership without copying,
+which is significant when a "tensor" wrapper object represents gigabytes on the device.
+- Templates in CUDA/ML runtimes: kernels are commonly templated on dtype (fp16/bf16/fp32) and tile/block size so the compiler emits specialized, branch-free code per instantiation instead of paying a
+runtime dispatch cost — this is why CUTLASS/cuDNN-style APIs look template-heavy.
+- C++ fundamentals to prioritize before CUDA/XLA: value vs. reference semantics, ownership (`unique_ptr`/`shared_ptr` vs. raw pointers), templates, and RAII. These four show up constantly in kernel
+wrapper code and runtime internals — more load-bearing early on than deep OOP class hierarchies.
+---
+
+## Frame: GPU/TPU & Accelerator Computing — Community Resources & Further Reading
+
+- NVIDIA CUDA C++ Programming Guide (docs.nvidia.com/cuda) — the canonical reference for the CUDA execution and memory model.
+- NVIDIA Developer Blog (developer.nvidia.com/blog) — practical posts on kernel optimization, Nsight profiling workflows, and mixed-precision training.
+- "Programming Massively Parallel Processors" by Kirk & Hwu — the standard GPU-programming textbook, used in many university parallel-computing courses.
+- Google Cloud TPU documentation (cloud.google.com/tpu/docs) — system architecture, performance guide, and profiling guide; complements the TPU papers
+already logged in the GPU/TPU frame.
+- PyTorch/XLA documentation and GitHub (github.com/pytorch/xla) — official docs for running PyTorch on TPU, including debugging and profiling guides.
+- Horace He, "Making Deep Learning Go Brrrr From First Principles" — widely cited practical treatment of compute-bound vs. memory-bound vs. overhead-bound
+performance analysis.
+- Megatron-LM paper (Shoeybi et al., 2019) — canonical reference for tensor-parallel + pipeline-parallel training at scale.
+- ZeRO / DeepSpeed paper (Rajbhandari et al., 2020) — canonical reference for optimizer-state, gradient, and parameter sharding across data-parallel workers.
+- NVIDIA Nsight Systems & Nsight Compute documentation — official profiling-tool docs, the CUDA-side counterpart to XProf already listed for TPU.
+---
+
+## Frame: cuda for deep learning
+
+Roadmap
+2: cuda kernel to understand fundamental concepts (GPU arhictecture, memory, warps, blocks)
+
+3: building blods of neural networks from scratch (identify parralism)
+
+4: full end-to-end training pipeline (identify areas of optimization)
+
+*from training to inference 5: transformer architrecutre: autoregression, KV caching, Mixture of Experts
+
+6: profiling bottlenecks, systematic approach to optimizing kernels
+
+7: tensor cores (specialized hardware) to accelerate matrix operateions
+
+*8: flash attention
+
+*9: quantization, memory compression without performance loss
+
+10: multiple GPU orchestration
+---
+Ch 12: Out of Scope but mentions key technolgoies for background
+---
+CH 12.3: vLLM
+    - high throughput inference with efficient memory management
+    - Paged Attention
+    - Key-Value cache management
+    - paying to allocate memory dynamically as needed
+    - continous batch approach: processes requests as they arrive
+    - supports tensor parrallenism and openAI compatible (XPU)
+
+    - LLM focused (vLLM, SGLang, TensorRT-LLM): Autoreressive decoding, KV cache
+        - ONNX is the portability layer for everything else
+---
+Chp 12.5 cuda is the base
+    - C++, Python
+    - PyTorch
+    - JAX is worth learning as part of the ecosystem
+    - for TPU:
+        - openXLA
+        - StableHLO
+---
+Chapter 1 Fundamentals
+---
+Cuda refers to the entire ecosystem
+CUDA C++
+cuBLAS : optimized linear algebra (pyTorch built ontop)
+cuDNN : deep learning primitives (pyTorch built ontop)1
+CUTLASS : template library
+Threads : parallel algorthims
+---
+Chapter 4: Multi-layer perceptron from PyTorch to Numpy to C to Cuda optimizations
+---
+Chapter 3 Naive Kernels
+---
+This chapter covers
+Why standard attention becomes memory-bound and how to spot that shift.
+Core ideas behind Flash Attention: tiling, online softmax, and SRAM residency.
+Restructuring loops and work distribution so tiles cooperate efficiently.
+Building a fused Flash Attention kernel with WMMA tensor cores.
+Evaluating Flash Attention across versions and hardware generations.
+Deciding when Flash Attention is the right optimization for your model.
+---
+8.1.1 from compute-bound to memory-bound
+    Tensor core: raw compute throughput
+    Memory bottlenecks attention
+
+Resolving compute-bound: Tesnor Cores (specialized hardware)
+Optimizing attention mechnisms encounter differnt kind of performance barrier (memory bound)
+
+Baseline naive/standard self-attention mechanism relies on the high-bandwidth memory (HBM), moving such large compute in/out outweighs the actual cost of compute
+We are no longer limited by how fast we can do the math, but by how fast we can shuttle data to and from the GPU’s main memory.
+---
+chp 5 takeaways
+-> C++, Cuda, Python, PyTorch; wrappers to build custom kernels while integrating with ecosystem
+-> transformer training (parrallenism; dot product matrix-matrix) vs.. transformer inference (single token) (matrix-vector)
+---
+Chp 8 Takeaways
+-> Tensor Core gives raw compute throughput
+-> Attention has a different bottleneck: volume of data between on-chip SRAM and off-chip HBM
+    -> Flash Attention
+---
+8.1.2 The High Bandwidth memory bottleneck in standard attention
+To understand why Flash Attention is necessary, first analyze the standard implementation of the attention mechanism
+
+The core of attention
+    1. calculate the dot product of Query (Q) and Key (K) matrices, Score (S) = Q @ (K) dot (T)
+    2. apply softmax to the score to get weights (P), P = softmax(S)
+    3. multiply the attention weights P by the value (V) matrix to get output, O = P @ V
+
+For a context length, N = 8192, (N, d) (S, P) = (N, N) -> 8192 x 8192 x 4 bytes (32-bit floats) ~~ 268 megabytes
+... for a modern context length N = 128k ... >65GB for a single attention head
+    This is the throughput problem transferring between memory, not the computational throughput
+** the entire S matrix must be written to HBM after the first matrix multiplication, read back from HBM, writes back to HBM, reads again for final matrix multiplication **
+-> fast onchip SRAM and slower offchip HBM is the bottleneck
+---
+2.7 The Universal Pattern: From nD to 1D
+Whether you’re working with 1D vectors, 2D matrices, 3D tensors, or even higher-dimensional data, the pattern remains the same:
+
+Calculate your thread’s unique coordinates using blockIdx and threadIdx
+Apply boundary checks to ensure you don’t access invalid memory
+Linearize the nD coordinates into a row-major 1D memory index using stride calculations (this matches the layout used by C, NumPy, and PyTorch)
+Perform your computation on the data at that index
+That third step is often called "linearizing" or "flattening" your index. Because PyTorch, NumPy, and plain C default to row-major layout, the stride formulas you’ve seen throughout this chapter follow that convention.
+
+This is the foundation of all CUDA programming. Master this pattern, and you can parallelize operations on data of any dimensionality.
+---
+2.5 Scaling Compute
+    - 1 block / 1024 threads, how many blocks can I have?1
+---
+2.8 Summary
+A CUDA program consists of two main parts: host code that runs on the CPU and orchestrates the process, and device code (kernels) that runs in massive parallel on the GPU.
+The terms Host and Device are the official CUDA terminology for the CPU and GPU, respectively. They have separate memory spaces.
+Data must be explicitly transferred between host (RAM) and device (VRAM) memory using cudaMemcpy. This transfer is a potential performance bottleneck.
+GPU memory is managed with cudaMalloc and cudaFree, analogous to C’s malloc and free for host memory.
+A kernel is a C++ function marked with global that is launched from the host and executed by many threads on the device.
+CUDA organizes threads into a two-level hierarchy: threads are grouped into blocks, and blocks are organized into a grid.
+Each thread calculates a unique global index using built-in variables (blockIdx, threadIdx, blockDim, gridDim) to determine which piece of data it is responsible for processing.
+Essential C concepts like pointers (*) are fundamental to CUDA, as they are used to manage memory addresses on both the host and device.
+A simple CUDA program can be compiled from the command line using the CUDA compiler (nvcc).
+---
+Chapter 2 first CUDA program
+---
+1
+---
+Chp 5: Transformer inference in CUDA
+This chapter covers
+    Understanding the decoder-only transformer architecture that powers GPT-style models
+    
+    The fundamental split between prefill (processing the prompt) and decode (generating tokens)
+
+    Building naive CUDA kernels for inference: GEMV, softmax, layer normalization, and attention
+
+    KV caching to avoid redundant computation during autoregressive generation
+
+    Mixture-of-Experts routing with custom TopK kernels
+
+    The CUDA-Python binding pipeline that connects our kernels to PyTorch
+---
+5.1 Transfromer Architecture and Setup **inference**
+    - bottleneck is memory bandwidth not compute throughput because token parrallelism becomes matrix-vector products
+    - pyTorch baseline Cuda will match before optimizing / hybrid approaches where CUDA can optimize layers of PyTorch & Python
+
+5.1.1 Baseline Scenario (pyTorch)
+    - Training processes entire sequences in parrallel
+        - all 64 tokens flow through attention simultaneously
+    - Inference generates one token at a time depending on all previous tokens
+        - sequential dependency changes how we write CUDA kernels
+    - reference implementation uses: sequence = 64, embedding dimensions = 128, attention heads = 4, and 8 transformation layers
+        - position 32 can attend to positions 0-31 at the same time positino 40 attends 0-39
+            - parallel processing is what makes training a generalized matrix multiplication dominated workflow 
+
+5.1.1 The Binding Pipeline: Connecting CUDA to Python
+    - CUDA kernels, C++ bindings, python wrappers
+From setup.py:
+    from torch.utils.cpp_extension import CUDAExtension, BuildExtension
+
+CUDAExtension compiles cuda to Pytorch's C++,
+    #include <torch/extension.h>
+    //It uses PyTorch’s extension header and pybind11 to expose functions:
+
+5.1.1 Dataset and Tokenization
+    - author uses The Wonderful Wizard of Oz by L. Frank Baum, a public domain novel that’s perfect for character-level language
+modeling.
+    - Character-level tokenization treats each character as a separate token, creating a vocabulary of 65 unique characters (letters,
+punctuation, spaces, etc.).
+
+5.1.1 Decoder-only transformer architecture (GPT)
+    - encoder-decoder used for translations
+    - encoder-only used for classificaiton
+    - decoder-only used to generate text autoregressively: predict one token at a time, each prediction conditioned only on preivous
+token
+
+Transformer Terminology:
+    -> Head: A single attention computation that projects inputs to queries, keys, and values, computes attention scores, and
+produces an output. Each head learns to focus on different relationships between tokens.
+    -> Multi-head attention: Multiple heads running in parallel, their outputs concatenated and projected back to the model dimension.
+This allows the model to attend to information from different representation subspaces simultaneously.
+    -> Block (or layer): One complete transformer unit containing multi-head attention, a feed-forward network, and the residual
+connections and layer normalization that wrap them. Our model stacks 8 of these blocks.
+    -> Model: The complete transformer: token embeddings, position embeddings, a stack of blocks, final layer normalization, and the
+output projection to vocabulary logits (the raw, unnormalized scores for each token in the vocabulary before softmax converts them
+to probabilities).
+
+We also need to be precise about tensor dimensions. Throughout this chapter, our primary activation tensor has shape (batch,
+sequence_length, embedding_dim) or (B, T, C) in code:
+
+B (batch): Number of sequences processed in parallel (16 in our setup)
+T (sequence length): Number of tokens per sequence (64 in our setup)
+C (channels/embedding dimension): Size of each token’s representation (128 in our setup)
+---
+5.1.1 Tokenization and embedding: setting up the sequence
+    - during training, tokenization happens once per training
+    - ... implementation of code
+---
+5.2 Inference: Theory and Optimization
+
+    - inference is fundamentally different from training.
+    - inference generates tokens one at a time through autoregressive sampling
+    - **APPLY KV-CACHING AND OTHER OPTIMIZATION**
+
+5.2.1 Optimizing Autoregressive Generation
+    - Inference flips our computational paradigm completley.
+        - instead of processing 64 tokens in parallel, we generate one token at a time (based on all
+previous tokens; hence KV cache)
+    - previous training scale was for learning purposes but inference scaled to reflect production like
+workloads (768 dimensional embeddings, 24 layers)
+    - at scale, we can better see the performance improvements using cuda kernel level optimizations
+
+5.2.1 KV Cache: Avoiding redundent computation
+    - KV cache stores key-value tensors from previous tokens during autoregressive generation,
+avoiding recompute for each new token
+    - how does it work?
+         During each generation step, we compute the new token’s key and value vectors and append
+them to our cache. When computing attention, the new token’s query attends to all cached keys and
+values, transforming the operation from GEMM (recomputing everything) to GEMV (one query against
+cached data).
+
+5.2.2 GEMV-Dominated Inference operations
+    - KV cache transforms computational patterns from matrix-matrix to matrix-vector
+        - we compute attention for one new position against all previous positions
+
+Because T = 1 during generation (we process a single new token at a time), the returned tensor
+already matches the narrow blue column. From there the attention heads run matrix-vector products
+against the cached keys and values instead of full matrix-matrix multiplies, so memory bandwidth
+becomes the primary bottleneck.
+
+5.2.2 cache vs recomputation memory trade-offs
+    - KV cache trades memory for computation; compute only new ones
+        - The longer the sequence, the more computation we save, but the more memory we consume.
+This trade-off becomes critical when serving models at scale.
+
+5.2.2 Mixture of Experts in Inference: Sparse Activation
+    - What is it? Mixture of Experts (MoE) is an architectural pattern that replaces a single dense
+feed-forward layer with multiple parallel feed-forward networks called "experts." Each expert has
+identical architecture (the same layer sizes and activation functions) but different learned weights. A
+router network scores each expert for a given input and selects the top-k to actually run. The term
+"expert" is a metaphor from the machine learning literature: through training, each network tends to
+specialize in different input patterns, becoming an "expert" at processing certain types of tokens.
+This specialization emerges from optimization, not from explicit design - the router and experts co-
+adapt so that tokens get routed to whichever expert produces the best predictions. 
+
+Why should I care? MoE allows models to scale to massive parameter counts (trillions) while keeping
+inference costs manageable. Only a small fraction (typically 2-4 experts out of hundreds) are active
+per token, dramatically reducing compute requirements.
+
+How does it work? For each token, a router network computes scores for all experts, selects the top-
+k highest scoring experts, normalizes their weights, and combines their outputs. During inference, this
+sparse activation means you’re only computing ~1% of the model’s total parameters per token.
+
+The routing process involves several key steps:
+
+Router Computation: A linear layer transforms each token’s embedding into expert scores
+Softmax Normalization: Convert scores to probabilities across all experts
+Top-K Selection: Choose the k experts with highest probabilities
+Load Balancing: Re-normalize probabilities among selected experts
+Expert Execution: Run each selected expert on the token
+Output Combination: Weighted sum of expert outputs
+This sparsity creates unique optimization opportunities for CUDA kernels, particularly in the top-k
+selection and routing computation. figure 5.10 illustrates the top-k selection process that determines
+which experts process each token.
+
+5.2.2 CUDA Optimized MOE Routing
+- hand the heavy lifting to CUDA kernels: score experts in PyTorch, offload the softmax and top-k
+work to CUDA, then combine the selected expert outputs back to Python with a handful of tensors
+
+5.2.2 GEMV vs GEMM: the fundamental shift
+    Training Pattern (GEMM):
+    
+    Process 8 tokens simultaneously: [4,8,4] @ [4,4] = [4,8,4]
+    Attention computes full 8×8 matrices
+    High arithmetic intensity
+    All positions computed in parallel
+    Inference Pattern (GEMV):
+    
+    Process 1 new token: [1,1,4] @ [4,4] = [1,1,4]
+    Attention: 1 query against cached keys
+    Lower arithmetic intensity per step
+    Sequential token generation
+    Memory bandwidth critical for cache access
+
+
+5.2.2 Deploying the Optimized Stack
+    - All of the inference optimizations only matter if the end-to-end experience improves. 
+... Complete Generation Example: Token by Token
+This benchmarking framework measures the two critical inference metrics: Time To First Token
+(TTFT) for responsiveness and tokens per second for throughput. CUDA kernels primarily help with
+TTFT by reducing the overhead of individual operations.
+
+Production Inference Results: PyTorch vs CUDA
+Running our complete benchmarking suite shows the practical effect of CUDA optimization for
+transformer inference. figure 5.12 shows the performance comparison.
+
+Figure 5.12 Performance comparison: our naive CUDA kernels underperform PyTorch’s optimized
+implementations, demonstrating why production systems use battle-tested libraries
+pytorch vs cuda perf
+listing 5.23 demonstrates the thorough comparison and validation code that verifies correctness while
+measuring performance.
+
+
+Run all four implementations (PyTorch dense/MoE, CUDA dense/MoE) Require exact token-by-token
+agreement for the dense models Measure MoE divergence by token difference rate because routing can
+drift under tiny floating-point perturbations
+
+The inference.py comparison demonstrates exact token sequence matching for dense models and
+tolerance-based verification for MoE models. CUDA implementations show speedups ranging from 0.9x
+to 1.5x (some operations see overhead from CPU-GPU transfers in our educational implementation),
+with MoE models benefiting more from the sparse routing optimizations at scale. The hybrid approach
+ensures correctness while providing performance improvements through targeted CUDA kernel
+acceleration.
+
+The actual model configurations used in inference.py:
+
+Dense model: 95-token printable-ASCII vocabulary, 768 embedding dimensions, 8 attention heads, 24
+layers, ~177M parameters
+MoE model: Same inference-oriented configuration, but with 8 experts using top-2 routing, ~708M
+total parameters (only ~177M active per token)
+Next Steps: Expanding CUDA Kernel Coverage
+Our inference optimization journey shows a clear progression:
+
+Phase 1: Prove Concept - Start with simple embedding kernels to establish the kernel binding pipeline
+and verify correctness.
+
+Phase 2: Target Bottlenecks - Profile to identify which operations consume the most time, then
+implement CUDA kernels for those specific operations.
+
+Phase 3: Optimize Memory Access - For inference-heavy workloads, focus on memory bandwidth
+optimization, kernel fusion, and reducing data movement.
+
+The foundation we’ve built with embedding kernels extends naturally to attention, MLP, and layer
+normalization operations, each providing incremental performance improvements.
+---
+5.3 Inference Kernels
+Inference has it's own performance profile: spceailize for single-token workloads where latency
+>>> throughput
+
+5.3.1 Memory layout and contiguity
+    -  **CUDA kernels expect contiguous memory**: this applies to training and inference
+    x_contiguous = [[1,2,3]
+                         [4,5,6]
+                         [7,8,9]]
+
+    x_contiguous_transpose = x_not_contiguous = [[1,4,7]
+                                                               [2,5,8]
+                                                               [3,6,9]]
+
+**torch.contiguous() #creates a new tensor with contiguous memory layout, costs one memcpy,
+but ensures correctness
+
+5.3.2 GEMV: The inference workhorse
+    - Matrix-vector multiplication for single-token processing
+Training uses GEMM (matrix-matrix): [B, T, D] @ [D, D] -> [B,T,D]
+Inference uses GEMV (metrix-vector): [1, 1, D] @ [D, D] -> [1, 1, D]
+
+Remember, at inference, we process one token outputs as they arrive: GEMV (inference, 1 new
+token)
+GEMM (training, T=64 tokens):
+Q[64, 128] @ K.T[128, 64] = Scores[64, 64]
+-> 64 * 64 * 128 = 524,288 FLOPs
+-> High arithmetic intensity, compute-bound
+
+GEMV (inference, 1 new token):
+q[1, 128] @ K.T[128, 64] = scores[1, 64]
+-> 1 * 64 * 128 = 8,192 FLOPs
+-> Low arithmetic intensity, memory-bound
+
+GEMV vs GEMM kernel strategy
+- GEMM optimized for compute-bound arithmic intesity using shared memory tiling
+
+- GEMV is memory bound by loading, not computing the dot product
+
+5.3.2 topK for mixture of export (MoE) routing
+where k = 2, we select the 2 highest scorees
+
+TopK parallelizes across batch elements. Each token in the batch needs its own independent
+routing decision, so we assign one CUDA block per token. Within each block, a single thread scans
+through all expert scores and maintains a small sorted buffer of the k best candidates.
+
+5.3.2 Design Decision: why naive insertion sort
+- Why this works for MoE:
+
+k is tiny (k=2 or k=4 typically)
+n is small (n=8 experts in our example)
+Overhead of parallel algorithms > benefit
+Total comparisons: 8 * 2 = 16 (trivial)
+Performance: For k=2, n=8:
+
+Our kernel: ~2 μs
+Parallel reduction: ~15 μs (synchronization overhead)
+As k grows (k=64 for larger MoE), you’d switch to parallel approaches. But for typical MoE (k=2),
+simple wins.
+
+Note on alternative methods:
+Option 1: Parallel reduction (like finding max)
+
+// Multiple rounds: find max, mask it, repeat k times
+__shared__ float smax[256];
+for (round = 0; round < k; round++) {
+    parallel_max_reduce(input, smax);
+    top_k[round] = smax[0];
+    input[argmax] = -INF;  // Mask found value
+}
+
+Overhead: thread synchronization, shared memory management Good for: Large k (k > 32)
+
+Option 2: Sorting networks
+// Bitonic sort: fixed comparison pattern
+// Compare-exchange pairs in parallel
+if ((i & mask) == 0)
+    compare_and_swap(arr[i], arr[i ^ mask]);
+
+Overhead: Complex indexing, works well for power-of-2 sizes Good for: k close to n
+
+Option 3: Insertion sort (our choice)
+// Simple: one thread scans all values
+for each value in input:
+    if value > smallest_in_top_k:
+        insert_sorted(value, top_k)
+
+Works best for: Small k (k=2 in our case)
+---
+chp 6: optimizing transformer kernels
+---
+Chp 7 Tensor Cores
+---
+Chp 8 Flash Attention: resolves High bandwidth memory bottleneck
+---
+Chp 9 Quantization
+---
+Chp 10 Distributive computing
+---
+
+## Frame: GPU Glossary (CUDA, Deep Learning (Transformer))
+
+https://modal.com/gpu-glossary/readme
+---
+From cuda-for-deep-learning, the evolution of flashattention relied on maximizing the hardware capabilities
+---
+Using Modal GPU Glossary to read more, excalidraw and cuda-for-deep-learning will guide a top-down learning plan and relationship
+---
+CUDA (device architecture)
+---
+Stream Multiprocessor (SM)
+---
+Core
+---
+Special Function Unit [SFU]
+---
+Load/Store Unit
+---
+Warp Scheduler
+---
+CUDA Core
+---
+Tensor Core
+---
+Tensor Memory Accelerator [TMA]
+---
+Streaming Multiprocessor Architecture
+---
+Texture Processing Cluster [TPC]
+---
+Graphics Processing Cluster [GPC]
+---
+Register File
+---
+L1 Data Cache
+---
+Tensor Memory
+---
+GPU RAM
+---
+KV Caching
+Flash Attention (v1 through v3); NVIDIA Hopper, Blackwell 
+vLLM (paged attention)
+    -> What is attention? (Q, K, V)
+    -> HBM handoff back and forth
+Familiarity with the compounding optimization layers: Clusters of GPU > Quantization > Flash attention > tesnorCore > Memory OPtimization > Naive Cuda
+
+Fundamentals
+    - threads (NVIDIA warps (32 threads), AMD wavefront (64 threads)) -> blocks (of threads) -> grids (of blocks)
+GEMM (matrix-matrix) to GEMV (matrix-vector) -> Transformer io
+TensorCore: WMMA/WGMA
+    - PCIe vs. NVLink
+Quantization and their types (in reality a mix)
+    - static, dynamic, symmetric
+
+Mixture of Experts
+    - a selection of feedforward neural networks in the transformer architecture with various predefined weights that are selected from previous routing softmax
+
+Fundamental NLP Transformer terminology
+    - head
+    - attention
+---
+1. Benchmark (Pytorch)
+2. Replicate (CUDA; under the hood)
+3. Optimize
+    - Leverage hardware specific features
+---

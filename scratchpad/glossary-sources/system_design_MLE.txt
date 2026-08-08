@@ -1,0 +1,329 @@
+# Source: public/excalidraw/system_design_MLE.excalidraw
+# Text elements: 15
+
+## Frame: designing machine learning systems
+
+ch01 overview of machine learning systems
+    - design, data, model, backend, frontend, ops (deploy to production)
+    - machine learning models are apart of software engineering
+        - SWE: deterministic outputs
+        - MLE: pattern recognition outputs
+---
+ch02 machine learning systems design
+    - frame business problems as machine learning solutions
+        - familarity with common practices, usecases
+    - prioritize business ROI not arbitrary model performance without impact
+    - most deployed models are classical machine learning models
+        - in reality, hybrid approach and multimodal to use relevant models as tools when needed
+---
+Takeaways
+    - could mean various things, get clarity on:
+        - online
+            - human intervention > on the internet
+        - offline
+            - no human intervention > 
+        - production
+            - notebook to stakeholders vs. serving >1M users
+
+    - main 4 non-functional characteristics for most Machine learning systems
+        1. reliability
+            - machine learning systems can fail silently
+
+        2. scalability
+            - compute
+
+        3. maintainability
+            - people from various backgrounds, so find a mutually collective and comphrensive ecosystem
+            - code should be documented
+            - code, data, artifact should be versioned
+
+        4.  adaptability
+            - iterative process, continuous improvement & learning
+---
+'The process of updating a model is manual and ad hoc. Someone, usually a
+data engineer, has to query the data warehouse for new data. Someone else
+cleans this new data, extracts features from it, retrains that model from
+scratch on both the old and new data, and then exports the updated model
+into a binary format. Then someone else takes that binary format and deploys
+the updated model. Oftentimes, the code encapsulating data, features, and
+model logic was changed during the retraining process but these changes failed
+to be replicated to production, causing bugs that are hard to track down.'
+---
+ch03 data engineering fundamentals
+    - data sources (analytical, transactional) -> ETL/ELT -> feature engineering -> model training, development, evaluation -> deployment
+        - data sources can be logs, user data, third party; just be mindful of inherent bias with certain data & features
+    - batch vs streaming processing
+    - data formats
+        - agnostic: JSON, CSV, yaml, xml
+        - specific: pickle, protobuf, parquet
+
+    - more about data bases (Thomas to make a dedicated frame on databases)
+        -
+---
+ch04 training data
+    - sampling, labels, class imbalance (skewed distribution), data augmentation)
+    * fundamentals of evaluation metrics
+        - precision, recall, F1, accuracy, area under the curve, precision-recall curve
+    - feature engineering: choosing what data to use and what to extract for the machine learning model
+        ?) deep learning is still hands-on despite marketed as not having to be; more like feature extraction for higher dimension patterns
+        - feature extraction may require a domain expert to identify value-add features
+---
+ch05  feature engineering
+    - quality > quantity
+    - having too many features can be bad to training and serving:
+        - leaky data features
+        - overfitting
+        - increased compute, latency
+        - excess features become technical debt
+            - more effective to remove than linger features >0
+---
+ch06  model development and offline evaluation
+    - with initial features to develop algorthims and evaluate before deployment
+    - a iterative process to continuously improve and learn
+    ** focus on algorithms based on the problem you're trying to solve **
+        - text classificaiton: natural language processing, NLP: BERT, LLM?
+    - evaluations and assessment:
+        - model performance: accuracy, precision, F1, loss
+        - other properties: data, compute, time/memory, inference latency
+
+    - 6 tips for model selection
+        1. avoid state of the art trap: evaluate for the business, simpler & cheaper is preferred
+        2. start with the simplest model
+        3. avoid human biases in selecting models
+        4. evaluate good performance now (design for today's problems)
+        5. evaluate trade-offs
+        6. understand your model
+            - data, assumptions, limitations, distributions, features and drift
+
+    - bagging & boosting, essembles, stacking
+    - experiment tracking and versioning
+---
+ch07 model deployment and prediciton service
+---
+ch08 data distribution shifts and monitoring
+
+Software vs ML-specific failures
+> dependency (packaging version)
+> deployment
+> hardware
+> crashing
+
+ML Specific
+> training vs production
+    > real world is continously changing 
+    > bugs in pipeline: missing/incorect data, wrong subset
+> edge cases (the <1%)
+    > degenerate feedback loops
+        > homogenous where predictions affect user data
+        >> course correct hetereogenous through randomization and positional features
+
+** distribution shift =/= concept drift **
+    > covariate shift
+    > occasionally label
+
+Monitoring and Observaility
+Monitoring: tracking, measure, logging of metrics
+Observability: visbility (i.e frtonend)
+
+** 4 major concerns for monitoring **
+1. a company might have 100s of models in production each uses 100s, 1000s of features
+    > computing monitoring alone at this scale is computatiaonlly intensive
+---
+ch09 continual learning and test in production
+
+if a model is a neural network, if trained too frequently, tends to forget (weight adjustments over time)
+if retrained too frequently, hardware backends designed for batch vs. continous batch training -- could be a waste of compute if not significant
+> blue-green deployment
+> canary deployment / roll out
+
+Stateless vs stateful training
+    > stateless: retraining from scratch each time
+    > stateful: training ontop of new data
+
+4 stages of continous learning
+1. manual, stateless training
+    > try to solve as many ML problems as possible, uipdating existing takes a back burner focusing on ad-hoc manual tuning
+2. autoated retraining (runners, schedulers, data, mdoel store)
+    > priortity shifts to maintaining existing models
+3. automated stateful training
+    > loads previous checkout into memory before continous training; infrastucture must support stateful training (model and data async training end-to-end requirements)
+4. continual learning
+    > finding the optimal schedule isn't straight forward and can be situation dependent; anomolies in the real world affect data and models need to be retrained to reflect this otherwise nothing happens
+    > consider retraining when performance drops
+---
+ch10 infrastructure and tooling for MLOps
+> tests in production (blue-green, canary roll out, shadow, A/B)
+---
+
+## Frame: interview kickstart bootcamp notes: database modeling
+
+Table Of Content
+● Introduction to Relational Databases
+    - structured data
+        - entities, attributes, and relationships
+    - normalized
+    
+● ACID Properties: reliability of transactions in a relaitonal database management system (RDBMS)
+    - atomicity: transactions are all or nothing
+    - consistency: data remains after a transaction
+    - isolation: transactions do not interfere with each other
+    - durability: once a transaction is committed, it remains committed even in case of failure
+
+● Differences between SQL & NoSQL
+    - SQL: structured data with a fixed schema, strong ACID compliance, support for complex queries and transactions
+    - NoSQL: flexible schema, horizontal scalibility where performance and flexibility are prioritized over consistency
+        - BASE properties; basically available soft state, is often eventual consistency
+            - Key-Value (Redis), Document-Based (MongoDB), Column-Based (Cassandra), Graph-based
+                - in system design, characterize by type of NoSQL database not the implementation level (these are just examples) without having
+alternatives and trade offs known + provider alternatives
+
+● Vector Databases
+    - vector supported vs. dedicated vector databases: vectors are outputs from an embedding model enabling semantic simiarltiy searches by
+converting complex objects into numerical vectors
+        - 2026: industry standard is hybrid retrieval augmented generation using classical RAG + agentic RAG
+        - uses cosine similarity upon querying the input text with the existing database store of vectors to evaluate, top (25) results ranked
+
+● Relational Data Model
+    - 1 to 1
+    - 1 to many
+    - many to 1
+    - many to many
+
+● Keys in Relational Databases
+    - primary keys
+        - candidate keys and super keys
+    - foreign keys
+
+* Data Intengrity and Constraints; maintaining data quality
+    - NOT NULL
+    - UNIQUE
+    - CHECK
+    - DEFAULT
+
+● Database Design Process
+    1. Requirements Gathering: Understand the needs of the users and the system.
+        ● Customer Needs: Understand product selection, search capabilities,
+        and ordering options.
+        ● Inventory Management: Define how inventory tracking should work.
+        ● Payment and Checkout: Specify payment methods and security
+        measures.
+        ● User Accounts: Identify required information for customer profiles.
+        ● Delivery: Clarify delivery preferences and scheduling options.
+
+    2. Conceptual Design: Create an abstract model of the database using entities, attributes, and relationships.
+        ● Entities: Identify primary entities like "Products," "Customers," "Orders," and "Inventory."
+        ● Attributes: Define attributes for each entity.
+        ● Relationships: Establish connections between entities.
+
+    3. Logical Design: Refine the conceptual model into detailed tables, relationships, and constraints.
+        ● Tables: Create tables for each entity, specifying fields.
+        ● Data Types: Define data types for fields.
+        ● Constraints: Implement primary keys, foreign keys, and unique constraints.
+        ● Normalization: Optimize the structure, reducing redundancy.
+
+    4. Physical Design: Implement the database in a DBMS, optimizing for performance and security.
+        ● DBMS Selection: Choose a suitable DBMS like MySQL, PostgreSQL.
+        ● Indexing: Determine which fields require indexing for faster queries.
+        ● Partitioning: Consider partitioning strategies for large datasets.
+        ● Security: Implement security measures to protect data.
+        ● Performance Tuning: Optimize database performance through query optimization.
+
+● Entity-Relationship Diagrams
+        Introduction to ERD
+        Visual tools that provide a graphical representation of a database’s
+        structure, showing entities, attributes, and relationships.
+        Components of an ERD
+        ● Entities: Represent real-world objects or concepts.
+        ● Attributes: Properties or characteristics of entities.
+        ● Relationships: Establish connections between entities.
+        ● Cardinality: Defines the number of related records between entities.
+
+● Normalization Techniques
+    Normalization is a database design technique that helps us organize data
+    efficiently, reducing redundancy and ensuring data integrity.
+    
+    Levels of Normalization
+        ● First Normal Form (1NF): This is the most basic level of
+        normalization. In 1NF, each table cell should contain only a single
+        value, and each column should have a unique name. The first normal
+        form helps to eliminate duplicate data and simplify queries.
+    
+        ● Second Normal Form (2NF): 2NF eliminates redundant data by
+        requiring that each non-key attribute be dependent on the primary
+        key. This means that each column should be directly related to the
+        primary key, and not to other columns.
+    
+        ● Third Normal Form (3NF): 3NF builds on 2NF by requiring that all
+        non-key attributes are independent of each other. This means that
+        each column should be directly related to the primary key, and not to
+        any other columns in the same table.
+    
+        ● Boyce-Codd Normal Form (BCNF): BCNF is a stricter form of 3NF
+        that ensures that each determinant in a table is a candidate key. In
+        other words, BCNF ensures that each non-key attribute is dependent
+        only on the candidate key.
+    
+    Normal forms help to reduce data redundancy, increase data consistency,
+    and improve database performance. However, higher levels of
+    normalization can lead to more complex database designs and queries. It is
+    important to strike a balance between normalization and practicality when
+    designing a database.
+    
+Database Security and Authorization
+    Key Areas of Focus
+    1. Data Encryption: Encrypt data at rest and in transit using SSL/TLS and AES.
+    2. Strong Authentication: Implement multi-factor authentication (MFA) and secure password storage.
+    3. Authorization and RBAC: Define roles and assign permissions accordingly.
+    4. Audit Trails and Logging: Monitor database activity and retain logs for forensic analysis.
+    5. Backup and Disaster Recovery: Regularly backup data and establish recovery plans.
+    6. Network Security: Use firewalls, IDS/IPS, and network monitoring to protect the database.
+---
+
+## Frame: ML Systems Design — Senior-Level Best Practices
+
+- Treat an ML system design interview as generic system design PLUS an ML-specific axis: even if not asked, proactively surface training/serving skew, data + label lineage, model versioning, and retraining cadence early in your answer.
+- Use the pipeline as your answer skeleton (Chain of Responsibility): Data -> Features -> Training -> Evaluation -> Deployment -> Monitoring -> Retraining. Don't lecture through every stage; use it to structure scope-narrowing questions.
+- Online vs batch prediction is a first framing decision, not an afterthought:
+  - Online: synchronous, low-latency, needs live feature lookups (feature store), for interactive user-facing decisions.
+  - Batch: precomputed on a schedule, higher throughput, staler by definition.
+  - Many "real-time" products are hybrid: batch-precompute + online fallback/re-rank.
+- Deployment strategies escalate in blast radius and each catches different failure classes:
+  - Shadow deployment: new model runs in parallel, predictions logged not served -> zero user risk, tests infra/latency/crashes, not quality.
+  - Canary: small % of real traffic, ramp gradually -> catches infra + basic quality regressions.
+  - A/B test: statistical comparison on a business metric, needs a defined randomization unit + guardrail metrics -> catches business-impact regressions.
+- Prefer shadow -> canary -> A/B in that order for any model launch; skipping shadow means your canary traffic is your crash test.
+- Champion-challenger is a continuous, ongoing pattern (not just a one-time launch gate) — always have a current "champion" in prod and challengers evaluated against it on a rolling basis.
+- Training-serving skew is the single most common real-world ML production bug:
+  - Causes: separate code paths computing features offline (batch/training) vs online (serving), time-window mismatches, point-in-time label leakage in the training pipeline.
+  - Mitigation: shared feature-transformation code, and a feature store as the single source of truth for both training and serving.
+- Monitoring must distinguish three distinct failure modes, and you should name all three explicitly in an interview:
+  - Data drift: input feature distribution shifts (P(x) changes).
+  - Concept drift: the input-output relationship changes (P(y|x) changes — same input, different correct answer over time).
+  - Model/label staleness: model was correct at training time but the world has moved on and ground truth is simply old.
+- Don't rely on raw accuracy as your primary alert — ground truth labels are often delayed or unavailable in real time. Use leading proxy signals instead: prediction distribution shift, model confidence/score drift, feature distribution monitors (e.g. PSI/KL divergence), and downstream business-metric deltas.
+- Continual learning needs explicit, named retraining triggers — don't leave this implicit:
+  - Scheduled (fixed cadence, e.g. daily/weekly).
+  - Performance-based (a monitored metric crosses a threshold).
+  - Data-volume-based (N new labeled examples accumulated).
+- Full retrain-from-scratch vs incremental fine-tune from the last checkpoint is a real cost/risk tradeoff: incremental is cheaper but risks compounding drift and catastrophic forgetting — mention a periodic full-retrain "reset" as a safeguard.
+- Online learning (updating weights directly on live traffic) is high-risk — call out degenerate feedback loops and adversarial/gaming behavior (bad actors learning to manipulate the model) as a known failure mode, and always pair it with a rollback plan / kill switch.
+- Use precise MLOps infra vocabulary rather than generic data-engineering terms:
+  - Feature store: guarantees offline/online consistency for the same feature logic.
+  - Model registry: versioning, staging->production promotion, and lineage back to the exact training data + code commit + hyperparameters that produced a given model.
+  - Pipeline orchestration for ML is distinct from generic ETL DAGs: it must version data + model + code together as one deployable unit ("model = data + code + config").
+- A model registry's real interview-answer value is rollback: always state explicitly which model is in prod, what produced it, and how you roll back to the previous version — treat rollback as a first-class deployment feature, not an afterthought.
+- Batch prediction pipelines need monitoring beyond job exit codes — a job can succeed (exit 0) while silently producing empty, truncated, or stale output; monitor row counts, schema, and freshness of the output artifact itself.
+- Ground every scale claim in QPS, latency budget, and feature-freshness requirement, then work backward to online vs batch vs hybrid and whether a feature store is even justified — proposing a feature store at low scale/simple feature sets is a common interview red flag (over-engineering).
+---
+
+## Frame: ML Systems Design — Community Resources & Further Reading
+
+- "Machine Learning Design Patterns" — Lakshmanan, Robinson & Munn (O'Reilly, 2020) — catalog of recurring ML engineering patterns (e.g. feature store, checkpoints, cascade).
+- "Rules of Machine Learning: Best Practices for ML Engineering" — Martin Zinkevich, Google (developers.google.com) — terse, battle-tested production ML rules from Google.
+- Google Cloud Architecture Center: "MLOps: Continuous delivery and automation pipelines in machine learning" — reference architecture for CI/CD/CT maturity levels in ML systems.
+- Stanford CS 329S: Machine Learning Systems Design (Chip Huyen) — public course notes/syllabus; the course this board's core book grew out of.
+- Full Stack Deep Learning (fullstackdeeplearning.com) — production-focused course covering deployment, monitoring, and infra for ML teams.
+- Made With ML (madewithml.com, Goku Mohandas) — applied MLOps lessons with runnable code, from data to deployment.
+- Eugene Yan — applyingml.com — applied ML system design write-ups from practitioners at Amazon/Alibaba and other large-scale teams.
+- Evidently AI blog (evidentlyai.com) — deep dives specifically on ML monitoring, data drift, and concept drift detection in production.
+---

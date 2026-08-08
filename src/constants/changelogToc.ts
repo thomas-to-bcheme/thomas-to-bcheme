@@ -15,10 +15,10 @@ export interface ChangelogTocItem {
   label: string;
 }
 
-// The "At a Glance" executive-summary id, plus the 5 essay section ids, in
+// The "At a Glance" executive-summary id, plus the 6 essay section ids, in
 // reading order — together the sidebar/mobile-toc's "Mental Model" group.
 // 'executive-summary' is rendered by ExecutiveSummary (page.tsx); the
-// remaining 5 ids must match the `id` props rendered by ChangelogHeaderEssay.
+// remaining 6 ids must match the `id` props rendered by ChangelogHeaderEssay.
 export const MENTAL_MODEL_TOC_ITEMS: ChangelogTocItem[] = [
   { id: 'executive-summary', label: 'Executive summary' },
   { id: 'mission', label: 'Mission & $0 cost' },
@@ -26,6 +26,7 @@ export const MENTAL_MODEL_TOC_ITEMS: ChangelogTocItem[] = [
   { id: 'swe-compass', label: 'The SWE Compass' },
   { id: 'agent-definition', label: 'What "agent" means' },
   { id: 'system-design-philosophy', label: 'System design philosophy' },
+  { id: 'effective-communication', label: 'Effective communication' },
 ];
 
 // One entry per CHANGELOG_PROJECTS item, in the same order, so the sidebar's
@@ -37,7 +38,7 @@ export const PROJECT_TOC_ITEMS: ChangelogTocItem[] = CHANGELOG_PROJECTS.map((pro
 
 export const FAQ_TOC_ITEM: ChangelogTocItem = { id: 'faq', label: 'FAQ' };
 
-// Full, flat TOC — 5 essay sections + 4 project ids + faq — the exact set
+// Full, flat TOC — 6 essay sections + 4 project ids + faq — the exact set
 // ChangelogSidebar's single useActiveSection call is scoped to.
 export const CHANGELOG_TOC_ITEMS: ChangelogTocItem[] = [
   ...MENTAL_MODEL_TOC_ITEMS,

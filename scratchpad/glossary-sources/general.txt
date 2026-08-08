@@ -1,0 +1,763 @@
+# Source: public/excalidraw/general.excalidraw
+# Text elements: 161
+
+## Frame: Learning Plan
+
+programming language -> functional code -> professional code (typehinting, typesaftey, testing) -> high throughput (concurrency) and optimization (C/C++, O(1) hashing, code maintenance)
+---
+Fundamentals
+---
+Practical Coding
+---
+System Design
+---
+AI/ML (GenAI)
+---
+Interviewing
+---
+Python
+---
+C++
+---
+SQL
+---
+TypeScript
+---
+Fundamentals of Software Eng
+Mark Richards
+(9781098143220)
+---
+Clean Architecture
+Robert C. Martin
+(9798341638167)
+---
+The Pragmatic Programmer
+David Thomas
+(9789083381831)
+---
+Grokking Algorithms
+Aditya Bhargava
+(9781617299704)
+---
+Working Effectively with Legacy Code
+Michael Feathers
+(0131177052)
+---
+Understanding Computation
+Tom Stuart
+(9781449318482)
+---
+Building Microservices
+Sam Newman
+(9781098116668)
+---
+Fluent Python
+Luciano Ramalho
+(9781492056348)
+---
+Python Crash Course
+Eric Matthes
+(9780138172398)
+---
+Architecture Patterns
+Harry Percival
+(9781098100650)
+---
+Clean Python
+Sunil Kapil
+(9781800560215)
+---
+Python Testing with pytest
+Brian Okken
+(9781680509199)
+---
+Effective Modern C++
+Scott Meyers
+(9781098178130)
+---
+C++ Crash Course
+Josh Lospinoso
+(9781839216541)
+---
+Design Patterns with C++
+Fedor Pikus
+(9781835881149)
+---
+Learning SQL
+Alan Beaulieu
+(9781492077435)
+---
+SQL Performance Explained
+Markus Winand
+(9798341627475)
+---
+Programming TypeScript
+Boris Cherny
+(9781492037644)
+---
+Effective TypeScript
+Dan Vanderkam
+(9781492053736)
+---
+Designing Data-Intensive App
+Martin Kleppmann
+(9781098175504)
+---
+System Design Interview
+Alex Xu
+(9781492086888)
+---
+Understanding Distributed Sys
+Roberto Vitillo
+(9781098156343)
+---
+Microservices Patterns
+Chris Richardson
+(9781098163532)
+---
+Database Internals
+Alex Petrov
+(9781492083115)
+---
+Site Reliability Engineering
+Niall Richard Murphy
+(9781492053101)
+---
+Cloud Native Patterns
+Cornelia Davis
+(9781098119058)
+---
+Generative AI on AWS
+Chris Fregly
+(9781098166298)
+---
+Machine Learning Design Patterns
+Valliappa Lakshmanan
+(9781098107956)
+---
+Hands-On Generative AI
+Maximilien
+(9798341660717)
+---
+Modern Generative AI
+Packt
+(9781807782313)
+---
+Programming Interviews Exposed
+John Mongan
+(9781119418474)
+---
+Ace the Data Science Interview
+Kevin Huo
+(9781098146535)
+---
+The Complete Coding Interview Guide
+Packt
+(9781788399081)
+---
+Java Programming Interviews
+Exposed
+Apress
+(9781430247616)
+---
+https://missing.csail.mit.edu/
+---
+https://google.github.io/eng-practices/review/reviewer/
+---
+https://missing.csail.mit.edu/2026/
+---
+Robust Python
+---
+High Performance Python
+---
+Rust
+---
+(py)Spark
+---
+(SWE/ML/LLM)Ops
+---
+Kubernetes
+---
+KubeFlow
+---
+MLFlow
+---
+AirFlow
+---
+Docker
+---
+dbt
+---
+DVC
+---
+Fivetran
+---
+Terraform
+---
+If I had to start my software engineering career again in today's job market...
+
+I'd learn these 10 things in this order:
+
+1. Data Structures & Algorithms
+2. Backend Development
+3. System Design
+4. SQL & Database Design
+5. Cloud (AWS/GCP)
+6. Docker & Kubernetes
+7. AI Development (LLMs, RAG, Agents)
+8. CI/CD & DevOps
+9. Debugging & Production Engineering
+10. Communication & Writing
+---
+
+## Frame: Practical Coding
+
+Practical Coding
+---
+Primitives
+(integers, floats, boolean, strings)
+---
+Type Systems
+(static/dynamic, strong/weak)
+---
+Memory & Mutability
+---
+Control Flow
+---
+Loops & Iteration
+(for, while)
+---
+Scope & Execution Blocks
+    (global vs. local)
+---
+Conditional
+    (if/elif/else, switch/case)
+---
+Error & Exception
+---
+Data Structures
+---
+Object Orientated Programming
+---
+Inheritance
+---
+Polymorphism
+---
+Encapsulation
+---
+Abstraction
+---
+Foundations
+---
+Linear
+(Array, Linked List, Stack/Queue)
+---
+Hashmaps, Hashsets, Trees, Graphs
+---
+
+## Frame: Communication Frameworks, Methods, and Techniques
+
+Must Signal: I have done ___ which resulted in ___
+
+Key Interview Questions & Their Hidden Meanings:
+Tell me about yourself (1:00): Don't just recite your resume. Link your background directly to how you can solve the problem the employer is hiring to fix.
+
+Why did you leave your last job? (2:06): 
+Employers are assessing risk. They want to know if you are a flight risk or if you tend to run away from challenges.
+
+Explain your job gap (3:19): 
+They want to know if there is a valid reason and, more importantly, how you stayed sharp and relevant during that time.
+
+What’s your greatest weakness? (4:12): 
+This tests your self-awareness. Pick a genuine, non-critical weakness and show how you are working to overcome it.
+
+What are your salary expectations? (5:04): 
+A game of "chicken." Be honest and provide a market-researched range to avoid wasting time.
+
+Why do you want this job? (6:02): 
+They need to see genuine passion and mission rather than just a desire for a paycheck, which could signal you're a flight risk.
+
+Where do you see yourself in 5 years? (6:41): 
+A trick question to check for career alignment—does this role realistically lead to your goals, or are you just a temporary filler?
+
+Why should we hire you? (7:50): 
+Your final chance to demonstrate clear fit and present information that hasn't been covered yet.
+
+Do you have any other offers? (8:24): 
+They need to know if they need to expedite their internal process to stay competitive for you.
+
+Do you have any questions for us? (9:41): 
+This is for you to evaluate if the company is a good fit for you. Treat the interview as a two-way street.
+---
+Answer Framework
+• What was the project/problem?
+• What specifically was your role?
+• What technologies did you use?
+• What was the outcome/impact?
+• If limited experience: "I haven't directly owned that, but I've worked with/alongside X and
+have been building knowledge in Y."
+
+Python Experience
+• Be prepared with 2-3 examples
+
+• APIs, backend services, automation, integrations, data processing
+• Discuss architecture, challenges, and business impact
+
+Final Reminder
+• Credibility > Perfection
+• Ownership > Buzzwords
+• Clarity > Overexplaining
+• Honest about gaps + ambitious about growth = strongest interview outcome.
+
+1. Situation, Task, Action Result
+2. Answer with specific examples of what i've done with concrete details leveraging the technologies used and their impact
+    2.1 Signal and narrate your resume's Google XYZ structure
+3. Audience must receive the signal you are prepared to do the job (not learn on the job)
+4. Philosophies of Code
+    - ...-driven-development
+        - business, test, type, domain
+    - assume users don't have ill-intent (happy path), minimum effective security
+    - leave code better than you found it, be empathetic to the developer who originally made it
+
+Key Coaching Point
+• Stay out of hypotheticals ("I would...", "I could...", "I imagine...")
+• Lead with what you have actually done
+• If you lack direct experience:
+o Clearly state it
+o Explain related exposure
+o Demonstrate foundational knowledge
+
+Phrases to Use
+• "My direct experience was..."
+• "I partnered closely with..."
+• "My level of ownership was..."
+• "I haven't directly done X, but I've gained exposure through..."
+• "That's an area I'm actively looking to deepen."
+
+Phrases to Avoid
+• "I would..."
+• "I could..."
+• "If I were..."
+• "I've been exposed to..." (without explaining what exposure means)
+• Any statement that blurs ownership vs participation
+---
+Use real examples whenever possible
+---
+Absstract to agnostic frameworks systems thinking but explain from hardware 1st principles
+    * STAR
+    * end-to-end
+        - design, data, backend, model, frontend, deploy
+
+Real example:
+    Q: how would you improve performance of a pipeline
+    A: what non-functional characteristic am I improving? When running TPU computing for weeks, high availbility is imporant
+    Q: improve the latency for a data pipeline
+    A: (real responses live in the moment with limited time; joined late and hard cut off with time back)
+        - selecting too much data
+        - chunking strategies could be improved
+        - if we could use GPU, should we?
+            - CPU--i/o--GPU & clustering
+        - hardware limit to vertical computing, consider horizontal strategies
+            - consider concurrent workflows with sharding and/or parralleism for distributive compute
+        - financial constraints, sometimes you can't because of other constraints so set expectations with stakeholders
+        
+After some thoughts:
+    - interviewier and recruiter communicated real-examples. This interviewier and others in the past don't want hypotheticals. Signal real answers from real experience.
+    - additional approaches: memory management for less data bloat to compute faster and/or improved reads-speed
+        - improving reads by structuring data as columns instead of rows
+        - SQL Joins could be improved, Python immutability & memory/garbage management, otherwise refactor to C/C++/Rust or some other performative language
+            - database selection and other systems design considerations holistically (batch vs streaming)
+        - zero-copy (no i/o handoff between CPU/GPU and within CPU L1/L2 memory)
+        - distributive compute with clusters
+    
+    - similar to monolith vs microservices is partitioning vs sharding
+        - single: monolith, partitioning strategies (like additional subfolders in a folder)
+        - multiple: microservices, sharding
+---
+Start with showcaseable project then extrapolate professionally at scale
+---
+
+## Frame: Digitizing Notes
+
+LLM workflow (I define) vs. Agentic (autonomous)
+AI growth and adoption: addressing user fear (of AI and SWE automation) despite 100k and 1M system
+Linkedin Agent (offline) vs. Resume Agent (online)
+    -> RAG vs CAG: retrieval augmented generation vs. cache augmented generation
+---
+Outreach
+---
+resume
+---
+linkedin
+-find job description
+-find team
+-find hiring manager
+-email
+---
+Interview Preparation
+---
+Agentic Debugging (read-only)
+Data Structures and Algorithms
+First principles fundamentals
+System Design + Cloud (AWS/GCP, Docker/Kubernetes)
+---
+Job readiness
+---
+Upskill with the industry/next role
+---
++ Open source contributions
++ lower-level hardware compute (GPU/TPU)
+---
+
+## Frame: git contributions
+
+Github Contributions
+---
+Working with Colab
+---
+Git
+git checkout main
+* main
+git branch -b <feature/fix/.../refactor>/<description>-<description...>
+* ...
+git push -u origin HEAD #local to cloud
+---
+Git Pull requests
+- Markdown
+## Summary
+What is the purpose of this pull request? If it resolves a bug or adds a feature, please link to the associated issue or Jira ticket.
+
+## Changes Made
+- [ ] Added/Changed/Removed this specific feature or bugfix.
+- [ ] Updated corresponding documentation.
+- [ ] Added/Updated unit tests.
+
+## How to Test
+What are the step-by-step instructions to verify these changes?
+1. Run `X` command
+2. Navigate to `Y` route
+3. Observe `Z` behavior
+
+## Screenshots / Evidence (if applicable)
+Please attach images, GIFs, or terminal outputs showing the change working as intended.
+---
+
+## Frame: Pair Programming
+
+- Happy Path (code as intended)
+- guard clauses (if not None: ...)
+- helper functions
+    - if used atleast 3 times, def _abstract_out() -> None:
+- Balance type safety with code speed, readability
+    """ this includes doc strings
+            <args>:
+            <returns>:
+        See source code as examples,
+        https://github.com/pytorch/pytorch/blob/v2.13.0/torch/accelerator/__init__.py#L102
+    """
+---
+Testing
+- assert <boolean> == True, <raise_error_str> 
+- if__name__ == "__main__":
+- try: except: raise: finally:
+---
+Timeblocking
+    - 5: read design
+    - 5: pseudo code
+    - 20: implement happy path
+    - 10: edge cases, testing, documentation, robustness (typesaftey)
+-> make it work -> make it right -> make it fast
+Keep things clean and modular, high cohesion and low coupling
+---
+Job Readiness Python
+- async/await
+- concurrency
+- distributed systems
+---
+
+## Frame: Data Structures and Algorthims
+
+Neetcode
+1. Sorting
+- .sort vs sorted(), .sort() preferred since in-line and more memory optimized
+- awareness of keywords and params to leverage default native language 
+
+2. pythonic programming 
+- unpacking
+- enumerate1 
+- zip
+- inequiality
+- min(), max()
+
+3. lists
+4. Stacks & Queues
+5. 2D lists
+6. Hashmap and Hashsets
+7. Heaps/Priority Queues
+8. Sorted Dicts and Sorted Sets
+
+--
+
+Neetcode cont.
+
+Tree traversal vs. Linked-list traversal
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+--
+Standard Libraries to know
+1. collections
+2. heapq
+3. bisect
+4. defaultdict
+    - convienent way to initiate values of dicts
+---
+Learning Python (book)
+1. FUNDAMENTALS
+- numbers & expressions
+- dynamic typing
+- strings
+    - print f"string{var}"
+- lists and dictionary
+    - list.append vs. list.extend
+- tuples1
+
+2. LOGICAL FLOW
+- if/else
+- for, while loops
+- comprehensions
+- pass, continue, break
+
+3. FUNCTIONS
+- functions (def my_func(args: args_type = default_value) -> return.type:
+- lambda single_arg:
+
+4. MODULES
+- import ...
+- from ... import ...
+- Could be our own scripts
+    - requires __init__.py at top of folder structure
+
+5. CLASSES & OBJECT ORIENTATED PROGRAMMING
+Class MyClass:
+    def __init__(self, my_param: param.type) -> None:
+        self.my_param = my_param # self creates an instance of the varaible for use downstream
+
+    def my_method(self) -> None:
+
+6. EXCEPTIONS & TESTING1
+---
+
+## Frame: Engineering Fundamentals & Career — Senior-Level Best Practices
+
+- Novel-problem approach (beyond Neetcode pattern-matching): restate the problem in your own words, hand-trace a small concrete example before coding, then name the technique out loud (decomposition, transformation, search/prune,
+greedy, DP) instead of guessing at a memorized template.
+- Narrate the brute force first, before optimizing — interviewers grade the reasoning process, not just the final code. Silence reads as stuck; a wrong idea stated and self-corrected reads as senior.
+- Practice articulating complexity tradeoffs out loud, not just writing Big-O: time vs. space, average vs. worst case, amortized cost of a resize, and when a worse asymptotic complexity is the right call (small N, cache locality, simpler
+code to maintain).
+- Advanced git — interactive rebase: squash/reorder/edit commits before opening a PR so history reads as a narrative, not a diary of fixes.
+  - `git rebase -i HEAD~n`, then pick/squash/fixup/reword each commit
+  - `git rebase --abort` to bail out safely if it goes sideways
+- Advanced git — `git bisect` to binary-search a regression: `git bisect start`, mark commits `good`/`bad`, let it walk the range — or automate the whole search with `git bisect run <test-script>`.
+- Advanced git — resolving real conflicts: read the `<<<<<<< HEAD` / `=======` / `>>>>>>>` markers as "mine vs. theirs," prefer re-applying intent over blindly picking a side, and use `git rebase --onto` to salvage a branch after a
+botched merge.
+- Advanced git — hooks (`pre-commit`, `pre-push`) for local automation: gate lint/format/tests before code ever reaches CI or review. Hooks live in `.git/hooks/`, or are shared across a team via a tool like Husky or the `pre-commit`
+framework.
+- Concurrency fundamentals: a race condition is unsynchronized access to shared mutable state; mutex (exclusive access) vs. semaphore (bounded count) vs. read-write lock; deadlock requires mutual exclusion + hold-and-wait + no
+preemption + circular wait — breaking any one prevents it.
+- Async patterns: the event loop and non-blocking I/O vs. OS threads; callback to Promise to async/await is a readability evolution, not a performance one; backpressure — a slow consumer signaling a fast producer to slow down — is
+the concept most engineers skip until it breaks in production.
+- Distributed systems basics: CAP theorem (pick 2 of consistency/availability/partition-tolerance during a network partition); idempotency keys so retries are safe to replay; eventual consistency and read-your-own-writes; exponential
+backoff with jitter, not fixed-interval retries.
+- Code review culture, giving feedback: comment on the diff, not the author; explicitly label blocking vs. nit vs. question; approve with comments when nothing is blocking so the change isn't stalled waiting on you.
+- Code review culture, receiving feedback: assume good intent, ask a clarifying question before pushing back, and thank the reviewer even when you disagree — the goal is a better system, not winning the thread.
+- Mentoring: ask questions that lead someone to the answer rather than handing it over; pair on the hardest 20% of a task and let them drive; assign stretch work slightly outside their comfort zone with a safety net in place.
+- Technical writing / RFCs: problem statement -> constraints -> alternatives considered (with why each was rejected) -> proposed approach -> rollout/rollback plan. Write for the reader who opens the doc six months from now with
+zero context.
+- Cross-team communication: over-communicate context before asking for help, default to async written updates over pulling people into meetings, and flag scope or timeline changes the moment you know — never let a surprise land at
+the deadline.
+- Managing ambiguity is itself a senior skill: when scope is unclear, propose a concrete interpretation and success metric rather than waiting to be told, and timebox exploration/spikes. Senior criteria in practice = influence beyond your
+own PRs, sound judgment under uncertainty, and ownership of outcomes rather than just tasks completed.
+---
+
+## Frame: Engineering Fundamentals & Career — Community Resources & Further Reading
+
+- Pro Git (Scott Chacon & Ben Straub) — free official book at git-scm.com/book; the canonical deep dive on rebasing, bisect, and git internals beyond daily-driver usage.
+- Learn Git Branching (learngitbranching.js.org) — interactive visual sandbox for practicing interactive rebase, cherry-pick, and merge-conflict resolution without risking a real repo.
+- Google Engineering Practices (google.github.io/eng-practices) — official "How to do a code review" and "The CL Author's Guide," the most widely cited public standard for review culture.
+- Staff Engineer archetypes & guides (staffeng.com) — Will Larson's site on staff-plus scope and influence: Tech Lead, Architect, Solver, and Right Hand archetypes.
+- The Pragmatic Engineer (newsletter.pragmaticengineer.com) — Gergely Orosz's newsletter on career progression and real-world engineering practice at senior/staff level.
+- levels.fyi — crowdsourced leveling and compensation data across companies; useful for calibrating what "senior" actually means from one company's ladder to another's.
+- Blind (teamblind.com) — anonymous, verified-employee community for compensation, interview-loop, and leveling discussions; read critically, since it's unmoderated.
+- Tech Interview Handbook (techinterviewhandbook.org) — free, community-maintained guide covering behavioral prep, negotiation, and the end-to-end interview process, not just algorithms.
+- Pramp, now part of Exponent (pramp.com) — free peer-to-peer mock interview practice for rehearsing live problem-solving and communication under time pressure.
+---
+
+## Frame: agnostic frameworks
+
+design
+---
+data
+---
+model
+---
+backend
+    - serverside logic
+---
+frontend
+    - visualizing backend
+    - UI/UX design implementation
+---
+operations (ops)
+    - cloud deployment (ci/cd)
+        - tests, code quality
+    - distributive (kubernetes)
+---
+standard (naive) solutions:
+    - batch processes
+    - sequential
+    - stateless
+    - "just works" or "good enough"
+---
+improved (optimized) solutions:
+    - streaming processes
+        - continous batch processes
+    - parrallized
+    - concurrent
+    - stateful
+        - continuous learning (KV cache)
+---
+end-to-end
+---
+abstraction
+---
+time
+---
+Abstraction Level
+---
+Role / Definition
+---
+Resume Examples
+---
+AI/GPU Acceleration Tech
+---
+Level 10:
+AI Agent
+---
+Autonomous Intent Execution
+---
+WebSocket Puzzle Agent, Agentic
+Video Pipeline[cite: 1]
+---
+vLLM Inference Server, Triton
+Inference Server
+---
+Level 9:
+SaaS / Integration
+---
+App-to-App APIs & Logic
+---
+SAP S/4HANA, Google
+Workspaces, Snowflake
+Cortex[cite: 1]
+---
+Ray Clusters, KubeRay, NVIDIA
+Dynamo
+---
+Level 8:
+Application
+---
+End-User Interfaces &
+Dashboards
+---
+Streamlit, Tableau Dashboards,
+Next.js / React[cite: 1]
+---
+Gradio, HuggingFace Hub UIs
+---
+Level 7:
+Framework
+---
+Software & ML Scaffolding
+---
+LangChain, dbt, OpenFold3,
+PyTorch, FastAPI[cite: 1]
+---
+PyTorch, JAX, Flax, TensorRT-
+LLM, DeepSpeed
+---
+Level 6:
+Platform
+---
+Containerized Compute
+Environments
+---
+GCP, AWS, Docker
+Containerization, Kubernetes[cite:
+1]
+---
+Google Kubernetes Engine (GKE),
+AWS Trainium
+---
+Level 5:
+Compiler / Runtime
+---
+Translating Code to
+Operations
+---
+Python3, Node.js Runtime,
+JavaScript, R[cite: 1]
+---
+OpenXLA Compiler, TVM, Triton
+(Kernel Compiler)
+---
+Level 4:
+Operating System
+---
+Hardware Resource
+Management
+---
+GitHub Actions Runners, Docker
+OS Isolation[cite: 1]
+---
+Ubuntu, NVIDIA Management
+Library (NVML), Kernel Drivers
+---
+Level 3:
+Instruction Set (ISA)
+---
+Standardized Machine
+Instructions
+---
+ARM64 (Raspberry Pi), x86-64
+Execution[cite: 1]
+---
+PTX (NVIDIA Virtual
+Architecture), AMDGCN
+---
+Level 2:
+Microarchitecture
+---
+Hardware Logic & Matrix
+Operations
+---
+CuPy, OpenXLA, Model
+Quantization Kernels[cite: 1]
+---
+CUDA Kernels, FlashAttention,
+Tensor Cores
+---
+Level 1:
+Physical Silicon
+---
+Physical Compute Hardware
+---
+Raspberry Pi, NVIDIA GPUs,
+Google TPUs[cite: 1]
+---
+NVIDIA H100 / B200, Google
+Cloud TPU v5e / v6e
+---

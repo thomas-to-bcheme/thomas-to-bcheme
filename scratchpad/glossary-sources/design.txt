@@ -1,0 +1,1057 @@
+# Source: public/excalidraw/design.excalidraw
+# Text elements: 77
+
+## Frame: System Design Interview Framework
+
+STEP 1
+Requirements
+& Scope
+(~5 min)
+---
+STEP 2
+High-Level
+Design
+(~20 min)
+---
+STEP 3
+Deep Dive
+(~15 min)
+---
+STEP 4
+Wrap Up
+(~5 min)
+---
+STEP 1 — Requirements & Scope (~5 min)
+---
+FUNCTIONAL REQUIREMENTS — ask, don't assume
+• Who are the system users? (end users, admins, B2B clients, services)
+• What are the 3 core use cases to prioritize?
+• What is explicitly OUT of scope?
+• What are the read vs. write patterns? (CRUD-heavy, real-time, analytics)
+
+NON-FUNCTIONAL REQUIREMENTS — the staff-level differentiator
+• Latency: P50/P99 read + write targets (not just "fast")
+• Throughput: peak RPS — ask about burst patterns vs. sustained load
+• Availability: 99.9% = 8.7h downtime/yr | 99.99% = 52min/yr | 99.999% = 5.3min/yr
+• Consistency: strong (linearizable) vs. read-your-writes vs. eventual
+• Scalability: current DAU + 10× growth horizon
+• Durability: RPO? (can we lose 1 hour of writes? 1 second?)
+• Compliance: GDPR (EU data residency), HIPAA (PHI audit), PCI-DSS
+• Geographic: single region, multi-region, global edge?
+• Security: public API vs. internal, auth requirements
+
+BACK-OF-ENVELOPE — anchor every component decision
+• RPS (avg) = DAU × requests/user/day / 86,400
+• RPS (peak) = avg × burst_factor (often 3–5×)
+• Storage/day = writes/day × avg_record_bytes
+• Storage/year = storage/day × 365 × replication_factor
+• Example: 100M DAU, 10 req/user/day → 11,574 avg RPS, ~35K peak RPS
+
+CAP vs. PACELC — frame before picking databases
+• CAP: when network partition occurs → CP (consistency) or AP (availability)?
+  CP: Zookeeper, HBase, etcd — blocks writes during partition
+  AP: Cassandra, DynamoDB, CouchDB — serves possibly stale data
+• PACELC: even without partition → optimize for Latency or Consistency?
+  PA/EL: DynamoDB (always prefer availability + low latency)
+  PC/EC: HBase (always prefer consistency)
+• Most web systems: AP during partition + eventual consistency at normal ops
+---
+STEP 2 — High-Level Design (~20 min)
+---
+API DESIGN — select paradigm from requirements
+• REST: public APIs, CRUD, HTTP caching, universal client support
+  Use when: external-facing, resource-oriented, SEO matters
+• gRPC: binary protobuf, streaming, codegen stubs, low latency
+  Use when: internal microservices, high-throughput, strong contracts
+• GraphQL: client-driven queries, reduces over/under-fetching
+  Use when: mobile-first, multiple client types with varied data needs
+  Risk: N+1 problem → mitigate with DataLoader batching
+• WebSocket/SSE: persistent connection, real-time push
+  Use when: chat, live feeds, collaborative editing, notifications
+
+DATA MODEL — 3 decisions before schema
+1. Identify entities and relationships (ERD or informal)
+2. Map read access patterns (what queries will be most common?)
+3. Choose database TYPE from access pattern + consistency need:
+   • Simple lookups, sessions → Key-Value (Redis, DynamoDB)
+   • Relational, complex joins, ACID → SQL (PostgreSQL, Aurora)
+   • Flexible schema, nested docs → Document (MongoDB)
+   • Write-heavy, time-series, global → Column-family (Cassandra)
+   • Full-text search → Elasticsearch
+   • Graph traversal → Neo4j
+   Rule: pick DB from access pattern, NOT brand familiarity
+
+CANONICAL HLD COMPONENTS
+Client → CDN (static cache, geo-edge)
+  → Load Balancer (L7 ALB: HTTP routing; NLB: TCP gaming/streaming)
+  → API Gateway (auth, rate limiting, routing, SSL termination)
+  → Services (stateless; scale horizontally)
+  → Cache Layer (Redis: L2 distributed cache)
+  → Message Queue (Kafka/SQS: async decoupling)
+  → Primary DB + Read Replicas
+  → Object Storage (S3/GCS: blobs, pre-signed URLs)
+  → Observability (Prometheus + Grafana + OpenTelemetry/Jaeger)
+
+JUSTIFICATION TEMPLATE (use for every component):
+"I'm adding [component] here because [NFR it addresses].
+I chose [technology A] over [technology B] because [reason].
+The trade-off is [cost/complexity/consistency impact]."
+---
+STEP 3 — Deep Dive (~15 min)
+---
+IDENTIFY BOTTLENECKS FIRST — then propose solutions
+• State the exact bottleneck: "At 35K peak RPS, a single PostgreSQL primary
+  will saturate at ~10K writes/sec — that's the first thing I'd address."
+• Propose 2+ solutions per bottleneck with trade-offs
+• Pick one with justification tied to NFRs
+• Move to next bottleneck; don't go infinite depth on one
+
+CACHING:
+• Cache-Aside: app checks cache → miss → fetch DB → write cache
+  Best for: read-heavy, resilient to cache failure, cold start penalty
+• Write-Through: write cache + DB sync — fresh data, write latency cost
+• Write-Behind: write cache, async flush — low write latency, loss risk on crash
+• Thundering herd: probabilistic early expiry OR request coalescing (mutex on miss)
+• Hot key: shard key + random suffix (user:12345:rand(0,9))
+
+DATABASE SCALING:
+• Read replicas: async replication (monitor lag < 1s), routes ~80% of traffic
+• Connection pooling: PgBouncer (PG), ProxySQL (MySQL) — critical at scale
+• Sharding: Hash (even dist, no range queries), Range (ordered, hotspot risk)
+  Consistent hashing: virtual nodes minimize resharding impact
+• Indexes: composite covers WHERE + ORDER BY; partial for filtered subsets
+  EXPLAIN ANALYZE every query > 100ms; avoid N+1 with DataLoader or JOINs
+
+RATE LIMITING:
+• Token Bucket: fixed capacity N, refills at rate R — allows burst up to N
+  Best for: user-facing APIs, natural bursty traffic
+• Sliding Window Log: Redis sorted set + ZCARD — precise, memory O(requests)
+  Best for: strict compliance requirements
+• Fixed Window Counter: Redis INCR + EXPIRE — simple, edge-burst risk
+• Distributed: Redis Lua EVAL for atomic check+decrement; shard by user_id
+
+MESSAGE QUEUES & ASYNC:
+• Kafka: durable log, replay, partitioned ordering (partition key = entity_id)
+  Retention 7 days; consumer groups = horizontal scale up to partition count
+  Use for: event sourcing, audit trail, data pipelines, fan-out
+• SQS: managed, at-least-once; visibility timeout > processing time
+  DLQ after N retries; FIFO variant for strict ordering
+• Idempotency: consumer MUST store processed event_ids
+• Outbox pattern: write event + state in same DB tx → relay publishes
+
+CONSISTENCY MODELS (weakest → strongest):
+• Eventual: AP systems (Cassandra, DynamoDB default) — fastest
+• Monotonic Read: once you read version V, never read V-1
+• Read-Your-Writes: always see your own updates
+• Causal: cause precedes effect — collaborative documents
+• Strong/Linearizable: globally ordered — most expensive
+---
+STEP 4 — Wrap Up (~5 min)
+---
+SUMMARIZE — 3 key decisions + WHY
+• "I chose [technology] because [NFR]. The trade-off is [X]."
+• "The most critical bottleneck was [Y], addressed by [Z]."
+• "If I were to improve this further, I'd explore [improvement]"
+
+FAILURE SCENARIOS TO MENTION
+• Primary DB fails → automated failover (60–120s RDS), replica promoted
+• Cache cold start → thundering herd; mitigated by circuit breaker
+• Queue consumer lag → DLQ strategy, scale consumers
+• Network partition → AP system serves stale data; TTL-based convergence
+• Cascading failure → bulkhead, circuit breaker (open on N failures)
+
+MONITORING & OBSERVABILITY
+• RED (per service): Rate, Error rate, Duration (latency P50/P99)
+• USE (per infrastructure): Utilization, Saturation, Errors
+• SLI: measured value (e.g., 99.95% requests < 200ms)
+• SLO: internal target (e.g., 99.9% P99 < 200ms over 30 days)
+• SLA: customer-facing contract with financial penalties
+• Error budget: 1 - SLO = allowed failure budget (burn-rate alerts)
+• Distributed tracing: OpenTelemetry → Jaeger/Tempo (W3C TraceContext)
+• Structured logs: JSON + trace_id + correlation_id; never log PII raw
+
+STAFF-LEVEL SIGNALS TO DROP IN
+• Cost: "At this scale, the cache tier adds ~$800/month but eliminates
+  ~$8,000/month in DB over-provisioning"
+• Org/Conway's Law: "I'd align service boundaries to team boundaries
+  — Team A owns Service X end-to-end including on-call"
+• Phase roadmap: "Phase 1 handles 10K users (MVP); Phase 2 at 100K
+  adds read replicas + cache; Phase 3 at 1M evaluates sharding"
+• Security by default: "DB in private subnet, only accessible from
+  service tier; secrets in Secrets Manager, rotated weekly; mTLS internal"
+• Operational excellence: "Two runbooks I'd prioritize: primary DB
+  failover and cache stampede recovery"
+---
+INTERVIEW SCORING RUBRIC
+---
+FIVE DIMENSIONS — interviewers score each 1–5 (25 max)
+
+COMMUNICATION (1–5)
+1 = Jumps to solution, hard to follow
+3 = Explains each step, pauses to verify understanding
+5 = Teaches the interviewer; draws proactively; adjusts depth on signal
+Tip: Narrate your thinking — "I'm considering X because Y"
+
+BREADTH (1–5)
+1 = Knows one technology per category
+3 = Names multiple options per category, knows rough trade-offs
+5 = Knows edge cases, failure modes, when "popular" choice is wrong
+Tip: Always offer 2 solutions before committing to one
+
+DEPTH (1–5)
+1 = Can't go deeper than box-level diagram
+3 = Can explain implementation details of chosen components
+5 = Can whiteboard internal algorithms, data structures, failure modes
+Tip: Know 2–3 components at implementation depth (consistent hashing, LSM-tree)
+
+TRADE-OFF ARTICULATION (1–5)
+1 = Picks tech "because it scales" or "because we use it at work"
+3 = Explains pros/cons of each option
+5 = Quantifies trade-offs ("write-through adds ~2ms but eliminates stale reads")
+Tip: Always tie trade-off to a specific NFR from Step 1
+
+PROACTIVE PROBLEM IDENTIFICATION (1–5)
+1 = Only identifies bottlenecks when interviewer points them out
+3 = Finds obvious issues (single DB, no caching)
+5 = Identifies subtle issues (thundering herd, hot partitions, split-brain)
+Tip: After each component ask: "what happens when this fails?"
+
+STAFF-LEVEL DIFFERENTIATORS (beyond 25/25)
+• Mentions cost implications without being asked
+• References team/org ownership model for service boundaries
+• Proposes phased rollout with concrete milestones
+• Identifies security boundaries proactively
+• Shows awareness of build-vs-buy judgment
+• Discusses deprecation/migration path for replaced components
+---
+COMMUNICATION SCRIPTS
+---
+OPENING (first 60 seconds — DO NOT draw yet):
+"Before I start designing, let me make sure I understand the scope.
+Are we optimizing for [read-heavy / write-heavy]? What's our target
+DAU — millions or hundreds of millions? And do we need global
+distribution or single-region? ... Great. I'll use those to anchor."
+
+PROPOSING EVERY COMPONENT (template):
+"I'd add [component] here because [specific NFR it addresses].
+My default choice is [technology A] — [one-line reason].
+We could alternatively use [technology B], which gives us [benefit]
+at the cost of [trade-off]. Given our [NFR], I'll go with A."
+
+ARTICULATING A BOTTLENECK:
+"The concern with [component] is [specific failure mode].
+At [scale metric] — say 35K RPS — [what breaks].
+Two approaches: [Solution A] which gives us [benefit] but costs [X];
+[Solution B] which costs [Y] but gives us [Z].
+I'd recommend [A] because [tie to NFR from Step 1]."
+
+PROACTIVE TRADE-OFF MENTION:
+"I want to call out a trade-off: we're sacrificing [consistency /
+latency / simplicity] in exchange for [availability / throughput /
+scale]. That's the right call here because [business reason]."
+
+HANDLING "WHY NOT X?":
+"Great question. [X] would work — the reason I didn't lead with it
+is [specific technical reason]. If [condition] changed, I'd reconsider."
+
+WRAP-UP:
+"Let me summarize the key decisions: [1], [2], [3].
+The biggest risk I see is [X], mitigated by [Y].
+If I had another 30 minutes, I'd explore [Z] to improve [metric]."
+
+STAFF-LEVEL SIGNALS TO DROP IN NATURALLY:
+• Cost: "Rough estimate: at this scale, that's ~$X/month.
+  The [component] saves us ~$Y/month on [resource]."
+• Conway's Law: "I'd structure service ownership so [team A] owns
+  [service X] end-to-end — API, DB schema, and on-call rotation."
+• Security: "I'd put the DB in a private subnet — no public route,
+  only reachable from the service layer via security group rule."
+• Phased delivery: "Phase 1 gets us to 10K users.
+  Phase 2 at 100K: we add [component]. Phase 3 at 1M: revisit [decision]."
+• Operational: "Two failure modes I'd want runbooks for: [X] and [Y]."
+---
+
+## Frame: Architecture Concepts
+
+Design
+---
+REQUIREMENTS ENGINEERING
+Functional: core use cases, actors, API contracts, out-of-scope
+Non-Functional (NFRs):
+• Latency: P50/P99 read + write targets
+• Throughput: peak RPS + burst factor
+• Availability: 99.9%=8.7h | 99.99%=52min | 99.999%=5.3min
+• Consistency: strong vs. eventual
+• Scalability: 10× growth horizon
+• Durability: RPO/RTO targets
+• Compliance: GDPR/HIPAA/PCI-DSS
+
+SLA / SLO / SLI
+• SLI: measured metric (e.g., 99.95% up)
+• SLO: internal target (99.9% over 30d)
+• SLA: contractual with financial penalties
+• Error budget = 1 - SLO
+
+CAP THEOREM
+• CP: Zookeeper, HBase, etcd (blocks on partition)
+• AP: Cassandra, DynamoDB (serves stale)
+PACELC:
+• P: partition → Availability vs Consistency
+• E: else (normal) → Latency vs Consistency
+• DynamoDB: PA/EL | HBase: PC/EC
+
+FAULT TOLERANCE PATTERNS
+• Circuit Breaker: open on N failures → fast-fail → probe → reset
+• Bulkhead: separate thread pool per downstream
+• Retry: exp backoff + full jitter, max 3 retries + total deadline
+• Timeout: fail fast at P99 of downstream
+• Fallback: cached data or default response
+
+SDLC ENVIRONMENTS
+Dev → Test → Staging (prod-mirror) → Prod
+• Immutable infra: rebuild, don't patch
+• Feature flags: decouple deploy from release
+• Expand-contract: safe DB schema migration
+---
+Data
+---
+DATABASE TAXONOMY — pick by access pattern
+
+RELATIONAL (ACID):
+• PostgreSQL: JSONB, FTS, PostGIS, MVCC
+• Aurora: multi-AZ HA, read replicas
+• Use: relational data, joins, compliance
+
+KEY-VALUE (fastest reads/writes):
+• Redis: in-memory, pub/sub, sorted sets, streams
+• DynamoDB: serverless, GSI, single-digit ms, DAX
+• Use: sessions, cache, leaderboards, counters
+
+DOCUMENT (flexible schema):
+• MongoDB: aggregation, Atlas Search, nested docs
+• Firestore: real-time sync, offline first
+• Use: hierarchical, schema-evolving data
+
+COLUMN-FAMILY (write-heavy, massive scale):
+• Cassandra: LSM-tree, tunable consistency, multi-DC
+• Use: >10M writes/day, time-series, known partition key
+
+SEARCH: Elasticsearch — inverted index, BM25,
+  autocomplete, faceted, percolate
+GRAPH: Neo4j — Cypher, relationship traversal
+TIME-SERIES: InfluxDB, TimescaleDB
+
+INDEXING
+• B-Tree: range + equality (default PG/MySQL)
+• LSM-Tree: write-optimized (Cassandra/RocksDB)
+• Inverted: full-text (Elasticsearch)
+• Composite: match query filter column order
+• Partial: WHERE is_active=true (smaller index)
+• Covering: include all SELECT cols (index-only scan)
+
+SHARDING
+• Hash: even distribution; no range queries
+• Range: ordered; hotspot risk at boundaries
+• Consistent hashing: virtual nodes, minimal resharding
+
+REPLICATION
+• Sync: strong consistency, write latency
+• Async: eventual, read scale, lag < 1s
+• Monitor: seconds_behind_master; alert > 5s
+---
+Model
+---
+ARCHITECTURE EVOLUTION
+Monolith → Modular Monolith → Microservices
+Conway's Law: org structure drives system structure
+
+MONOLITH
++ Simple deploy, fast iteration, no network hops
+- Vertical scaling only, deploy coupling
+Use: team < 15, domain unclear, MVP stage
+
+MODULAR MONOLITH
++ Module boundaries enforced in code
++ Easy to extract to microservices later
+Use: team growing, clearer domains
+
+MICROSERVICES
++ Independent deploy, polyglot, team autonomy
++ Horizontal scale per service
+- Network latency, distributed tracing, complex local dev
+Use: org > 50 eng, distinct bounded contexts
+
+DDD — DOMAIN-DRIVEN DESIGN
+• Bounded Context: own model + DB + API
+• Aggregate: consistency boundary
+  (1 transaction = 1 aggregate root)
+• Domain Events: notify other contexts
+• Ubiquitous language: code = domain terms
+
+CQRS
+• Separate write model (commands, ACID)
+  from read model (queries, denormalized)
+• Use: read/write scaling mismatch, complex domain
+
+EVENT SOURCING
+• Append-only event log; replay = state
++ Audit trail, time-travel, replay consumers
+- Projection complexity, schema evolution
+
+SAGA (distributed transactions without 2PC)
+• Choreography: services react to events (decoupled)
+• Orchestration: saga coordinator drives steps (clear)
+• Compensating txns: undo each completed step
+
+OTHER PATTERNS
+• BFF: one API adapter per client type
+• Strangler Fig: incremental monolith migration
+• Sidecar: co-deployed proxy (Envoy/Istio mTLS)
+---
+Backend
+---
+COMPUTE — choose by traffic pattern
+• EC2/VMs: full control, stateful, GPU
+• ECS/K8s: containerized, HPA auto-scale
+• Lambda/Fargate: serverless, event-driven
+  Cold start: 100ms–1s; max 15min (Lambda)
+
+CACHING LAYERS
+• L1 in-process: Guava/Caffeine — nanoseconds
+• L2 distributed: Redis/Memcached — microseconds
+• L3 CDN: geo-edge — milliseconds
+
+CACHE WRITE PATTERNS
+• Cache-Aside: lazy, resilient, cold-start penalty
+• Write-Through: always fresh, write latency
+• Write-Behind: low-latency writes, loss on crash
+• Eviction: LRU (recency), LFU (frequency), TTL
+
+MESSAGE BROKERS
+• Kafka: durable log, replay, consumer groups
+  Partition key: entity_id (order per entity)
+  Retention: 7d default → replay for new consumers
+• SQS: managed, at-least-once, DLQ after N retries
+• RabbitMQ: AMQP, routing, acks, RPC
+• SNS: pub/sub fan-out → SQS/Lambda/HTTP
+
+API PATTERNS
+• REST: cacheable, stateless, versioning (v1/)
+• gRPC: protobuf, streaming, codegen, deadlines
+• GraphQL: DataLoader for N+1 batching
+
+RATE LIMITING
+• Token Bucket: capacity N, refill R — burst-friendly
+• Sliding Window Log: sorted set — precise
+• Fixed Window: INCR+EXPIRE — simple, edge-burst risk
+• Distributed: Redis Lua EVAL (atomic check+decrement)
+
+LOAD BALANCING
+• Round-robin: equal dist, stateless services
+• Least-connections: route to least-busy
+• IP-hash: sticky sessions per client IP
+• Health-check: auto-remove unhealthy instances
+---
+Deployment
+---
+CONTAINERIZATION
+• Docker: immutable artifacts, multi-stage builds
+• Kubernetes: HPA, PodDisruptionBudget, probes
+• Helm: K8s package manager, values-templating
+• Service Mesh: Istio/Linkerd — mTLS, circuit breaking
+
+CI/CD PIPELINE
+Build → Unit Tests → Integration Tests
+→ SAST/DAST → Build+Scan Image
+→ Deploy Staging → Smoke Tests
+→ Deploy Prod → Synthetic Monitoring
+→ Rollback trigger on SLO breach
+
+DEPLOYMENT STRATEGIES
+• Blue-Green: instant cutover + rollback, 2× cost
+• Canary: % traffic to new version, expand on SLO health
+• Rolling: replace pods one-by-one; version skew risk
+• Feature Flags: deploy dark; enable per cohort
+
+INFRASTRUCTURE AS CODE
+• Terraform: multi-cloud, plan/apply, modules
+• CloudFormation: AWS-native, drift detection
+• Pulumi: TypeScript/Python/Go IaC
+• GitOps: ArgoCD/Flux — cluster state in Git
+
+OBSERVABILITY (3 pillars)
+• Metrics: Prometheus + Grafana
+  RED: Rate, Error rate, Duration per service
+  USE: Utilization, Saturation, Errors per resource
+• Logs: structured JSON, ELK or Grafana Loki
+  Always include trace_id, span_id, service, level
+  Never log PII, passwords, tokens raw
+• Traces: OpenTelemetry → Jaeger/Tempo
+  W3C TraceContext; sample 100% errors + 1% success
+• Alerting: SLO burn-rate (fast 5m + slow 6h windows)
+• Synthetic: probe every 60s from 3+ regions
+
+DISASTER RECOVERY
+• Backup/Restore: RTO = hours, cheapest
+• Pilot Light: scaled-down standby, RTO = 30min
+• Warm Standby: full-size standby, RTO = 5min
+• Active-Active: best RTO, highest cost
+---
+Frontend
+---
+RENDERING STRATEGIES
+• SSR: HTML generated per request on server
+  + SEO, fast initial paint | - hydration cost
+  Use: dynamic user content, SEO critical
+• SSG: pre-built at deploy time, served from CDN
+  + Fastest, zero server compute | - stale data
+  Use: marketing, docs, blog, static content
+• ISR: revalidate on interval or on-demand
+  Best of SSR + SSG (Next.js revalidate)
+  Use: eCommerce, news, semi-dynamic pages
+• CSR: SPA, bundle fetched once, client renders
+  - Poor SEO, slow initial load | + rich interactivity
+  Use: dashboards, admin tools, auth-only apps
+
+CDN & EDGE
+• Fingerprinted assets: Cache-Control: immutable
+• API: short TTL (30s) + stale-while-revalidate
+• Edge functions: geo-routing, A/B, auth
+
+CORE WEB VITALS
+• LCP < 2.5s: preload hero, SSR above-fold
+• INP < 200ms: avoid tasks > 50ms, use workers
+• CLS < 0.1: explicit image/ad dimensions
+
+PERFORMANCE
+• Code splitting: dynamic import() per route
+• Tree-shaking: ESM modules
+• Lazy loading: images + below-fold components
+• Compression: Brotli > gzip (25% smaller)
+
+STATE MANAGEMENT (complexity ladder)
+• useState/useReducer: component-local
+• React Query/SWR: server state, auto-revalidate
+• Zustand: simple shared state, minimal boilerplate
+• Redux Toolkit: complex undo/redo, large teams
+
+TESTING
+• Unit: Vitest/Jest (pure functions, hooks)
+• Component: React Testing Library (a11y-first)
+• E2E: Playwright/Cypress (critical user journeys)
+• Visual: Storybook + Chromatic (diff snapshots)
+---
+Security
+---
+AUTHENTICATION & AUTHORIZATION
+AuthN (who are you?):
+• OAuth2 + OIDC: federated SSO
+• JWT: stateless, verify sig + exp
+• Session tokens: server-side, revocable
+AuthZ (what can you do?):
+• RBAC: role-based — simple, coarse
+• ABAC: attribute-based — flexible, complex
+• ReBAC: relationship-based (Zanzibar)
+
+SECRETS MANAGEMENT
+• Never plaintext in code or env files
+• AWS Secrets Manager / HashiCorp Vault
+• Rotate automatically; audit all access
+• SOPS: encrypt secrets in Git
+
+TRANSPORT & ENCRYPTION
+• TLS 1.3 everywhere (internal + external)
+• mTLS: service-to-service (zero-trust)
+• Certificate pinning: mobile MITM prevention
+• At-rest: KMS envelope encryption
+• Field-level: PII/PCI columns in DB
+
+INPUT VALIDATION
+• OWASP Top 10: SQLi, XSS, CSRF, SSRF
+• Parameterized queries always
+• CSP headers, CORS allowlist (no wildcard)
+• Rate limit + CAPTCHA on public endpoints
+
+NETWORK SECURITY
+• VPC: private subnets for DB + internal svc
+• Security groups: deny by default
+• WAF: OWASP rules + geo-block + bot detect
+• DDoS: CloudFront+Shield or Cloudflare
+• Zero-trust: authenticate every hop
+
+COMPLIANCE CONTROLS
+• GDPR: EU data residency, right to erasure, DPA
+• HIPAA: PHI encryption + audit logs + BAA
+• PCI-DSS: tokenization, quarterly scan
+• SOC 2: audit logs, access controls, change mgmt
+
+SECURITY IN SDLC
+• SAST: SonarQube/Semgrep in CI
+• DAST: OWASP ZAP in staging
+• Dependency scan: Snyk / Dependabot
+• Threat modeling: STRIDE per feature
+• Pen test: quarterly external + bug bounty
+---
+
+## Frame: System Architecture Diagram
+
+PRODUCTION HLD ARCHITECTURE — REQUEST FLOW
+---
+Client
+(browser
+/mobile)
+---
+CDN
+CloudFront
+/Cloudflare
+---
+Load
+Balancer
+L7 ALB/NLB
+---
+WAF
+OWASP rules
+DDoS protect
+---
+API Gateway
+Kong/AWS GW
+auth+rate limit
+---
+Auth Service
+JWT/OAuth2
+mTLS internal
+---
+Service A
+(stateless)
+HPA
+---
+Service B
+(stateless)
+HPA
+---
+ML/AI
+Inference API
+GPU/CPU
+---
+Redis Cache
+L2 dist
+cache-aside
+---
+Kafka/SQS
+Async queue
+DLQ on fail
+---
+Primary DB
+PostgreSQL
+ACID
+---
+Object Store
+S3/GCS
+pre-signed URL
+---
+Read Replicas
+async lag<1s
+80% reads
+---
+Workers
+async consumer
+idempotent
+---
+Monitoring
+Prom+Grafana
++OTel traces
+---
+Client→CDN (static)→LB (SSL+health)→WAF (OWASP)→API GW (auth, rate limit, route)→Services (stateless HPA)→{Redis (L2 cache), Kafka (async), PostgreSQL (ACID), S3 (blobs)}→{Read Replicas (80% reads), Workers (async consumers), Monitoring (RED+USE+traces)}
+---
+HLD COMPONENT BEST PRACTICES
+---
+CDN
+• Fingerprinted filenames → Cache-Control: immutable, max-age=31536000
+• API responses: Surrogate-Control: max-age=60, stale-while-revalidate=30
+• Origin shield: single PoP → reduces origin hits 10–30×
+• Providers: CloudFront (AWS), Cloudflare (DDoS+WAF), Fastly (real-time config)
+• Skip CDN: user-specific data, write paths, regulated data residency
+
+LOAD BALANCER
+• L7 ALB: host/path routing, SSL termination, WebSocket upgrade
+• L4 NLB: ultra-low latency, no HTTP context — gaming, DB proxy
+• Health: active (/health HTTP) + passive (5xx rate tracking)
+• Connection draining: 30s grace before removing unhealthy instance
+• Avoid sticky sessions: use Redis for sessions → stateless LB
+
+API GATEWAY
+• Responsibilities: auth, rate limit, routing, SSL, transform, logging
+• Managed: AWS API GW (pay-per-call) | Self-hosted: Kong, Traefik
+• Anti-pattern: business logic in gateway (gateway = infrastructure only)
+• Rate limit: token bucket in Redis, return 429 + Retry-After header
+• Circuit breaker at gateway → prevents cascade to all downstream services
+
+CACHE (Redis)
+• Key design: namespace:type:id (user:profile:123) → enables pattern delete
+• TTL: shorter = fresh | longer = DB relief; stale-while-revalidate pattern
+• Thundering herd: probabilistic early expiry OR mutex on first miss
+• Hot key: key + rand(0, N) → distribute reads across N virtual shards
+• Redis Cluster: 16384 hash slots, auto failover; cross-slot ops restricted
+• Do NOT cache: financial real-time data, low-read-frequency entities
+
+MESSAGE QUEUE
+• Kafka: ordered per partition, durable log, replay up to N months
+  Partition key = entity_id (preserves ordering per entity)
+  Consumer group = horizontal scale (up to partition count)
+• SQS: visibility timeout > max processing time; DLQ after N retries
+• Idempotency: consumer MUST store processed event_ids before processing
+• Outbox pattern: write event + state in same DB tx → relay publishes
+  Eliminates dual-write inconsistency between state and event store
+---
+DATABASE
+• Connection pool: PgBouncer (PG), ProxySQL (MySQL)
+  Pool size = (cores × 2) + disk spindle count (empirical rule)
+• Read replicas: route 80% of reads; monitor lag (alert >5s)
+• EXPLAIN ANALYZE: every query >100ms; cover WHERE + ORDER BY cols
+• Partial index: WHERE is_active = true (smaller, faster, targeted)
+• Expand-contract migration: add nullable → backfill → add constraint
+  (zero-downtime; never add NOT NULL to existing table directly)
+• N+1: detect via log_min_duration_statement; fix with JOINs or DataLoader
+
+OBSERVABILITY
+• Metrics (RED per service): Rate, Error rate, Duration P50/P99
+• Metrics (USE per infra): Utilization, Saturation, Errors
+• SLO alerts: burn-rate (fast 5m + slow 6h windows) > threshold alerts
+• Logs: structured JSON; always include trace_id, span_id, service, level
+  Never log raw: passwords, tokens, PII fields
+• Traces: OpenTelemetry → Jaeger/Tempo; W3C TraceContext headers
+  Sample: 100% of errors + 1% of success traces (cost control)
+• Synthetic: probe golden-path every 60s from 3+ regions
+
+SERVICE-TO-SERVICE
+• Sync (gRPC): set deadline on every call (never infinite wait)
+  Retry only idempotent calls; non-idempotent needs idempotency-key
+• Async (Kafka/SQS): producer fires-and-forgets; consumer idempotent
+• Timeout hierarchy: outer client deadline → propagate through each hop
+  Never set inner timeout longer than outer (wasted work)
+• mTLS: zero-trust; Istio/Linkerd service mesh automates cert rotation
+• Service discovery: K8s DNS (in-cluster), Consul (multi-cluster/cloud)
+
+SECURITY BASELINE (every production system)
+• All DBs in private subnets (no public route, SG from svc layer only)
+• All secrets in Secrets Manager / Vault (never plaintext in env vars)
+• TLS 1.3 everywhere; mTLS between internal services
+• WAF in front of CDN (OWASP managed rules, DDoS protection)
+• Audit logs: every data-access event with actor, resource, timestamp
+• Zero-trust: no implicit trust even on internal network — verify every hop
+---
+TECHNICAL COMMUNICATION FRAMEWORK — INTERVIEW
+---
+HOW TO PRESENT HLD
+---
+HOW TO STRUCTURE YOUR HLD PRESENTATION
+
+STEP 1 — ANCHOR TO NFRs BEFORE DRAWING
+"Before I start, let me make sure the design serves our NFRs.
+We said [latency target], [RPS scale], [availability SLA].
+I'll call out which NFR each component addresses as I walk through."
+→ Do NOT draw until you've confirmed requirements
+
+STEP 2 — WALK THE REQUEST FLOW (top-down)
+Don't list components; narrate the journey:
+"A request starts at the client. First stop is the CDN — if cached
+there, we never hit origin. On a cache miss, it goes to the load
+balancer..." → Shows you understand data flow, not just boxes
+
+STEP 3 — JUSTIFY EVERY COMPONENT (template)
+"I'm adding [component] here because [specific NFR].
+My choice is [tech A] over [tech B] because [reason].
+Trade-off: [cost/complexity/consistency impact].
+Given our [NFR], that trade-off is acceptable."
+→ Never add a component without a WHY
+
+STEP 4 — IDENTIFY BOTTLENECKS PROACTIVELY
+"The component I'm most worried about is [X] because
+[specific failure mode] at [scale].
+Two approaches: [A] trades X for Y; [B] trades Y for Z.
+I'd go with [A] because [NFR linkage]."
+→ Staff engineers surface problems before being asked
+
+STEP 5 — INVITE COLLABORATION
+"Does this design make sense so far?
+I could go deeper on [component] or move to [next area]."
+→ Treat it as a technical conversation, not a monologue
+
+DIAGRAM DRAWING TECHNIQUE
+• Draw boxes first (shape), label second, arrows last
+• Label every arrow: what data, which protocol, sync/async
+• Start happy path; add failure paths after confirmation
+• Use dashed boundaries to group related components
+• Number components to reference them verbally
+
+HANDLING TRADE-OFF QUESTIONS
+"Option A — [name]: [one sentence].
+  Pros: [X], [Y]. Cons: [Z].
+Option B — [name]: [one sentence].
+  Pros: [X]. Cons: [Y], [Z].
+Given [our NFR], I'd go with A because [direct link]."
+
+HANDLING AMBIGUITY (don't freeze)
+"I'll assume [X] and call it out explicitly.
+If that assumption is wrong, we can adjust the design."
+
+TIME MANAGEMENT
+• 0–5 min: requirements ONLY (no drawing)
+• 5–25 min: HLD (draw quickly, speak as you draw)
+• 25–40 min: deep dive (worst bottleneck first)
+• 40–45 min: wrap-up + Q&A
+• If running long: "shall I continue with [X] or move to wrap-up?"
+---
+STAFF-LEVEL APTITUDE SIGNALS
+---
+8 SIGNALS THAT SEPARATE STAFF FROM SENIOR
+
+SIGNAL 1 — COST QUANTIFICATION
+"At 1M DAU with 90% cache hit rate, ElastiCache costs ~$800/month
+vs ~$8,000/month hitting the DB directly. Cache pays for itself
+in week one." → Attach dollar amounts to architectural decisions
+
+SIGNAL 2 — CONWAY'S LAW AWARENESS
+"I'd align service boundaries to team boundaries. Team A owns
+Service X end-to-end: API, DB schema, deployment, on-call."
+→ Mention team topology without being prompted
+
+SIGNAL 3 — OPERATIONAL DESIGN
+"Two failure modes I'd write runbooks for: [primary DB failover]
+and [cache stampede]. Alerts fire on SLO burn rate — not raw error
+count — so we page on actual customer impact, not noise."
+→ Design for day-2 operations, not just happy path
+
+SIGNAL 4 — SECURITY WITHOUT BEING ASKED
+"DBs in private subnets — no public route. Only the service tier
+can reach them via SG rule. Secrets in Secrets Manager, rotated
+weekly. mTLS between services — no implicit internal trust."
+→ Mention security proactively as an architectural default
+
+SIGNAL 5 — PHASED ROADMAP
+"Phase 1 (10K users): monolith + single DB.
+Phase 2 (100K): add read replicas + Redis cache.
+Phase 3 (1M): evaluate sharding or DynamoDB only after measuring
+actual access patterns." → Think in milestones, not final states
+
+SIGNAL 6 — DATA-DRIVEN THRESHOLDS
+"Cassandra vs PostgreSQL depends on write:read ratio.
+If writes exceed 30% of traffic, Cassandra's LSM-tree wins.
+Below that, Postgres with read replicas covers us."
+→ Use specific thresholds, not vague "it depends"
+
+SIGNAL 7 — FAILURE FIRST THINKING
+"What happens when the cache goes down? Thundering herd.
+Mitigation: probabilistic early expiry + circuit breaker caps
+DB at 80% capacity. Remaining 20% get 503 + Retry-After
+— degraded but not down." → Walk failure modes unprompted
+
+SIGNAL 8 — BUILD VS BUY JUDGMENT
+"I could build the rate limiter with Redis + Lua, but I'd start
+with Kong's rate-limit plugin or AWS WAF. Rate limiting is not
+a differentiating capability — buy first."
+→ Know when NOT to build custom solutions
+
+COMMON MISTAKES TO AVOID
+✗ Drawing before clarifying requirements
+✗ Picking tech "because it's popular / I've used it"
+✗ Single point of failure with no mitigation
+✗ Consistency everywhere (unnecessary cost)
+✗ Not drawing anything (interviewers need visual anchor)
+✗ Asking too many questions before designing
+✗ Over-engineering for scale not in the NFRs
+✗ Ignoring security until the very end
+✗ No mention of monitoring or observability
+✗ Treating interview as a quiz, not a conversation
+---
+TECHNOLOGY SELECTION REFERENCE
+---
+API STYLE — when to choose
+• REST: public APIs, CRUD, HTTP caching, browser clients
+• gRPC: internal microservices, high-perf, streaming, codegen
+• GraphQL: mobile-first, multiple client types, client-driven queries
+• WebSocket: bidirectional real-time (chat, live feeds, games)
+• SSE: server→client streaming (notifications, dashboards)
+
+DATABASE SELECTION FRAMEWORK
+Step 1 — Access pattern?
+  • Simple key lookups → Redis / DynamoDB
+  • Relational joins, ACID → PostgreSQL / Aurora
+  • Full-text search → Elasticsearch
+  • Time-series → InfluxDB / TimescaleDB
+  • Graph traversal → Neo4j
+  • Write-heavy time-series, no JOINs → Cassandra
+Step 2 — Write:read ratio?
+  • Read-heavy (>10:1 R:W) → add cache + read replicas
+  • Write-heavy (>10:1 W:R) → LSM-tree DB (Cassandra)
+  • Balanced → B-tree DB with read replicas
+Step 3 — Consistency requirement?
+  • Strong ACID → SQL
+  • Eventual, multi-region → Cassandra / DynamoDB
+Step 4 — Scale target?
+  • <10M records, <10K RPS → any SQL DB works fine
+  • 10M–1B records → sharding or managed (Aurora, DynamoDB)
+  • >1B records → Cassandra, Bigtable, or sharded SQL
+
+COMPUTE SELECTION
+• EC2/VM: full control, stateful, GPU, predictable cost
+• ECS + Fargate: managed containers, AWS native
+• Kubernetes: max portability, complex, large platform teams
+• Lambda: event-driven, zero ops, 15min max, cold starts
+• App Runner: simple web apps, low-ops teams
+---
+SCALING PROGRESSION (do in order)
+1. Index optimization (EXPLAIN ANALYZE, free)
+2. Query optimization (JOIN instead of N+1)
+3. Connection pooling (PgBouncer/ProxySQL)
+4. Caching layer (Redis, target 80%+ hit rate)
+5. Read replicas (route 80% of reads)
+6. Vertical scaling (larger instance, simpler)
+7. Sharding (last resort; highest complexity cost)
+8. DB type change (if access pattern fundamentally different)
+
+FAILURE PATTERNS & MITIGATIONS
+Thundering herd:
+  → Probabilistic early expiry + request coalescing
+Split-brain (two primaries after partition):
+  → Quorum writes (majority must ack) + fencing tokens
+Cascading failure:
+  → Timeout + circuit breaker + bulkhead
+Hot partition (write hotspot):
+  → Random suffix on partition key + write sharding
+Slow consumer (queue lag growing):
+  → Scale consumers (up to partition count) + DLQ
+Retry storm:
+  → Exponential backoff + full jitter + max deadline
+
+DISASTER RECOVERY
+• RPO: max data loss → dictates backup frequency
+• RTO: max downtime → dictates failover automation
+• Backup/Restore: hours RTO, cheapest
+• Pilot Light: minutes RTO, minimal standby
+• Warm Standby: ~5min RTO, full-size standby
+• Active-Active: <1min RTO, highest cost
+
+GLOBAL DISTRIBUTION
+• Active-Active: all regions write, conflict resolution required
+• Active-Passive: one primary, failover to secondary (simpler)
+• Geo-routing: Route53 latency routing → nearest region
+• Data residency: GDPR → EU users must stay in EU region
+---
+Client
+---
+API
+---
+Service
+---
+Database
+---
+Ai/MLModel
+---
+
+## Frame: Distributive Systems (python, system design, kubernetes)
+
+Fundamentals
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/fundamentals-of-software/9781098143220/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/learning-python-6th/9781098171292/
+
+
+lower level
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/high-performance-python/9781492055013/ix01.html
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/python-concurrency-with/9781617298660/
+
+optional
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/robust-python/9781098100650/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/pythonic-programming/9781680509199/
+
+design patterns
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/architecture-patterns-with/9781492052197/
+
+
+system design
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/designing-data-intensive-applications/9781098119058/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/designing-distributed-systems/9781098156343/
+
+
+learning kubernetes
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/kubernetes-up-and/9781098110192/
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/production-kubernetes/9781492092292/
+
+kubernetes lower level
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/programming-kubernetes/9781492047094/
+
+
+kubernetes design patterns
+https://learning-oreilly-com.opl.idm.oclc.org/library/view/kubernetes-patterns-2nd/9781098131678/
+---
+AWS GLUE (CPU Spark) -> SAGEMAKER (GPU/TPU) -> Cloudwatch+Prometheus+Grafana 
+
+Sagemaker abstracts on EC2
+ECR to register containers on EKS (AWS Kubernetes) for multiple servers, ECS (AWS docker) for multiple containers on 1 server
+---
+S3 (data lake) --AWS GLUE--> SAGEMAKER (EC2 with GPU/TPU compute) with EKS for distributive cluster compute -> Cloudwatch+Prometheus+Grafana
+[data storage]--[ETL]--[Compute]--[Logging and Monitoring]
+
+image -> container -> pods -> cluster
+---
+LAYER 4: CONSUMPTION & TRACKING (Metadata / Registry)
+---
+MLflow / Weights & Biases
+- Role: Experiment Tracking & Model Registry
+- DOES NOT run clusters. It just logs metrics & models.
+---
+KServe / Triton / Seldon Core
+- Role: Model Serving / Deployment
+- Exposes your finished model as a live API endpoint.
+---
+LAYER 3: WORKFLOW ORCHESTRATION (DAG Engines)
+---
+Apache Airflow / Prefect
+- Type: General Data Orchestrator
+- Code: Written in Python
+- Function: Great for heavy ETL data engineering tasks. Spawns tasks as temporary pods but lacks deep native ML metadata tracking.
+---
+Kubeflow Pipelines / Flyte
+- Type: Kubernetes-Native MLOps
+- Code: Strongly-typed Python
+- Function: Designed purely for ML. Caches individual task steps natively on K8s. Passes massive dataset data references effortlessly between pods.
+---
+Argo Workflows
+- Type: Core K8s Engine
+- Code: Written in YAML Config
+- Function: The structural engine under the hood. Kubeflow compiles Python code into Argo YAML to execute it natively.
+---
+LAYER 2: COMPUTE / INFRASTRUCTURE (Kubernetes)
+---
+
+## Frame: System Design — Senior-Level Best Practices
+
+- Step 2 — High-Level Design: narrate a simple end-to-end flow first (client → API → DB), then layer in components only as the stated requirements demand — don't open with a diagram full of boxes you can't justify.
+- API Design: define the contract before the internals — endpoint/RPC signatures, request/response shapes, idempotency keys on writes, pagination strategy. State REST vs gRPC vs GraphQL with a one-line reason, not a lecture.
+- Step 3 — Deep Dive: let the interviewer steer. Offer 2-3 candidate topics ('I could go deeper on data model, consistency, or the write path — which is most useful?') rather than picking unilaterally.
+- Deep Dive: every tradeoff needs a because — 'I'd pick eventual consistency because read-after-write isn't a hard requirement here' beats naming CAP theorem in isolation.
+- Step 4 — Wrap Up: proactively name what you'd cut for time — bottlenecks, single points of failure, monitoring/alerting, cost. Signals you know the design is time-boxed, not 'done.'
+- Wrap Up: summarize in under 60 seconds — requirements satisfied, one open risk, one next step you'd take with more time.
+- Anti-pattern: designing for infinite scale on day one. Size the system to the actual load estimated in step 1, and state the explicit trigger for the next scaling step.
+- Failure-mode reasoning: for every dependency added, ask 'what happens when this is slow, down, or returns garbage?' — an un-timed-out downstream call is the most common cascading-failure bug, in interviews and in prod.
+- Anti-pattern: synchronous chains of more than 2-3 services per user request. Prefer async/queue-based decoupling once a call chain risks compounding p99 latency (multiply per-hop p99s, don't just add them).
+- Split-brain and dual-writes: never assume two systems (cache + DB, or two DBs) stay in sync without an explicit reconciliation or write-ordering strategy — call this out even if you don't solve it live.
+- Retries amplify load under failure ('retry storms'). Always pair retries with exponential backoff + jitter, a max-attempt ceiling, and idempotent operations downstream.
+- Senior vs. staff: senior gets the design correct; staff also quantifies cost/complexity — 'this saves 40ms p99 but adds on-call burden and $X/month for marginal benefit at our scale' — said unprompted.
+- Staff-level signal: naming unknown-unknowns explicitly — 'I'm assuming writes are read-heavy 10:1; if that's wrong the caching strategy changes' — instead of presenting assumptions as facts.
+- Staff-level signal: propose the boring, operationally-proven solution first (managed Postgres before a bespoke sharded KV store), and only reach for novelty when a specific requirement demands it.
+- Senior vs. staff on ambiguity: senior clarifies once at the start; staff keeps re-scoping throughout, flagging when an earlier answer would change if a stated assumption turns out false.
+- Practice pacing against a clock (5/20/15/5). Running out of time mid deep-dive is the single most common way a technically strong candidate is scored down.
+---
+
+## Frame: System Design — Community Resources & Further Reading
+
+- Alex Xu — "System Design Interview: An Insider's Guide" (Vol. 1 & 2) — the de facto interview-prep book; complements DDIA's depth with interview framing and pacing.
+- roadmap.sh/system-design — free, actively maintained community roadmap and topic breakdown.
+- donnemartin/system-design-primer (GitHub) — large open-source collection of system design notes, diagrams, and flashcards.
+- AWS Architecture Center (aws.amazon.com/architecture) — reference architectures and the AWS Well-Architected Framework whitepapers for real tradeoff examples.
+- Google Cloud Architecture Center (cloud.google.com/architecture) — official reliability/scalability patterns, similar in spirit to AWS's.
+- Netflix Tech Blog (netflixtechblog.com) — production war-stories on chaos engineering, resilience, and real-world failure modes.
+- "The Log: What every software engineer should know about real-time data's unifying abstraction" — Jay Kreps, LinkedIn Engineering blog — canonical explainer underlying Kafka-style architectures.
+- High Scalability (highscalability.com) — long-running blog of real company architecture case studies.
+---

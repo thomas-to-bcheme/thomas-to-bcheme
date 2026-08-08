@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { buildJobsSearch, type JobsQueryParams, type JobsDateRange } from '@/lib/jobs/queryParams';
 import { RECENT_WINDOW_DAYS, JOBS_SEARCH_DEBOUNCE_MS, type JobsPageSize } from '@/lib/jobs/constants';
@@ -145,23 +144,16 @@ const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
         <label htmlFor="job-search" className="text-micro text-zinc-400">
           Search
         </label>
-        <div className="relative">
-          <Search
-            size={15}
-            aria-hidden="true"
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"
-          />
-          <input
-            id="job-search"
-            type="search"
-            className="input-base pl-9"
-            placeholder="Search title or company…"
-            value={searchInput}
-            // Deliberately never disabled while isPending — disabling mid-
-            // debounce would block further typing, defeating the point.
-            onChange={(event) => setSearchInput(event.target.value)}
-          />
-        </div>
+        <input
+          id="job-search"
+          type="search"
+          className="input-base appearance-none"
+          placeholder="Search title or company…"
+          value={searchInput}
+          // Deliberately never disabled while isPending — disabling mid-
+          // debounce would block further typing, defeating the point.
+          onChange={(event) => setSearchInput(event.target.value)}
+        />
       </div>
     </div>
   );

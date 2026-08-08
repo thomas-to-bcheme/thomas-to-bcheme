@@ -1,0 +1,47 @@
+# Source: public/excalidraw/backend.excalidraw
+# Text elements: 4
+
+## Frame: Learning Plan: Backend Development
+
+Backend
+---
+Python
+    - FastAPI/Django/Flask
+    - REST API
+---
+
+## Frame: Backend Development — Senior-Level Best Practices
+
+- REST API design
+  - Model resources (nouns), not actions — /orders/{id}/cancel, not /cancelOrder
+  - Use HTTP verbs/status codes correctly: 200/201/204 success, 400 validation, 401/403 auth, 404 missing, 409 conflict, 422 semantic error, 5xx server fault
+- API versioning: URI (/v1/) simplest for public APIs; header/media-type versioning for stricter contract evolution — never break existing clients silently
+- Pagination: cursor-based for large/real-time-changing datasets (stable under inserts/deletes); offset/limit fine for small, static, admin-facing lists
+- Idempotency: PUT/DELETE must be idempotent by definition; for POST (payments, order creation) require an Idempotency-Key header so retries don't double-create
+- Auth patterns
+  - Session + cookie: simplest, server holds state, easy revocation — good default for first-party web apps
+  - JWT: stateless, scales horizontally, but hard to revoke before expiry — keep access tokens short-lived + refresh tokens
+  - OAuth2/OIDC: delegate auth to a provider (Google/Auth0) for third-party or enterprise SSO — don't roll your own
+- ORM vs raw SQL: ORM (SQLAlchemy/Django ORM) for velocity and safety on CRUD-heavy paths; drop to raw SQL/query builder for reporting, bulk ops, or anywhere the ORM generates pathological queries
+- Migrations: every schema change goes through a versioned migration (Alembic/Django migrations), forwards AND backwards compatible during rolling deploy — never hand-edit the prod schema
+- Connection pooling: reuse a bounded pool (pgbouncer, SQLAlchemy pool) sized to DB max_connections / (num app instances) — unbounded connections are a classic outage cause
+- N+1 queries: the #1 ORM footgun — fix with eager loading (select_related/joinedload, prefetch_related/selectinload); watch for it in list endpoints that touch related objects
+- Transactions & isolation: wrap multi-step writes in a transaction; know READ COMMITTED (Postgres default) vs SERIALIZABLE tradeoffs — stricter isolation trades throughput for correctness on concurrent writes
+- Caching: cache-aside (app checks cache, falls back to DB, populates cache) is the default; write-through when staleness is unacceptable — always pair with a TTL AND an explicit invalidation path (never rely on TTL alone for correctness-critical data)
+- Async processing: push slow/non-critical work (emails, thumbnails, webhooks) onto a queue (SQS/RabbitMQ/Celery/Kafka) — go async when the caller doesn't need the result synchronously or when work needs retry/backoff semantics
+- Testing strategy: unit tests mock external boundaries (DB, HTTP, queue) and cover business logic; integration tests hit a real (test) DB; contract tests (e.g. Pact) verify producer/consumer API compatibility without full E2E
+- Observability: structured JSON logs (not printf strings), a correlation/request ID threaded through every service hop, and distributed tracing (OpenTelemetry) to see cross-service latency — logs alone don't answer "why is this slow?"
+- Be ready to reason about the classic system-design archetypes: rate limiter (token bucket vs sliding window, where state lives), URL shortener (hash/base62 + collision handling, read-heavy caching), notification service (fan-out, delivery guarantees, retry/dead-letter queues)
+---
+
+## Frame: Backend Development — Community Resources & Further Reading
+
+- roadmap.sh/backend — community-curated backend developer roadmap
+- FastAPI official docs (fastapi.tiangolo.com) — async Python API framework, strong on typing/validation
+- Django official docs (docs.djangoproject.com) — batteries-included framework, ORM/migrations reference
+- Flask official docs (flask.palletsprojects.com) — minimal WSGI framework, good for understanding fundamentals
+- "Designing Data-Intensive Applications" by Martin Kleppmann — the canonical book on databases, caching, and distributed systems tradeoffs
+- "System Design Interview" by Alex Xu (Vol. 1 & 2) — walks through the rate limiter / URL shortener / notification-service archetypes
+- donnemartin/system-design-primer (GitHub) — widely-used open-source system design interview reference
+- PostgreSQL official docs, transaction isolation chapter (postgresql.org/docs) — authoritative reference on isolation levels and concurrency
+---

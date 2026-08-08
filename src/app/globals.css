@@ -122,9 +122,17 @@ body {
   color: inherit;
 }
 
-/* --- UTILITY CLASSES --- */
+/* --- UTILITY CLASSES ---
+   Wrapped in @layer components so Tailwind's own utility classes (layered,
+   via @import "tailwindcss") can still override individual properties on
+   these when combined in a className string (e.g. "input-base py-1").
+   Per the CSS Cascade Layers spec, unlayered CSS always beats layered CSS
+   regardless of specificity/order — leaving these bare silently defeats any
+   utility appended after them.
+*/
+@layer components {
 
-/* 1. ENGINEERING GRID BACKGROUND 
+/* 1. ENGINEERING GRID BACKGROUND
    Updated: Removed 'mask-image' so the grid does not fade out.
 */
 .bg-grid-pattern {
@@ -246,6 +254,18 @@ pre {
          dark:text-white placeholder:text-zinc-400;
 }
 
+/* Strip WebKit's native type="search" chrome (magnifying-glass/clear-button
+   decorations) wherever .input-base is used on a search input, so the field
+   is fully our own styling with no browser-native icon fighting it. A no-op
+   on every other .input-base consumer (selects, text inputs) since these
+   pseudo-elements only exist on input[type=search]. */
+.input-base::-webkit-search-decoration,
+.input-base::-webkit-search-cancel-button,
+.input-base::-webkit-search-results-button,
+.input-base::-webkit-search-results-decoration {
+  display: none;
+}
+
 /* Chat message bubbles */
 .message-user {
   @apply max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed shadow-sm overflow-hidden
@@ -339,3 +359,5 @@ pre {
 .icon-container-zinc {
   @apply p-2 rounded-lg flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400;
 }
+
+} /* end @layer components */

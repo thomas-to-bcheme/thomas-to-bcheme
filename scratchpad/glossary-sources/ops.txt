@@ -1,0 +1,245 @@
+# Source: public/excalidraw/ops.excalidraw
+# Text elements: 31
+
+## Frame: AWS/GCP/Azure Agnostic
+
+Compute
+    - Server?
+    - Serverless?
+
+Storage
+    - Blob?
+        - Lakehouse
+    - Relational?
+    - Non-Relational?
+        - key-value
+        - wide-column
+        - document
+    - B-tree vs LSTM for read/write consideraetions
+
+Security
+
+Networking
+
+Containres
+
+Big Data
+    - See pandas vs polars vs spark
+        - single core single CPU, multi core single CPU, multi core distributive CPU
+
+Ai/ML
+
+Observaibility & Monitoring
+---
+AWS Glue?
+AWS Step functions?
+AWS SageMaker
+AWS Cloudwatch+ Prometeus
+
+...
+
+ETL data pipelines
+data pipeline orcehstration
+observability & monitoring
+evaluation
+testing
+ci/cd
+containerization
+---
+AWS Stack
+---
+1. API G/W: Amazon API GW
+2. Compute: AWS Fargate
+3. Event Bus: EventBridge
+4. DB: Aurora Serverless
+---
+GCP Stack
+---
+1. API G/W: Apigee
+2. Compute: Cloud Run
+3. Event Bus: Eventarc
+4. DB: Cloud SQL / Spanner
+---
+Cloud Service Architecture Mapping & Decision Matrix
+---
+ARCHITECTURAL NEED       | OPEN SOURCE/AGNOSTIC | AWS                 | GCP                  | AZURE
+-------------------------------------------------------------------------------------------------------------------------
+Serverless Containers    | Knative, OpenFaaS    | AWS Fargate         | Cloud Run            | Azure Container Apps
+Distributed/Wide-Column  | Apache Cassandra     | Amazon Keyspaces    | Cloud Bigtable       | Cosmos DB (Cassandra)
+Data Warehouse/Lakehouse | Apache Iceberg+Trino | Amazon Redshift     | BigQuery             | Azure Synapse / Fabric
+Graph Database           | Neo4j, TinkerPop     | Neptune Serverless  | Spanner Graph        | Cosmos DB (Gremlin)
+High-Throughput Stream   | Apache Kafka         | Amazon MSK/Kinesis  | Pub/Sub              | Event Hubs
+Service Mesh             | Istio, Linkerd       | AWS App Mesh        | Anthos Service Mesh  | Azure Service Mesh
+Generative AI / LLMs     | vLLM + HuggingFace   | Amazon Bedrock      | Vertex AI            | Azure OpenAI Service
+---
+AWS Stack
+---
+• Route 53 (DNS)
+• API Gateway
+• Fargate (Compute)
+• EventBridge (Bus)
+• Aurora (DB)
+• S3 (Storage)
+---
+GCP Stack
+---
+• Cloud DNS
+• Apigee
+• Cloud Run (Compute)
+• Eventarc (Bus)
+• Cloud SQL (DB)
+• Cloud Storage
+---
+Azure Stack
+---
+• Azure DNS
+• API Management
+• Container Apps
+• Event Grid (Bus)
+• Azure SQL (DB)
+• Blob Storage
+---
+Cloud Agnostic
+---
+• CoreDNS
+• Envoy / Kong
+• Kubernetes / Knative
+• Apache Kafka
+• PostgreSQL
+• MinIO (S3 Compatible)
+---
+Best Practices for Provider Agnosticism
+---
+1. Avoid Proprietary Orchestration: Do not use AWS Step Functions or Azure Logic Apps for core logic. Use Temporal or Apache Airflow.
+2. Standardize the Interface: Build adapter layers (e.g., an internal EventPublisher interface) instead of importing AWS SDKs directly into business logic.
+3. Keep Compute Stateless: Ensure workloads spin up instantly, handle events, and push state to a managed database or distributed cache like Redis.
+---
+Comprehensive System Design Provider Mapping
+---
+CATEGORY             | OPEN SOURCE / AGNOSTIC | AWS                     | GCP                      | AZURE
+-------------------------------------------------------------------------------------------------------------------------------------
+COMPUTE
+ - Server (VM)       | KVM, KubeVirt          | EC2                     | Compute Engine (GCE)     | Virtual Machines
+ - Serverless        | OpenFaaS, Knative      | Lambda                  | Cloud Functions          | Azure Functions
+
+STORAGE
+ - Blob / Lakehouse  | MinIO + Apache Iceberg | S3 + Athena/Lake Form.  | GCS + BigLake            | ADLS + Fabric/Synapse
+ - Relational        | PostgreSQL / MySQL     | RDS / Aurora            | Cloud SQL / AlloyDB      | Azure SQL
+ - KV / Document     | Redis / MongoDB        | DynamoDB                | Firestore                | Cosmos DB
+ - Wide-Column       | Apache Cassandra       | Keyspaces               | Bigtable                 | Cosmos DB (Cassandra API)
+
+CONTAINERS
+ - Orchestration     | Kubernetes (K8s)       | EKS                     | GKE                      | AKS
+ - Serverless (CaaS) | Knative                | Fargate                 | Cloud Run                | Container Apps
+
+BIG DATA (Compute)
+ - 1-Core, 1-CPU     | Pandas (In-Memory)     | EC2 + Pandas            | GCE + Pandas             | VM + Pandas
+ - Multi-Core, 1-CPU | Polars / DuckDB        | EC2 + Polars/DuckDB     | GCE + Polars/DuckDB      | VM + Polars/DuckDB
+ - Dist. Multi-CPU   | Apache Spark / Trino   | EMR / Glue              | Dataproc                 | HDInsight / Databricks
+
+AI / ML
+ - Platform / Ops    | Kubeflow, MLflow       | SageMaker               | Vertex AI                | Azure Machine Learning
+ - GenAI / LLMs      | vLLM, HuggingFace      | Bedrock                 | Vertex AI (Gemini)       | Azure OpenAI
+
+SECURITY
+ - Identity          | Keycloak (OIDC)        | IAM / Cognito           | Cloud IAM                | Entra ID (Azure AD)
+ - Secrets/Crypto    | HashiCorp Vault        | Secrets Manager / KMS   | Secret Manager / KMS     | Key Vault
+
+NETWORKING
+ - API / Routing     | Envoy, Kong            | API Gateway             | API Gateway / Apigee     | API Management
+ - Service Mesh      | Istio, Linkerd         | App Mesh                | Anthos Service Mesh      | Azure Service Mesh
+
+OBSERVABILITY
+ - Logs/Metrics/Trace| Prom / Loki / Jaeger   | CloudWatch / X-Ray      | Cloud Ops (Stackdriver)  | Azure Monitor
+---
+Storage Mechanics: B-Tree vs. LSM-Tree
+---
+B-Tree (PostgreSQL, Cloud SQL, Aurora):
+Optimized for Read-Heavy workloads, point lookups, and 
+complex joins. Updates data in place (random I/O). 
+Suffers from fragmentation under extreme write loads.
+
+LSM-Tree (Cassandra, Bigtable, DynamoDB):
+Optimized for extreme Write-Heavy workloads (Time-series, IoT).
+Appends data sequentially (fastest possible I/O). Reads can be 
+slower as the engine must check multiple SSTable levels/memtables.
+---
+Big Data Compute: Hardware & Engine Scaling
+---
+Pandas (Single-Core, Single CPU):
+Loads entire dataset into RAM. Incredibly fast for small data,
+but hits a hard bottleneck based on the instance's memory size.
+
+Polars / DuckDB (Multi-Core, Single CPU):
+Vectorized execution utilizes all cores on a single machine. Maximize
+vertical scaling (e.g., massive EC2/GCE instances) to avoid network latency.
+
+Spark / Trino (Multi-Core, Distributed CPUs):
+Scales horizontally across clusters. Incurs heavy network shuffling latency. 
+Use ONLY when data size exceeds a single machine's RAM/Disk limits.
+---
+
+## Frame: Docker+Kubernetes (AWS EKS)_service
+
+Kubernetes allows you to create a cluster of nodes, each labeled with resources it may have, and to orchestrate running containers on the nodes.
+---
+Agnostic concepts applied to AWS stack + Opensource & Open source provider equivalent
+    Jul 2026, Apple interview noted they use the entire AWS AI/ML stack not limited to S3 --GLUE--App Runner-- > SAGEMAKER (EC2/Inferentia or Trainium TPUs) -> Cloud Watch
+---
+code build -> ECR -> EKS
+---
+
+## Frame: Learning Plan: Deployment
+
+Deployment
+---
+Cloud
+    - AWS/GCP/Azure
+    - Docker
+    - CI/CD
+---
+
+## Frame: Cloud & DevOps — Senior-Level Best Practices
+
+- K8s resource requests/limits: requests guarantee scheduling headroom, limits cap noisy-neighbor blast radius
+  - under-set requests silently throttle CPU (no OOM, just p99 latency creep) — always load-test before setting
+- Liveness vs readiness vs startup probes are different contracts
+  - liveness restarts a wedged process; readiness pulls a pod from the Service endpoint list without restarting it; startup probe protects slow-booting apps from a premature liveness kill
+- Pod Disruption Budgets (PDBs) protect availability during voluntary disruptions (node drains, cluster upgrades)
+  - set minAvailable/maxUnavailable per-Deployment, not cluster-wide, or upgrades can stall indefinitely
+- Horizontal Pod Autoscaler (HPA) should scale on the metric that actually predicts load (custom/external metrics via Prometheus adapter), not just CPU — CPU-only HPA lags request-queue-driven bursts
+- Secrets management: never plaintext env vars or ConfigMaps for credentials
+  - use External Secrets Operator / Vault / AWS Secrets Manager + KMS, with rotation and least-privilege IRSA/Workload Identity bindings, not static keys baked into images
+- CI/CD deployment strategy tradeoffs (the judgment interviewers actually probe):
+  - rolling: default, cheap, but a bad version is live for real users during rollout — needs fast, automated health-gated rollback
+  - blue-green: instant cutover + instant rollback, doubles infra cost during the swap, and stateful/DB migrations must be backward-compatible across both colors
+  - canary: lowest blast radius, catches regressions on a slice of real traffic first, but needs traffic-shaping (mesh/ingress) + automated metric-based promotion, not a human eyeballing a dashboard
+- Terraform state is the single source of truth for infra — treat it like production data
+  - remote backend (S3+DynamoDB lock, GCS, Terraform Cloud) is non-negotiable; local state + no locking = concurrent-apply corruption
+- Immutable infrastructure: never patch a running instance/container — rebuild the image/AMI and redeploy
+  - eliminates configuration drift and makes rollback trivial (redeploy the prior artifact instead of reverse-patching)
+- Drift detection: run `terraform plan` (or a drift-detection job) on a schedule against live state, not just at deploy time
+  - manual console/CLI changes are the #1 source of "works in staging, prod is different" incidents
+- Golden signals for any service: latency, traffic, errors, saturation (Google SRE book)
+  - dashboards should default to these four before anything custom — they answer "is this on fire" in one glance
+- SLOs + error budgets turn reliability into a product decision, not a vibe
+  - a healthy error budget authorizes shipping risky changes; a burned budget should auto-freeze non-critical deploys
+- Distributed tracing (OpenTelemetry + Jaeger/Tempo/X-Ray) is what makes microservice latency debuggable
+  - correlation/trace IDs must propagate through every hop, including async queues, or the trace just dead-ends
+- On-call/incident response: runbooks + clear severity levels + a named incident commander during any SEV1
+  - blameless postmortems focused on systemic/process fixes, not blaming the engineer who pushed the change
+- Cost optimization (FinOps) is an engineering practice, not just a finance report
+  - right-size before autoscaling masks waste, use spot/preemptible for stateless/batch workloads, and tag every resource by team/service so cost is attributable, not just aggregate
+---
+
+## Frame: Cloud & DevOps — Community Resources & Further Reading
+
+- Google SRE Book — "Site Reliability Engineering" (sre.google/books) — golden signals, SLOs/error budgets, incident response, canonical for the ops/on-call lens
+- Kubernetes official docs (kubernetes.io/docs) — probes, PDBs, HPA, resource management are all documented with the exact field semantics interviewers expect
+- AWS Well-Architected Framework (aws.amazon.com/architecture/well-architected) — the Reliability and Cost Optimization pillars map directly onto FinOps and resilience judgment
+- Google Cloud Architecture Framework (cloud.google.com/architecture/framework) — GCP's equivalent to Well-Architected; reliability + operational excellence pillars
+- Azure Well-Architected Framework (learn.microsoft.com/azure/well-architected) — same pillars, useful for cross-cloud comparison in interviews
+- HashiCorp Terraform docs (developer.hashicorp.com/terraform) — remote state, locking, and drift are covered directly in the official "State" section
+- roadmap.sh/devops — free, community-maintained DevOps/SRE learning roadmap, good for gap-checking before an interview
+- "The Phoenix Project" / "The DevOps Handbook" (Kim, Humble, Debois, Willis) — the canonical narrative + practice reference for CI/CD culture and deployment risk
+---

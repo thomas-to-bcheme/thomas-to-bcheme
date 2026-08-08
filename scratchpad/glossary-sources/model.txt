@@ -1,0 +1,117 @@
+# Source: public/excalidraw/model.excalidraw
+# Text elements: 15
+
+## Frame: AI/ML
+
+(Business) Problem
+---
+Feature Engineering
+---
+Data Collection
+Sources?
+---
+Data Preparation
+Pre-Processing?
+---
+Exploratory Data
+Analaysis
+---
+Data Modeling
+---
+Model Evaluation
+---
+Model Deployment
+---
+
+## Frame: Drug Discovery - Deep Learning (8-12)
+
+Chapter 8:
+    - colab TPU requires torch_xla, colab and local limited to CPU/GPU (cuda,mps,xps)
+    -
+---
+Chapter 9: structure based drug design with active learning
+    - numpy does not have native GPU support, outputs to CPU, torch.to(device) for acceleration
+        - therefore libraries like cupy (numpy for GPU) and JAX (numpy for TPU) were maintained
+    - torch.manual_seed() abstracts hardware specific acceleraetion and source code applies seed to multi/single GPU
+    ? (3)multi-layer-perceptron is used but unclear if minimally effecitve MLP or simple for usecase from author
+
+    9.1: molecular docking
+        - consider active vs. allosteric sites: protein-ligand, protein-protein, and protein-DNA docking types
+        - minimal protein-ligand docking workflow: input, structure preparation, docking
+            - conformational sampling and pose evaluation are two main challenges
+            - scoring and ranking to account for: van der waals, electrostatics, hydrogen bonding, etc.
+            - poses are possible geometries
+        - 9.1.3: data preparation, 9.1.4: running the dock using a rigid protein, flexible ligand with a binding box (mdtraj from pdb)
+
+    9.2: active learning
+        -
+
+    9.3: generalization (hence drop-out 50% as opposed to 20% due to active learning?)
+        -
+---
+
+## Frame: Learning Plan: ML Concepts
+
+Model
+---
+ML concepts
+    - model inference
+    - evaluation
+    - data pipelines
+
+ML frameworks
+    - PyTorch
+    - Huggingface
+    - Langchain
+---
+LLM Apps
+    - RAG
+    - Prompting
+    - Agentic workflows
+---
+
+## Frame: ML Engineering — Senior-Level Best Practices
+
+- Frame the business problem as a measurable ML task first
+  - Pick the target variable and success metric before touching data — a mismatched metric (e.g. accuracy on imbalanced fraud data) invalidates everything downstream
+- Prevent data leakage at the source, not in review
+  - Time-based splits for temporal data, group-aware splits when rows share an entity (user/patient), and fit all scalers/encoders only on the training fold
+- Treat feature engineering as a versioned artifact
+  - A feature store (Feast, Tecton, or a simple point-in-time-correct table) keeps train/serve features consistent and prevents online/offline skew
+- EDA should produce falsifiable hypotheses, not just plots
+  - Check target leakage, class imbalance, missingness patterns (MCAR/MAR/MNAR), and distribution drift between train and expected production data
+- Choose eval metrics by problem type and cost asymmetry, not convention
+  - Precision/recall/F1 or PR-AUC for imbalanced classification, calibration (Brier score) when probabilities drive decisions, quantile loss for uncertainty-aware regression
+- Always beat a trivial baseline before trusting a complex model
+  - Majority class, linear/logistic regression, or a simple heuristic — if a gradient-boosted model barely beats it, the signal may not be there
+- Track every experiment with lineage: code version, data version, hyperparameters, metrics
+  - MLflow, Weights & Biases, or DVC — reproducibility is a debugging and audit requirement, not a nice-to-have
+- Version models and data together, not just code
+  - A model artifact without its training data hash and preprocessing pipeline version is not reproducible and not safely rollback-able
+- Test ML code like software: unit test transforms, contract-test the training pipeline, and add data validation (Great Expectations / pandera) as a CI gate
+- Monitor for drift after deployment, not just uptime
+  - Feature drift (PSI, KL divergence), prediction drift, and label/concept drift once ground truth arrives — alert on threshold breaches, not just crashes
+- Deploy with a rollback path: shadow mode first, then canary, then champion-challenger
+  - Shadow runs the new model silently alongside production to compare outputs before it ever affects a user
+- For LLM-based features, separate system instructions from user input explicitly to prevent prompt injection, and version prompts like code (diffable, reviewable, rollback-able)
+- RAG systems fail in specific, recurring ways: retrieval returns relevant-but-wrong-grain chunks, embeddings drift when the embedding model changes (requires full re-index), and context-stuffing degrades generation quality past a token budget — validate retrieval quality (recall@k) separately from generation quality
+- Agentic workflows need bounded iteration and explicit tool-call validation
+  - Cap retries/steps, validate tool outputs against a schema before feeding them back into the loop, and log every step for observability (Chain of Responsibility: retrieve → grade → generate → validate)
+- Fail fast and gracefully on LLM API limits
+  - Handle rate limits, timeouts, and context-window overflows with explicit fallback logic (smaller model, cached response, truncated context) rather than an unhandled exception reaching the user
+- Senior-level judgment: know when NOT to use ML
+  - A well-tuned heuristic or SQL rule is often more reliable, cheaper, and easier to debug than a model for problems with clear deterministic logic
+---
+
+## Frame: ML Engineering — Community Resources & Further Reading
+
+- PyTorch official documentation & tutorials (pytorch.org/tutorials) — canonical reference for training loops, autograd, and torch_xla/device placement
+- Hugging Face documentation & courses (huggingface.co/docs, huggingface.co/learn) — transformers, datasets, and the free NLP/LLM course
+- Made With ML (madewithml.com) — free, widely-used course on production ML engineering: MLOps, testing, and deployment practices
+- Full Stack Deep Learning (fullstackdeeplearning.com) — course and reading materials on the practical engineering side of shipping ML systems
+- "Machine Learning Engineering" by Andriy Burkov (mlebook.com) — concise, practitioner-focused complement to more academic ML texts
+- Google's "Rules of Machine Learning" (developers.google.com/machine-learning/guides/rules-of-ml) — battle-tested heuristics from Google's internal ML practice
+- "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (Lewis et al., 2020, arXiv:2005.11401) — the original RAG paper defining the architecture pattern
+- LangChain official documentation (python.langchain.com) — reference patterns for RAG pipelines and agentic tool-calling workflows
+- Awesome MLOps (github.com/visenger/awesome-mlops) — curated, community-maintained list of MLOps tools, papers, and platforms
+---
