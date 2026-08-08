@@ -42,7 +42,8 @@ function escapeLikePattern(raw: string): string {
  * render pagination controls or decide the requested page was out of range.
  *
  * Single authoritative query shape against "PORTFOLIO".roles (job_id, title,
- * url, company, posted_date, resume_pdf_path). src/app/jobs/query.tsx and
+ * url, company, posted_date, resume_pdf_path, applications_accepted_until).
+ * src/app/jobs/query.tsx and
  * src/app/api/jobs/route.ts both delegate to this function so the page and
  * the public API route never drift into hand-writing their own copies again.
  *
@@ -106,7 +107,8 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
           url,
           company,
           posted_date::text AS "postedDate",
-          resume_pdf_path AS "resumePdfPath"
+          resume_pdf_path AS "resumePdfPath",
+          applications_accepted_until::text AS "applicationsAcceptedUntil"
         FROM "PORTFOLIO".roles
         WHERE posted_date >= ${cutoff}::date
           AND (${params.company}::text IS NULL OR company = ${params.company})
@@ -122,7 +124,8 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
           url,
           company,
           posted_date::text AS "postedDate",
-          resume_pdf_path AS "resumePdfPath"
+          resume_pdf_path AS "resumePdfPath",
+          applications_accepted_until::text AS "applicationsAcceptedUntil"
         FROM "PORTFOLIO".roles
         WHERE (posted_date < ${cutoff}::date OR posted_date IS NULL)
           AND (${params.company}::text IS NULL OR company = ${params.company})
@@ -147,6 +150,7 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
       company: row.company ?? null,
       postedDate: row.postedDate ?? null,
       resumePdfPath: row.resumePdfPath ?? null,
+      applicationsAcceptedUntil: row.applicationsAcceptedUntil ?? null,
     })
   );
 

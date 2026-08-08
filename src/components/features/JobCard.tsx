@@ -1,19 +1,25 @@
 import type { JobListing } from '@/types/jobs';
 import { createResumeDownloadUrl } from '@/lib/auth/resumeToken';
 
-function formatPostedDate(postedDate: string | null): string | null {
-  if (!postedDate) return null;
-  const parsed = new Date(postedDate);
+// Shared by postedDate and applicationsAcceptedUntil — both are date-only
+// ISO strings (YYYY-MM-DD) from Postgres. Parsing as UTC midnight and
+// slicing the UTC ISO string back out never shifts the day across a local
+// timezone boundary, unlike using local getters on a date-only source.
+function formatIsoDate(isoDate: string | null): string | null {
+  if (!isoDate) return null;
+  const parsed = new Date(isoDate);
   if (Number.isNaN(parsed.getTime())) return null;
-
-  // ISO 8601 date (YYYY-MM-DD), e.g. "2026-06-18". Date-only source strings
-  // parse as UTC midnight, so slicing the UTC ISO string back out never
-  // shifts the day across a local timezone boundary.
   return parsed.toISOString().slice(0, 10);
 }
 
 const JobCard = ({ job }: { job: JobListing }) => {
-  const postedDate = formatPostedDate(job.postedDate);
+  const postedDate = formatIsoDate(job.postedDate);
+  // NVIDIA-only, and null even for NVIDIA unless the posting's description
+  // had a parseable deadline sentence — see JobListingSchema's doc comment.
+  // Phrased as "at least until", not "closes on", since the upstream source
+  // sentence is a stated floor, not a hard cutoff — the posting may still be
+  // open past this date.
+  const applicationsAcceptedUntil = formatIsoDate(job.applicationsAcceptedUntil);
 
   return (
     <div className="card-base p-5 flex flex-col h-full space-y-3">
@@ -44,8 +50,9 @@ const JobCard = ({ job }: { job: JobListing }) => {
 
       <div className="flex-1" />
 
-      <div className="pt-2 border-t border-zinc-200 dark:border-zinc-700 text-xs text-subtle">
-        {postedDate ? `Posted ${postedDate}` : 'Posting date unavailable'}
+      <div className="pt-2 border-t border-zinc-200 dark:border-zinc-700 text-xs text-subtle space-y-0.5">
+        <p>{postedDate ? `Posted ${postedDate}` : 'Posting date unavailable'}</p>
+        {applicationsAcceptedUntil && <p>Accepting applications at least until {applicationsAcceptedUntil}</p>}
       </div>
     </div>
   );
