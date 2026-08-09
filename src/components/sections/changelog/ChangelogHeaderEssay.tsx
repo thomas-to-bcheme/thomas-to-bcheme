@@ -20,16 +20,17 @@ const BULLET_CLASS =
  * shorten it, including the inline notes distinguishing newly-authored
  * synthesis from direct quotes.
  *
- * Four additions are deliberate, later exceptions to that rule, made by
+ * Five additions are deliberate, later exceptions to that rule, made by
  * explicit user decision outside the original §4 plan: the
  * business-driven-development paragraphs and "AI Growth & Adoption"
- * pull-quote appended to system-design-philosophy; the prompt-engineering
- * paragraphs appended to agent-definition; the standalone
- * effective-communication section (plus the non-section
- * mental-models-synthesis closing block after it); and the standalone
- * unintended-consequences section, inserted between system-design-philosophy
- * and effective-communication. Leave every original section's pre-existing
- * sentences untouched when editing any of the four.
+ * pull-quote appended to system-design-philosophy; the
+ * benchmark-before-automating paragraphs appended immediately after that
+ * pull-quote, in the same section; the prompt-engineering paragraphs
+ * appended to agent-definition; the standalone effective-communication
+ * section (plus the non-section mental-models-synthesis closing block after
+ * it); and the standalone unintended-consequences section, inserted between
+ * system-design-philosophy and effective-communication. Leave every original
+ * section's pre-existing sentences untouched when editing any of the five.
  */
 const ChangelogHeaderEssay = () => {
   return (
@@ -333,6 +334,45 @@ const ChangelogHeaderEssay = () => {
             count that may never show up. That&apos;s why this site treats adoption — a résumé PDF
             a recruiter actually opens, a chat agent a hiring manager actually trusts enough to ask
             a follow-up question — as the metric that comes before throughput, not after it.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>
+              Benchmark the existing process before automating it, not after.
+            </strong>{' '}
+            Any operational process improvement that replaces a manually-run workflow with an
+            automated one starts by measuring the process as it already performs — cost, turnaround
+            time, error rate — before a line of automation code exists, so the &quot;after&quot;
+            number has a real &quot;before&quot; to be checked against. Skip that step and the risk
+            isn&apos;t just a worse process; it&apos;s a process nobody can prove is better, which
+            is the same trust gap the &quot;AI Growth &amp; Adoption&quot; pull-quote above is
+            about, one layer down.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>
+              Finance and time are the default success criteria — not the only ones.
+            </strong>{' '}
+            Cost saved and hours reclaimed map straight onto the business-driven-development rubric
+            above and read clearly to a recruiter or hiring manager without translation. But quality
+            or another qualitative measure is the honest criterion when the task calls for it — the
+            tailored-résumé rubric check described under &quot;What &apos;agent&apos;
+            means&quot; is graded on whether the output passes, not on how fast it runs, because a
+            faster résumé that fails the rubric is a regression wearing a KPI, not an improvement.
+            Once a metric is picked, the discipline is in what doesn&apos;t get measured:
+            instrumenting every available signal &quot;just in case&quot; produces test-fatigue
+            nobody actually looks at, and it invites optimizing for a number the process was never
+            scoped to move — scope creep, chasing a metric outside the original design&apos;s
+            intent instead of the one that was actually the point.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>The benchmark is also the gate on scale.</strong> A
+            process proven against a narrow benchmark hasn&apos;t earned the right to run at ten
+            times that scope just because the math says it could — the same
+            grassroots-trust-before-headroom argument the pull-quote above makes about users,
+            applied to the process itself. Rolling automation out past its established benchmark
+            before addressing that hesitation — a team&apos;s or a stakeholder&apos;s fear of an
+            automated process replacing one they trusted by hand — repeats the exact mistake the
+            pull-quote warns against: capacity spent on scale nobody asked for yet, instead of on
+            earning the trust scale depends on.
           </p>
         </div>
       </section>
