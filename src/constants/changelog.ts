@@ -40,6 +40,24 @@ export interface ChangelogEntry {
 // Sorted newest-first; CHANGELOG_ENTRIES[0] is the current release.
 export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
   {
+    version: 'v2.6.0',
+    date: '2026-08-08',
+    title: "Company-aware staleness: NVIDIA's deadline replaces its missing posted date",
+    summary:
+      "The upstream ingestion pipeline that syncs the Job Board four times a day — scraping each company's own job board directly, checking the database for staleness before writing anything new — now treats 'stale' differently per company, and the Job Board itself surfaces the date it's actually keying off instead of a misleading 'Posted' label.",
+    changes: [
+      "Surfaced NVIDIA's 'accepting applications at least until' deadline on the Job Board, replacing posted_date as the effective date NVIDIA rows are labeled, bucketed, and sorted by — NVIDIA's own listings don't expose a real posted date, so a plain 'Posted <date>' line was actively misleading.",
+      'Made the Job Board filter bar and pagination sticky as one unit so long, filtered result lists stay easy to re-filter without scrolling back up.',
+      "Extended the staleness check the ingestion pipeline runs before every write to be company-aware: NVIDIA rows are deleted once today passes their listed 'accepted at least until' date, while other companies (e.g. Apple) are kept for a longer 3–6 month window, per recruiter feedback that a late applicant isn't automatically an unqualified one.",
+    ],
+    lessonsLearned: [
+      "NVIDIA is the one company in this pipeline that doesn't expose a real posted date, only an 'accepted at least until' deadline — so staleness couldn't mean the same thing for every row. The fix was one effective-date concept (COALESCE(applications_accepted_until, posted_date), NVIDIA-only) threaded through the ingestion pipeline's own delete check, the read query's bucketing/sort, and the UI label, not three separate special cases.",
+      "Recruiter feedback that an interview loop can take a few months to circle back reshaped the staleness policy itself, not just the UI: postings without a hard deadline are kept for 3–6 months instead of NVIDIA's tighter cutoff, since a candidate applying late in that window is more likely earlier in a slow pipeline than actually unqualified.",
+      "The private Vercel Blob résumé storage this feature is built on wasn't only an architecture exercise — it got used live, mid-interview, as a fast way to pull up and share a tailored résumé straight from the portfolio.",
+    ],
+    links: [{ label: 'View the Job Board', url: '/jobs', type: 'route' }],
+  },
+  {
     version: 'v2.5.0',
     date: '2026-08-08',
     title: 'Changelog becomes a project-organized mental model',
@@ -225,10 +243,10 @@ export const CHANGELOG_PROJECTS: ChangelogProject[] = [
     name: 'Job Board',
     tagline: 'Neon Postgres + résumé-tailoring pipeline',
     description:
-      'The first live, database-backed feature on this portfolio — real rows in a Neon Postgres table, synced by an external tailoring pipeline four times a day, with signed 24-hour résumé downloads and no ISR/revalidate window once filtering made per-request rendering cheap enough.',
+      "The first live, database-backed feature on this portfolio — real rows in a Neon Postgres table, synced by an external tailoring pipeline four times a day straight from each company's own job board, checking the database for staleness before every write. That staleness check is company-aware: NVIDIA rows are deleted once today passes their listed 'accepted at least until' date, while other companies get a longer, recruiter-informed 3–6 month window. Signed 24-hour résumé downloads, no ISR/revalidate window once filtering made per-request rendering cheap enough.",
     route: '/jobs',
     icon: Briefcase,
-    entries: [V2_4_0_JOB_BOARD_SLICE, findEntry('v2.0.0')],
+    entries: [findEntry('v2.6.0'), V2_4_0_JOB_BOARD_SLICE, findEntry('v2.0.0')],
   },
   {
     id: 'huggingface-zerogpu',
