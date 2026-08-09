@@ -1,0 +1,1002 @@
+[
+  {
+    "slug": "ab-testing-ml",
+    "term": "A/B Testing",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "abstraction-oop",
+    "term": "Abstraction (OOP)",
+    "category": "systems-design"
+  },
+  {
+    "slug": "acid-properties",
+    "term": "ACID Properties",
+    "category": "systems-design"
+  },
+  {
+    "slug": "agent-orchestration",
+    "term": "Agent Orchestration",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "agentic-rag",
+    "term": "Agentic RAG",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "agentic-workflow",
+    "term": "Agentic Workflow",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "all-reduce",
+    "term": "AllReduce",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "api-versioning",
+    "term": "API Versioning",
+    "category": "systems-design"
+  },
+  {
+    "slug": "attention-mechanism",
+    "term": "Attention",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "b-tree-index",
+    "term": "B-Tree Index",
+    "category": "systems-design"
+  },
+  {
+    "slug": "backfill",
+    "term": "Backfill",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "backpressure",
+    "term": "Backpressure",
+    "category": "systems-design"
+  },
+  {
+    "slug": "backpropagation",
+    "term": "Backpropagation",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "bank-conflict",
+    "term": "Bank Conflict",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "base-properties",
+    "term": "BASE Properties",
+    "category": "systems-design"
+  },
+  {
+    "slug": "batch-vs-stream-processing",
+    "term": "Batch vs. Stream Processing",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "bias-variance-tradeoff",
+    "term": "Bias-Variance Tradeoff",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "blameless-postmortem",
+    "term": "Blameless Postmortem",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "blue-green-deployment",
+    "term": "Blue-Green Deployment",
+    "category": "systems-design"
+  },
+  {
+    "slug": "bounded-context",
+    "term": "Bounded Context",
+    "category": "systems-design"
+  },
+  {
+    "slug": "bulkhead-pattern",
+    "term": "Bulkhead Pattern",
+    "category": "systems-design"
+  },
+  {
+    "slug": "cache-aside",
+    "term": "Cache-Aside",
+    "category": "systems-design"
+  },
+  {
+    "slug": "cache-augmented-generation",
+    "term": "Cache-Augmented Generation (CAG)",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "canary-deployment",
+    "term": "Canary Deployment",
+    "category": "systems-design"
+  },
+  {
+    "slug": "cap-theorem",
+    "term": "CAP Theorem",
+    "category": "systems-design"
+  },
+  {
+    "slug": "champion-challenger",
+    "term": "Champion-Challenger",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "change-data-capture",
+    "term": "Change Data Capture (CDC)",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "circuit-breaker",
+    "term": "Circuit Breaker",
+    "category": "systems-design"
+  },
+  {
+    "slug": "class-imbalance",
+    "term": "Class Imbalance",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "client-side-rendering",
+    "term": "Client-Side Rendering (CSR)",
+    "category": "systems-design"
+  },
+  {
+    "slug": "code-splitting",
+    "term": "Code Splitting",
+    "category": "systems-design"
+  },
+  {
+    "slug": "columnar-storage-format",
+    "term": "Columnar Storage Format",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "compute-bound-vs-memory-bound",
+    "term": "Compute-Bound vs. Memory-Bound",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "concept-drift",
+    "term": "Concept Drift",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "confusion-matrix",
+    "term": "Confusion Matrix",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "connection-pooling",
+    "term": "Connection Pooling",
+    "category": "systems-design"
+  },
+  {
+    "slug": "consistent-hashing",
+    "term": "Consistent Hashing",
+    "category": "systems-design"
+  },
+  {
+    "slug": "containerization",
+    "term": "Containerization",
+    "category": "systems-design"
+  },
+  {
+    "slug": "containerized-model-serving",
+    "term": "Containerized Model Serving",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "context-window",
+    "term": "Context Window",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "continual-learning",
+    "term": "Continual Learning",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "continuous-training",
+    "term": "Continuous Training (CT)",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "conways-law",
+    "term": "Conway's Law",
+    "category": "systems-design"
+  },
+  {
+    "slug": "core-web-vitals",
+    "term": "Core Web Vitals",
+    "category": "systems-design"
+  },
+  {
+    "slug": "correlation-id",
+    "term": "Correlation ID",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "cosine-similarity",
+    "term": "Cosine Similarity",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "covariate-shift",
+    "term": "Covariate Shift",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "cqrs",
+    "term": "CQRS",
+    "category": "systems-design"
+  },
+  {
+    "slug": "cross-validation",
+    "term": "Cross-Validation",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "cuda-core",
+    "term": "CUDA Core",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "dag-orchestration",
+    "term": "DAG Orchestration",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-aware-dependency",
+    "term": "Data-Aware Dependency",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-drift",
+    "term": "Data Drift",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "data-lake",
+    "term": "Data Lake",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-lakehouse",
+    "term": "Data Lakehouse",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-leakage",
+    "term": "Data Leakage",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "data-lineage",
+    "term": "Data Lineage",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-mesh",
+    "term": "Data Mesh",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-parallelism",
+    "term": "Data Parallelism",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "data-partitioning",
+    "term": "Data Partitioning",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-validation-ingestion",
+    "term": "Data Validation at Ingestion",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "data-warehouse",
+    "term": "Data Warehouse",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "database-normalization",
+    "term": "Database Normalization",
+    "category": "systems-design"
+  },
+  {
+    "slug": "dead-letter-queue",
+    "term": "Dead-Letter Queue",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "deadlock",
+    "term": "Deadlock",
+    "category": "systems-design"
+  },
+  {
+    "slug": "decoder",
+    "term": "Decoder",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "degenerate-feedback-loop",
+    "term": "Degenerate Feedback Loop",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "delivery-semantics",
+    "term": "Delivery Semantics",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "denormalization",
+    "term": "Denormalization",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "deterministic-seeding",
+    "term": "Deterministic Seeding",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "distributed-tracing",
+    "term": "Distributed Tracing",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "edge-inference",
+    "term": "Edge Inference",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "embedding-model",
+    "term": "Embedding Model",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "encapsulation",
+    "term": "Encapsulation",
+    "category": "systems-design"
+  },
+  {
+    "slug": "encoder",
+    "term": "Encoder",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "ensemble-methods",
+    "term": "Ensemble Methods (Bagging/Boosting/Stacking)",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "error-budget",
+    "term": "Error Budget",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "etl-vs-elt",
+    "term": "ETL vs. ELT",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "event-loop",
+    "term": "Event Loop",
+    "category": "systems-design"
+  },
+  {
+    "slug": "event-sourcing",
+    "term": "Event Sourcing",
+    "category": "systems-design"
+  },
+  {
+    "slug": "experiment-tracking",
+    "term": "Experiment Tracking",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "exponential-backoff",
+    "term": "Exponential Backoff",
+    "category": "systems-design"
+  },
+  {
+    "slug": "feature-discretization",
+    "term": "Feature Discretization",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "feature-engineering",
+    "term": "Feature Engineering",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "feature-flags",
+    "term": "Feature Flags",
+    "category": "systems-design"
+  },
+  {
+    "slug": "feature-store",
+    "term": "Feature Store",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "fine-tuning",
+    "term": "Fine-Tuning",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "flash-attention",
+    "term": "Flash Attention",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "function-calling",
+    "term": "Function Calling",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "gemm-vs-gemv",
+    "term": "GEMM vs. GEMV",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "global-memory",
+    "term": "Global Memory (HBM)",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "golden-dataset",
+    "term": "Golden Dataset",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "golden-signals",
+    "term": "Golden Signals",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "gradient-descent",
+    "term": "Gradient Descent",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "grid-cuda",
+    "term": "Grid",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "guardrails",
+    "term": "Guardrails",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "hardware-agnostic-inference",
+    "term": "Hardware-Agnostic Inference",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "host-vs-device",
+    "term": "Host vs. Device",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "hybrid-retrieval",
+    "term": "Hybrid Retrieval",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "idempotency-key",
+    "term": "Idempotency Key",
+    "category": "systems-design"
+  },
+  {
+    "slug": "idempotent-pipeline-design",
+    "term": "Idempotent Pipeline Design",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "incremental-static-regeneration",
+    "term": "Incremental Static Regeneration (ISR)",
+    "category": "systems-design"
+  },
+  {
+    "slug": "infrastructure-as-code",
+    "term": "Infrastructure as Code",
+    "category": "systems-design"
+  },
+  {
+    "slug": "inheritance",
+    "term": "Inheritance",
+    "category": "systems-design"
+  },
+  {
+    "slug": "jit-compilation-cuda",
+    "term": "JIT Compilation",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "jwt",
+    "term": "JWT",
+    "category": "systems-design"
+  },
+  {
+    "slug": "kernel-cuda",
+    "term": "Kernel",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "kv-cache",
+    "term": "KV Cache",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "label-smoothing",
+    "term": "Label Smoothing",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "llm-as-judge",
+    "term": "LLM-as-Judge",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "load-balancing",
+    "term": "Load Balancing",
+    "category": "systems-design"
+  },
+  {
+    "slug": "lora",
+    "term": "LoRA (Low-Rank Adaptation)",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "lsm-tree",
+    "term": "LSM-Tree",
+    "category": "systems-design"
+  },
+  {
+    "slug": "memory-coalescing",
+    "term": "Memory Coalescing",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "memory-hierarchy-gpu",
+    "term": "GPU Memory Hierarchy",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "message-broker",
+    "term": "Message Broker",
+    "category": "systems-design"
+  },
+  {
+    "slug": "microservices",
+    "term": "Microservices",
+    "category": "systems-design"
+  },
+  {
+    "slug": "mini-batch-training",
+    "term": "Mini-Batch Training",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "missing-data-mechanisms",
+    "term": "Missing Data Mechanisms (MCAR/MAR/MNAR)",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "mixed-precision",
+    "term": "Mixed Precision (bf16/fp16/fp8)",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "mixture-of-experts",
+    "term": "Mixture of Experts (MoE)",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "model-artifact",
+    "term": "Model Artifact",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "model-calibration",
+    "term": "Model Calibration",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "model-card",
+    "term": "Model Card",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "model-context-protocol",
+    "term": "Model Context Protocol (MCP)",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "model-registry",
+    "term": "Model Registry",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "model-staleness",
+    "term": "Model / Label Staleness",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "model-versioning",
+    "term": "Model Versioning",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "monitoring-vs-observability",
+    "term": "Monitoring vs. Observability",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "monolith",
+    "term": "Monolith",
+    "category": "systems-design"
+  },
+  {
+    "slug": "multi-head-attention",
+    "term": "Multi-Head Attention",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "mutex",
+    "term": "Mutex",
+    "category": "systems-design"
+  },
+  {
+    "slug": "n-plus-one-query",
+    "term": "N+1 Query",
+    "category": "systems-design"
+  },
+  {
+    "slug": "nccl",
+    "term": "NCCL",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "nvlink",
+    "term": "NVLink",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "oauth2-oidc",
+    "term": "OAuth 2.0 / OIDC",
+    "category": "systems-design"
+  },
+  {
+    "slug": "occupancy",
+    "term": "Occupancy",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "oltp-vs-olap",
+    "term": "OLTP vs. OLAP",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "online-vs-batch-prediction",
+    "term": "Online vs. Batch Prediction",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "overfitting-underfitting",
+    "term": "Overfitting vs. Underfitting",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "paged-attention",
+    "term": "Paged Attention",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "pcie",
+    "term": "PCIe",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "pipeline-orchestration-ml",
+    "term": "ML Pipeline Orchestration",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "pipeline-parallelism",
+    "term": "Pipeline Parallelism",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "polymorphism",
+    "term": "Polymorphism",
+    "category": "systems-design"
+  },
+  {
+    "slug": "population-stability-index",
+    "term": "Population Stability Index (PSI)",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "positional-encoding",
+    "term": "Positional Encoding",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "precision-recall-f1",
+    "term": "Precision, Recall & F1",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "prompt-engineering",
+    "term": "Prompt Engineering",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "prompt-injection",
+    "term": "Prompt Injection",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "ptx",
+    "term": "PTX",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "quantization",
+    "term": "Quantization",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "race-condition",
+    "term": "Race Condition",
+    "category": "systems-design"
+  },
+  {
+    "slug": "rate-limiting",
+    "term": "Rate Limiting",
+    "category": "systems-design"
+  },
+  {
+    "slug": "rbac",
+    "term": "Role-Based Access Control (RBAC)",
+    "category": "systems-design"
+  },
+  {
+    "slug": "recall-at-k",
+    "term": "Recall@k",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "register-file",
+    "term": "Register File",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "regularization",
+    "term": "Regularization (L1/L2)",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "replication",
+    "term": "Replication",
+    "category": "systems-design"
+  },
+  {
+    "slug": "retraining-trigger",
+    "term": "Retraining Trigger",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "retrieval-augmented-generation",
+    "term": "Retrieval-Augmented Generation (RAG)",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "ring-vs-tree-collectives",
+    "term": "Ring vs. Tree Collectives",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "roc-auc",
+    "term": "ROC / AUC",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "rollback-strategy-ml",
+    "term": "Rollback Strategy",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "saga-pattern",
+    "term": "Saga Pattern",
+    "category": "systems-design"
+  },
+  {
+    "slug": "schema-evolution",
+    "term": "Schema Evolution",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "self-attention",
+    "term": "Self-Attention",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "semaphore",
+    "term": "Semaphore",
+    "category": "systems-design"
+  },
+  {
+    "slug": "server-side-rendering",
+    "term": "Server-Side Rendering (SSR)",
+    "category": "systems-design"
+  },
+  {
+    "slug": "service-mesh",
+    "term": "Service Mesh",
+    "category": "systems-design"
+  },
+  {
+    "slug": "shadow-deployment",
+    "term": "Shadow Deployment",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "sharding",
+    "term": "Sharding",
+    "category": "systems-design"
+  },
+  {
+    "slug": "shared-memory",
+    "term": "Shared Memory",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "sidecar-pattern",
+    "term": "Sidecar Pattern",
+    "category": "systems-design"
+  },
+  {
+    "slug": "sla",
+    "term": "Service Level Agreement (SLA)",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "sli",
+    "term": "Service Level Indicator (SLI)",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "slo",
+    "term": "Service Level Objective (SLO)",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "slowly-changing-dimension",
+    "term": "Slowly Changing Dimension (SCD)",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "small-files-problem",
+    "term": "Small Files Problem",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "star-schema",
+    "term": "Star Schema",
+    "category": "data-engineering"
+  },
+  {
+    "slug": "stateless-vs-stateful-training",
+    "term": "Stateless vs. Stateful Training",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "static-site-generation",
+    "term": "Static Site Generation (SSG)",
+    "category": "systems-design"
+  },
+  {
+    "slug": "strangler-fig-pattern",
+    "term": "Strangler Fig Pattern",
+    "category": "systems-design"
+  },
+  {
+    "slug": "streaming-inference",
+    "term": "Streaming Inference",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "streaming-multiprocessor",
+    "term": "Streaming Multiprocessor (SM)",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "structured-logging",
+    "term": "Structured Logging",
+    "category": "evaluation-observability"
+  },
+  {
+    "slug": "tensor-core",
+    "term": "Tensor Core",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "tensor-memory-accelerator",
+    "term": "Tensor Memory Accelerator (TMA)",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "tensor-parallelism",
+    "term": "Tensor Parallelism",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "thread-block",
+    "term": "Thread Block",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "tls",
+    "term": "TLS",
+    "category": "systems-design"
+  },
+  {
+    "slug": "tokenization",
+    "term": "Tokenization",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "tool-use-validation",
+    "term": "Tool-Use Validation",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "training-serving-skew",
+    "term": "Training-Serving Skew",
+    "category": "mlops-infra"
+  },
+  {
+    "slug": "transformer-architecture",
+    "term": "Transformer Architecture",
+    "category": "data-science-ml"
+  },
+  {
+    "slug": "vector-database",
+    "term": "Vector Database",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "vision-language-model",
+    "term": "Vision-Language Model (VLM)",
+    "category": "ai-ml-engineering"
+  },
+  {
+    "slug": "warp",
+    "term": "Warp",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "warp-divergence",
+    "term": "Warp Divergence",
+    "category": "gpu-cuda"
+  },
+  {
+    "slug": "zero-trust-security",
+    "term": "Zero-Trust Security",
+    "category": "systems-design"
+  }
+]

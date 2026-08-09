@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { JobListingSchema, type JobListing } from '@/types/jobs';
-import { getRecentCutoffDate } from '@/lib/jobs/constants';
+import { getRecentCutoffDate, NVIDIA_COMPANY_NAME } from '@/lib/jobs/constants';
 import type { JobsQueryParams } from '@/lib/jobs/queryParams';
 
 // Fail-fast: validate required environment variables at module load
@@ -43,6 +43,9 @@ function escapeLikePattern(raw: string): string {
  *
  * Single authoritative query shape against "PORTFOLIO".roles (job_id, title,
  * url, company, posted_date, resume_pdf_path, applications_accepted_until).
+ * NVIDIA rows additionally substitute applications_accepted_until for
+ * posted_date wherever this query buckets, sorts, or labels by date — see
+ * the "effective date" paragraph below.
  * src/app/jobs/query.tsx and
  * src/app/api/jobs/route.ts both delegate to this function so the page and
  * the public API route never drift into hand-writing their own copies again.
@@ -60,10 +63,26 @@ function escapeLikePattern(raw: string): string {
  * third axis of variants, following the existing `(${x}::text IS NULL OR
  * ...)` idiom already used for company.
  *
- * NULL posted_date rows are excluded from 'recent' (can't confirm recency)
- * and included in 'older' (posted_date < cutoff OR posted_date IS NULL) —
- * matching the "Posting date unavailable" fallback already in JobCard.tsx
- * rather than silently dropping those rows from every view.
+ * The recent/older cutoff, ORDER BY, and both COUNT queries' WHERE clauses
+ * all key off an "effective date" rather than the raw posted_date column:
+ * posted_date for every company except NVIDIA_COMPANY_NAME (src/lib/jobs/
+ * constants.ts), where COALESCE(applications_accepted_until, posted_date) is
+ * used instead — NVIDIA's own listings state an "accepted at least until
+ * <date>" deadline rather than exposing a comparable posted date, so an
+ * NVIDIA row with a parsed deadline buckets/sorts by whether applications
+ * are still open, not by how long ago it was first posted. This is an
+ * intentional behavior change from posted_date-only bucketing, scoped to
+ * NVIDIA rows only; see JobCard.tsx for how the relabeled UI disambiguates
+ * it. NULL effective-date rows are excluded from 'recent' (can't confirm
+ * recency/openness) and included in 'older' (effective date < cutoff OR
+ * effective date IS NULL) — matching the "Posting date unavailable"
+ * fallback already in JobCard.tsx rather than silently dropping those rows
+ * from every view. Each query block below computes the effective date once,
+ * in a WITH clause, rather than repeating the CASE expression inline for
+ * WHERE/ORDER BY/the SELECT alias — a plain single-template CTE, not the
+ * cross-template fragment composition the driver doesn't support (see
+ * above), so it doesn't hit that limitation while keeping the expression
+ * from drifting out of sync between clauses.
  *
  * Page clamping is intentionally NOT done here: this function always honors
  * the requested page verbatim (an out-of-range page legitimately returns
@@ -85,52 +104,76 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
 
   const countQuery = params.range === 'recent'
     ? sql`
+        WITH scoped AS (
+          SELECT
+            company, title,
+            CASE WHEN company = ${NVIDIA_COMPANY_NAME} THEN COALESCE(applications_accepted_until, posted_date) ELSE posted_date END AS effective_date
+          FROM "PORTFOLIO".roles
+        )
         SELECT COUNT(*)::int AS count
-        FROM "PORTFOLIO".roles
-        WHERE posted_date >= ${cutoff}::date
+        FROM scoped
+        WHERE effective_date >= ${cutoff}::date
           AND (${params.company}::text IS NULL OR company = ${params.company})
           AND (${searchPattern}::text IS NULL OR title ILIKE ${searchPattern} OR company ILIKE ${searchPattern})
       `
     : sql`
+        WITH scoped AS (
+          SELECT
+            company, title,
+            CASE WHEN company = ${NVIDIA_COMPANY_NAME} THEN COALESCE(applications_accepted_until, posted_date) ELSE posted_date END AS effective_date
+          FROM "PORTFOLIO".roles
+        )
         SELECT COUNT(*)::int AS count
-        FROM "PORTFOLIO".roles
-        WHERE (posted_date < ${cutoff}::date OR posted_date IS NULL)
+        FROM scoped
+        WHERE (effective_date < ${cutoff}::date OR effective_date IS NULL)
           AND (${params.company}::text IS NULL OR company = ${params.company})
           AND (${searchPattern}::text IS NULL OR title ILIKE ${searchPattern} OR company ILIKE ${searchPattern})
       `;
 
   const selectQuery = params.range === 'recent'
     ? sql`
+        WITH scoped AS (
+          SELECT
+            job_id, title, url, company, resume_pdf_path, applications_accepted_until,
+            CASE WHEN company = ${NVIDIA_COMPANY_NAME} THEN COALESCE(applications_accepted_until, posted_date) ELSE posted_date END AS effective_date
+          FROM "PORTFOLIO".roles
+        )
         SELECT
           job_id,
           title,
           url,
           company,
-          posted_date::text AS "postedDate",
+          effective_date::text AS "postedDate",
           resume_pdf_path AS "resumePdfPath",
           applications_accepted_until::text AS "applicationsAcceptedUntil"
-        FROM "PORTFOLIO".roles
-        WHERE posted_date >= ${cutoff}::date
+        FROM scoped
+        WHERE effective_date >= ${cutoff}::date
           AND (${params.company}::text IS NULL OR company = ${params.company})
           AND (${searchPattern}::text IS NULL OR title ILIKE ${searchPattern} OR company ILIKE ${searchPattern})
-        ORDER BY posted_date DESC NULLS LAST
+        ORDER BY effective_date DESC NULLS LAST
         LIMIT ${limitValue}
         OFFSET ${offset}
       `
     : sql`
+        WITH scoped AS (
+          SELECT
+            job_id, title, url, company, resume_pdf_path, applications_accepted_until,
+            CASE WHEN company = ${NVIDIA_COMPANY_NAME} THEN COALESCE(applications_accepted_until, posted_date) ELSE posted_date END AS effective_date
+          FROM "PORTFOLIO".roles
+        )
         SELECT
           job_id,
           title,
           url,
           company,
-          posted_date::text AS "postedDate",
+          effective_date::text AS "postedDate",
           resume_pdf_path AS "resumePdfPath",
           applications_accepted_until::text AS "applicationsAcceptedUntil"
-        FROM "PORTFOLIO".roles
-        WHERE (posted_date < ${cutoff}::date OR posted_date IS NULL)
+        FROM scoped
+        WHERE (effective_date < ${cutoff}::date OR effective_date IS NULL)
           AND (${params.company}::text IS NULL OR company = ${params.company})
           AND (${searchPattern}::text IS NULL OR title ILIKE ${searchPattern} OR company ILIKE ${searchPattern})
-        ORDER BY posted_date DESC NULLS LAST
+        ORDER BY effective_date DESC NULLS LAST
         LIMIT ${limitValue}
         OFFSET ${offset}
       `;

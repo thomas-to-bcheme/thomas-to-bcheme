@@ -20,14 +20,16 @@ const BULLET_CLASS =
  * shorten it, including the inline notes distinguishing newly-authored
  * synthesis from direct quotes.
  *
- * Three additions are deliberate, later exceptions to that rule, made by
+ * Four additions are deliberate, later exceptions to that rule, made by
  * explicit user decision outside the original §4 plan: the
  * business-driven-development paragraphs and "AI Growth & Adoption"
  * pull-quote appended to system-design-philosophy; the prompt-engineering
- * paragraphs appended to agent-definition; and the standalone
+ * paragraphs appended to agent-definition; the standalone
  * effective-communication section (plus the non-section
- * mental-models-synthesis closing block after it). Leave every original
- * section's pre-existing sentences untouched when editing any of the three.
+ * mental-models-synthesis closing block after it); and the standalone
+ * unintended-consequences section, inserted between system-design-philosophy
+ * and effective-communication. Leave every original section's pre-existing
+ * sentences untouched when editing any of the four.
  */
 const ChangelogHeaderEssay = () => {
   return (
@@ -335,6 +337,92 @@ const ChangelogHeaderEssay = () => {
         </div>
       </section>
 
+      {/* --- UNINTENDED CONSEQUENCES --- */}
+      <section id="unintended-consequences" className="scroll-mt-24">
+        <SectionHeading
+          eyebrow="Mental Model"
+          title="Bias, geopolitics, and PR risk — not just system design"
+        />
+        <div className="space-y-4">
+          <p className={PARAGRAPH_CLASS}>
+            A systems-design interview at Apple raised this directly, through two related prompts
+            in the same conversation. The first: design a system that translates English into
+            another language. The obvious move is to pick a target language and start on the
+            architecture — but the choice of target isn&apos;t a neutral technical default.
+            &quot;Chinese&quot; isn&apos;t one language or one dialect; picking it without picking
+            which variety, region, and political context it represents is itself a bias decision,
+            made before a single API gets designed.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            That gets sharper the moment the system does more than move text around. Text-to-text
+            translation and text-to-voice translation aren&apos;t the same problem — voice has to
+            carry dialect and regional accent, which flat text never surfaces. English → Japanese
+            makes it concrete: Kyoto&apos;s dialect (Kansai-ben) and Tokyo&apos;s standard dialect
+            are differing regional and contextual representations of the same language, not
+            interchangeable defaults. A system that doesn&apos;t account for that risks a real
+            mistranslation, not a cosmetic one — and shipping without accounting for that risk is
+            a decision with consequences, not a neutral technical default someone else is
+            responsible for.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            The same interview&apos;s second prompt was two-way translation — English →
+            Portuguese and Portuguese → English. The design question wasn&apos;t the algorithm; it
+            was the launch market. Shipping that service targeted only at Brazil — one
+            Portuguese-speaking market, not Portugal or the rest of the Lusophone world — looks
+            like an ordinary &quot;which market ships first&quot; product call. It isn&apos;t just
+            that: it carries geopolitical, historical, and public-relations weight for the
+            company&apos;s reputation, far outside anything in the codebase.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>
+              The system design doesn&apos;t have to change — the engineer&apos;s awareness does.
+            </strong>{' '}
+            Generalized past translation specifically: an engineer can be asked to design a system
+            — &quot;build a translator&quot; — and the system design itself may not need to change
+            at all to account for any of this. What has to change is whether the engineer stays
+            mindful of the real-world business, geopolitical, and reputational realities sitting
+            around that design decision. Skip that awareness and the system still ships, still
+            works, still passes review — and still produces unintended real-world consequences
+            anyway. That awareness is a distinct discipline from the system design itself:
+            business acumen and real-world judgment, layered on top of the technical design, not a
+            substitute for it.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            It&apos;s the same instinct as{' '}
+            <a
+              href="#effective-communication"
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Not just what you say — how you say it
+            </a>{' '}
+            — know who&apos;s actually in the room — taken to its most extreme, highest-stakes
+            version. There, the room is one reader or one interviewer; here, the &quot;room&quot;
+            is an entire user population, and the same audience-first calibration decides whether
+            a design represents their dialect, region, or nationality faithfully, or doesn&apos;t.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            It also compounds the exact risk the{' '}
+            <a
+              href="#system-design-philosophy-ai-growth-adoption"
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              AI Growth &amp; Adoption
+            </a>{' '}
+            pull-quote raises about scaling to users who aren&apos;t there yet. A translation or
+            localization choice that misrepresents or alienates a dialect, region, or nationality
+            doesn&apos;t just ship a worse product — it erodes the grassroots trust adoption
+            actually depends on. It&apos;s the same &quot;users afraid of the technology&quot;
+            failure mode, except the fear here is earned by cultural or geopolitical
+            insensitivity baked into a language or market decision, not unfamiliarity with the
+            technology itself.
+          </p>
+          <p className={NOTE_CLASS}>
+            Flagged: this section is newly-authored synthesis distilling a real, specific
+            interview experience — not a verbatim transcript or quote.
+          </p>
+        </div>
+      </section>
+
       {/* --- EFFECTIVE COMMUNICATION --- */}
       <section id="effective-communication" className="scroll-mt-24">
         <SectionHeading eyebrow="Mental Model" title="Not just what you say — how you say it" />
@@ -416,16 +504,17 @@ const ChangelogHeaderEssay = () => {
           problem we&apos;re actually trying to solve.&quot;
         </p>
         <p className={PARAGRAPH_CLASS}>
-          None of the five sections above are meant to be memorized as a checklist. In an actual
+          None of the six sections above are meant to be memorized as a checklist. In an actual
           conversation — working through a problem live, collaboratively, with an interviewer —
           they get combined on the fly: navigating horizontally, the way the SWE Compass&apos;
           end-to-end lifecycle moves through design, data, model, backend, frontend, and ops, and
           vertically, up its abstraction ladder and across its time axis, while applying a
-          business-driven-development rubric to what&apos;s actually worth solving, and
-          communicating that navigation out loud as it happens instead of presenting it after the
-          fact. That combination — not any one model in isolation — is what this page is actually
-          trying to demonstrate. It&apos;s not a rule to follow; it&apos;s a skill to leverage,
-          differently, every time.
+          business-driven-development rubric — and a mindfulness of the real-world consequences a
+          design decision carries — to what&apos;s actually worth solving, and communicating that
+          navigation out loud as it happens instead of presenting it after the fact. That
+          combination — not any one model in isolation — is what this page is actually trying to
+          demonstrate. It&apos;s not a rule to follow; it&apos;s a skill to leverage, differently,
+          every time.
         </p>
       </div>
     </div>

@@ -14,6 +14,25 @@
 export const RECENT_WINDOW_DAYS = 30;
 
 /**
+ * Exact `company` column value for NVIDIA postings in "PORTFOLIO".roles.
+ * Single source of truth for the explicit company check getFilteredJobs()
+ * (src/lib/db/jobs.ts) and JobCard.tsx use to source NVIDIA rows' effective
+ * date from applications_accepted_until instead of posted_date — NVIDIA's
+ * own listings state an "accepted at least until <date>" deadline rather
+ * than exposing a true posted date the way other companies' sources do.
+ *
+ * Matched with plain `=` (not ILIKE) everywhere this is used, so casing
+ * must exactly match what's actually stored. Confirmed directly against the
+ * live table (`SELECT DISTINCT company FROM "PORTFOLIO".roles`) — the
+ * column is stored lowercase ("apple", "nvidia"), not title-cased, despite
+ * every other part of this codebase (UI copy, docs, job_id prefixes)
+ * writing "NVIDIA". A casing mismatch here fails silently: zero rows match
+ * the CASE's WHEN branch, and NVIDIA rows quietly fall back to plain
+ * posted_date behavior with no error.
+ */
+export const NVIDIA_COMPANY_NAME = 'nvidia';
+
+/**
  * Allowed "results per page" choices for the Job Board's page-size selector.
  * 'all' means no LIMIT — every matching role on one page. Single source of
  * truth for both the server-side validation in queryParams.ts (anything not

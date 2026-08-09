@@ -1,5 +1,6 @@
 import type { JobListing } from '@/types/jobs';
 import { createResumeDownloadUrl } from '@/lib/auth/resumeToken';
+import { NVIDIA_COMPANY_NAME } from '@/lib/jobs/constants';
 
 // Shared by postedDate and applicationsAcceptedUntil — both are date-only
 // ISO strings (YYYY-MM-DD) from Postgres. Parsing as UTC midnight and
@@ -20,6 +21,14 @@ const JobCard = ({ job }: { job: JobListing }) => {
   // sentence is a stated floor, not a hard cutoff — the posting may still be
   // open past this date.
   const applicationsAcceptedUntil = formatIsoDate(job.applicationsAcceptedUntil);
+
+  // True exactly when getFilteredJobs()'s effective-date CASE (src/lib/db/
+  // jobs.ts) sourced this row's postedDate from applications_accepted_until
+  // rather than posted_date — i.e. an NVIDIA row with a parsed deadline.
+  // job.postedDate IS the deadline in that case, so "Posted <date>" would
+  // misdescribe it; the primary line is relabeled instead, and the old
+  // second line is dropped since it would just repeat the same date.
+  const usesAcceptedUntilLabel = job.company === NVIDIA_COMPANY_NAME && applicationsAcceptedUntil !== null;
 
   return (
     <div className="card-base p-5 flex flex-col h-full space-y-3">
@@ -51,8 +60,11 @@ const JobCard = ({ job }: { job: JobListing }) => {
       <div className="flex-1" />
 
       <div className="pt-2 border-t border-zinc-200 dark:border-zinc-700 text-xs text-subtle space-y-0.5">
-        <p>{postedDate ? `Posted ${postedDate}` : 'Posting date unavailable'}</p>
-        {applicationsAcceptedUntil && <p>Accepting applications at least until {applicationsAcceptedUntil}</p>}
+        {usesAcceptedUntilLabel ? (
+          <p>Accepting applications at least until {applicationsAcceptedUntil}</p>
+        ) : (
+          <p>{postedDate ? `Posted ${postedDate}` : 'Posting date unavailable'}</p>
+        )}
       </div>
     </div>
   );

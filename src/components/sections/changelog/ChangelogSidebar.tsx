@@ -18,7 +18,7 @@ const NAV_LINK_CLASS =
 
 /**
  * Sticky desktop sidebar — hidden below `lg:`, where ChangelogMobileToc takes
- * over instead. One useActiveSection call, scoped to the full flat TOC (6
+ * over instead. One useActiveSection call, scoped to the full flat TOC (7
  * essay sections + 4 project ids + faq), drives which link is highlighted.
  */
 const ChangelogSidebar = () => {

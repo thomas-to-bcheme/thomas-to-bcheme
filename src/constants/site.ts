@@ -48,6 +48,7 @@ export const NAV_LINKS = [
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
   { label: 'Changelog', href: '/changelog' },
+  { label: 'Glossary', href: '/glossary' },
 ] as const;
 
 // --- Ideal Roles ---
@@ -64,5 +65,6 @@ export const FOOTER_NAV_LINKS = [
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
   { label: 'Changelog', href: '/changelog' },
+  { label: 'Glossary', href: '/glossary' },
   { label: 'About Me', href: '/#about-me' },
 ] as const;

@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Compass,
   Handshake,
+  Languages,
   Presentation,
   Puzzle,
   Scale,
@@ -47,9 +48,9 @@ const EXECUTIVE_SUMMARY_ITEMS: ExecutiveSummaryItem[] = [
   },
   {
     icon: Compass,
-    label: 'Five mental models, not fixed rules',
+    label: 'Six mental models, not fixed rules',
     blurb:
-      'The SWE Compass, the agent definition, system-design philosophy, business-driven development, and effective communication are first-principles lessons from years across domains — tools for scoping ambiguous problems, not dogma.',
+      'The SWE Compass, the agent definition, system-design philosophy, business-driven development, unintended consequences, and effective communication are first-principles lessons from years across domains — tools for scoping ambiguous problems, not dogma.',
     anchorId: 'swe-compass',
     anchorLabel: 'The SWE Compass',
   },
@@ -60,6 +61,14 @@ const EXECUTIVE_SUMMARY_ITEMS: ExecutiveSummaryItem[] = [
       "Every decision traces back to revenue, risk, time, or process — not novelty or the wrong KPI. A system that scales to 1M users is pointless if the grassroots users aren't there yet.",
     anchorId: 'system-design-philosophy',
     anchorLabel: 'System design philosophy',
+  },
+  {
+    icon: Languages,
+    label: 'No design choice is neutral',
+    blurb:
+      "Choosing a translation's target dialect or launch market isn't a neutral engineering call — a Kyoto-vs-Tokyo default or a Brazil-only Portuguese launch carries bias, geopolitical, and PR weight no system diagram captures.",
+    anchorId: 'unintended-consequences',
+    anchorLabel: 'Unintended consequences',
   },
   {
     icon: Presentation,
@@ -73,7 +82,7 @@ const EXECUTIVE_SUMMARY_ITEMS: ExecutiveSummaryItem[] = [
     icon: Puzzle,
     label: "There's too much to know",
     blurb:
-      "There's too much to know to memorize. The five models above only work combined, live, and applied to whatever problem is actually in front of you.",
+      "There's too much to know to memorize. The six models above only work combined, live, and applied to whatever problem is actually in front of you.",
     anchorId: 'mental-models-synthesis',
     anchorLabel: 'How it all combines',
     wide: true,
@@ -81,10 +90,10 @@ const EXECUTIVE_SUMMARY_ITEMS: ExecutiveSummaryItem[] = [
 ];
 
 /**
- * Compact "at a glance" grid at the very top of /changelog — 7 scannable
+ * Compact "at a glance" grid at the very top of /changelog — 8 scannable
  * takeaway cards distilling the essay below plus the platform's underlying
  * business framing, each deep-linking into ChangelogHeaderEssay's anchors.
- * The closing card (wide) is the essay's synthesis, not one of the five
+ * The closing card (wide) is the essay's synthesis, not one of the six
  * mental models itself. The full essay stays intact below for readers who
  * want depth.
  */

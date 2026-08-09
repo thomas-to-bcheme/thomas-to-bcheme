@@ -12,6 +12,16 @@ import { z } from 'zod';
 // own — the store is private) or null when no resume was attached to the
 // posting; see src/app/api/jobs/resume/route.ts for how it's resolved to a
 // download.
+// `postedDate` is NOT always a direct passthrough of the posted_date column:
+// getFilteredJobs() (src/lib/db/jobs.ts) computes an "effective date" per
+// row, and for NVIDIA rows (see NVIDIA_COMPANY_NAME in
+// src/lib/jobs/constants.ts) substitutes applications_accepted_until
+// whenever it's populated. So `postedDate` here means "the date this row is
+// bucketed/sorted/labeled by" — for most rows that's still literally when
+// it was posted, but for an NVIDIA row with a parsed deadline it's that
+// deadline instead. See JobCard.tsx for how the two cases are
+// disambiguated in the UI (a relabeled primary line, not a fabricated
+// "posted" date).
 // `applicationsAcceptedUntil` is NVIDIA-only (always null for Apple rows) and
 // is itself frequently null even for NVIDIA — the upstream microservice only
 // populates it when a posting's description contains a parseable "Applications
