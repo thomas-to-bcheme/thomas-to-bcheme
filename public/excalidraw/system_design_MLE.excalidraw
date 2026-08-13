@@ -2949,12 +2949,10 @@
       "shown": false,
       "data": null
     },
-    "previousSelectedElementIds": {
-      "qyAZdGDN3ImjtN6eWWUWN": true
-    },
+    "previousSelectedElementIds": {},
     "scrolledOutside": false,
-    "scrollX": -2835.578228461044,
-    "scrollY": 5407.256699961479,
+    "scrollX": -1436.6359682507398,
+    "scrollY": 6278.4990265975875,
     "selectedElementIds": {},
     "hoveredElementIds": {},
     "selectedGroupIds": {},
@@ -2978,7 +2976,7 @@
     "viewBackgroundColor": "#ffffff",
     "zenModeEnabled": false,
     "zoom": {
-      "value": 0.720006
+      "value": 0.280004
     },
     "viewModeEnabled": false,
     "pendingImageElementId": null,
@@ -2993,8 +2991,8 @@
     "searchMatches": [],
     "offsetLeft": 17,
     "offsetTop": -0.5,
-    "width": 1871,
-    "height": 748
+    "width": 1285,
+    "height": 518
   },
   "files": {
     "0663a2afd4b5abf639d0af39b5aed6a9814970c4": {
