@@ -10,7 +10,7 @@ import {
   Target,
   Users,
 } from 'lucide-react';
-import SectionHeading from '@/components/sections/changelog/SectionHeading';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 interface ExecutiveSummaryItem {
   icon: LucideIcon;

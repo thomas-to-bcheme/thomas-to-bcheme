@@ -19,7 +19,7 @@ export default function GlossaryPage() {
     <div className="min-h-screen bg-white dark:bg-black bg-grid-pattern font-sans text-zinc-900 dark:text-zinc-100 selection:bg-blue-500/20">
       <SiteHeader />
 
-      {/* Compact header — constrained width, same shell as /changelog */}
+      {/* Compact header — constrained width, same shell as /projects */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-4">
         <Link
           href="/"

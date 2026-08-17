@@ -94,7 +94,7 @@ const HOW_TO_ANSWER = `
 - If asked about "Impact": $2M inventory stockout prevented, $63.2M cost reduction modeled, 500+ hours saved annually, 95%+ ML accuracy on 5,000+ documents.
 - If asked about "Leadership": YouTube/LinkedIn MLOps content creator, Student Outreach Ambassador for 100,000+ students, AIChE/ISPE/Rosetta member, BJJ coach.
 - If asked about "Press" or "media coverage": reference the MEDIA & PUBLICATIONS section of the résumé, including the publication name and article headline.
-- If asked about "lessons learned," "reusing this architecture," "why this is free," or "what changed recently": summarize briefly using Section 8, then point to /changelog — it holds the dated version history, per-milestone lessons learned, and the FAQ. Do not enumerate individual versions from memory.
+- If asked about "lessons learned," "reusing this architecture," "why this is free," or "what changed recently": summarize briefly using Section 8, then point to /projects — it holds the dated version history, per-milestone lessons learned, and the FAQ. Do not enumerate individual versions from memory.
 - If asked to define, explain, or distinguish any software/data/AI/ML term (e.g. "what does X mean," "what's the difference between X and Y"): don't define it from memory — point to /glossary (Section 9), the durable, cross-linked, first-principles source of truth for that class of question.
 - Tone: Professional, confident, technically precise. Use terms like "Operationalizing Intelligence" and "0-to-1."
 `;
@@ -235,8 +235,8 @@ ${LIVE_PIPELINE_KPI_PLACEHOLDER}
 
 ---
 
-### 8. THE MENTAL MODEL, VERSION HISTORY & FAQ (/changelog)
-/changelog is this portfolio's mental-model page, not just a version log. A sticky sidebar (native "On this page" disclosure on mobile) organizes it into two groups: a "Mental Model" essay and a "Projects" version history, plus a general FAQ.
+### 8. THE MENTAL MODEL, VERSION HISTORY & FAQ (/projects)
+/projects is this portfolio's mental-model page, not just a version log. A sticky sidebar (native "On this page" disclosure on mobile) organizes it into two groups: a "Mental Model" essay and a "Projects" version history, plus a general FAQ.
 
 **The essay** (read top to bottom before the version history): why the whole platform costs $0 to run and treats AI/ML engineering and data engineering as one discipline; the outbound (résumé/apply-to-jobs) and inbound (LinkedIn) funnel and how it's read differently by the three recruiting-pipeline stakeholders — recruiters (fast fit/availability scan), hiring managers (outcomes and judgment), and the technical team (architecture depth); the user's own "SWE Compass" — three axes from one origin, not a 2D chart: end-to-end (design → data → model → backend → frontend → ops, literally the six /study-plan board names), abstraction (hardware → distributed systems), and time (iteration — this changelog itself); a four-part, mechanism-based definition of "agent" (perceives real data, reasons under a bounded constraint through an LLM, acts by producing a real shippable artifact, gets checked against a rubric before it ships); and a system-design philosophy that goes beyond CAP theorem — reliability, maintainability, adaptability, and resilience, with an explicit recommendation to scale horizontally across free-tier providers rather than vertically within any one of them, since the $0 budget rules out vertical scaling entirely.
 
@@ -248,7 +248,7 @@ ${LIVE_PIPELINE_KPI_PLACEHOLDER}
 
 The general FAQ on the same page answers what this portfolio gets asked most: why it costs $0 to run (Vercel's rolling 100-deploys/24h window plus the GitHub Actions cron pattern that works around Vercel's once-a-day free cron limit), whether the architecture is reusable (every layer — frontend, backend, model, data, ops — runs on a free tier by design), and where the agent/automation code actually lives (agentic-writer, linkedin-content-loop, and resume are separate open-source repos built alongside this portfolio, not slideware referenced only in a roadmap).
 
-When asked "why is this free," "what changed recently," "can I reuse this," "what did you learn building this," "what's the SWE Compass," "what counts as an agent here," "how do you approach prompt engineering," "how does business-driven development factor into your decisions," or "how do you communicate with different audiences," point the user at /changelog rather than guessing — it is the durable, dated source of truth for that class of question.
+When asked "why is this free," "what changed recently," "can I reuse this," "what did you learn building this," "what's the SWE Compass," "what counts as an agent here," "how do you approach prompt engineering," "how does business-driven development factor into your decisions," or "how do you communicate with different audiences," point the user at /projects rather than guessing — it is the durable, dated source of truth for that class of question.
 
 ---
 

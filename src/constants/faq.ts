@@ -1,5 +1,5 @@
 /**
- * FAQ data for /changelog. Every answer is grounded in a real, cited file —
+ * FAQ data for /projects. Every answer is grounded in a real, cited file —
  * see the "Source:" comment above each entry. No answer here should ever
  * restate changelog specifics ("what changed recently") as a hardcoded
  * string, since that goes stale; it points at the timeline above instead.

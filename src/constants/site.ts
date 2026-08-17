@@ -40,16 +40,30 @@ export const SITE_VERSION = LATEST_CHANGELOG_VERSION;
 export const SITE_REGION = 'US-West (SFO)';
 
 // --- Navigation ---
-// Section links use `/#section` so they work from any route (subpages like the
-// Study Plan link back to homepage sections). The Study Plan entry is a real route.
-export const NAV_LINKS = [
-  { label: 'About Me', href: '/#about-me', sectionId: 'about-me' },
-  { label: 'Study Plan', href: '/study-plan' },
-  { label: 'Jobs', href: '/jobs' },
-  { label: 'Hugging Face', href: '/huggingface' },
-  { label: 'Changelog', href: '/changelog' },
-  { label: 'Glossary', href: '/glossary' },
-] as const;
+// Discriminated union: a plain route link, or a dropdown group of related
+// links (currently just "Interview", collapsing the 4 interview-prep routes
+// into one top-level slot so the header doesn't overflow at common widths).
+export type NavLink = { type: 'link'; label: string; href: string };
+export type NavGroup = { type: 'group'; label: string; items: { label: string; href: string }[] };
+export type NavEntry = NavLink | NavGroup;
+
+export const NAV_LINKS: NavEntry[] = [
+  { type: 'link', label: 'Study Plan', href: '/study-plan' },
+  {
+    type: 'group',
+    label: 'Interview',
+    items: [
+      { label: 'Communication', href: '/effective-communication' },
+      { label: 'Technical Prep', href: '/practical-technical' },
+      { label: 'System Design', href: '/system-design' },
+      { label: 'Behavioural', href: '/behavioural' },
+    ],
+  },
+  { type: 'link', label: 'Jobs', href: '/jobs' },
+  { type: 'link', label: 'Hugging Face', href: '/huggingface' },
+  { type: 'link', label: 'Projects', href: '/projects' },
+  { type: 'link', label: 'Glossary', href: '/glossary' },
+];
 
 // --- Ideal Roles ---
 export const IDEAL_ROLES = [
@@ -62,9 +76,13 @@ export const IDEAL_ROLES = [
 // --- Footer Navigation ---
 export const FOOTER_NAV_LINKS = [
   { label: 'Study Plan', href: '/study-plan' },
+  { label: 'Behavioural', href: '/behavioural' },
+  { label: 'Effective Communication', href: '/effective-communication' },
+  { label: 'Practical Technical', href: '/practical-technical' },
+  { label: 'System Design', href: '/system-design' },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
-  { label: 'Changelog', href: '/changelog' },
+  { label: 'Projects', href: '/projects' },
   { label: 'Glossary', href: '/glossary' },
   { label: 'About Me', href: '/#about-me' },
 ] as const;

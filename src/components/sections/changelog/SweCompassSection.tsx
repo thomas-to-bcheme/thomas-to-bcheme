@@ -83,9 +83,43 @@ const SweCompassSection = () => {
           serving notes (documented on the Hugging Face page) on the high end — the same climb,
           from a kernel running on one GPU slice to a serving layer built to run against many.
         </p>
+        <p className={PARAGRAPH_CLASS}>
+          That climb keeps going past the two rungs above: the CUDA kernel is compiled by{' '}
+          <code className={CODE_CLASS}>ZeroGPU</code>&apos;s own runtime-JIT step, which in turn is
+          driven by a programming language — <code className={CODE_CLASS}>Python</code> for the
+          Hugging Face ML backend, <code className={CODE_CLASS}>TypeScript</code> for this site —
+          and each language sits inside a framework one rung up,{' '}
+          <code className={CODE_CLASS}>TensorFlow</code>/<code className={CODE_CLASS}>
+            scikit-learn
+          </code>{' '}
+          on the backend and <code className={CODE_CLASS}>Next.js</code> here. Above any single
+          framework is open source itself: <code className={CODE_CLASS}>agentic-writer</code>,{' '}
+          <code className={CODE_CLASS}>linkedin-content-loop</code>, and{' '}
+          <code className={CODE_CLASS}>resume</code> are this project&apos;s own open-sourced
+          repos, sitting in the same ecosystem <code className={CODE_CLASS}>Next.js</code> itself
+          comes from. Above that is infrastructure this project doesn&apos;t run at all — a native
+          cloud provider like <code className={CODE_CLASS}>AWS DynamoDB</code> for the
+          roadmap&apos;s NoSQL store, and third-party cloud/SaaS like{' '}
+          <code className={CODE_CLASS}>Vercel</code>, <code className={CODE_CLASS}>Neon</code>,
+          and <code className={CODE_CLASS}>Vercel Blob</code> for everything else this site is
+          hosted and stored on. One rung higher still is agents-as-a-service — the{' '}
+          <code className={CODE_CLASS}>Gemini API</code>, a hosted generative model consumed over
+          an API rather than run locally. The top of the ladder is where this closes the loop back
+          to &quot;a fleet of them coordinating&quot;: GitHub Actions, Vercel, and Hugging Face
+          acting as one &quot;GitHub Monolith&quot; is that same distributed-systems rung, three
+          separate providers running as a single system.
+        </p>
       </div>
 
       <div id="swe-compass-time" className="scroll-mt-24 space-y-3">
+        <p className={PARAGRAPH_CLASS}>
+          Every real system carries a time axis independent of any one page: the legacy decisions
+          already made and now load-bearing, whether anyone remembers making them or not; the
+          actual scale it runs at today, not the scale it was originally designed for; and the
+          future scale it has to survive to without a rewrite, since a rewrite is itself a legacy
+          decision the next version inherits. This page is one concrete instance of that general
+          shape, not an exception to it.
+        </p>
         <p className={PARAGRAPH_CLASS}>
           <strong className="font-bold text-zinc-900 dark:text-white">
             Time — iteration, and this page.

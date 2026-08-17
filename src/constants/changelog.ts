@@ -72,7 +72,7 @@ export const CHANGELOG_ENTRIES: ChangelogEntry[] = [
       'Organizing a changelog by project instead of strictly by date makes a thin-history project (the chat agent) visible on its own terms, instead of buried inside a mixed-purpose entry like v2.4.0.',
       "A mental-model essay this long only stays legible with real information architecture — a sticky sidebar and scrollspy reused from the homepage's own useActiveSection hook, not a new nav pattern invented for one page.",
     ],
-    links: [{ label: 'Read the SWE Compass', url: '/changelog#swe-compass', type: 'route' }],
+    links: [{ label: 'Read the SWE Compass', url: '/projects#swe-compass', type: 'route' }],
   },
   {
     version: 'v2.4.0',

@@ -13,7 +13,7 @@ import ProjectChangelogSection from '@/components/sections/changelog/ProjectChan
 import { CHANGELOG_PROJECTS } from '@/constants/changelog';
 
 export const metadata: Metadata = {
-  title: 'Changelog — Thomas To',
+  title: 'Projects — Thomas To',
   description:
     'The mental model behind this $0-infrastructure portfolio — mission, outbound/inbound funnel, the SWE Compass, what "agent" means here, and a system-design philosophy beyond CAP theorem — plus a per-project version history, lessons learned, and FAQ for the Job Board, Hugging Face/ZeroGPU backend, Study Plan, and Chat/RAG agent.',
 };
@@ -38,7 +38,7 @@ export default function ChangelogPage() {
         <div className="mt-4 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
           <div>
             <span className="text-micro font-bold uppercase tracking-widest text-zinc-400 mb-1 block">
-              Changelog
+              Projects
             </span>
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-tight">
               The mental model, & <span className="gradient-text-blue">lessons learned</span>

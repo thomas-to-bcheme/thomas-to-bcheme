@@ -4,10 +4,11 @@ interface SectionHeadingProps {
 }
 
 /**
- * Eyebrow + h2 heading used atop every major /changelog section — the 5
- * mental-model essay sections (ChangelogHeaderEssay) and the executive
- * summary (ExecutiveSummary). Extracted so both consumers share one heading
- * language instead of duplicating the same markup twice.
+ * Eyebrow + h2 heading — originally authored for /projects's section family
+ * (ChangelogHeaderEssay, ExecutiveSummary), promoted to ui/ once the 4
+ * interview-prep pages (Behavioural, Effective Communication, Practical
+ * Technical, System Design) needed the identical eyebrow+h2 pattern too.
+ * Zero page-specific logic — safe to share verbatim.
  */
 const SectionHeading = ({ eyebrow, title }: SectionHeadingProps) => (
   <div className="mb-4">

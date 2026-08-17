@@ -1,7 +1,8 @@
 import React from 'react';
+import Link from 'next/link';
 import { Quote } from 'lucide-react';
 import SweCompassSection from '@/components/sections/changelog/SweCompassSection';
-import SectionHeading from './SectionHeading';
+import SectionHeading from '@/components/ui/SectionHeading';
 
 const PARAGRAPH_CLASS = 'text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed';
 const STRONG_CLASS = 'font-bold text-zinc-900 dark:text-white';
@@ -255,6 +256,28 @@ const ChangelogHeaderEssay = () => {
             <strong className={STRONG_CLASS}>resilience</strong> — and the concrete recommendation
             that falls out of that constraint is to scale horizontally, by partitioning work across
             several free-tier providers, rather than vertically within any one of them.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            That four-axis list isn&apos;t invented from scratch — it&apos;s a deliberate
+            adaptation of Chip Huyen&apos;s canonical four characteristics of a well-designed
+            system: reliability, scalability, maintainability, and adaptability, from{' '}
+            <a
+              href="https://github.com/chiphuyen/dmls-book"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Designing Machine Learning Systems
+            </a>{' '}
+            (O&apos;Reilly, 2022). Three of her four carry over here unchanged: reliability,
+            maintainability, adaptability. The fourth — scalability — is deliberately swapped for
+            resilience, and not as a hedge: a system that structurally cannot vertically scale (the
+            $0-budget constraint named above) doesn&apos;t get to claim scalability as a real,
+            honest axis of its own design. What it can still be judged on is whether it survives a
+            provider outage or a policy change without going down, which is what resilience
+            measures here. Textbook version: reliability, scalability, maintainability,
+            adaptability. Applied version: reliability, maintainability, adaptability, resilience.
+            The swap isn&apos;t an oversight — it&apos;s the constraint talking.
           </p>
           <p className={PARAGRAPH_CLASS}>
             That&apos;s what the &quot;GitHub Monolith&quot; architecture actually is: GitHub does
@@ -529,6 +552,17 @@ const ChangelogHeaderEssay = () => {
             Every choice above — order, jargon, humor, which experience to share — is the same
             instinct pointed at a different lever: read the room first, then decide how to say the
             thing that&apos;s true anyway.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            For a reusable version of this — stakeholder archetypes and a step-by-step framework
+            for navigating any conversation — see{' '}
+            <Link
+              href="/effective-communication"
+              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+            >
+              Effective Communication
+            </Link>
+            .
           </p>
         </div>
       </section>

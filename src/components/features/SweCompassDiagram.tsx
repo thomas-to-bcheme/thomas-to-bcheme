@@ -18,7 +18,7 @@ interface SweCompassDiagramProps {
 // end-to-end (the site's existing accent), purple for abstraction (already
 // used in ArchitectureDiagram.tsx), amber for time (matches the shipped
 // "Lessons Learned" boxes).
-const AXIS_COLOR_CLASSES: Record<SweCompassAxis, string> = {
+export const AXIS_COLOR_CLASSES: Record<SweCompassAxis, string> = {
   'end-to-end': 'text-blue-700 dark:text-blue-400',
   abstraction: 'text-purple-700 dark:text-purple-400',
   time: 'text-amber-700 dark:text-amber-400',
@@ -99,7 +99,12 @@ const SweCompassDiagram = ({ activeAxis }: SweCompassDiagramProps) => {
 
   return (
     <svg
-      viewBox="0 0 260 280"
+      // Width widened from 260 to 330 — at 260 the "End-to-end" title (13px)
+      // and "design → ops" subtitle (10px), both anchored at x=236, ran past
+      // the viewBox's right edge and got clipped. The other two axis labels
+      // (abstraction, time) already fit within 260, so only the canvas width
+      // changes; every line/arrowhead/other-label coordinate is untouched.
+      viewBox="0 0 330 280"
       className="w-full max-w-md mx-auto"
       role="img"
       aria-label="The SWE Compass: three axes from one origin — end-to-end pointing right, abstraction pointing up, and time pointing diagonally down-left."

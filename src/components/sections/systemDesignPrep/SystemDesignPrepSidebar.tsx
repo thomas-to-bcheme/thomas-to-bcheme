@@ -1,27 +1,30 @@
 'use client';
 
 import React from 'react';
-import { Compass, Layers, HelpCircle } from 'lucide-react';
+import { Compass, ListChecks, MessagesSquare, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import {
-  CHANGELOG_TOC_ITEMS,
-  MENTAL_MODEL_TOC_ITEMS,
-  PROJECT_TOC_ITEMS,
-  FAQ_TOC_ITEM,
-} from '@/constants/changelogToc';
+  SYSTEM_DESIGN_TOC_ITEMS,
+  FRAMING_TOC_ITEMS,
+  FRAMEWORK_TOC_ITEMS,
+  QUESTIONS_TOC_ITEMS,
+  REFERENCE_TOC_ITEMS,
+} from '@/constants/systemDesignPrep/toc';
 
-const TOC_IDS = CHANGELOG_TOC_ITEMS.map((item) => item.id);
+const TOC_IDS = SYSTEM_DESIGN_TOC_ITEMS.map((item) => item.id);
 
 const NAV_LINK_CLASS =
   'block rounded-md px-3 py-1.5 text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1';
 
 /**
- * Sticky desktop sidebar — hidden below `lg:`, where ChangelogMobileToc takes
- * over instead. One useActiveSection call, scoped to the full flat TOC (7
- * essay sections + 4 project ids + faq), drives which link is highlighted.
+ * Sticky desktop sidebar — hidden below `lg:`, where
+ * SystemDesignPrepMobileToc takes over instead. One useActiveSection call,
+ * scoped to the full flat TOC (intro + 4 framework steps + 4 question
+ * categories + 5 reference sections), drives which link is highlighted.
+ * Follows ChangelogSidebar's exact interaction pattern.
  */
-const ChangelogSidebar = () => {
+const SystemDesignPrepSidebar = () => {
   const activeId = useActiveSection(TOC_IDS);
 
   const renderLink = (id: string, label: string) => {
@@ -45,31 +48,38 @@ const ChangelogSidebar = () => {
 
   return (
     <nav
-      aria-label="Projects table of contents"
+      aria-label="System design table of contents"
       className="hidden lg:block sticky top-24 self-start max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 space-y-6"
     >
       <div className="space-y-1">
         <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
-          <Compass size={12} className="stroke-[2.5]" /> Mental Model
+          <Compass size={12} className="stroke-[2.5]" /> Framing
         </span>
-        {MENTAL_MODEL_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
+        {FRAMING_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
       </div>
 
       <div className="space-y-1">
         <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
-          <Layers size={12} className="stroke-[2.5]" /> Projects
+          <ListChecks size={12} className="stroke-[2.5]" /> Framework
         </span>
-        {PROJECT_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
+        {FRAMEWORK_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
       </div>
 
       <div className="space-y-1">
         <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
-          <HelpCircle size={12} className="stroke-[2.5]" /> Reference
+          <MessagesSquare size={12} className="stroke-[2.5]" /> The Questions
         </span>
-        {renderLink(FAQ_TOC_ITEM.id, FAQ_TOC_ITEM.label)}
+        {QUESTIONS_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
+      </div>
+
+      <div className="space-y-1">
+        <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
+          <BookOpen size={12} className="stroke-[2.5]" /> Reference
+        </span>
+        {REFERENCE_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
       </div>
     </nav>
   );
 };
 
-export default ChangelogSidebar;
+export default SystemDesignPrepSidebar;
