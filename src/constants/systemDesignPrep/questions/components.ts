@@ -166,17 +166,22 @@ export const COMPONENTS_OF_SYSTEM_DESIGN_QUESTIONS: SystemDesignQuestion[] = [
     ],
     implementationNotes: [
       {
-        consideration: 'HTTP/HTTPS and TCP vs UDP are the layer underneath all of this',
+        consideration: 'TCP vs UDP is a real fork, not just vocabulary to name-drop',
         dependsOn:
-          'Transport-layer choice (TCP for reliability, UDP for latency-sensitive/lossy-tolerant traffic like video or gaming) and HTTP version are foundational vocabulary worth naming if asked, but rarely a genuine fork in a typical interview — DNS and CDN are the two decisions that actually shape the design.',
+          "TCP guarantees ordered, reliable delivery via handshake, acknowledgment, retransmission, and congestion control — but that reliability costs a connection setup and head-of-line blocking when a single packet is lost. UDP sends packets with no delivery or ordering guarantee at all, trading reliability for lower latency and zero handshake overhead. The fork that actually matters is whether the application can tolerate loss and reordering (DNS queries themselves, video/audio streaming, real-time gaming, where a late packet is worse than a dropped one) or genuinely can't (a file transfer, almost every typical API call). Worth naming if it comes up: HTTP/3 builds its own reliability semantics on top of UDP via QUIC, specifically to avoid paying for all of TCP's guarantees when only some are needed.",
+      },
+      {
+        consideration: "DNS resolution is a caching chain, not a single lookup — and it's why failover is minutes, not seconds",
+        dependsOn:
+          "A lookup walks browser/OS cache → recursive resolver (the ISP's, or a public one like 8.8.8.8) → root server → TLD server → authoritative server for the domain, and each layer caches the result according to the record's TTL. A long TTL means fast repeat lookups and fewer round trips, but slow failover if the underlying IP needs to change; a short TTL trades the reverse. That's the direct mechanism behind this entry's own claim above that DNS-level failover is minutes, not seconds — it's a consequence of TTL caching at every layer of the chain, not an arbitrary limitation of DNS as a protocol.",
       },
     ],
-    ripplesInto: ['hosting-model', 'lb-vs-gateway-vs-proxy'],
+    ripplesInto: ['hosting-model', 'lb-vs-gateway-vs-proxy', 'consistent-hashing-routing'],
     sourceNote: 'synthesized',
   },
   {
     id: 'authn-vs-authz-vs-security',
-    category: 'ops',
+    category: 'design',
     axes: ['end-to-end', 'abstraction'],
     question: 'Who is making this request, what are they allowed to do, and how is the whole surface actually protected?',
     clarifyingSubQuestions: [
@@ -213,7 +218,7 @@ export const COMPONENTS_OF_SYSTEM_DESIGN_QUESTIONS: SystemDesignQuestion[] = [
           "Authorization always assumes authentication already happened — a system can't decide what you're allowed to do until it knows who you are. Conflating the two in an interview answer is a common signal of not having the distinction crisp.",
       },
     ],
-    ripplesInto: ['hosting-model'],
+    ripplesInto: ['hosting-model', 'security-by-design'],
     sourceNote: 'synthesized',
   },
 ];

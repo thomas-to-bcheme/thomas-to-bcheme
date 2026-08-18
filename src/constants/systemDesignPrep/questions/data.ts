@@ -211,7 +211,7 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
           'The standard pattern is OLTP as the system of record with a periodic ETL/CDC pipeline feeding an OLAP warehouse — this keeps analytical query load from ever touching the live transactional path.',
       },
     ],
-    ripplesInto: ['sql-vs-nosql', 'batch-vs-streaming'],
+    ripplesInto: ['sql-vs-nosql', 'batch-vs-streaming', 'lake-vs-warehouse-vs-mesh'],
     sourceNote: 'synthesized',
   },
   {
@@ -275,5 +275,176 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
     ],
     ripplesInto: ['db-selection', 'monolith-vs-microservices'],
     sourceNote: 'board',
+  },
+  {
+    id: 'cache-eviction-policies',
+    category: 'data',
+    axes: ['abstraction', 'time'],
+    question: 'When the cache is full and a new entry needs to be inserted, which existing entry gets evicted?',
+    clarifyingSubQuestions: [
+      'Is access to cached entries roughly uniform, or is it skewed/long-tail with a small hot set?',
+      'Does recency (accessed most recently) or frequency (accessed most often) better predict what gets accessed next?',
+      'Does eviction need to be cheap — O(1) — to keep up at high throughput, or is there headroom for a heavier bookkeeping structure?',
+    ],
+    approachOptions: [
+      {
+        label: 'FIFO',
+        whenToUse: 'The simplest possible policy — a plain queue, evicting the oldest entry regardless of how hot it is.',
+        tradeoffs: 'Trivial to implement, but ignores access pattern entirely — a frequently-hit entry gets evicted just as readily as a cold one.',
+      },
+      {
+        label: 'LRU (Least Recently Used)',
+        whenToUse: 'The default in practice — O(1) eviction via a hash map plus a doubly-linked list.',
+        tradeoffs: 'Cheap and usually a good approximation of "hot," but a burst of one-off scans can evict an otherwise-hot working set — cache pollution.',
+      },
+      {
+        label: 'LFU (Least Frequently Used)',
+        whenToUse: 'Skewed/long-tail access patterns where LRU\'s cache pollution problem is a real, recurring issue.',
+        tradeoffs: 'Resists that pollution problem by tracking access frequency, but needs a decay strategy — otherwise a once-popular-now-cold key pins itself in the cache forever.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'Eviction policy and cache write pattern are orthogonal choices',
+        dependsOn:
+          'Which entry gets evicted (FIFO/LRU/LFU) is independent from how writes propagate to the cache (cache-aside/write-through/write-behind/write-around — see the Reference Grid\'s Cache write patterns entry). Most real caches, Redis or a CDN edge node, let you pick one from each axis independently.',
+      },
+    ],
+    ripplesInto: ['consistent-hashing-routing'],
+    sourceNote: 'synthesized',
+  },
+  {
+    id: 'consistent-hashing-routing',
+    category: 'data',
+    axes: ['abstraction', 'end-to-end'],
+    question:
+      'When traffic or data needs to be assigned to one of many nodes — and nodes are added or removed over time — how do you avoid remapping almost everything on every change?',
+    clarifyingSubQuestions: [
+      'Is the node set stable, or elastic — nodes routinely added/removed for scaling or failure recovery?',
+      'Does a rebalance need to move the minimum possible amount of data/traffic, or is a full remap acceptable?',
+      'Is node capacity uniform across the fleet, or are some nodes meaningfully bigger/smaller than others?',
+    ],
+    approachOptions: [
+      {
+        label: 'Naive modulo hashing',
+        whenToUse: 'A fixed, never-changing node count — the trivial case.',
+        tradeoffs: '`hash(key) % N` is trivial to implement, but changing N — adding or removing even one node — remaps nearly every key.',
+      },
+      {
+        label: 'Consistent hashing (hash ring)',
+        whenToUse: 'Node counts that change over time and where minimizing remap churn on each change actually matters.',
+        tradeoffs:
+          'Nodes and keys both map onto a ring; adding or removing one node only remaps the keys between it and its ring neighbor — roughly 1/N of all keys, not nearly all of them.',
+      },
+      {
+        label: 'Consistent hashing + virtual nodes',
+        whenToUse: 'The same elastic-node-set problem, but with uneven physical node capacity.',
+        tradeoffs:
+          'Each physical node gets many points on the ring, smoothing load distribution when capacity is uneven and reducing the odds of one node inheriting a disproportionate share on rebalance.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'The same mechanism solves two different-looking problems',
+        dependsOn:
+          'CDN edge-node request routing (maximizing cache-hit locality as edge nodes are added/removed) and cache/database shard ownership (minimizing data movement on scale-in/out) are the same "assign X to one of many nodes cheaply, with minimal churn on change" problem, solved twice.',
+      },
+      {
+        consideration: 'This composes with — doesn\'t replace — the CAP/PACELC trade-off',
+        dependsOn:
+          'Consistent hashing decides where a key lives (see the CAP vs PACELC question for what consistency guarantee reads/writes to it get) — it answers routing, not consistency.',
+      },
+    ],
+    ripplesInto: ['cap-vs-pacelc', 'partitioning-vs-sharding', 'networking-dns-cdn', 'cache-eviction-policies'],
+    sourceNote: 'synthesized',
+  },
+  {
+    id: 'lake-vs-warehouse-vs-mesh',
+    category: 'data',
+    axes: ['end-to-end', 'abstraction'],
+    question:
+      'Once data lands somewhere durable, what architecture organizes it for consumption — and is the constraint technical or organizational?',
+    clarifyingSubQuestions: [
+      'Is the data\'s schema known upfront, or does it need to be discovered/imposed later, at read time?',
+      'Is the actual bottleneck query performance and governance (technical), or which team owns and can change the data (organizational)?',
+      'Is the source data static/reference — a one-time load — or an unbounded, continuously-arriving stream?',
+    ],
+    approachOptions: [
+      {
+        label: 'Data lake',
+        whenToUse: 'Raw or unstructured data landing cheaply via object storage, with schema imposed later at read time.',
+        tradeoffs: 'Cheap and flexible, schema-on-read — but ungoverned, it degrades into a "data swamp" nobody trusts.',
+      },
+      {
+        label: 'Data warehouse',
+        whenToUse: 'Fast, structured BI/analytics queries against a fixed, enforced schema — schema-on-write.',
+        tradeoffs: 'Fast, well-governed structured queries, but every new source needs upfront modeling before it\'s usable.',
+      },
+      {
+        label: 'Data lakehouse / Delta Lake',
+        whenToUse: 'Wanting warehouse-style guarantees without the separate lake-to-warehouse ETL hop.',
+        tradeoffs:
+          'Adds warehouse-style ACID transactions and schema enforcement directly on top of lake object storage, collapsing that ETL hop — but the tooling is younger and still maturing.',
+      },
+      {
+        label: 'Data mesh',
+        whenToUse: 'The bottleneck is organizational, not technical — a single central team owning one warehouse is the actual constraint.',
+        tradeoffs:
+          'Domain teams own and publish their own data as products instead of a central team owning one warehouse — but this only works with real platform/tooling investment behind it, or it just relabels the same bottleneck under a new name.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'This layers on top of, not replaces, the row/column and schema-timing questions',
+        dependsOn:
+          'This question sits above `oltp-vs-olap` (row vs. column storage engine choice) and `structured-vs-unstructured` (whether the schema is knowable at write time) — it\'s about the organizing architecture around wherever that data already lives. See the Glossary\'s Data Warehouse, Data Lake, Data Lakehouse, and Data Mesh definitions (`src/constants/glossary/dataEngineering.ts`) for the first-principles terminology this question builds on.',
+      },
+      {
+        consideration: 'Static/reference data vs. dynamic/streaming data changes the scope of the decision',
+        dependsOn:
+          'A one-time load is a one-time architectural decision; continuously-arriving data needs a real ongoing ingestion pipeline with schema-evolution and backfill handling — see the `mapreduce-vs-stream-processing` question for that fork.',
+      },
+    ],
+    ripplesInto: ['oltp-vs-olap', 'structured-vs-unstructured', 'mapreduce-vs-stream-processing'],
+    sourceNote: 'synthesized',
+  },
+  {
+    id: 'mapreduce-vs-stream-processing',
+    category: 'data',
+    axes: ['end-to-end'],
+    question:
+      'Is this a general-purpose big-data processing pattern — batch jobs across a cluster, or a continuous stream pipeline — independent of whether the output feeds a dashboard, a warehouse, or an ML feature store?',
+    clarifyingSubQuestions: [
+      'How fresh does the output need to be — minutes/hours-old is fine, or does it need to be near-real-time?',
+      'Does the computation need the full dataset at once, or can it process one event at a time as it arrives?',
+      'Can the team absorb the operational complexity of a stream processor — state management, exactly-once semantics, backpressure?',
+    ],
+    approachOptions: [
+      {
+        label: 'MapReduce-style batch (Hadoop/Spark)',
+        whenToUse: 'Mature, well-understood tooling and a simple map -> shuffle -> reduce mental model.',
+        tradeoffs:
+          'Output freshness is bounded by the run schedule, and a full-dataset job pays a roughly fixed cost every run — even for a small incremental delta.',
+      },
+      {
+        label: 'Stream processing (Kafka Streams, Flink)',
+        whenToUse: 'Near-real-time output is a real requirement, not a nice-to-have.',
+        tradeoffs: 'Real operational complexity: state management, exactly-once semantics, backpressure, handling out-of-order events.',
+      },
+      {
+        label: 'Micro-batch (Spark Structured Streaming)',
+        whenToUse: 'Wanting most of streaming\'s simplicity of reasoning without committing to a full stream processor.',
+        tradeoffs: 'Splits the difference, but is still fundamentally bounded by its micro-batch interval.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'This is the general pattern; ML feature computation is one specific instance of it',
+        dependsOn:
+          'MapReduce popularized the "split a big job across a cluster of commodity machines" pattern that both traditional OLAP-warehouse ETL jobs and ML feature-computation pipelines are built on — the existing `batch-vs-streaming` question (ML-feature-computation-scoped) is the ML-specific instance of this same general fork, not a separate concept.',
+      },
+    ],
+    ripplesInto: ['oltp-vs-olap', 'batch-vs-streaming', 'lake-vs-warehouse-vs-mesh'],
+    sourceNote: 'synthesized',
   },
 ];

@@ -70,6 +70,15 @@ export const STAFF_SIGNALS: StaffSignal[] = [
       '"For rate limiting I’d reach for an existing managed solution rather than building a custom token-bucket implementation — this isn’t a differentiating problem for us to own."',
     takeaway: 'Knowing when NOT to build something custom is as much a signal of judgment as knowing how to build it.',
   },
+  {
+    id: 'narrates-tradeoffs-not-just-labels',
+    signalNumber: 9,
+    label: 'Narrates the trade-off, not just the label',
+    example:
+      '"I\'d make the like-count eventually consistent — a few seconds of staleness is invisible to a user scrolling a feed. I\'d make the opposite call for an account balance, though: staleness there isn\'t cosmetic, it\'s a correctness bug someone notices immediately."',
+    takeaway:
+      'Naming the trade-off and explaining why it fits THIS specific case is what separates real judgment from reciting "eventual consistency" as a keyword.',
+  },
 ];
 
 export const COMMON_MISTAKES: string[] = [
@@ -79,4 +88,73 @@ export const COMMON_MISTAKES: string[] = [
   'Retry logic with no backoff or jitter, which can turn a transient blip into a retry storm that takes the service down',
   'Going silent while thinking for more than a few seconds — narrate, even a half-formed thought, rather than leaving dead air',
   'Treating the first design as final rather than something to iterate on as new information comes in',
+];
+
+export interface LevelArchitectureDimension {
+  id: string;
+  dimension: string;
+  senior: string;
+  staff: string;
+}
+
+/**
+ * Senior vs. Staff+, sliced specifically to architecture/technical judgment
+ * in a system-design interview — deliberately distinct from
+ * `SENIOR_TO_STAFF_SHIFT` in src/constants/behavioural.ts, which covers the
+ * interpersonal/storytelling side of that same rung (time horizon,
+ * autonomy, conflict, managerial support) on the /behavioural page. Rendered
+ * by StaffSignalsSection, reusing that file's blue/purple bordered-box idiom.
+ */
+export const LEVEL_ARCHITECTURE_DIMENSIONS: LevelArchitectureDimension[] = [
+  {
+    id: 'scope-of-impact',
+    dimension: 'Scope of Impact',
+    senior:
+      'Implements the right components to fix a specific, stated scaling failure inside their own service or application.',
+    staff:
+      "Standardizes architecture across a domain — the choices they make align technical direction with business strategy at the org level, not just one service's.",
+  },
+  {
+    id: 'system-architecture',
+    dimension: 'System Architecture',
+    senior: 'Picks a proven architecture for the stated requirements and can defend every piece of it under questioning.',
+    staff:
+      "Names the next order of magnitude the current shape won't survive, and sequences the migration proactively — rather than over-designing for scale nobody has asked for yet.",
+  },
+  {
+    id: 'data-state-management',
+    dimension: 'Data & State Management',
+    senior: "Picks the right database and consistency model for their own service's data.",
+    staff:
+      'Reasons about which service is the system of record and how state propagates to consumers — a synchronous call, an event, or CDC — and what staleness each consumer can actually tolerate.',
+  },
+  {
+    id: 'api-decoupling',
+    dimension: 'API & Decoupling',
+    senior: 'Builds a robust REST or GraphQL endpoint, and reaches for a message queue where async makes sense.',
+    staff:
+      "Defines org-wide communication standards and drives decoupling specifically to prevent cascading failures across services, not just within one.",
+  },
+  {
+    id: 'ambiguity-autonomy',
+    dimension: 'Ambiguity & Autonomy',
+    senior: 'Takes defined functional requirements and clarifies the non-functional constraints before building.',
+    staff: 'Proactively identifies a future bottleneck and drives the architectural shift before growth forces it.',
+  },
+];
+
+/**
+ * Self-check questions scoped to system-design/architecture judgment,
+ * mirroring the voice of LEVEL_SELF_CHECK_QUESTIONS in
+ * src/constants/behavioural.ts (same "before you commit to an answer"
+ * framing) but applied to a design, not a story. Rendered by
+ * StaffSignalsSection alongside COMMON_MISTAKES.
+ */
+export const PROMOTION_ALIGNMENT_CHECKLIST: string[] = [
+  'Did I explicitly clarify non-functional requirements — latency, throughput, consistency — before jumping to implementation?',
+  "Can I articulate how this system survives failure, not just its happy path — redundancy, fault tolerance, and decoupling?",
+  'Did I justify the data-layer choice against actual read/write access patterns, rather than defaulting to whatever I know best?',
+  'Did I explain the caching or consistency trade-off in terms of what the business could actually tolerate, not just "eventual vs. strong"?',
+  'Did I factor CDN, DNS, and real network latency into how I reasoned about global scale?',
+  'When I pick an architecture, do I state the scale at which it stops working — not just that it works today?',
 ];

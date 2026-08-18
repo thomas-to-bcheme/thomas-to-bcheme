@@ -116,6 +116,16 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
           'Sidecar: attaching cross-cutting concerns (logging, proxying) alongside a service without modifying it',
         ],
       },
+      {
+        id: 'capacity-planning-numbers',
+        label: 'Numbers to know',
+        summary:
+          'The latency ladder for back-of-envelope estimates: memory access ~100ns, SSD random read ~100–150μs, same-datacenter round trip ~0.5ms, cross-continent round trip ~150ms.',
+        details: [
+          'Use these to sanity-check whether a design choice is even physically plausible before optimizing it — no amount of clever code makes a cross-continent round trip cheaper than a same-datacenter one.',
+          'Distilled from the standard "numbers every engineer should know" reference used across system-design interview prep.',
+        ],
+      },
     ],
   },
   {
@@ -219,11 +229,12 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
       {
         id: 'cache-write-patterns',
         label: 'Cache write patterns',
-        summary: 'Cache-aside, write-through, write-behind.',
+        summary: 'Cache-aside, write-through, write-behind, write-around.',
         details: [
           'Cache-aside: app manages the cache explicitly, simplest and most common',
           'Write-through: writes go to cache and store together, always consistent, higher write latency',
           'Write-behind: writes go to cache first and flush to store async, fastest writes, risk of data loss on cache failure',
+          'Write-around: writes go directly to the backing store, bypassing the cache — avoids polluting the cache with data that may never be re-read, at the cost of a guaranteed miss on the first read after a write',
         ],
       },
       {

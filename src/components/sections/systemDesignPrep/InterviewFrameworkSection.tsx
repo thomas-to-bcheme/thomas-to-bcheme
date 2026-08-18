@@ -39,7 +39,7 @@ const InterviewFrameworkSection = () => (
     <SectionHeading eyebrow="The Framework" title="A repeatable 4-step approach" />
     <p className="max-w-2xl text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">
       This is the tool you reach for during steps 2 and 3 below — the question bank in{' '}
-      <a href="#data-consistency" className="font-semibold text-blue-700 dark:text-blue-400 hover:underline">
+      <a href="#design" className="font-semibold text-blue-700 dark:text-blue-400 hover:underline">
         &quot;Ask the right question before picking an answer&quot;
       </a>{' '}
       is what fills in the substance of the High-Level Design and Deep Dive steps.
