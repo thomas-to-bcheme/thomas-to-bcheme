@@ -63,6 +63,35 @@ export const STAR_FRAMEWORK: FrameworkStep[] = [
   },
 ];
 
+/**
+ * A delivery *arc*, distinct from STAR's content structure — STAR says what to include,
+ * this says how to shape it in the telling. Reused generically via the same
+ * <FrameworkStepList> component as STAR_FRAMEWORK, rendered directly beneath it.
+ */
+export const U_SHAPED_NARRATIVE: FrameworkStep[] = [
+  {
+    id: 'u-anchor',
+    marker: '1',
+    label: 'Anchor',
+    description:
+      "Open at the responsibility level you're interviewing for — not below it, not oversold above it — so the interviewer knows what altitude to listen at.",
+  },
+  {
+    id: 'u-dip',
+    marker: '2',
+    label: 'Dip',
+    description:
+      'Go into the real constraint, conflict, or setback honestly — this is the bottom of the U, and skipping it is what makes a story sound too easy to be senior.',
+  },
+  {
+    id: 'u-rise',
+    marker: '3',
+    label: 'Rise',
+    description:
+      "Close on an outcome that's net positive but not artificially clean — an imperfect result you owned reads as more senior than a flawless one that got lucky.",
+  },
+];
+
 export interface StarGuidance {
   situation: string;
   task: string;
@@ -79,6 +108,181 @@ export interface LevelSignal {
   senior: string;
   staff: string;
 }
+
+export interface FitSignalGroup {
+  id: 'role-fit' | 'company-fit';
+  label: string;
+  description: string;
+  signals: string[];
+}
+
+/**
+ * Behavioural interviews are answering two questions at once: do you fit, and at what
+ * level. FIT_SIGNAL_GROUPS covers the first — Role Fit (does this story match what the
+ * specific role demands day to day) and Company Fit (does it match how this company
+ * actually rewards behavior, not just its stated values). Rendered by
+ * FitFramingSection, ahead of the career-ladder section that covers the second
+ * question (level). Synthesized from ByteByteGo's "What Companies Are Looking For".
+ */
+export const FIT_SIGNAL_GROUPS: FitSignalGroup[] = [
+  {
+    id: 'role-fit',
+    label: 'Role Fit',
+    description:
+      'Whether your stories show comfort with what this specific role demands day to day — not the job title, the job.',
+    signals: [
+      'If the role runs on ambiguous requirements, do your stories show you moving before someone hands you clarity?',
+      'If the role spans multiple teams, do your stories show you coordinating across a boundary rather than staying inside your own?',
+      'If the role rewards fast iteration, do your stories show you shipping something imperfect and adjusting, not polishing before you ship?',
+    ],
+  },
+  {
+    id: 'company-fit',
+    label: 'Company Fit',
+    description:
+      'Whether the choices inside your stories match how this company actually rewards behavior — not its stated values, the ones it visibly acts on.',
+    signals: [
+      'A company that prizes moving fast wants a story where you acted on incomplete information and it worked out.',
+      'A company that prizes depth wants a story where you went further than asked to understand a root cause.',
+      'A company that prizes openness wants a story where you surfaced a number or a mistake you could have kept quiet.',
+    ],
+  },
+];
+
+export interface FitTensionAxis {
+  id: string;
+  left: string;
+  right: string;
+  description: string;
+  example: string;
+}
+
+/**
+ * The same story can be a green flag at one company and a red flag at another — these
+ * are the 7 recurring axes where that happens. Rendered by MisFitAxesSection.
+ * Synthesized from ByteByteGo's "What Companies Are Looking For".
+ */
+export const FIT_TENSION_AXES: FitTensionAxis[] = [
+  {
+    id: 'independence-collaboration',
+    left: 'Independence',
+    right: 'Collaboration',
+    description:
+      'How you work and how you decide — some places want you to pick up a problem and return with a solution; others want the team built into every step.',
+    example:
+      'A story where you built something solo end-to-end reads as ownership at an autonomy-first company and as a steamroll risk at a consensus-driven one — and the reverse is just as true.',
+  },
+  {
+    id: 'speed-thoroughness',
+    left: 'Speed',
+    right: 'Thoroughness',
+    description:
+      'Whether shipping a rough version fast is judgment or a red flag depends entirely on what breaks if you’re wrong.',
+    example:
+      'Shipping an MVP and iterating on feedback reads as good instinct at a startup and as recklessness at a company where a bug reaches a hospital chart or a bank balance.',
+  },
+  {
+    id: 'excellence-pragmatism',
+    left: 'Excellence',
+    right: 'Pragmatism',
+    description:
+      'Whether you protect the architecture or protect the deadline when the two genuinely conflict.',
+    example:
+      'Spending two extra weeks on a clean abstraction reads as craft on a platform team and as missing the point on a team shipping against a fixed launch date.',
+  },
+  {
+    id: 'innovation-stability',
+    left: 'Innovation',
+    right: 'Stability',
+    description:
+      'Whether you are expected to challenge the existing approach or keep a proven system running without surprises.',
+    example:
+      'Replacing an established process reads as initiative on a team chasing a new capability and as unnecessary risk on a team maintaining critical infrastructure.',
+  },
+  {
+    id: 'direct-diplomatic',
+    left: 'Direct',
+    right: 'Diplomatic',
+    description: 'Whether blunt, say-it-plainly feedback reads as clarity or as a relationship problem.',
+    example:
+      'Telling a peer their approach is wrong, in the room, reads as candor at a company that prizes disagree-and-commit and as abrasive at one that protects face carefully.',
+  },
+  {
+    id: 'data-intuition',
+    left: 'Data',
+    right: 'Intuition',
+    description:
+      'Whether a decision needs a number behind it, or whether experienced judgment is trusted to stand on its own.',
+    example:
+      'Running three tests to settle a small decision reads as rigor at a data-driven company and as overkill — even mildly concerning — at one that trusts a senior engineer’s gut.',
+  },
+  {
+    id: 'specialist-generalist',
+    left: 'Specialist',
+    right: 'Generalist',
+    description: 'Whether the org needs deep mastery of one domain or comfort switching across several.',
+    example:
+      'A story about going deep on one subsystem for years reads as expertise at a large company with dedicated teams and as narrow at a small one that needs you wearing several hats.',
+  },
+];
+
+export interface ResearchTactic {
+  id: string;
+  source: string;
+  approach: string;
+  questionsToAsk: string[];
+}
+
+/**
+ * Concrete pre-interview tactics for sensing which side of each FIT_TENSION_AXES axis a
+ * company actually sits on, before you're in the room. Rendered by
+ * ResearchChecklistSection. Synthesized from ByteByteGo's "What Companies Are Looking For".
+ */
+export const COMPANY_RESEARCH_TACTICS: ResearchTactic[] = [
+  {
+    id: 'recruiter',
+    source: 'Your Recruiter',
+    approach:
+      'Recruiters succeed when you get an offer — treat them as a source of insider information, not a gatekeeper to get past.',
+    questionsToAsk: [
+      "What's the team actually struggling with right now, beyond what's in the job description?",
+      'Which of my skills matters most for this particular seat, in their eyes?',
+      "Is there any prep material or scoring guide you're able to pass along?",
+    ],
+  },
+  {
+    id: 'public-information',
+    source: 'Public Information',
+    approach:
+      'Repeated words in a job post, an engineering blog, or a conference talk are signal, not filler — notice what a company chooses to celebrate or publish.',
+    questionsToAsk: [
+      'What do their engineering blog posts and conference talks choose to highlight — speed, scale, or reliability?',
+      'What have they open-sourced, and what does that choice say about what they value?',
+      'Do they publish detailed postmortems — a sign they reward learning from failure over hiding it?',
+    ],
+  },
+  {
+    id: 'forums',
+    source: 'Glassdoor / Blind / Reddit',
+    approach:
+      'Ignore any single rant; look for the same complaint or praise repeating across several unrelated posts.',
+    questionsToAsk: [
+      'Does "too much process" or "no work-life balance" show up more than once?',
+      'Does "autonomy" or "learning culture" show up as praise more than once?',
+    ],
+  },
+  {
+    id: 'employees',
+    source: 'Current Employees',
+    approach:
+      "Skip \"how's the culture\" — ask a question specific enough that the answer reveals a real behavior, not a slogan.",
+    questionsToAsk: [
+      'What did the last person who got promoted here actually do differently?',
+      'What is something that would get you dinged in a review here?',
+      'When two people on the team genuinely disagree, how does it actually get settled?',
+    ],
+  },
+];
 
 /**
  * The full career ladder the general framework section walks through —
@@ -211,6 +415,47 @@ export const LEVEL_DIMENSIONS: LevelDimension[] = [
   },
 ];
 
+export interface OperatingShiftRow {
+  id: string;
+  dimension: string;
+  senior: string;
+  staff: string;
+}
+
+/**
+ * A second lens alongside LEVEL_DIMENSIONS, scoped deliberately to Senior→Staff only
+ * (mirroring the source's own two-column framing rather than stretching it across the
+ * full Junior→Principal ladder). Rendered inside SeniorVsStaffSection, reusing the same
+ * blue/purple bordered-box idiom BehaviouralCategoryCard already uses for its
+ * per-category Senior vs. Staff comparison.
+ */
+export const SENIOR_TO_STAFF_SHIFT: OperatingShiftRow[] = [
+  {
+    id: 'time-horizon',
+    dimension: 'Time Horizon',
+    senior: 'Plans and delivers against roughly a 12-month horizon, and resists trading long-term cost for a short-term win.',
+    staff: "Holds a multi-year view and checks that today's architecture decisions still make sense against where the business is headed, not just where it is now.",
+  },
+  {
+    id: 'autonomy-output',
+    dimension: 'Autonomy & Output',
+    senior: 'Manages their own scope tightly — adding rigor where it earns its cost, not complexity for its own sake.',
+    staff: 'Creates capacity by growing other engineers into the scope they used to hold personally, rather than personally absorbing more work.',
+  },
+  {
+    id: 'conflict-resolution-shift',
+    dimension: 'Conflict Resolution',
+    senior: "Disagrees, makes the case once, and commits fully once a call is made — even when it doesn't go their way.",
+    staff: "Resolves standoffs between peers at their own level where there's no shared manager to appeal to, and the disagreement has to be settled on the merits.",
+  },
+  {
+    id: 'managerial-support',
+    dimension: 'Managerial Support',
+    senior: 'Uses data to show where their capacity is maxed out and asks explicitly for help prioritizing.',
+    staff: "Needs a manager positioned to advocate for cross-team scope on their behalf — the role doesn't function well under a manager who can't see past one team.",
+  },
+];
+
 /**
  * Merges Hello Interview's "We Disease" / concrete-over-vague coaching with
  * ByteByteGo's story red-flag checklist — the failure modes that undercut a
@@ -223,6 +468,21 @@ export const LEVEL_PITFALLS: string[] = [
   'Spending most of the story on how hard the work was without ever landing on what it produced — difficulty without payoff reads as a struggle, not a win.',
   "Describing a scope or role bigger than the one you'd actually defend under a specific follow-up question — overstated scope collapses the moment it's tested.",
   'Presenting a neutral menu of options you considered instead of the decision you actually made and defended — indecision reads as diplomacy but scores as a missing signal.',
+  'Playing the "local hero" — repeatedly saving a project by working nights and weekends — which signals you\'re a bottleneck at senior+ levels, not that you scale; the mature move is growing someone else into that scope.',
+  'Building something technically impressive that doesn\'t map to a real organizational pain point — impact is judged against business need, not against how hard the work was.',
+];
+
+/**
+ * An affirmative self-check, distinct from LEVEL_PITFALLS (what to avoid) — the
+ * questions to ask of a story before you tell it. Rendered as a third callout in
+ * SeniorVsStaffSection, alongside "Common pitfalls at any level".
+ */
+export const LEVEL_SELF_CHECK_QUESTIONS: string[] = [
+  'Does my target team or company actually have enough organizational need to justify this level — or am I hoping the title outruns the scope?',
+  'Can I point to impact that specifically would not have happened with an average engineer in the seat — not just impact that happened while I was in it?',
+  'Is my story honestly U-shaped — a real constraint or setback, not a straight line to a clean win?',
+  'Am I describing this in terms of business value and team outcomes, or did I just translate my code into slightly plainer words?',
+  "Do I proactively take a problem off my manager's or leadership's desk before being asked — or do I wait to be assigned?",
 ];
 
 /**

@@ -27,6 +27,11 @@ const StakeholderArchetypeCard = ({ archetype }: StakeholderArchetypeCardProps) 
       ))}
     </ul>
 
+    <span className="text-micro text-zinc-400 block mt-4 mb-2">Reading their depth</span>
+    <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+      {archetype.howToReadTheirDepth}
+    </p>
+
     <span className="text-micro text-zinc-400 block mt-4 mb-2">How to adapt</span>
     <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
       {archetype.howToAdaptCommunication}

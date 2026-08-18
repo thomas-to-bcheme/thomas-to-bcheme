@@ -1,7 +1,14 @@
 import React from 'react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Badge from '@/components/ui/Badge';
-import { CAREER_LEVELS, LEVEL_DIMENSIONS, LEVEL_PITFALLS, type CareerLevelId } from '@/constants/behavioural';
+import {
+  CAREER_LEVELS,
+  LEVEL_DIMENSIONS,
+  LEVEL_PITFALLS,
+  LEVEL_SELF_CHECK_QUESTIONS,
+  SENIOR_TO_STAFF_SHIFT,
+  type CareerLevelId,
+} from '@/constants/behavioural';
 
 const LIST_ITEM_CLASS =
   "text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-zinc-300 dark:before:text-zinc-700";
@@ -83,19 +90,59 @@ const SeniorVsStaffSection = () => (
     </div>
 
     <div className="mt-8 card-base p-4">
-      <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-3">Common pitfalls at any level</h3>
-      <ul className="space-y-1.5">
-        {LEVEL_PITFALLS.map((line) => (
-          <li key={line} className={LIST_ITEM_CLASS}>
-            {line}
-          </li>
+      <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-3">
+        The senior &rarr; staff operating shift
+      </h3>
+      <div className="space-y-3">
+        {SENIOR_TO_STAFF_SHIFT.map((row) => (
+          <div key={row.id}>
+            <span className="text-micro text-zinc-400 mb-1.5 block">{row.dimension}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 border-l-2 border-l-blue-400 dark:border-l-blue-500 p-3">
+                <Badge color="blue" variant="outline">
+                  Senior
+                </Badge>
+                <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{row.senior}</p>
+              </div>
+              <div className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 border-l-2 border-l-purple-400 dark:border-l-purple-500 p-3">
+                <Badge color="purple" variant="outline">
+                  Staff
+                </Badge>
+                <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{row.staff}</p>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
+    </div>
+
+    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+      <div className="card-base p-4">
+        <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-3">Common pitfalls at any level</h3>
+        <ul className="space-y-1.5">
+          {LEVEL_PITFALLS.map((line) => (
+            <li key={line} className={LIST_ITEM_CLASS}>
+              {line}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="card-base p-4">
+        <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-3">Before you tell the story</h3>
+        <ul className="space-y-1.5">
+          {LEVEL_SELF_CHECK_QUESTIONS.map((line) => (
+            <li key={line} className={LIST_ITEM_CLASS}>
+              {line}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
 
     <p className="mt-4 text-xs text-zinc-500 dark:text-zinc-500">
       Synthesized from Hello Interview&rsquo;s signal-area writeups and ByteByteGo&rsquo;s senior/staff/principal
-      rubric.
+      rubric and &ldquo;What Companies Are Looking For&rdquo; chapter.
     </p>
   </section>
 );

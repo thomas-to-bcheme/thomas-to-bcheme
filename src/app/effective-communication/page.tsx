@@ -7,16 +7,20 @@ import Footer from '@/components/sections/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import PageSectionNav from '@/components/ui/PageSectionNav';
 import FrameworkStepList from '@/components/ui/FrameworkStepList';
+import Badge from '@/components/ui/Badge';
 import StakeholderArchetypeCard from '@/components/sections/effectiveCommunication/StakeholderArchetypeCard';
+import StoryStructureCard from '@/components/sections/effectiveCommunication/StoryStructureCard';
 import {
   STAKEHOLDER_ARCHETYPES,
   CONVERSATION_NAVIGATION_FRAMEWORK,
+  STORY_STRUCTURE_APPROACHES,
+  HYBRID_NARRATIVE_GUIDANCE,
 } from '@/constants/effectiveCommunication';
 
 export const metadata: Metadata = {
   title: 'Effective Communication — Thomas To',
   description:
-    'A reusable reference for audience-aware communication — four stakeholder archetypes (engineer, PM, executive, cross-functional partner) and a five-step framework for navigating any conversation, whoever ends up in the room.',
+    'A reusable reference for audience-aware communication — five stakeholder archetypes (engineer, manager, PM, executive, cross-functional partner) to calibrate depth and framing against, a five-step framework for navigating any conversation, and a guide to structuring the story of completed work.',
 };
 
 const FOCUS_RING =
@@ -25,6 +29,7 @@ const FOCUS_RING =
 const PAGE_SECTION_NAV_ITEMS = [
   { id: 'know-your-stakeholder', label: 'Stakeholders' },
   { id: 'conversation-navigation', label: 'Navigating the Conversation' },
+  { id: 'structuring-the-story', label: 'Structuring the Story' },
 ];
 
 export default function EffectiveCommunicationPage() {
@@ -50,9 +55,10 @@ export default function EffectiveCommunicationPage() {
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
             The same technical answer lands differently depending on who&apos;s asking. This is a
-            reusable reference for reading the room — four stakeholder archetypes to calibrate
-            against, and a step-by-step framework for navigating a conversation even before you
-            know who&apos;s in it.
+            reusable reference for reading the room — five stakeholder archetypes to calibrate
+            against, a step-by-step framework for navigating a conversation even before you
+            know who&apos;s in it, and a structure to reach for when the moment calls for telling
+            the story of something already done.
           </p>
         </div>
       </div>
@@ -72,6 +78,34 @@ export default function EffectiveCommunicationPage() {
         <section id="conversation-navigation" className="scroll-mt-24 mt-16">
           <SectionHeading eyebrow="Putting It Into Practice" title="Navigating any conversation" />
           <FrameworkStepList steps={CONVERSATION_NAVIGATION_FRAMEWORK} />
+        </section>
+
+        <section id="structuring-the-story" className="scroll-mt-24 mt-16">
+          <SectionHeading eyebrow="Telling The Story" title="Structuring the story" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {STORY_STRUCTURE_APPROACHES.map((approach) => (
+              <StoryStructureCard key={approach.id} approach={approach} />
+            ))}
+          </div>
+
+          <div className="mt-6 card-base border-l-2 border-l-blue-400 dark:border-l-blue-500 p-5 sm:p-6">
+            <Badge color="blue" variant="outline">
+              {HYBRID_NARRATIVE_GUIDANCE.label}
+            </Badge>
+            <p className="mt-3 text-sm font-semibold text-zinc-900 dark:text-white leading-relaxed">
+              {HYBRID_NARRATIVE_GUIDANCE.summary}
+            </p>
+            <div className="mt-3 space-y-3">
+              {HYBRID_NARRATIVE_GUIDANCE.body.map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
         </section>
       </main>
 
