@@ -109,6 +109,14 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
     whatItOffers:
       'The canonical four system-design characteristics (reliability, scalability, maintainability, adaptability) this site\'s own four-axis philosophy is adapted from — see the System Design Philosophy section of /projects for the resilience-for-scalability swap and why.',
   },
+  {
+    id: 'devops-lifecycle-overview',
+    group: 'lifecycles',
+    title: 'Atlassian — "What is DevOps?"',
+    url: 'https://www.atlassian.com/devops',
+    whatItOffers:
+      'The standard 8-stage DevOps "infinite loop" (plan → code → build → test → release → deploy → operate → monitor) — the fourth named lifecycle in this page\'s Development Lifecycles section, alongside SDLC, Data Engineering, and MLOps.',
+  },
 
   // --- Cross-Lifecycle Operating Standards ---
   {

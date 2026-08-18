@@ -43,9 +43,11 @@ export const QUESTIONS_TOC_ITEMS: SystemDesignTocItem[] = SYSTEM_DESIGN_CATEGORI
 export const REFERENCE_TOC_ITEMS: SystemDesignTocItem[] = [
   toItem('reference-grid', 'Reference Grid'),
   toItem('components-of-system-design', 'Components'),
+  toItem('cross-domain-strategies', 'Cross-Domain Strategies'),
   toItem('scoring-rubric', 'Scoring Rubric'),
   toItem('staff-signals', 'Staff-Level Signals'),
   toItem('communication-scripts', 'Communication Scripts'),
+  toItem('development-lifecycles', 'Development Lifecycles'),
   toItem('sources', 'Sources'),
 ];
 

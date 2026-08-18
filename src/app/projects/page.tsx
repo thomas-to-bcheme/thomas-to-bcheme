@@ -16,7 +16,7 @@ import { CHANGELOG_PROJECTS } from '@/constants/changelog';
 export const metadata: Metadata = {
   title: 'Projects — Thomas To',
   description:
-    'The mental model behind this $0-infrastructure portfolio — mission, outbound/inbound funnel, the SWE Compass, what "agent" means here, and a system-design philosophy beyond CAP theorem — plus a per-project version history, lessons learned, the open-source & content project pipeline with its own tier-by-tier architecture, and FAQ for the Job Board, Hugging Face/ZeroGPU backend, Study Plan, and Chat/RAG agent.',
+    'The mental model behind this $0-infrastructure portfolio — mission, outbound/inbound funnel, the SWE Compass (including the lifecycle-agnostic pattern its own end-to-end axis instantiates), what "agent" means here, and a system-design philosophy beyond CAP theorem — plus a per-project version history, lessons learned, the open-source & content project pipeline with its own tier-by-tier architecture, and FAQ for the Job Board, Hugging Face/ZeroGPU backend, Study Plan, and Chat/RAG agent.',
 };
 
 const FOCUS_RING =

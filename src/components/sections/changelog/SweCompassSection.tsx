@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+import { Quote } from 'lucide-react';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import SweCompassDiagram, { type SweCompassAxis } from '@/components/features/SweCompassDiagram';
 
@@ -137,6 +139,35 @@ const SweCompassSection = () => {
           (abstraction), and expect to revisit both as you learn (time) — the three axes this site
           is organized around, literally, in the sidebar to the left.
         </p>
+      </div>
+
+      <div id="swe-compass-lifecycle-synthesis" className="scroll-mt-24 space-y-4">
+        <p className={PARAGRAPH_CLASS}>
+          The end-to-end axis above — design → data → model → backend → frontend → ops — isn&apos;t
+          an invented taxonomy. It&apos;s this portfolio&apos;s own concrete instance of a more
+          general pattern that recurs, under different names, in every named engineering lifecycle:
+          the Software Development Lifecycle, the data engineering lifecycle, the ML/MLOps
+          lifecycle, and the DevOps lifecycle. Each defines, builds, validates, ships, and operates
+          in its own vocabulary; strip that vocabulary away and the same shape is underneath all of
+          them. The full background on each of those 4 lifecycles, plus the abstraction that unifies
+          them, lives at{' '}
+          <Link href="/system-design#development-lifecycles" className="font-bold text-blue-700 dark:text-blue-400 hover:underline">
+            the Development Lifecycles section of /system-design
+          </Link>{' '}
+          — this page doesn&apos;t repeat that depth, it names the parallel.
+        </p>
+        <div className="rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-900/10 p-5 sm:p-6">
+          <span className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-3">
+            <Quote size={12} className="stroke-[2.5]" /> Why This Pattern
+          </span>
+          <blockquote className="text-sm sm:text-base italic text-emerald-900 dark:text-emerald-200 leading-relaxed border-l-2 border-emerald-300 dark:border-emerald-700 pl-4">
+            &quot;Navigate ambiguity by understanding what to use, when to use it, and why to use
+            it.&quot;
+          </blockquote>
+          <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mt-3">
+            — Thomas To
+          </p>
+        </div>
       </div>
     </div>
   );

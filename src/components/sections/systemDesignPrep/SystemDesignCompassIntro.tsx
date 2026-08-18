@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Quote } from 'lucide-react';
 import SweCompassDiagram from '@/components/features/SweCompassDiagram';
 import SectionHeading from '@/components/ui/SectionHeading';
 
@@ -60,6 +61,16 @@ const SystemDesignCompassIntro = () => (
           architecture judged by long-term maintainability, not just greenfield design. That&apos;s the
           frame this whole page is built on.
         </p>
+        <div className="rounded-xl border border-blue-100 dark:border-blue-900/40 bg-blue-50/50 dark:bg-blue-900/10 p-5 sm:p-6">
+          <span className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 mb-3">
+            <Quote size={12} className="stroke-[2.5]" /> North Star
+          </span>
+          <blockquote className="text-sm sm:text-base italic text-blue-900 dark:text-blue-200 leading-relaxed border-l-2 border-blue-300 dark:border-blue-700 pl-4">
+            &quot;Navigate ambiguity by understanding what to use, when to use it, and why to use
+            it.&quot;
+          </blockquote>
+          <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mt-3">— Thomas To</p>
+        </div>
       </div>
       <SweCompassDiagram activeAxis={null} />
     </div>

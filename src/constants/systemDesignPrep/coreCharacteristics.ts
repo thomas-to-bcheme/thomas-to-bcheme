@@ -79,6 +79,13 @@ export const SITUATIONAL_CHARACTERISTICS: SituationalCharacteristic[] = [
     questionId: 'scaling-progression',
   },
   {
+    id: 'scaling-reads-vs-scaling-writes',
+    label: 'Scaling reads vs. scaling writes',
+    summary:
+      'Read replicas and caching scale read traffic; sharding scales write volume — the scaling-progression ladder splits into two different levers depending on which side is actually the bottleneck.',
+    questionId: 'scaling-progression',
+  },
+  {
     id: 'latency-vs-throughput',
     label: 'Latency vs. throughput',
     summary:

@@ -74,8 +74,8 @@ export const DESIGN_PRINCIPLES: DesignPrinciple[] = [
   },
   {
     id: 'build-for-scale',
-    label: 'Build for scale',
-    summary: 'Design so the next order of magnitude is a lever to pull, not a rewrite — know the next cheapest lever before reaching for the expensive one.',
+    label: "Build for today's scale, with a runway",
+    summary: "Design for the load and requirements that actually exist today, simple enough to ship — but keep the next order of magnitude a lever to pull, not a rewrite. Know the runway a given design buys (how much growth it absorbs before a lever stops being enough) before treating the current shape as decided.",
     crossLink: { label: 'See Scaling progression →', href: '#scaling-progression' },
   },
   {
