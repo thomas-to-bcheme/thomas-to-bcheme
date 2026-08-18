@@ -23,13 +23,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1266738268,
-      "version": 273,
-      "versionNonce": 937809939,
+      "version": 274,
+      "versionNonce": 1300610735,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a0"
     },
     {
       "id": "g1R001Stp1Bx",
@@ -52,8 +53,8 @@
         "type": 3
       },
       "seed": 1001,
-      "version": 28,
-      "versionNonce": 1010261427,
+      "version": 29,
+      "versionNonce": 96339905,
       "isDeleted": false,
       "boundElements": [
         {
@@ -61,9 +62,10 @@
           "id": "g1T001Stp1Tx"
         }
       ],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a1"
     },
     {
       "id": "g1T001Stp1Tx",
@@ -84,11 +86,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1002,
-      "version": 28,
-      "versionNonce": 1938239315,
+      "version": 29,
+      "versionNonce": 1121456335,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 1\nRequirements\n& Scope\n(~5 min)",
@@ -99,7 +101,8 @@
       "verticalAlign": "middle",
       "containerId": "g1R001Stp1Bx",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a2"
     },
     {
       "id": "g1R002Stp2Bx",
@@ -122,8 +125,8 @@
         "type": 3
       },
       "seed": 1003,
-      "version": 28,
-      "versionNonce": 2870515,
+      "version": 29,
+      "versionNonce": 50948001,
       "isDeleted": false,
       "boundElements": [
         {
@@ -131,9 +134,10 @@
           "id": "g1T002Stp2Tx"
         }
       ],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a3"
     },
     {
       "id": "g1T002Stp2Tx",
@@ -154,11 +158,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1004,
-      "version": 28,
-      "versionNonce": 1974187667,
+      "version": 29,
+      "versionNonce": 442179311,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 2\nHigh-Level\nDesign\n(~20 min)",
@@ -169,7 +173,8 @@
       "verticalAlign": "middle",
       "containerId": "g1R002Stp2Bx",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a4"
     },
     {
       "id": "g1R003Stp3Bx",
@@ -192,8 +197,8 @@
         "type": 3
       },
       "seed": 1005,
-      "version": 28,
-      "versionNonce": 851274803,
+      "version": 29,
+      "versionNonce": 597543809,
       "isDeleted": false,
       "boundElements": [
         {
@@ -201,9 +206,10 @@
           "id": "g1T003Stp3Tx"
         }
       ],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a5"
     },
     {
       "id": "g1T003Stp3Tx",
@@ -224,11 +230,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1006,
-      "version": 28,
-      "versionNonce": 2068278739,
+      "version": 29,
+      "versionNonce": 1184327951,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 3\nDeep Dive\n(~15 min)",
@@ -239,7 +245,8 @@
       "verticalAlign": "middle",
       "containerId": "g1R003Stp3Bx",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a6"
     },
     {
       "id": "g1R004Stp4Bx",
@@ -262,8 +269,8 @@
         "type": 3
       },
       "seed": 1007,
-      "version": 28,
-      "versionNonce": 1382038387,
+      "version": 29,
+      "versionNonce": 532329313,
       "isDeleted": false,
       "boundElements": [
         {
@@ -271,9 +278,10 @@
           "id": "g1T004Stp4Tx"
         }
       ],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "a7"
     },
     {
       "id": "g1T004Stp4Tx",
@@ -294,11 +302,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1008,
-      "version": 28,
-      "versionNonce": 340677907,
+      "version": 29,
+      "versionNonce": 1426419503,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 4\nWrap Up\n(~5 min)",
@@ -309,7 +317,8 @@
       "verticalAlign": "middle",
       "containerId": "g1R004Stp4Bx",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "a8"
     },
     {
       "id": "g1A001ArrStpFl",
@@ -345,14 +354,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 1009,
-      "version": 28,
-      "versionNonce": 1351105203,
+      "version": 29,
+      "versionNonce": 2075107137,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "a9"
     },
     {
       "id": "g1A002ArrStpFl",
@@ -388,14 +398,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 1010,
-      "version": 28,
-      "versionNonce": 1672768595,
+      "version": 29,
+      "versionNonce": 269332815,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "aA"
     },
     {
       "id": "g1A003ArrStpFl",
@@ -431,14 +442,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 1011,
-      "version": 28,
-      "versionNonce": 1370057203,
+      "version": 29,
+      "versionNonce": 98307873,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "aB"
     },
     {
       "id": "g1H-1370Hdr",
@@ -459,11 +471,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1012,
-      "version": 28,
-      "versionNonce": 1601024915,
+      "version": 29,
+      "versionNonce": 1627959151,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 1 — Requirements & Scope (~5 min)",
@@ -474,7 +486,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aC"
     },
     {
       "id": "g1B-1370Bdy",
@@ -495,11 +508,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1013,
-      "version": 28,
-      "versionNonce": 1832372531,
+      "version": 29,
+      "versionNonce": 347046657,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "FUNCTIONAL REQUIREMENTS — ask, don't assume\n• Who are the system users? (end users, admins, B2B clients, services)\n• What are the 3 core use cases to prioritize?\n• What is explicitly OUT of scope?\n• What are the read vs. write patterns? (CRUD-heavy, real-time, analytics)\n\nNON-FUNCTIONAL REQUIREMENTS — the staff-level differentiator\n• Latency: P50/P99 read + write targets (not just \"fast\")\n• Throughput: peak RPS — ask about burst patterns vs. sustained load\n• Availability: 99.9% = 8.7h downtime/yr | 99.99% = 52min/yr | 99.999% = 5.3min/yr\n• Consistency: strong (linearizable) vs. read-your-writes vs. eventual\n• Scalability: current DAU + 10× growth horizon\n• Durability: RPO? (can we lose 1 hour of writes? 1 second?)\n• Compliance: GDPR (EU data residency), HIPAA (PHI audit), PCI-DSS\n• Geographic: single region, multi-region, global edge?\n• Security: public API vs. internal, auth requirements\n\nBACK-OF-ENVELOPE — anchor every component decision\n• RPS (avg) = DAU × requests/user/day / 86,400\n• RPS (peak) = avg × burst_factor (often 3–5×)\n• Storage/day = writes/day × avg_record_bytes\n• Storage/year = storage/day × 365 × replication_factor\n• Example: 100M DAU, 10 req/user/day → 11,574 avg RPS, ~35K peak RPS\n\nCAP vs. PACELC — frame before picking databases\n• CAP: when network partition occurs → CP (consistency) or AP (availability)?\n  CP: Zookeeper, HBase, etcd — blocks writes during partition\n  AP: Cassandra, DynamoDB, CouchDB — serves possibly stale data\n• PACELC: even without partition → optimize for Latency or Consistency?\n  PA/EL: DynamoDB (always prefer availability + low latency)\n  PC/EC: HBase (always prefer consistency)\n• Most web systems: AP during partition + eventual consistency at normal ops",
@@ -510,7 +523,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aD"
     },
     {
       "id": "g1H200Hdr",
@@ -531,11 +545,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1014,
-      "version": 28,
-      "versionNonce": 275655379,
+      "version": 29,
+      "versionNonce": 1916725647,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 2 — High-Level Design (~20 min)",
@@ -546,7 +560,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aE"
     },
     {
       "id": "g1B200Bdy",
@@ -567,11 +582,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1015,
-      "version": 28,
-      "versionNonce": 1839683699,
+      "version": 29,
+      "versionNonce": 78215905,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "API DESIGN — select paradigm from requirements\n• REST: public APIs, CRUD, HTTP caching, universal client support\n  Use when: external-facing, resource-oriented, SEO matters\n• gRPC: binary protobuf, streaming, codegen stubs, low latency\n  Use when: internal microservices, high-throughput, strong contracts\n• GraphQL: client-driven queries, reduces over/under-fetching\n  Use when: mobile-first, multiple client types with varied data needs\n  Risk: N+1 problem → mitigate with DataLoader batching\n• WebSocket/SSE: persistent connection, real-time push\n  Use when: chat, live feeds, collaborative editing, notifications\n\nDATA MODEL — 3 decisions before schema\n1. Identify entities and relationships (ERD or informal)\n2. Map read access patterns (what queries will be most common?)\n3. Choose database TYPE from access pattern + consistency need:\n   • Simple lookups, sessions → Key-Value (Redis, DynamoDB)\n   • Relational, complex joins, ACID → SQL (PostgreSQL, Aurora)\n   • Flexible schema, nested docs → Document (MongoDB)\n   • Write-heavy, time-series, global → Column-family (Cassandra)\n   • Full-text search → Elasticsearch\n   • Graph traversal → Neo4j\n   Rule: pick DB from access pattern, NOT brand familiarity\n\nCANONICAL HLD COMPONENTS\nClient → CDN (static cache, geo-edge)\n  → Load Balancer (L7 ALB: HTTP routing; NLB: TCP gaming/streaming)\n  → API Gateway (auth, rate limiting, routing, SSL termination)\n  → Services (stateless; scale horizontally)\n  → Cache Layer (Redis: L2 distributed cache)\n  → Message Queue (Kafka/SQS: async decoupling)\n  → Primary DB + Read Replicas\n  → Object Storage (S3/GCS: blobs, pre-signed URLs)\n  → Observability (Prometheus + Grafana + OpenTelemetry/Jaeger)\n\nJUSTIFICATION TEMPLATE (use for every component):\n\"I'm adding [component] here because [NFR it addresses].\nI chose [technology A] over [technology B] because [reason].\nThe trade-off is [cost/complexity/consistency impact].\"",
@@ -582,7 +597,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aF"
     },
     {
       "id": "g1H1780Hdr",
@@ -603,11 +619,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1016,
-      "version": 28,
-      "versionNonce": 1386861075,
+      "version": 29,
+      "versionNonce": 283697071,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 3 — Deep Dive (~15 min)",
@@ -618,7 +634,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aG"
     },
     {
       "id": "g1B1780Bdy",
@@ -639,11 +656,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1017,
-      "version": 78,
-      "versionNonce": 275519411,
+      "version": 79,
+      "versionNonce": 1985574593,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "IDENTIFY BOTTLENECKS FIRST — then propose solutions\n• State the exact bottleneck: \"At 35K peak RPS, a single PostgreSQL primary\n  will saturate at ~10K writes/sec — that's the first thing I'd address.\"\n• Propose 2+ solutions per bottleneck with trade-offs\n• Pick one with justification tied to NFRs\n• Move to next bottleneck; don't go infinite depth on one\n\nCACHING:\n• Cache-Aside: app checks cache → miss → fetch DB → write cache\n  Best for: read-heavy, resilient to cache failure, cold start penalty\n• Write-Through: write cache + DB sync — fresh data, write latency cost\n• Write-Behind: write cache, async flush — low write latency, loss risk on crash\n• Thundering herd: probabilistic early expiry OR request coalescing (mutex on miss)\n• Hot key: shard key + random suffix (user:12345:rand(0,9))\n\nDATABASE SCALING:\n• Read replicas: async replication (monitor lag < 1s), routes ~80% of traffic\n• Connection pooling: PgBouncer (PG), ProxySQL (MySQL) — critical at scale\n• Sharding: Hash (even dist, no range queries), Range (ordered, hotspot risk)\n  Consistent hashing: virtual nodes minimize resharding impact\n• Indexes: composite covers WHERE + ORDER BY; partial for filtered subsets\n  EXPLAIN ANALYZE every query > 100ms; avoid N+1 with DataLoader or JOINs\n\nRATE LIMITING:\n• Token Bucket: fixed capacity N, refills at rate R — allows burst up to N\n  Best for: user-facing APIs, natural bursty traffic\n• Sliding Window Log: Redis sorted set + ZCARD — precise, memory O(requests)\n  Best for: strict compliance requirements\n• Fixed Window Counter: Redis INCR + EXPIRE — simple, edge-burst risk\n• Distributed: Redis Lua EVAL for atomic check+decrement; shard by user_id\n\nMESSAGE QUEUES & ASYNC:\n• Kafka: durable log, replay, partitioned ordering (partition key = entity_id)\n  Retention 7 days; consumer groups = horizontal scale up to partition count\n  Use for: event sourcing, audit trail, data pipelines, fan-out\n• SQS: managed, at-least-once; visibility timeout > processing time\n  DLQ after N retries; FIFO variant for strict ordering\n• Idempotency: consumer MUST store processed event_ids\n• Outbox pattern: write event + state in same DB tx → relay publishes\n\nCONSISTENCY MODELS (weakest → strongest):\n• Eventual: AP systems (Cassandra, DynamoDB default) — fastest\n• Monotonic Read: once you read version V, never read V-1\n• Read-Your-Writes: always see your own updates\n• Causal: cause precedes effect — collaborative documents\n• Strong/Linearizable: globally ordered — most expensive",
@@ -654,7 +671,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aH"
     },
     {
       "id": "g1H-1370HdR2",
@@ -675,11 +693,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1018,
-      "version": 28,
-      "versionNonce": 353675603,
+      "version": 29,
+      "versionNonce": 1328484815,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STEP 4 — Wrap Up (~5 min)",
@@ -690,7 +708,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aI"
     },
     {
       "id": "g1B-1370BdR2",
@@ -711,11 +730,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1019,
-      "version": 28,
-      "versionNonce": 1174013683,
+      "version": 29,
+      "versionNonce": 1281291937,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "SUMMARIZE — 3 key decisions + WHY\n• \"I chose [technology] because [NFR]. The trade-off is [X].\"\n• \"The most critical bottleneck was [Y], addressed by [Z].\"\n• \"If I were to improve this further, I'd explore [improvement]\"\n\nFAILURE SCENARIOS TO MENTION\n• Primary DB fails → automated failover (60–120s RDS), replica promoted\n• Cache cold start → thundering herd; mitigated by circuit breaker\n• Queue consumer lag → DLQ strategy, scale consumers\n• Network partition → AP system serves stale data; TTL-based convergence\n• Cascading failure → bulkhead, circuit breaker (open on N failures)\n\nMONITORING & OBSERVABILITY\n• RED (per service): Rate, Error rate, Duration (latency P50/P99)\n• USE (per infrastructure): Utilization, Saturation, Errors\n• SLI: measured value (e.g., 99.95% requests < 200ms)\n• SLO: internal target (e.g., 99.9% P99 < 200ms over 30 days)\n• SLA: customer-facing contract with financial penalties\n• Error budget: 1 - SLO = allowed failure budget (burn-rate alerts)\n• Distributed tracing: OpenTelemetry → Jaeger/Tempo (W3C TraceContext)\n• Structured logs: JSON + trace_id + correlation_id; never log PII raw\n\nSTAFF-LEVEL SIGNALS TO DROP IN\n• Cost: \"At this scale, the cache tier adds ~$800/month but eliminates\n  ~$8,000/month in DB over-provisioning\"\n• Org/Conway's Law: \"I'd align service boundaries to team boundaries\n  — Team A owns Service X end-to-end including on-call\"\n• Phase roadmap: \"Phase 1 handles 10K users (MVP); Phase 2 at 100K\n  adds read replicas + cache; Phase 3 at 1M evaluates sharding\"\n• Security by default: \"DB in private subnet, only accessible from\n  service tier; secrets in Secrets Manager, rotated weekly; mTLS internal\"\n• Operational excellence: \"Two runbooks I'd prioritize: primary DB\n  failover and cache stampede recovery\"",
@@ -726,7 +745,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aJ"
     },
     {
       "id": "g1H200HdR2",
@@ -747,11 +767,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1020,
-      "version": 28,
-      "versionNonce": 430092435,
+      "version": 29,
+      "versionNonce": 1714028527,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "INTERVIEW SCORING RUBRIC",
@@ -762,7 +782,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aK"
     },
     {
       "id": "g1B200BdR2",
@@ -783,11 +804,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1021,
-      "version": 28,
-      "versionNonce": 1908745779,
+      "version": 29,
+      "versionNonce": 1768520321,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "FIVE DIMENSIONS — interviewers score each 1–5 (25 max)\n\nCOMMUNICATION (1–5)\n1 = Jumps to solution, hard to follow\n3 = Explains each step, pauses to verify understanding\n5 = Teaches the interviewer; draws proactively; adjusts depth on signal\nTip: Narrate your thinking — \"I'm considering X because Y\"\n\nBREADTH (1–5)\n1 = Knows one technology per category\n3 = Names multiple options per category, knows rough trade-offs\n5 = Knows edge cases, failure modes, when \"popular\" choice is wrong\nTip: Always offer 2 solutions before committing to one\n\nDEPTH (1–5)\n1 = Can't go deeper than box-level diagram\n3 = Can explain implementation details of chosen components\n5 = Can whiteboard internal algorithms, data structures, failure modes\nTip: Know 2–3 components at implementation depth (consistent hashing, LSM-tree)\n\nTRADE-OFF ARTICULATION (1–5)\n1 = Picks tech \"because it scales\" or \"because we use it at work\"\n3 = Explains pros/cons of each option\n5 = Quantifies trade-offs (\"write-through adds ~2ms but eliminates stale reads\")\nTip: Always tie trade-off to a specific NFR from Step 1\n\nPROACTIVE PROBLEM IDENTIFICATION (1–5)\n1 = Only identifies bottlenecks when interviewer points them out\n3 = Finds obvious issues (single DB, no caching)\n5 = Identifies subtle issues (thundering herd, hot partitions, split-brain)\nTip: After each component ask: \"what happens when this fails?\"\n\nSTAFF-LEVEL DIFFERENTIATORS (beyond 25/25)\n• Mentions cost implications without being asked\n• References team/org ownership model for service boundaries\n• Proposes phased rollout with concrete milestones\n• Identifies security boundaries proactively\n• Shows awareness of build-vs-buy judgment\n• Discusses deprecation/migration path for replaced components",
@@ -798,7 +819,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aL"
     },
     {
       "id": "g1H1780HdR2",
@@ -819,11 +841,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1022,
-      "version": 28,
-      "versionNonce": 893904851,
+      "version": 29,
+      "versionNonce": 1474439695,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "COMMUNICATION SCRIPTS",
@@ -834,7 +856,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aM"
     },
     {
       "id": "g1B1780BdR2",
@@ -855,11 +878,11 @@
       "frameId": "rEX9ZkQmLMonBL9XY3xl",
       "roundness": null,
       "seed": 1023,
-      "version": 28,
-      "versionNonce": 708932979,
+      "version": 29,
+      "versionNonce": 775455329,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837018637,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "OPENING (first 60 seconds — DO NOT draw yet):\n\"Before I start designing, let me make sure I understand the scope.\nAre we optimizing for [read-heavy / write-heavy]? What's our target\nDAU — millions or hundreds of millions? And do we need global\ndistribution or single-region? ... Great. I'll use those to anchor.\"\n\nPROPOSING EVERY COMPONENT (template):\n\"I'd add [component] here because [specific NFR it addresses].\nMy default choice is [technology A] — [one-line reason].\nWe could alternatively use [technology B], which gives us [benefit]\nat the cost of [trade-off]. Given our [NFR], I'll go with A.\"\n\nARTICULATING A BOTTLENECK:\n\"The concern with [component] is [specific failure mode].\nAt [scale metric] — say 35K RPS — [what breaks].\nTwo approaches: [Solution A] which gives us [benefit] but costs [X];\n[Solution B] which costs [Y] but gives us [Z].\nI'd recommend [A] because [tie to NFR from Step 1].\"\n\nPROACTIVE TRADE-OFF MENTION:\n\"I want to call out a trade-off: we're sacrificing [consistency /\nlatency / simplicity] in exchange for [availability / throughput /\nscale]. That's the right call here because [business reason].\"\n\nHANDLING \"WHY NOT X?\":\n\"Great question. [X] would work — the reason I didn't lead with it\nis [specific technical reason]. If [condition] changed, I'd reconsider.\"\n\nWRAP-UP:\n\"Let me summarize the key decisions: [1], [2], [3].\nThe biggest risk I see is [X], mitigated by [Y].\nIf I had another 30 minutes, I'd explore [Z] to improve [metric].\"\n\nSTAFF-LEVEL SIGNALS TO DROP IN NATURALLY:\n• Cost: \"Rough estimate: at this scale, that's ~$X/month.\n  The [component] saves us ~$Y/month on [resource].\"\n• Conway's Law: \"I'd structure service ownership so [team A] owns\n  [service X] end-to-end — API, DB schema, and on-call rotation.\"\n• Security: \"I'd put the DB in a private subnet — no public route,\n  only reachable from the service layer via security group rule.\"\n• Phased delivery: \"Phase 1 gets us to 10K users.\n  Phase 2 at 100K: we add [component]. Phase 3 at 1M: revisit [decision].\"\n• Operational: \"Two failure modes I'd want runbooks for: [X] and [Y].\"",
@@ -870,7 +893,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aN"
     },
     {
       "id": "QOUb4KZXFqglQsoA3RDs",
@@ -892,13 +916,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 952613835,
-      "version": 315,
-      "versionNonce": 277001555,
+      "version": 316,
+      "versionNonce": 1364201519,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aO"
     },
     {
       "id": "g2H100Col",
@@ -919,11 +944,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2001,
-      "version": 157,
-      "versionNonce": 1069978355,
+      "version": 158,
+      "versionNonce": 932941377,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Design",
@@ -934,7 +959,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aP"
     },
     {
       "id": "g2B100Col",
@@ -955,11 +981,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2002,
-      "version": 157,
-      "versionNonce": 1107147923,
+      "version": 158,
+      "versionNonce": 1281110607,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "REQUIREMENTS ENGINEERING\nFunctional: core use cases, actors, API contracts, out-of-scope\nNon-Functional (NFRs):\n• Latency: P50/P99 read + write targets\n• Throughput: peak RPS + burst factor\n• Availability: 99.9%=8.7h | 99.99%=52min | 99.999%=5.3min\n• Consistency: strong vs. eventual\n• Scalability: 10× growth horizon\n• Durability: RPO/RTO targets\n• Compliance: GDPR/HIPAA/PCI-DSS\n\nSLA / SLO / SLI\n• SLI: measured metric (e.g., 99.95% up)\n• SLO: internal target (99.9% over 30d)\n• SLA: contractual with financial penalties\n• Error budget = 1 - SLO\n\nCAP THEOREM\n• CP: Zookeeper, HBase, etcd (blocks on partition)\n• AP: Cassandra, DynamoDB (serves stale)\nPACELC:\n• P: partition → Availability vs Consistency\n• E: else (normal) → Latency vs Consistency\n• DynamoDB: PA/EL | HBase: PC/EC\n\nFAULT TOLERANCE PATTERNS\n• Circuit Breaker: open on N failures → fast-fail → probe → reset\n• Bulkhead: separate thread pool per downstream\n• Retry: exp backoff + full jitter, max 3 retries + total deadline\n• Timeout: fail fast at P99 of downstream\n• Fallback: cached data or default response\n\nSDLC ENVIRONMENTS\nDev → Test → Staging (prod-mirror) → Prod\n• Immutable infra: rebuild, don't patch\n• Feature flags: decouple deploy from release\n• Expand-contract: safe DB schema migration",
@@ -970,7 +996,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aQ"
     },
     {
       "id": "g2H620Col",
@@ -991,11 +1018,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2003,
-      "version": 160,
-      "versionNonce": 1620936024,
+      "version": 161,
+      "versionNonce": 1550982689,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783985697027,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Data",
@@ -1006,7 +1033,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aR"
     },
     {
       "id": "g2B620Col",
@@ -1027,11 +1055,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2004,
-      "version": 157,
-      "versionNonce": 1934619603,
+      "version": 158,
+      "versionNonce": 1910444143,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "DATABASE TAXONOMY — pick by access pattern\n\nRELATIONAL (ACID):\n• PostgreSQL: JSONB, FTS, PostGIS, MVCC\n• Aurora: multi-AZ HA, read replicas\n• Use: relational data, joins, compliance\n\nKEY-VALUE (fastest reads/writes):\n• Redis: in-memory, pub/sub, sorted sets, streams\n• DynamoDB: serverless, GSI, single-digit ms, DAX\n• Use: sessions, cache, leaderboards, counters\n\nDOCUMENT (flexible schema):\n• MongoDB: aggregation, Atlas Search, nested docs\n• Firestore: real-time sync, offline first\n• Use: hierarchical, schema-evolving data\n\nCOLUMN-FAMILY (write-heavy, massive scale):\n• Cassandra: LSM-tree, tunable consistency, multi-DC\n• Use: >10M writes/day, time-series, known partition key\n\nSEARCH: Elasticsearch — inverted index, BM25,\n  autocomplete, faceted, percolate\nGRAPH: Neo4j — Cypher, relationship traversal\nTIME-SERIES: InfluxDB, TimescaleDB\n\nINDEXING\n• B-Tree: range + equality (default PG/MySQL)\n• LSM-Tree: write-optimized (Cassandra/RocksDB)\n• Inverted: full-text (Elasticsearch)\n• Composite: match query filter column order\n• Partial: WHERE is_active=true (smaller index)\n• Covering: include all SELECT cols (index-only scan)\n\nSHARDING\n• Hash: even distribution; no range queries\n• Range: ordered; hotspot risk at boundaries\n• Consistent hashing: virtual nodes, minimal resharding\n\nREPLICATION\n• Sync: strong consistency, write latency\n• Async: eventual, read scale, lag < 1s\n• Monitor: seconds_behind_master; alert > 5s",
@@ -1042,7 +1070,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aS"
     },
     {
       "id": "g2H1140Col",
@@ -1063,11 +1092,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2005,
-      "version": 160,
-      "versionNonce": 443751000,
+      "version": 161,
+      "versionNonce": 1806414337,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783985697027,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Model",
@@ -1078,7 +1107,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aT"
     },
     {
       "id": "g2B1140Col",
@@ -1099,11 +1129,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2006,
-      "version": 157,
-      "versionNonce": 476928787,
+      "version": 158,
+      "versionNonce": 1000417935,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "ARCHITECTURE EVOLUTION\nMonolith → Modular Monolith → Microservices\nConway's Law: org structure drives system structure\n\nMONOLITH\n+ Simple deploy, fast iteration, no network hops\n- Vertical scaling only, deploy coupling\nUse: team < 15, domain unclear, MVP stage\n\nMODULAR MONOLITH\n+ Module boundaries enforced in code\n+ Easy to extract to microservices later\nUse: team growing, clearer domains\n\nMICROSERVICES\n+ Independent deploy, polyglot, team autonomy\n+ Horizontal scale per service\n- Network latency, distributed tracing, complex local dev\nUse: org > 50 eng, distinct bounded contexts\n\nDDD — DOMAIN-DRIVEN DESIGN\n• Bounded Context: own model + DB + API\n• Aggregate: consistency boundary\n  (1 transaction = 1 aggregate root)\n• Domain Events: notify other contexts\n• Ubiquitous language: code = domain terms\n\nCQRS\n• Separate write model (commands, ACID)\n  from read model (queries, denormalized)\n• Use: read/write scaling mismatch, complex domain\n\nEVENT SOURCING\n• Append-only event log; replay = state\n+ Audit trail, time-travel, replay consumers\n- Projection complexity, schema evolution\n\nSAGA (distributed transactions without 2PC)\n• Choreography: services react to events (decoupled)\n• Orchestration: saga coordinator drives steps (clear)\n• Compensating txns: undo each completed step\n\nOTHER PATTERNS\n• BFF: one API adapter per client type\n• Strangler Fig: incremental monolith migration\n• Sidecar: co-deployed proxy (Envoy/Istio mTLS)",
@@ -1114,7 +1144,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aU"
     },
     {
       "id": "g2H1660Col",
@@ -1135,11 +1166,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2007,
-      "version": 159,
-      "versionNonce": 248385368,
+      "version": 160,
+      "versionNonce": 709347809,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783985697027,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Backend",
@@ -1150,7 +1181,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aV"
     },
     {
       "id": "g2B1660Col",
@@ -1171,11 +1203,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2008,
-      "version": 157,
-      "versionNonce": 1212805715,
+      "version": 158,
+      "versionNonce": 1448804527,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "COMPUTE — choose by traffic pattern\n• EC2/VMs: full control, stateful, GPU\n• ECS/K8s: containerized, HPA auto-scale\n• Lambda/Fargate: serverless, event-driven\n  Cold start: 100ms–1s; max 15min (Lambda)\n\nCACHING LAYERS\n• L1 in-process: Guava/Caffeine — nanoseconds\n• L2 distributed: Redis/Memcached — microseconds\n• L3 CDN: geo-edge — milliseconds\n\nCACHE WRITE PATTERNS\n• Cache-Aside: lazy, resilient, cold-start penalty\n• Write-Through: always fresh, write latency\n• Write-Behind: low-latency writes, loss on crash\n• Eviction: LRU (recency), LFU (frequency), TTL\n\nMESSAGE BROKERS\n• Kafka: durable log, replay, consumer groups\n  Partition key: entity_id (order per entity)\n  Retention: 7d default → replay for new consumers\n• SQS: managed, at-least-once, DLQ after N retries\n• RabbitMQ: AMQP, routing, acks, RPC\n• SNS: pub/sub fan-out → SQS/Lambda/HTTP\n\nAPI PATTERNS\n• REST: cacheable, stateless, versioning (v1/)\n• gRPC: protobuf, streaming, codegen, deadlines\n• GraphQL: DataLoader for N+1 batching\n\nRATE LIMITING\n• Token Bucket: capacity N, refill R — burst-friendly\n• Sliding Window Log: sorted set — precise\n• Fixed Window: INCR+EXPIRE — simple, edge-burst risk\n• Distributed: Redis Lua EVAL (atomic check+decrement)\n\nLOAD BALANCING\n• Round-robin: equal dist, stateless services\n• Least-connections: route to least-busy\n• IP-hash: sticky sessions per client IP\n• Health-check: auto-remove unhealthy instances",
@@ -1186,7 +1218,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aW"
     },
     {
       "id": "g2H2180Col",
@@ -1207,11 +1240,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2009,
-      "version": 159,
-      "versionNonce": 100820056,
+      "version": 160,
+      "versionNonce": 290842049,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783985697027,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Deployment",
@@ -1222,7 +1255,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aX"
     },
     {
       "id": "g2B2180Col",
@@ -1243,11 +1277,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2010,
-      "version": 157,
-      "versionNonce": 1423554963,
+      "version": 158,
+      "versionNonce": 1135940303,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "CONTAINERIZATION\n• Docker: immutable artifacts, multi-stage builds\n• Kubernetes: HPA, PodDisruptionBudget, probes\n• Helm: K8s package manager, values-templating\n• Service Mesh: Istio/Linkerd — mTLS, circuit breaking\n\nCI/CD PIPELINE\nBuild → Unit Tests → Integration Tests\n→ SAST/DAST → Build+Scan Image\n→ Deploy Staging → Smoke Tests\n→ Deploy Prod → Synthetic Monitoring\n→ Rollback trigger on SLO breach\n\nDEPLOYMENT STRATEGIES\n• Blue-Green: instant cutover + rollback, 2× cost\n• Canary: % traffic to new version, expand on SLO health\n• Rolling: replace pods one-by-one; version skew risk\n• Feature Flags: deploy dark; enable per cohort\n\nINFRASTRUCTURE AS CODE\n• Terraform: multi-cloud, plan/apply, modules\n• CloudFormation: AWS-native, drift detection\n• Pulumi: TypeScript/Python/Go IaC\n• GitOps: ArgoCD/Flux — cluster state in Git\n\nOBSERVABILITY (3 pillars)\n• Metrics: Prometheus + Grafana\n  RED: Rate, Error rate, Duration per service\n  USE: Utilization, Saturation, Errors per resource\n• Logs: structured JSON, ELK or Grafana Loki\n  Always include trace_id, span_id, service, level\n  Never log PII, passwords, tokens raw\n• Traces: OpenTelemetry → Jaeger/Tempo\n  W3C TraceContext; sample 100% errors + 1% success\n• Alerting: SLO burn-rate (fast 5m + slow 6h windows)\n• Synthetic: probe every 60s from 3+ regions\n\nDISASTER RECOVERY\n• Backup/Restore: RTO = hours, cheapest\n• Pilot Light: scaled-down standby, RTO = 30min\n• Warm Standby: full-size standby, RTO = 5min\n• Active-Active: best RTO, highest cost",
@@ -1258,7 +1292,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aY"
     },
     {
       "id": "g2H2700Col",
@@ -1279,11 +1314,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2011,
-      "version": 201,
-      "versionNonce": 590548787,
+      "version": 202,
+      "versionNonce": 1274381729,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Frontend",
@@ -1294,7 +1329,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aZ"
     },
     {
       "id": "g2B2700Col",
@@ -1315,11 +1351,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2012,
-      "version": 157,
-      "versionNonce": 856731859,
+      "version": 158,
+      "versionNonce": 1011343599,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "RENDERING STRATEGIES\n• SSR: HTML generated per request on server\n  + SEO, fast initial paint | - hydration cost\n  Use: dynamic user content, SEO critical\n• SSG: pre-built at deploy time, served from CDN\n  + Fastest, zero server compute | - stale data\n  Use: marketing, docs, blog, static content\n• ISR: revalidate on interval or on-demand\n  Best of SSR + SSG (Next.js revalidate)\n  Use: eCommerce, news, semi-dynamic pages\n• CSR: SPA, bundle fetched once, client renders\n  - Poor SEO, slow initial load | + rich interactivity\n  Use: dashboards, admin tools, auth-only apps\n\nCDN & EDGE\n• Fingerprinted assets: Cache-Control: immutable\n• API: short TTL (30s) + stale-while-revalidate\n• Edge functions: geo-routing, A/B, auth\n\nCORE WEB VITALS\n• LCP < 2.5s: preload hero, SSR above-fold\n• INP < 200ms: avoid tasks > 50ms, use workers\n• CLS < 0.1: explicit image/ad dimensions\n\nPERFORMANCE\n• Code splitting: dynamic import() per route\n• Tree-shaking: ESM modules\n• Lazy loading: images + below-fold components\n• Compression: Brotli > gzip (25% smaller)\n\nSTATE MANAGEMENT (complexity ladder)\n• useState/useReducer: component-local\n• React Query/SWR: server state, auto-revalidate\n• Zustand: simple shared state, minimal boilerplate\n• Redux Toolkit: complex undo/redo, large teams\n\nTESTING\n• Unit: Vitest/Jest (pure functions, hooks)\n• Component: React Testing Library (a11y-first)\n• E2E: Playwright/Cypress (critical user journeys)\n• Visual: Storybook + Chromatic (diff snapshots)",
@@ -1330,7 +1366,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "aa"
     },
     {
       "id": "g2H3220Col",
@@ -1351,11 +1388,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2013,
-      "version": 157,
-      "versionNonce": 1711873651,
+      "version": 158,
+      "versionNonce": 1968580993,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Security",
@@ -1366,7 +1403,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "ab"
     },
     {
       "id": "g2B3220Col",
@@ -1387,11 +1425,11 @@
       "frameId": "QOUb4KZXFqglQsoA3RDs",
       "roundness": null,
       "seed": 2014,
-      "version": 157,
-      "versionNonce": 652400659,
+      "version": 158,
+      "versionNonce": 1369172751,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837033030,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "AUTHENTICATION & AUTHORIZATION\nAuthN (who are you?):\n• OAuth2 + OIDC: federated SSO\n• JWT: stateless, verify sig + exp\n• Session tokens: server-side, revocable\nAuthZ (what can you do?):\n• RBAC: role-based — simple, coarse\n• ABAC: attribute-based — flexible, complex\n• ReBAC: relationship-based (Zanzibar)\n\nSECRETS MANAGEMENT\n• Never plaintext in code or env files\n• AWS Secrets Manager / HashiCorp Vault\n• Rotate automatically; audit all access\n• SOPS: encrypt secrets in Git\n\nTRANSPORT & ENCRYPTION\n• TLS 1.3 everywhere (internal + external)\n• mTLS: service-to-service (zero-trust)\n• Certificate pinning: mobile MITM prevention\n• At-rest: KMS envelope encryption\n• Field-level: PII/PCI columns in DB\n\nINPUT VALIDATION\n• OWASP Top 10: SQLi, XSS, CSRF, SSRF\n• Parameterized queries always\n• CSP headers, CORS allowlist (no wildcard)\n• Rate limit + CAPTCHA on public endpoints\n\nNETWORK SECURITY\n• VPC: private subnets for DB + internal svc\n• Security groups: deny by default\n• WAF: OWASP rules + geo-block + bot detect\n• DDoS: CloudFront+Shield or Cloudflare\n• Zero-trust: authenticate every hop\n\nCOMPLIANCE CONTROLS\n• GDPR: EU data residency, right to erasure, DPA\n• HIPAA: PHI encryption + audit logs + BAA\n• PCI-DSS: tokenization, quarterly scan\n• SOC 2: audit logs, access controls, change mgmt\n\nSECURITY IN SDLC\n• SAST: SonarQube/Semgrep in CI\n• DAST: OWASP ZAP in staging\n• Dependency scan: Snyk / Dependabot\n• Threat modeling: STRIDE per feature\n• Pen test: quarterly external + bug bounty",
@@ -1402,7 +1440,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "ac"
     },
     {
       "id": "HnMfl3zUaLJez2eI6LWk",
@@ -1424,13 +1463,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1284386177,
-      "version": 862,
-      "versionNonce": 1303336797,
+      "version": 863,
+      "versionNonce": 381112673,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "ad"
     },
     {
       "id": "DgsIDYGdBtsgIBRor9hJD",
@@ -1453,11 +1493,11 @@
         "type": 2
       },
       "seed": 1433614677,
-      "version": 365,
-      "versionNonce": 535192509,
+      "version": 366,
+      "versionNonce": 1344909615,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1474,7 +1514,8 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": null
+      "endArrowhead": null,
+      "index": "ae"
     },
     {
       "id": "uj9yNqJY2lsruvpGD9Q8P",
@@ -1495,11 +1536,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 1081582331,
-      "version": 153,
-      "versionNonce": 1144841245,
+      "version": 154,
+      "versionNonce": 1701346625,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1520,7 +1561,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "af"
     },
     {
       "id": "kdNhBSRI2dRFNYe_EdLp0",
@@ -1541,11 +1583,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 614206011,
-      "version": 173,
-      "versionNonce": 782522493,
+      "version": 174,
+      "versionNonce": 1633268559,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1566,7 +1608,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "ag"
     },
     {
       "id": "S3J-3LyY4KbxOALm26fmJ",
@@ -1587,11 +1630,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 742298555,
-      "version": 167,
-      "versionNonce": 1490960605,
+      "version": 168,
+      "versionNonce": 1086926113,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1612,7 +1655,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "ah"
     },
     {
       "id": "jVqiV-2S7x5yKFrKUx2SL",
@@ -1633,11 +1677,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 1394639707,
-      "version": 148,
-      "versionNonce": 142351677,
+      "version": 149,
+      "versionNonce": 1837396335,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1658,7 +1702,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "ai"
     },
     {
       "id": "Yir_NqX1uaBjyMiHq9orY",
@@ -1679,11 +1724,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 1862877301,
-      "version": 155,
-      "versionNonce": 1423928733,
+      "version": 156,
+      "versionNonce": 1883824385,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1704,7 +1749,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "aj"
     },
     {
       "id": "2ZzsLUVkRG0073CwQi4t0",
@@ -1725,11 +1771,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 421162645,
-      "version": 170,
-      "versionNonce": 1832497661,
+      "version": 171,
+      "versionNonce": 1039297423,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1750,7 +1796,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "ak"
     },
     {
       "id": "zxm_voMw4Vb3nzmT6Vc3P",
@@ -1771,11 +1818,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 524164475,
-      "version": 198,
-      "versionNonce": 512518749,
+      "version": 199,
+      "versionNonce": 560404705,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1796,7 +1843,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "al"
     },
     {
       "id": "lyC83up1h-yGdkqjj-XBZ",
@@ -1817,11 +1865,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 747696821,
-      "version": 171,
-      "versionNonce": 430511805,
+      "version": 172,
+      "versionNonce": 1591484847,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1842,7 +1890,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "am"
     },
     {
       "id": "Q1is3dAg3PS0Ka1ALHrEa",
@@ -1863,11 +1912,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 1483334613,
-      "version": 238,
-      "versionNonce": 2033268509,
+      "version": 239,
+      "versionNonce": 632509633,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1888,7 +1937,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "an"
     },
     {
       "id": "TbgGatN9KjiujSQ36e61p",
@@ -1909,11 +1959,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 2049186651,
-      "version": 188,
-      "versionNonce": 127290237,
+      "version": 189,
+      "versionNonce": 1097470927,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -1934,7 +1984,8 @@
       "elbowed": true,
       "fixedSegments": null,
       "startIsSpecial": null,
-      "endIsSpecial": null
+      "endIsSpecial": null,
+      "index": "ao"
     },
     {
       "id": "g3TitleSecA01",
@@ -1955,11 +2006,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3001,
-      "version": 473,
-      "versionNonce": 1159320541,
+      "version": 474,
+      "versionNonce": 1892488353,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "PRODUCTION HLD ARCHITECTURE — REQUEST FLOW",
@@ -1970,7 +2021,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "ap"
     },
     {
       "id": "g3EllClient01",
@@ -1993,8 +2045,8 @@
         "type": 2
       },
       "seed": 3002,
-      "version": 407,
-      "versionNonce": 768430141,
+      "version": 408,
+      "versionNonce": 498385391,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2002,9 +2054,10 @@
           "id": "g3TxtClient01"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aq"
     },
     {
       "id": "g3TxtClient01",
@@ -2025,11 +2078,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3003,
-      "version": 407,
-      "versionNonce": 1066549405,
+      "version": 408,
+      "versionNonce": 1449384065,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Client\n(browser\n/mobile)",
@@ -2040,7 +2093,8 @@
       "verticalAlign": "middle",
       "containerId": "g3EllClient01",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "ar"
     },
     {
       "id": "g3ArrC1CDN001",
@@ -2076,14 +2130,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3004,
-      "version": 407,
-      "versionNonce": 1075455229,
+      "version": 408,
+      "versionNonce": 348433423,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "as"
     },
     {
       "id": "g3RctCDN00001",
@@ -2106,8 +2161,8 @@
         "type": 3
       },
       "seed": 3005,
-      "version": 407,
-      "versionNonce": 1122401629,
+      "version": 408,
+      "versionNonce": 137830497,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2115,9 +2170,10 @@
           "id": "g3TxtCDN00001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "at"
     },
     {
       "id": "g3TxtCDN00001",
@@ -2138,11 +2194,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3006,
-      "version": 407,
-      "versionNonce": 1867041213,
+      "version": 408,
+      "versionNonce": 311579183,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "CDN\nCloudFront\n/Cloudflare",
@@ -2153,7 +2209,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctCDN00001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "au"
     },
     {
       "id": "g3ArrCDNLB001",
@@ -2189,14 +2246,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3007,
-      "version": 407,
-      "versionNonce": 107121181,
+      "version": 408,
+      "versionNonce": 1410755649,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "av"
     },
     {
       "id": "g3RctLBal0001",
@@ -2219,8 +2277,8 @@
         "type": 3
       },
       "seed": 3008,
-      "version": 407,
-      "versionNonce": 690306685,
+      "version": 408,
+      "versionNonce": 1879454799,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2228,9 +2286,10 @@
           "id": "g3TxtLBal0001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "aw"
     },
     {
       "id": "g3TxtLBal0001",
@@ -2251,11 +2310,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3009,
-      "version": 407,
-      "versionNonce": 1582458589,
+      "version": 408,
+      "versionNonce": 568409121,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Load\nBalancer\nL7 ALB/NLB",
@@ -2266,7 +2325,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctLBal0001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "ax"
     },
     {
       "id": "g3ArrLBWAF001",
@@ -2302,14 +2362,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3010,
-      "version": 407,
-      "versionNonce": 1484489533,
+      "version": 408,
+      "versionNonce": 1425592943,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "ay"
     },
     {
       "id": "g3RctWAF00001",
@@ -2332,8 +2393,8 @@
         "type": 3
       },
       "seed": 3011,
-      "version": 407,
-      "versionNonce": 2080510877,
+      "version": 408,
+      "versionNonce": 830935041,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2341,9 +2402,10 @@
           "id": "g3TxtWAF00001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "az"
     },
     {
       "id": "g3TxtWAF00001",
@@ -2364,11 +2426,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3012,
-      "version": 407,
-      "versionNonce": 622303229,
+      "version": 408,
+      "versionNonce": 1513270415,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "WAF\nOWASP rules\nDDoS protect",
@@ -2379,7 +2441,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctWAF00001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b00"
     },
     {
       "id": "g3ArrLBGW0001",
@@ -2415,14 +2478,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3013,
-      "version": 407,
-      "versionNonce": 767397981,
+      "version": 408,
+      "versionNonce": 419915745,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b01"
     },
     {
       "id": "g3RctAPIGW001",
@@ -2445,8 +2509,8 @@
         "type": 3
       },
       "seed": 3014,
-      "version": 407,
-      "versionNonce": 868580541,
+      "version": 408,
+      "versionNonce": 1802257071,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2454,9 +2518,10 @@
           "id": "g3TxtAPIGW001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b02"
     },
     {
       "id": "g3TxtAPIGW001",
@@ -2477,11 +2542,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3015,
-      "version": 407,
-      "versionNonce": 517004573,
+      "version": 408,
+      "versionNonce": 41010113,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "API Gateway\nKong/AWS GW\nauth+rate limit",
@@ -2492,7 +2557,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctAPIGW001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b03"
     },
     {
       "id": "g3ArrGWAuth01",
@@ -2528,14 +2594,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3016,
-      "version": 407,
-      "versionNonce": 1716597117,
+      "version": 408,
+      "versionNonce": 1766724815,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b04"
     },
     {
       "id": "g3RctAuth0001",
@@ -2558,8 +2625,8 @@
         "type": 3
       },
       "seed": 3017,
-      "version": 407,
-      "versionNonce": 394787293,
+      "version": 408,
+      "versionNonce": 702915489,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2567,9 +2634,10 @@
           "id": "g3TxtAuth0001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b05"
     },
     {
       "id": "g3TxtAuth0001",
@@ -2590,11 +2658,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3018,
-      "version": 407,
-      "versionNonce": 461813309,
+      "version": 408,
+      "versionNonce": 191931119,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Auth Service\nJWT/OAuth2\nmTLS internal",
@@ -2605,7 +2673,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctAuth0001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b06"
     },
     {
       "id": "g3ArrGWSvA01",
@@ -2641,14 +2710,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3019,
-      "version": 407,
-      "versionNonce": 1026483869,
+      "version": 408,
+      "versionNonce": 462587777,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b07"
     },
     {
       "id": "g3ArrGWSvB01",
@@ -2684,14 +2754,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3020,
-      "version": 407,
-      "versionNonce": 1865550589,
+      "version": 408,
+      "versionNonce": 39611663,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b08"
     },
     {
       "id": "g3ArrGWSvC01",
@@ -2727,14 +2798,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3021,
-      "version": 407,
-      "versionNonce": 1376887645,
+      "version": 408,
+      "versionNonce": 834137953,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b09"
     },
     {
       "id": "g3RctSvcA0001",
@@ -2757,8 +2829,8 @@
         "type": 3
       },
       "seed": 3022,
-      "version": 407,
-      "versionNonce": 2048864189,
+      "version": 408,
+      "versionNonce": 1502212911,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2766,9 +2838,10 @@
           "id": "g3TxtSvcA0001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0A"
     },
     {
       "id": "g3TxtSvcA0001",
@@ -2789,11 +2862,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3023,
-      "version": 407,
-      "versionNonce": 1971073053,
+      "version": 408,
+      "versionNonce": 1386568513,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Service A\n(stateless)\nHPA",
@@ -2804,7 +2877,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctSvcA0001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0B"
     },
     {
       "id": "g3RctSvcB0001",
@@ -2827,8 +2901,8 @@
         "type": 3
       },
       "seed": 3024,
-      "version": 407,
-      "versionNonce": 303703165,
+      "version": 408,
+      "versionNonce": 425833807,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2836,9 +2910,10 @@
           "id": "g3TxtSvcB0001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0C"
     },
     {
       "id": "g3TxtSvcB0001",
@@ -2859,11 +2934,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3025,
-      "version": 407,
-      "versionNonce": 1673170141,
+      "version": 408,
+      "versionNonce": 1857702689,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Service B\n(stateless)\nHPA",
@@ -2874,7 +2949,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctSvcB0001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0D"
     },
     {
       "id": "g3RctMLAI0001",
@@ -2897,8 +2973,8 @@
         "type": 3
       },
       "seed": 3026,
-      "version": 407,
-      "versionNonce": 166652221,
+      "version": 408,
+      "versionNonce": 691811183,
       "isDeleted": false,
       "boundElements": [
         {
@@ -2906,9 +2982,10 @@
           "id": "g3TxtMLAI0001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0E"
     },
     {
       "id": "g3TxtMLAI0001",
@@ -2929,11 +3006,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3027,
-      "version": 407,
-      "versionNonce": 907590045,
+      "version": 408,
+      "versionNonce": 1046888193,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "ML/AI\nInference API\nGPU/CPU",
@@ -2944,7 +3021,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctMLAI0001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0F"
     },
     {
       "id": "g3ArrSvADat01",
@@ -2980,14 +3058,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3028,
-      "version": 407,
-      "versionNonce": 1902738941,
+      "version": 408,
+      "versionNonce": 1902243215,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b0G"
     },
     {
       "id": "g3ArrSvBDat01",
@@ -3023,14 +3102,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3029,
-      "version": 407,
-      "versionNonce": 585283165,
+      "version": 408,
+      "versionNonce": 1076410081,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b0H"
     },
     {
       "id": "g3RctRedis001",
@@ -3053,8 +3133,8 @@
         "type": 3
       },
       "seed": 3030,
-      "version": 407,
-      "versionNonce": 1431691965,
+      "version": 408,
+      "versionNonce": 1024156591,
       "isDeleted": false,
       "boundElements": [
         {
@@ -3062,9 +3142,10 @@
           "id": "g3TxtRedis001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0I"
     },
     {
       "id": "g3TxtRedis001",
@@ -3085,11 +3166,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3031,
-      "version": 407,
-      "versionNonce": 1029997341,
+      "version": 408,
+      "versionNonce": 1989227201,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Redis Cache\nL2 dist\ncache-aside",
@@ -3100,7 +3181,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctRedis001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0J"
     },
     {
       "id": "g3RctKafka001",
@@ -3123,8 +3205,8 @@
         "type": 3
       },
       "seed": 3032,
-      "version": 407,
-      "versionNonce": 2139101053,
+      "version": 408,
+      "versionNonce": 1549866447,
       "isDeleted": false,
       "boundElements": [
         {
@@ -3132,9 +3214,10 @@
           "id": "g3TxtKafka001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0K"
     },
     {
       "id": "g3TxtKafka001",
@@ -3155,11 +3238,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3033,
-      "version": 407,
-      "versionNonce": 904536029,
+      "version": 408,
+      "versionNonce": 1715417761,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Kafka/SQS\nAsync queue\nDLQ on fail",
@@ -3170,7 +3253,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctKafka001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0L"
     },
     {
       "id": "g3RctPrimDB01",
@@ -3193,8 +3277,8 @@
         "type": 3
       },
       "seed": 3034,
-      "version": 407,
-      "versionNonce": 917773373,
+      "version": 408,
+      "versionNonce": 108757999,
       "isDeleted": false,
       "boundElements": [
         {
@@ -3202,9 +3286,10 @@
           "id": "g3TxtPrimDB01"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0M"
     },
     {
       "id": "g3TxtPrimDB01",
@@ -3225,11 +3310,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3035,
-      "version": 407,
-      "versionNonce": 431983773,
+      "version": 408,
+      "versionNonce": 1407334017,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Primary DB\nPostgreSQL\nACID",
@@ -3240,7 +3325,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctPrimDB01",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0N"
     },
     {
       "id": "g3RctS3000001",
@@ -3263,8 +3349,8 @@
         "type": 3
       },
       "seed": 3036,
-      "version": 407,
-      "versionNonce": 2126377213,
+      "version": 408,
+      "versionNonce": 2070097423,
       "isDeleted": false,
       "boundElements": [
         {
@@ -3272,9 +3358,10 @@
           "id": "g3TxtS3000001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0O"
     },
     {
       "id": "g3TxtS3000001",
@@ -3295,11 +3382,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3037,
-      "version": 407,
-      "versionNonce": 321964381,
+      "version": 408,
+      "versionNonce": 1111080545,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Object Store\nS3/GCS\npre-signed URL",
@@ -3310,7 +3397,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctS3000001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0P"
     },
     {
       "id": "g3ArrDBRep001",
@@ -3346,14 +3434,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3038,
-      "version": 407,
-      "versionNonce": 1483314621,
+      "version": 408,
+      "versionNonce": 1712362543,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b0Q"
     },
     {
       "id": "g3ArrKfkWk001",
@@ -3389,14 +3478,15 @@
       "endArrowhead": "arrow",
       "elbowed": false,
       "seed": 3039,
-      "version": 407,
-      "versionNonce": 696899101,
+      "version": 408,
+      "versionNonce": 806701633,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
-      "lastCommittedPoint": null
+      "lastCommittedPoint": null,
+      "index": "b0R"
     },
     {
       "id": "g3RctReadRp01",
@@ -3419,8 +3509,8 @@
         "type": 3
       },
       "seed": 3040,
-      "version": 407,
-      "versionNonce": 25365117,
+      "version": 408,
+      "versionNonce": 2121021007,
       "isDeleted": false,
       "boundElements": [
         {
@@ -3428,9 +3518,10 @@
           "id": "g3TxtReadRp01"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0S"
     },
     {
       "id": "g3TxtReadRp01",
@@ -3451,11 +3542,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3041,
-      "version": 407,
-      "versionNonce": 18264797,
+      "version": 408,
+      "versionNonce": 374626849,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Read Replicas\nasync lag<1s\n80% reads",
@@ -3466,7 +3557,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctReadRp01",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0T"
     },
     {
       "id": "g3RctWorker01",
@@ -3489,8 +3581,8 @@
         "type": 3
       },
       "seed": 3042,
-      "version": 407,
-      "versionNonce": 886460221,
+      "version": 408,
+      "versionNonce": 1800311919,
       "isDeleted": false,
       "boundElements": [
         {
@@ -3498,9 +3590,10 @@
           "id": "g3TxtWorker01"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0U"
     },
     {
       "id": "g3TxtWorker01",
@@ -3521,11 +3614,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3043,
-      "version": 407,
-      "versionNonce": 455303069,
+      "version": 408,
+      "versionNonce": 635858433,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Workers\nasync consumer\nidempotent",
@@ -3536,7 +3629,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctWorker01",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0V"
     },
     {
       "id": "g3RctMonit001",
@@ -3559,8 +3653,8 @@
         "type": 3
       },
       "seed": 3044,
-      "version": 407,
-      "versionNonce": 1781490685,
+      "version": 408,
+      "versionNonce": 1686122127,
       "isDeleted": false,
       "boundElements": [
         {
@@ -3568,9 +3662,10 @@
           "id": "g3TxtMonit001"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0W"
     },
     {
       "id": "g3TxtMonit001",
@@ -3591,11 +3686,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3045,
-      "version": 407,
-      "versionNonce": 368827485,
+      "version": 408,
+      "versionNonce": 1170933217,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Monitoring\nProm+Grafana\n+OTel traces",
@@ -3606,7 +3701,8 @@
       "verticalAlign": "middle",
       "containerId": "g3RctMonit001",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0X"
     },
     {
       "id": "g3TxtDiagAnno",
@@ -3627,11 +3723,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3046,
-      "version": 407,
-      "versionNonce": 375015613,
+      "version": 408,
+      "versionNonce": 347702447,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Client→CDN (static)→LB (SSL+health)→WAF (OWASP)→API GW (auth, rate limit, route)→Services (stateless HPA)→{Redis (L2 cache), Kafka (async), PostgreSQL (ACID), S3 (blobs)}→{Read Replicas (80% reads), Workers (async consumers), Monitoring (RED+USE+traces)}",
@@ -3642,7 +3738,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0Y"
     },
     {
       "id": "g3TitleSecB01",
@@ -3663,11 +3760,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3047,
-      "version": 407,
-      "versionNonce": 1827416349,
+      "version": 408,
+      "versionNonce": 1360110017,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "HLD COMPONENT BEST PRACTICES",
@@ -3678,7 +3775,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0Z"
     },
     {
       "id": "g3BPLeftBody1",
@@ -3699,11 +3797,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3048,
-      "version": 407,
-      "versionNonce": 1797455229,
+      "version": 408,
+      "versionNonce": 1000543951,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "CDN\n• Fingerprinted filenames → Cache-Control: immutable, max-age=31536000\n• API responses: Surrogate-Control: max-age=60, stale-while-revalidate=30\n• Origin shield: single PoP → reduces origin hits 10–30×\n• Providers: CloudFront (AWS), Cloudflare (DDoS+WAF), Fastly (real-time config)\n• Skip CDN: user-specific data, write paths, regulated data residency\n\nLOAD BALANCER\n• L7 ALB: host/path routing, SSL termination, WebSocket upgrade\n• L4 NLB: ultra-low latency, no HTTP context — gaming, DB proxy\n• Health: active (/health HTTP) + passive (5xx rate tracking)\n• Connection draining: 30s grace before removing unhealthy instance\n• Avoid sticky sessions: use Redis for sessions → stateless LB\n\nAPI GATEWAY\n• Responsibilities: auth, rate limit, routing, SSL, transform, logging\n• Managed: AWS API GW (pay-per-call) | Self-hosted: Kong, Traefik\n• Anti-pattern: business logic in gateway (gateway = infrastructure only)\n• Rate limit: token bucket in Redis, return 429 + Retry-After header\n• Circuit breaker at gateway → prevents cascade to all downstream services\n\nCACHE (Redis)\n• Key design: namespace:type:id (user:profile:123) → enables pattern delete\n• TTL: shorter = fresh | longer = DB relief; stale-while-revalidate pattern\n• Thundering herd: probabilistic early expiry OR mutex on first miss\n• Hot key: key + rand(0, N) → distribute reads across N virtual shards\n• Redis Cluster: 16384 hash slots, auto failover; cross-slot ops restricted\n• Do NOT cache: financial real-time data, low-read-frequency entities\n\nMESSAGE QUEUE\n• Kafka: ordered per partition, durable log, replay up to N months\n  Partition key = entity_id (preserves ordering per entity)\n  Consumer group = horizontal scale (up to partition count)\n• SQS: visibility timeout > max processing time; DLQ after N retries\n• Idempotency: consumer MUST store processed event_ids before processing\n• Outbox pattern: write event + state in same DB tx → relay publishes\n  Eliminates dual-write inconsistency between state and event store",
@@ -3714,7 +3812,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0a"
     },
     {
       "id": "g3BPRightBody",
@@ -3735,11 +3834,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3049,
-      "version": 678,
-      "versionNonce": 943736285,
+      "version": 679,
+      "versionNonce": 349815201,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "DATABASE\n• Connection pool: PgBouncer (PG), ProxySQL (MySQL)\n  Pool size = (cores × 2) + disk spindle count (empirical rule)\n• Read replicas: route 80% of reads; monitor lag (alert >5s)\n• EXPLAIN ANALYZE: every query >100ms; cover WHERE + ORDER BY cols\n• Partial index: WHERE is_active = true (smaller, faster, targeted)\n• Expand-contract migration: add nullable → backfill → add constraint\n  (zero-downtime; never add NOT NULL to existing table directly)\n• N+1: detect via log_min_duration_statement; fix with JOINs or DataLoader\n\nOBSERVABILITY\n• Metrics (RED per service): Rate, Error rate, Duration P50/P99\n• Metrics (USE per infra): Utilization, Saturation, Errors\n• SLO alerts: burn-rate (fast 5m + slow 6h windows) > threshold alerts\n• Logs: structured JSON; always include trace_id, span_id, service, level\n  Never log raw: passwords, tokens, PII fields\n• Traces: OpenTelemetry → Jaeger/Tempo; W3C TraceContext headers\n  Sample: 100% of errors + 1% of success traces (cost control)\n• Synthetic: probe golden-path every 60s from 3+ regions\n\nSERVICE-TO-SERVICE\n• Sync (gRPC): set deadline on every call (never infinite wait)\n  Retry only idempotent calls; non-idempotent needs idempotency-key\n• Async (Kafka/SQS): producer fires-and-forgets; consumer idempotent\n• Timeout hierarchy: outer client deadline → propagate through each hop\n  Never set inner timeout longer than outer (wasted work)\n• mTLS: zero-trust; Istio/Linkerd service mesh automates cert rotation\n• Service discovery: K8s DNS (in-cluster), Consul (multi-cluster/cloud)\n\nSECURITY BASELINE (every production system)\n• All DBs in private subnets (no public route, SG from svc layer only)\n• All secrets in Secrets Manager / Vault (never plaintext in env vars)\n• TLS 1.3 everywhere; mTLS between internal services\n• WAF in front of CDN (OWASP managed rules, DDoS protection)\n• Audit logs: every data-access event with actor, resource, timestamp\n• Zero-trust: no implicit trust even on internal network — verify every hop",
@@ -3750,7 +3849,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": false,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0b"
     },
     {
       "id": "g3TitleSecC01",
@@ -3771,11 +3871,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3050,
-      "version": 410,
-      "versionNonce": 391479869,
+      "version": 411,
+      "versionNonce": 265643247,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "TECHNICAL COMMUNICATION FRAMEWORK — INTERVIEW",
@@ -3786,7 +3886,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0c"
     },
     {
       "id": "g3CommLftHead",
@@ -3807,11 +3908,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3051,
-      "version": 407,
-      "versionNonce": 1833185949,
+      "version": 408,
+      "versionNonce": 240313729,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "HOW TO PRESENT HLD",
@@ -3822,7 +3923,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0d"
     },
     {
       "id": "g3CommLftBody",
@@ -3843,11 +3945,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3052,
-      "version": 407,
-      "versionNonce": 113104637,
+      "version": 408,
+      "versionNonce": 1624829711,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "HOW TO STRUCTURE YOUR HLD PRESENTATION\n\nSTEP 1 — ANCHOR TO NFRs BEFORE DRAWING\n\"Before I start, let me make sure the design serves our NFRs.\nWe said [latency target], [RPS scale], [availability SLA].\nI'll call out which NFR each component addresses as I walk through.\"\n→ Do NOT draw until you've confirmed requirements\n\nSTEP 2 — WALK THE REQUEST FLOW (top-down)\nDon't list components; narrate the journey:\n\"A request starts at the client. First stop is the CDN — if cached\nthere, we never hit origin. On a cache miss, it goes to the load\nbalancer...\" → Shows you understand data flow, not just boxes\n\nSTEP 3 — JUSTIFY EVERY COMPONENT (template)\n\"I'm adding [component] here because [specific NFR].\nMy choice is [tech A] over [tech B] because [reason].\nTrade-off: [cost/complexity/consistency impact].\nGiven our [NFR], that trade-off is acceptable.\"\n→ Never add a component without a WHY\n\nSTEP 4 — IDENTIFY BOTTLENECKS PROACTIVELY\n\"The component I'm most worried about is [X] because\n[specific failure mode] at [scale].\nTwo approaches: [A] trades X for Y; [B] trades Y for Z.\nI'd go with [A] because [NFR linkage].\"\n→ Staff engineers surface problems before being asked\n\nSTEP 5 — INVITE COLLABORATION\n\"Does this design make sense so far?\nI could go deeper on [component] or move to [next area].\"\n→ Treat it as a technical conversation, not a monologue\n\nDIAGRAM DRAWING TECHNIQUE\n• Draw boxes first (shape), label second, arrows last\n• Label every arrow: what data, which protocol, sync/async\n• Start happy path; add failure paths after confirmation\n• Use dashed boundaries to group related components\n• Number components to reference them verbally\n\nHANDLING TRADE-OFF QUESTIONS\n\"Option A — [name]: [one sentence].\n  Pros: [X], [Y]. Cons: [Z].\nOption B — [name]: [one sentence].\n  Pros: [X]. Cons: [Y], [Z].\nGiven [our NFR], I'd go with A because [direct link].\"\n\nHANDLING AMBIGUITY (don't freeze)\n\"I'll assume [X] and call it out explicitly.\nIf that assumption is wrong, we can adjust the design.\"\n\nTIME MANAGEMENT\n• 0–5 min: requirements ONLY (no drawing)\n• 5–25 min: HLD (draw quickly, speak as you draw)\n• 25–40 min: deep dive (worst bottleneck first)\n• 40–45 min: wrap-up + Q&A\n• If running long: \"shall I continue with [X] or move to wrap-up?\"",
@@ -3858,7 +3960,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0e"
     },
     {
       "id": "g3CommRgtHead",
@@ -3879,11 +3982,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3053,
-      "version": 407,
-      "versionNonce": 507768669,
+      "version": 408,
+      "versionNonce": 1757187425,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "STAFF-LEVEL APTITUDE SIGNALS",
@@ -3894,7 +3997,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0f"
     },
     {
       "id": "g3CommRgtBody",
@@ -3915,11 +4019,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3054,
-      "version": 517,
-      "versionNonce": 573045693,
+      "version": 518,
+      "versionNonce": 2032547119,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "8 SIGNALS THAT SEPARATE STAFF FROM SENIOR\n\nSIGNAL 1 — COST QUANTIFICATION\n\"At 1M DAU with 90% cache hit rate, ElastiCache costs ~$800/month\nvs ~$8,000/month hitting the DB directly. Cache pays for itself\nin week one.\" → Attach dollar amounts to architectural decisions\n\nSIGNAL 2 — CONWAY'S LAW AWARENESS\n\"I'd align service boundaries to team boundaries. Team A owns\nService X end-to-end: API, DB schema, deployment, on-call.\"\n→ Mention team topology without being prompted\n\nSIGNAL 3 — OPERATIONAL DESIGN\n\"Two failure modes I'd write runbooks for: [primary DB failover]\nand [cache stampede]. Alerts fire on SLO burn rate — not raw error\ncount — so we page on actual customer impact, not noise.\"\n→ Design for day-2 operations, not just happy path\n\nSIGNAL 4 — SECURITY WITHOUT BEING ASKED\n\"DBs in private subnets — no public route. Only the service tier\ncan reach them via SG rule. Secrets in Secrets Manager, rotated\nweekly. mTLS between services — no implicit internal trust.\"\n→ Mention security proactively as an architectural default\n\nSIGNAL 5 — PHASED ROADMAP\n\"Phase 1 (10K users): monolith + single DB.\nPhase 2 (100K): add read replicas + Redis cache.\nPhase 3 (1M): evaluate sharding or DynamoDB only after measuring\nactual access patterns.\" → Think in milestones, not final states\n\nSIGNAL 6 — DATA-DRIVEN THRESHOLDS\n\"Cassandra vs PostgreSQL depends on write:read ratio.\nIf writes exceed 30% of traffic, Cassandra's LSM-tree wins.\nBelow that, Postgres with read replicas covers us.\"\n→ Use specific thresholds, not vague \"it depends\"\n\nSIGNAL 7 — FAILURE FIRST THINKING\n\"What happens when the cache goes down? Thundering herd.\nMitigation: probabilistic early expiry + circuit breaker caps\nDB at 80% capacity. Remaining 20% get 503 + Retry-After\n— degraded but not down.\" → Walk failure modes unprompted\n\nSIGNAL 8 — BUILD VS BUY JUDGMENT\n\"I could build the rate limiter with Redis + Lua, but I'd start\nwith Kong's rate-limit plugin or AWS WAF. Rate limiting is not\na differentiating capability — buy first.\"\n→ Know when NOT to build custom solutions\n\nCOMMON MISTAKES TO AVOID\n✗ Drawing before clarifying requirements\n✗ Picking tech \"because it's popular / I've used it\"\n✗ Single point of failure with no mitigation\n✗ Consistency everywhere (unnecessary cost)\n✗ Not drawing anything (interviewers need visual anchor)\n✗ Asking too many questions before designing\n✗ Over-engineering for scale not in the NFRs\n✗ Ignoring security until the very end\n✗ No mention of monitoring or observability\n✗ Treating interview as a quiz, not a conversation",
@@ -3930,7 +4034,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0g"
     },
     {
       "id": "g3TitleSecD01",
@@ -3951,11 +4056,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3055,
-      "version": 494,
-      "versionNonce": 982219805,
+      "version": 495,
+      "versionNonce": 996555073,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "TECHNOLOGY SELECTION REFERENCE",
@@ -3966,7 +4071,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0h"
     },
     {
       "id": "g3TechLeftBdy",
@@ -3987,11 +4093,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3056,
-      "version": 539,
-      "versionNonce": 257945725,
+      "version": 540,
+      "versionNonce": 1076213583,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "API STYLE — when to choose\n• REST: public APIs, CRUD, HTTP caching, browser clients\n• gRPC: internal microservices, high-perf, streaming, codegen\n• GraphQL: mobile-first, multiple client types, client-driven queries\n• WebSocket: bidirectional real-time (chat, live feeds, games)\n• SSE: server→client streaming (notifications, dashboards)\n\nDATABASE SELECTION FRAMEWORK\nStep 1 — Access pattern?\n  • Simple key lookups → Redis / DynamoDB\n  • Relational joins, ACID → PostgreSQL / Aurora\n  • Full-text search → Elasticsearch\n  • Time-series → InfluxDB / TimescaleDB\n  • Graph traversal → Neo4j\n  • Write-heavy time-series, no JOINs → Cassandra\nStep 2 — Write:read ratio?\n  • Read-heavy (>10:1 R:W) → add cache + read replicas\n  • Write-heavy (>10:1 W:R) → LSM-tree DB (Cassandra)\n  • Balanced → B-tree DB with read replicas\nStep 3 — Consistency requirement?\n  • Strong ACID → SQL\n  • Eventual, multi-region → Cassandra / DynamoDB\nStep 4 — Scale target?\n  • <10M records, <10K RPS → any SQL DB works fine\n  • 10M–1B records → sharding or managed (Aurora, DynamoDB)\n  • >1B records → Cassandra, Bigtable, or sharded SQL\n\nCOMPUTE SELECTION\n• EC2/VM: full control, stateful, GPU, predictable cost\n• ECS + Fargate: managed containers, AWS native\n• Kubernetes: max portability, complex, large platform teams\n• Lambda: event-driven, zero ops, 15min max, cold starts\n• App Runner: simple web apps, low-ops teams",
@@ -4002,7 +4108,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0i"
     },
     {
       "id": "g3TechRgtBdy1",
@@ -4023,11 +4130,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 3057,
-      "version": 543,
-      "versionNonce": 1315363037,
+      "version": 544,
+      "versionNonce": 128936225,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "SCALING PROGRESSION (do in order)\n1. Index optimization (EXPLAIN ANALYZE, free)\n2. Query optimization (JOIN instead of N+1)\n3. Connection pooling (PgBouncer/ProxySQL)\n4. Caching layer (Redis, target 80%+ hit rate)\n5. Read replicas (route 80% of reads)\n6. Vertical scaling (larger instance, simpler)\n7. Sharding (last resort; highest complexity cost)\n8. DB type change (if access pattern fundamentally different)\n\nFAILURE PATTERNS & MITIGATIONS\nThundering herd:\n  → Probabilistic early expiry + request coalescing\nSplit-brain (two primaries after partition):\n  → Quorum writes (majority must ack) + fencing tokens\nCascading failure:\n  → Timeout + circuit breaker + bulkhead\nHot partition (write hotspot):\n  → Random suffix on partition key + write sharding\nSlow consumer (queue lag growing):\n  → Scale consumers (up to partition count) + DLQ\nRetry storm:\n  → Exponential backoff + full jitter + max deadline\n\nDISASTER RECOVERY\n• RPO: max data loss → dictates backup frequency\n• RTO: max downtime → dictates failover automation\n• Backup/Restore: hours RTO, cheapest\n• Pilot Light: minutes RTO, minimal standby\n• Warm Standby: ~5min RTO, full-size standby\n• Active-Active: <1min RTO, highest cost\n\nGLOBAL DISTRIBUTION\n• Active-Active: all regions write, conflict resolution required\n• Active-Passive: one primary, failover to secondary (simpler)\n• Geo-routing: Route53 latency routing → nearest region\n• Data residency: GDPR → EU users must stay in EU region",
@@ -4038,7 +4145,8 @@
       "verticalAlign": "top",
       "containerId": null,
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0j"
     },
     {
       "id": "1vS0iVb_pQ7f5ZF0z-0Xi",
@@ -4061,8 +4169,8 @@
         "type": 3
       },
       "seed": 192833269,
-      "version": 431,
-      "versionNonce": 1899083069,
+      "version": 432,
+      "versionNonce": 472905071,
       "isDeleted": false,
       "boundElements": [
         {
@@ -4070,9 +4178,10 @@
           "id": "qil-Ef4vd4IYq20XXwjFs"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0k"
     },
     {
       "id": "qil-Ef4vd4IYq20XXwjFs",
@@ -4093,11 +4202,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 90161237,
-      "version": 451,
-      "versionNonce": 1126303133,
+      "version": 452,
+      "versionNonce": 1996987649,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Client",
@@ -4108,7 +4217,8 @@
       "verticalAlign": "middle",
       "containerId": "1vS0iVb_pQ7f5ZF0z-0Xi",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0l"
     },
     {
       "id": "AAIbmGnzTH5MFYh8M4sSb",
@@ -4131,8 +4241,8 @@
         "type": 3
       },
       "seed": 51052123,
-      "version": 560,
-      "versionNonce": 661211645,
+      "version": 561,
+      "versionNonce": 344813455,
       "isDeleted": false,
       "boundElements": [
         {
@@ -4140,9 +4250,10 @@
           "id": "ba77nNzefgKVUS6irdIxb"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0m"
     },
     {
       "id": "ba77nNzefgKVUS6irdIxb",
@@ -4163,11 +4274,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 57703163,
-      "version": 583,
-      "versionNonce": 520684125,
+      "version": 584,
+      "versionNonce": 1492014305,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "API",
@@ -4178,7 +4289,8 @@
       "verticalAlign": "middle",
       "containerId": "AAIbmGnzTH5MFYh8M4sSb",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0n"
     },
     {
       "id": "ezAy0keIXE1X_At_GlsK7",
@@ -4201,8 +4313,8 @@
         "type": 3
       },
       "seed": 909960469,
-      "version": 613,
-      "versionNonce": 248688317,
+      "version": 614,
+      "versionNonce": 863413679,
       "isDeleted": false,
       "boundElements": [
         {
@@ -4210,9 +4322,10 @@
           "id": "lPWJs-0eFubE9PLnkXmU8"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0o"
     },
     {
       "id": "lPWJs-0eFubE9PLnkXmU8",
@@ -4233,11 +4346,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 1810463349,
-      "version": 643,
-      "versionNonce": 1164431133,
+      "version": 644,
+      "versionNonce": 1626542273,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Service",
@@ -4248,7 +4361,8 @@
       "verticalAlign": "middle",
       "containerId": "ezAy0keIXE1X_At_GlsK7",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0p"
     },
     {
       "id": "RX2Yl3_9vz1ccnqLgVB3Z",
@@ -4271,8 +4385,8 @@
         "type": 3
       },
       "seed": 162698517,
-      "version": 675,
-      "versionNonce": 1094312829,
+      "version": 676,
+      "versionNonce": 672405455,
       "isDeleted": false,
       "boundElements": [
         {
@@ -4280,9 +4394,10 @@
           "id": "WedvMLAs1o5UCkw3HVAeW"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0q"
     },
     {
       "id": "WedvMLAs1o5UCkw3HVAeW",
@@ -4303,11 +4418,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 623454837,
-      "version": 713,
-      "versionNonce": 915041245,
+      "version": 714,
+      "versionNonce": 615862433,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Database",
@@ -4318,7 +4433,8 @@
       "verticalAlign": "middle",
       "containerId": "RX2Yl3_9vz1ccnqLgVB3Z",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0r"
     },
     {
       "id": "31GIET1V_DQtvkgKdC9vo",
@@ -4341,8 +4457,8 @@
         "type": 3
       },
       "seed": 1500033365,
-      "version": 755,
-      "versionNonce": 1433069629,
+      "version": 756,
+      "versionNonce": 679364079,
       "isDeleted": false,
       "boundElements": [
         {
@@ -4350,9 +4466,10 @@
           "id": "8LmWM2XvjxiZqL8UsN6R9"
         }
       ],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0s"
     },
     {
       "id": "8LmWM2XvjxiZqL8UsN6R9",
@@ -4373,11 +4490,11 @@
       "frameId": "HnMfl3zUaLJez2eI6LWk",
       "roundness": null,
       "seed": 139574965,
-      "version": 825,
-      "versionNonce": 1337776285,
+      "version": 826,
+      "versionNonce": 1508152449,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Ai/MLModel",
@@ -4388,7 +4505,8 @@
       "verticalAlign": "middle",
       "containerId": "31GIET1V_DQtvkgKdC9vo",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0t"
     },
     {
       "id": "IwdEzhSQWnbFjSsFCoGve",
@@ -4411,11 +4529,11 @@
         "type": 2
       },
       "seed": 522822939,
-      "version": 426,
-      "versionNonce": 523353341,
+      "version": 427,
+      "versionNonce": 331198479,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -4432,7 +4550,8 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": null
+      "endArrowhead": null,
+      "index": "b0u"
     },
     {
       "id": "jajN1V3WIcsB_Ww1alRt7",
@@ -4455,11 +4574,11 @@
         "type": 2
       },
       "seed": 1059765307,
-      "version": 422,
-      "versionNonce": 189470045,
+      "version": 423,
+      "versionNonce": 1413504097,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -4476,7 +4595,8 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": null
+      "endArrowhead": null,
+      "index": "b0v"
     },
     {
       "id": "WZQaSsD-KqBT1adFSOlVn",
@@ -4499,11 +4619,11 @@
         "type": 2
       },
       "seed": 1775498587,
-      "version": 408,
-      "versionNonce": 1868194237,
+      "version": 409,
+      "versionNonce": 1405802031,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -4520,7 +4640,8 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": null
+      "endArrowhead": null,
+      "index": "b0w"
     },
     {
       "id": "bKtVYCjprGx7hYp3G8EMn",
@@ -4543,11 +4664,11 @@
         "type": 2
       },
       "seed": 1258592187,
-      "version": 394,
-      "versionNonce": 1082204701,
+      "version": 395,
+      "versionNonce": 1134045249,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783837038205,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "points": [
@@ -4564,7 +4685,8 @@
       "startBinding": null,
       "endBinding": null,
       "startArrowhead": null,
-      "endArrowhead": null
+      "endArrowhead": null,
+      "index": "b0x"
     },
     {
       "id": "qx7xfDqgqzxMj_0Ed580X",
@@ -4586,13 +4708,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1075094339,
-      "version": 2392,
-      "versionNonce": 851962403,
+      "version": 2393,
+      "versionNonce": 2140026959,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783923577671,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b0y"
     },
     {
       "id": "5wv7PuhFCts4-4viCM_G_",
@@ -4613,11 +4736,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 1319326125,
-      "version": 434,
-      "versionNonce": 590130627,
+      "version": 435,
+      "versionNonce": 835418145,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783923577671,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "Fundamentals\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/fundamentals-of-software/9781098143220/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/learning-python-6th/9781098171292/\n\n\nlower level\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/high-performance-python/9781492055013/ix01.html\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/python-concurrency-with/9781617298660/\n\noptional\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/robust-python/9781098100650/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/pythonic-programming/9781680509199/\n\ndesign patterns\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/architecture-patterns-with/9781492052197/\n\n\nsystem design\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/designing-data-intensive-applications/9781098119058/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/designing-distributed-systems/9781098156343/\n\n\nlearning kubernetes\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/kubernetes-up-and/9781098110192/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/production-kubernetes/9781492092292/\n\nkubernetes lower level\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/programming-kubernetes/9781492047094/\n\n\nkubernetes design patterns\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/kubernetes-patterns-2nd/9781098131678/\n",
@@ -4628,7 +4751,8 @@
       "containerId": null,
       "originalText": "Fundamentals\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/fundamentals-of-software/9781098143220/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/learning-python-6th/9781098171292/\n\n\nlower level\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/high-performance-python/9781492055013/ix01.html\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/python-concurrency-with/9781617298660/\n\noptional\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/robust-python/9781098100650/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/pythonic-programming/9781680509199/\n\ndesign patterns\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/architecture-patterns-with/9781492052197/\n\n\nsystem design\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/designing-data-intensive-applications/9781098119058/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/designing-distributed-systems/9781098156343/\n\n\nlearning kubernetes\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/kubernetes-up-and/9781098110192/\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/production-kubernetes/9781492092292/\n\nkubernetes lower level\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/programming-kubernetes/9781492047094/\n\n\nkubernetes design patterns\nhttps://learning-oreilly-com.opl.idm.oclc.org/library/view/kubernetes-patterns-2nd/9781098131678/\n",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b0z"
     },
     {
       "id": "1S5VJUL4cmQPZZgOQUR3X",
@@ -4649,11 +4773,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 225069213,
-      "version": 87,
-      "versionNonce": 1973782845,
+      "version": 88,
+      "versionNonce": 1021335151,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783965700768,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -4662,7 +4786,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "b10"
     },
     {
       "id": "662iWbtvb6ixnYyVB5gvC",
@@ -4683,11 +4808,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 402136573,
-      "version": 215,
-      "versionNonce": 566040819,
+      "version": 216,
+      "versionNonce": 1086966785,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783965723067,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -4696,7 +4821,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "b11"
     },
     {
       "id": "89ziMwa1qZfpJjHXDqXFo",
@@ -4717,11 +4843,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 822680893,
-      "version": 208,
-      "versionNonce": 810102493,
+      "version": 209,
+      "versionNonce": 1653190799,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783965983444,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "AWS GLUE (CPU Spark) -> SAGEMAKER (GPU/TPU) -> Cloudwatch+Prometheus+Grafana \n\nSagemaker abstracts on EC2\nECR to register containers on EKS (AWS Kubernetes) for multiple servers, ECS (AWS docker) for multiple containers on 1 server",
@@ -4732,7 +4858,8 @@
       "containerId": null,
       "originalText": "AWS GLUE (CPU Spark) -> SAGEMAKER (GPU/TPU) -> Cloudwatch+Prometheus+Grafana \n\nSagemaker abstracts on EC2\nECR to register containers on EKS (AWS Kubernetes) for multiple servers, ECS (AWS docker) for multiple containers on 1 server",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b12"
     },
     {
       "id": "ZY0oNlWrEDKcNCmRm-P6H",
@@ -4753,11 +4880,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 176112829,
-      "version": 79,
-      "versionNonce": 695524861,
+      "version": 80,
+      "versionNonce": 680698849,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783968127511,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -4766,7 +4893,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "b13"
     },
     {
       "id": "7bgEEVh_P4Nxt1GvF4xPs",
@@ -4787,11 +4915,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 78373661,
-      "version": 23,
-      "versionNonce": 1170427741,
+      "version": 24,
+      "versionNonce": 1514325679,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783968582504,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -4800,7 +4928,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "b14"
     },
     {
       "id": "RY_x2dfyZc1qwVvODIreF",
@@ -4821,11 +4950,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 2089697331,
-      "version": 68,
-      "versionNonce": 1798279443,
+      "version": 69,
+      "versionNonce": 1966440385,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783968587204,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -4834,7 +4963,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "b15"
     },
     {
       "id": "UuYzPpKi4UWowFDPDooyu",
@@ -4855,11 +4985,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 1038416477,
-      "version": 22,
-      "versionNonce": 711280189,
+      "version": 23,
+      "versionNonce": 1119099087,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783968606287,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -4868,7 +4998,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "b16"
     },
     {
       "id": "Z2FQIQevc8iiPp_Z_Y1aU",
@@ -4889,11 +5020,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 1524932051,
-      "version": 361,
-      "versionNonce": 1592528255,
+      "version": 362,
+      "versionNonce": 80863137,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1783988159322,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "S3 (data lake) --AWS GLUE--> SAGEMAKER (EC2 with GPU/TPU compute) with EKS for distributive cluster compute -> Cloudwatch+Prometheus+Grafana\n[data storage]--[ETL]--[Compute]--[Logging and Monitoring]\n\nimage -> container -> pods -> cluster",
@@ -4904,7 +5035,8 @@
       "containerId": null,
       "originalText": "S3 (data lake) --AWS GLUE--> SAGEMAKER (EC2 with GPU/TPU compute) with EKS for distributive cluster compute -> Cloudwatch+Prometheus+Grafana\n[data storage]--[ETL]--[Compute]--[Logging and Monitoring]\n\nimage -> container -> pods -> cluster",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b17"
     },
     {
       "id": "Css6vPaloud8WkTJlDebc",
@@ -4929,11 +5061,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1279459121,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1366697711,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b18"
     },
     {
       "id": "ipF9w0DcrCwCiCtNO5K1o",
@@ -4962,15 +5095,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1288996959,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1167541121,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "LAYER 4: CONSUMPTION & TRACKING (Metadata / Registry)",
       "autoResize": true,
-      "lineHeight": 1.5625
+      "lineHeight": 1.5625,
+      "index": "b19"
     },
     {
       "id": "dgnw8YTCO2FYwmsS4Pkfg",
@@ -4995,11 +5129,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 2128474385,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1964077327,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b1A"
     },
     {
       "id": "XRBxh4GBuw-e_sADTjYzw",
@@ -5028,15 +5163,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1526867071,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 868559713,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "MLflow / Weights & Biases\n- Role: Experiment Tracking & Model Registry\n- DOES NOT run clusters. It just logs metrics & models.",
       "autoResize": true,
-      "lineHeight": 1.4285714285714286
+      "lineHeight": 1.4285714285714286,
+      "index": "b1B"
     },
     {
       "id": "RTm91MHBez0hcRV_-qRyE",
@@ -5061,11 +5197,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1761584881,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 922646319,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b1C"
     },
     {
       "id": "kj6HHhwlNzy3qfeGwgR_J",
@@ -5094,15 +5231,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1701264543,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 397088577,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "KServe / Triton / Seldon Core\n- Role: Model Serving / Deployment\n- Exposes your finished model as a live API endpoint.",
       "autoResize": true,
-      "lineHeight": 1.4285714285714286
+      "lineHeight": 1.4285714285714286,
+      "index": "b1D"
     },
     {
       "id": "QhlwTpwXYaJUkMtKOH35P",
@@ -5127,11 +5265,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1966055633,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1571141967,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b1E"
     },
     {
       "id": "GaxYl8SCPeZBb4Dy-OAGI",
@@ -5160,15 +5299,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1874088127,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 61376289,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "LAYER 3: WORKFLOW ORCHESTRATION (DAG Engines)",
       "autoResize": true,
-      "lineHeight": 1.5625
+      "lineHeight": 1.5625,
+      "index": "b1F"
     },
     {
       "id": "3PHLOb_bRurjDoBDUPvV6",
@@ -5193,11 +5333,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1359306417,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1314895727,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b1G"
     },
     {
       "id": "beOc3FxA_trLtVNOGuQiN",
@@ -5226,15 +5367,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 864674015,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 304937729,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "Apache Airflow / Prefect\n- Type: General Data Orchestrator\n- Code: Written in Python\n- Function: Great for heavy ETL data engineering tasks. Spawns tasks as temporary pods but lacks deep native ML metadata tracking.",
       "autoResize": true,
-      "lineHeight": 2.5
+      "lineHeight": 2.5,
+      "index": "b1H"
     },
     {
       "id": "kN23hHptQlx4J7JOU9uhy",
@@ -5259,11 +5401,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 187195537,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 796193167,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b1I"
     },
     {
       "id": "T7Q2XzMN2mkt_t5FroVLp",
@@ -5292,15 +5435,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1652059391,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1672999649,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "Kubeflow Pipelines / Flyte\n- Type: Kubernetes-Native MLOps\n- Code: Strongly-typed Python\n- Function: Designed purely for ML. Caches individual task steps natively on K8s. Passes massive dataset data references effortlessly between pods.",
       "autoResize": true,
-      "lineHeight": 2.5
+      "lineHeight": 2.5,
+      "index": "b1J"
     },
     {
       "id": "1Y-npfnW4rOTpEZk0FkhB",
@@ -5325,11 +5469,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1901078129,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1243473839,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b1K"
     },
     {
       "id": "biKBSqX9Bt-CoUAy89Dpf",
@@ -5358,15 +5503,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 671118623,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 1557720769,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "Argo Workflows\n- Type: Core K8s Engine\n- Code: Written in YAML Config\n- Function: The structural engine under the hood. Kubeflow compiles Python code into Argo YAML to execute it natively.",
       "autoResize": true,
-      "lineHeight": 2.5
+      "lineHeight": 2.5,
+      "index": "b1L"
     },
     {
       "id": "0O-SfT8YNGEtvU33hgTAB",
@@ -5391,11 +5537,12 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 776220753,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 746789327,
       "isDeleted": false,
-      "link": null
+      "link": null,
+      "index": "b1M"
     },
     {
       "id": "mrZBcCxklD8knkf_TFEBz",
@@ -5424,15 +5571,16 @@
       "groupIds": [],
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "boundElements": [],
-      "updated": 1784047748186,
-      "version": 6,
-      "versionNonce": 1804761407,
+      "updated": 1787092948138,
+      "version": 7,
+      "versionNonce": 607088289,
       "isDeleted": false,
       "link": null,
       "containerId": null,
       "originalText": "LAYER 2: COMPUTE / INFRASTRUCTURE (Kubernetes)",
       "autoResize": true,
-      "lineHeight": 1.5625
+      "lineHeight": 1.5625,
+      "index": "b1N"
     },
     {
       "id": "lBd5-S5y0J-Gau1vgZz8F",
@@ -5453,11 +5601,11 @@
       "frameId": "qx7xfDqgqzxMj_0Ed580X",
       "roundness": null,
       "seed": 569994655,
-      "version": 103,
-      "versionNonce": 1992082143,
+      "version": 104,
+      "versionNonce": 196937711,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784047764565,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "status": "pending",
@@ -5466,7 +5614,8 @@
         1,
         1
       ],
-      "crop": null
+      "crop": null,
+      "index": "b1O"
     },
     {
       "id": "iaNUAlE-osGJhUxIAm55Y",
@@ -5488,13 +5637,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1446491255,
-      "version": 1,
-      "versionNonce": 1110503164,
+      "version": 2,
+      "versionNonce": 1617621633,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655820151,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b1P"
     },
     {
       "id": "hnBgkFzHmmUGgEO48L_O9",
@@ -5515,11 +5665,11 @@
       "frameId": "iaNUAlE-osGJhUxIAm55Y",
       "roundness": null,
       "seed": 573424492,
-      "version": 1,
-      "versionNonce": 291794146,
+      "version": 2,
+      "versionNonce": 1708405263,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655820151,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "- Step 2 — High-Level Design: narrate a simple end-to-end flow first (client → API → DB), then layer in components only as the stated requirements demand — don't open with a diagram full of boxes you can't justify.\n- API Design: define the contract before the internals — endpoint/RPC signatures, request/response shapes, idempotency keys on writes, pagination strategy. State REST vs gRPC vs GraphQL with a one-line reason, not a lecture.\n- Step 3 — Deep Dive: let the interviewer steer. Offer 2-3 candidate topics ('I could go deeper on data model, consistency, or the write path — which is most useful?') rather than picking unilaterally.\n- Deep Dive: every tradeoff needs a because — 'I'd pick eventual consistency because read-after-write isn't a hard requirement here' beats naming CAP theorem in isolation.\n- Step 4 — Wrap Up: proactively name what you'd cut for time — bottlenecks, single points of failure, monitoring/alerting, cost. Signals you know the design is time-boxed, not 'done.'\n- Wrap Up: summarize in under 60 seconds — requirements satisfied, one open risk, one next step you'd take with more time.\n- Anti-pattern: designing for infinite scale on day one. Size the system to the actual load estimated in step 1, and state the explicit trigger for the next scaling step.\n- Failure-mode reasoning: for every dependency added, ask 'what happens when this is slow, down, or returns garbage?' — an un-timed-out downstream call is the most common cascading-failure bug, in interviews and in prod.\n- Anti-pattern: synchronous chains of more than 2-3 services per user request. Prefer async/queue-based decoupling once a call chain risks compounding p99 latency (multiply per-hop p99s, don't just add them).\n- Split-brain and dual-writes: never assume two systems (cache + DB, or two DBs) stay in sync without an explicit reconciliation or write-ordering strategy — call this out even if you don't solve it live.\n- Retries amplify load under failure ('retry storms'). Always pair retries with exponential backoff + jitter, a max-attempt ceiling, and idempotent operations downstream.\n- Senior vs. staff: senior gets the design correct; staff also quantifies cost/complexity — 'this saves 40ms p99 but adds on-call burden and $X/month for marginal benefit at our scale' — said unprompted.\n- Staff-level signal: naming unknown-unknowns explicitly — 'I'm assuming writes are read-heavy 10:1; if that's wrong the caching strategy changes' — instead of presenting assumptions as facts.\n- Staff-level signal: propose the boring, operationally-proven solution first (managed Postgres before a bespoke sharded KV store), and only reach for novelty when a specific requirement demands it.\n- Senior vs. staff on ambiguity: senior clarifies once at the start; staff keeps re-scoping throughout, flagging when an earlier answer would change if a stated assumption turns out false.\n- Practice pacing against a clock (5/20/15/5). Running out of time mid deep-dive is the single most common way a technically strong candidate is scored down.",
@@ -5530,7 +5680,8 @@
       "containerId": null,
       "originalText": "- Step 2 — High-Level Design: narrate a simple end-to-end flow first (client → API → DB), then layer in components only as the stated requirements demand — don't open with a diagram full of boxes you can't justify.\n- API Design: define the contract before the internals — endpoint/RPC signatures, request/response shapes, idempotency keys on writes, pagination strategy. State REST vs gRPC vs GraphQL with a one-line reason, not a lecture.\n- Step 3 — Deep Dive: let the interviewer steer. Offer 2-3 candidate topics ('I could go deeper on data model, consistency, or the write path — which is most useful?') rather than picking unilaterally.\n- Deep Dive: every tradeoff needs a because — 'I'd pick eventual consistency because read-after-write isn't a hard requirement here' beats naming CAP theorem in isolation.\n- Step 4 — Wrap Up: proactively name what you'd cut for time — bottlenecks, single points of failure, monitoring/alerting, cost. Signals you know the design is time-boxed, not 'done.'\n- Wrap Up: summarize in under 60 seconds — requirements satisfied, one open risk, one next step you'd take with more time.\n- Anti-pattern: designing for infinite scale on day one. Size the system to the actual load estimated in step 1, and state the explicit trigger for the next scaling step.\n- Failure-mode reasoning: for every dependency added, ask 'what happens when this is slow, down, or returns garbage?' — an un-timed-out downstream call is the most common cascading-failure bug, in interviews and in prod.\n- Anti-pattern: synchronous chains of more than 2-3 services per user request. Prefer async/queue-based decoupling once a call chain risks compounding p99 latency (multiply per-hop p99s, don't just add them).\n- Split-brain and dual-writes: never assume two systems (cache + DB, or two DBs) stay in sync without an explicit reconciliation or write-ordering strategy — call this out even if you don't solve it live.\n- Retries amplify load under failure ('retry storms'). Always pair retries with exponential backoff + jitter, a max-attempt ceiling, and idempotent operations downstream.\n- Senior vs. staff: senior gets the design correct; staff also quantifies cost/complexity — 'this saves 40ms p99 but adds on-call burden and $X/month for marginal benefit at our scale' — said unprompted.\n- Staff-level signal: naming unknown-unknowns explicitly — 'I'm assuming writes are read-heavy 10:1; if that's wrong the caching strategy changes' — instead of presenting assumptions as facts.\n- Staff-level signal: propose the boring, operationally-proven solution first (managed Postgres before a bespoke sharded KV store), and only reach for novelty when a specific requirement demands it.\n- Senior vs. staff on ambiguity: senior clarifies once at the start; staff keeps re-scoping throughout, flagging when an earlier answer would change if a stated assumption turns out false.\n- Practice pacing against a clock (5/20/15/5). Running out of time mid deep-dive is the single most common way a technically strong candidate is scored down.",
       "autoResize": true,
-      "lineHeight": 1.25
+      "lineHeight": 1.25,
+      "index": "b1Q"
     },
     {
       "id": "MuGew3r05xDzCQ1JLFjvk",
@@ -5552,13 +5703,14 @@
       "frameId": null,
       "roundness": null,
       "seed": 1857360571,
-      "version": 1,
-      "versionNonce": 829963421,
+      "version": 2,
+      "versionNonce": 910883425,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655820151,
+      "updated": 1787092948138,
       "link": null,
-      "locked": false
+      "locked": false,
+      "index": "b1R"
     },
     {
       "id": "9RIRBuzlzpUPhLYSdW-UT",
@@ -5579,11 +5731,11 @@
       "frameId": "MuGew3r05xDzCQ1JLFjvk",
       "roundness": null,
       "seed": 802024672,
-      "version": 1,
-      "versionNonce": 1123793336,
+      "version": 2,
+      "versionNonce": 1673599023,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784655820151,
+      "updated": 1787092948138,
       "link": null,
       "locked": false,
       "text": "- Alex Xu — \"System Design Interview: An Insider's Guide\" (Vol. 1 & 2) — the de facto interview-prep book; complements DDIA's depth with interview framing and pacing.\n- roadmap.sh/system-design — free, actively maintained community roadmap and topic breakdown.\n- donnemartin/system-design-primer (GitHub) — large open-source collection of system design notes, diagrams, and flashcards.\n- AWS Architecture Center (aws.amazon.com/architecture) — reference architectures and the AWS Well-Architected Framework whitepapers for real tradeoff examples.\n- Google Cloud Architecture Center (cloud.google.com/architecture) — official reliability/scalability patterns, similar in spirit to AWS's.\n- Netflix Tech Blog (netflixtechblog.com) — production war-stories on chaos engineering, resilience, and real-world failure modes.\n- \"The Log: What every software engineer should know about real-time data's unifying abstraction\" — Jay Kreps, LinkedIn Engineering blog — canonical explainer underlying Kafka-style architectures.\n- High Scalability (highscalability.com) — long-running blog of real company architecture case studies.",
@@ -5594,10 +5746,1600 @@
       "containerId": null,
       "originalText": "- Alex Xu — \"System Design Interview: An Insider's Guide\" (Vol. 1 & 2) — the de facto interview-prep book; complements DDIA's depth with interview framing and pacing.\n- roadmap.sh/system-design — free, actively maintained community roadmap and topic breakdown.\n- donnemartin/system-design-primer (GitHub) — large open-source collection of system design notes, diagrams, and flashcards.\n- AWS Architecture Center (aws.amazon.com/architecture) — reference architectures and the AWS Well-Architected Framework whitepapers for real tradeoff examples.\n- Google Cloud Architecture Center (cloud.google.com/architecture) — official reliability/scalability patterns, similar in spirit to AWS's.\n- Netflix Tech Blog (netflixtechblog.com) — production war-stories on chaos engineering, resilience, and real-world failure modes.\n- \"The Log: What every software engineer should know about real-time data's unifying abstraction\" — Jay Kreps, LinkedIn Engineering blog — canonical explainer underlying Kafka-style architectures.\n- High Scalability (highscalability.com) — long-running blog of real company architecture case studies.",
       "autoResize": true,
+      "lineHeight": 1.25,
+      "index": "b1S"
+    },
+    {
+      "id": "1Cb1ATPBLiw6sW1-JQIQ3",
+      "type": "rectangle",
+      "x": -4619.661356685675,
+      "y": 5358.582585684235,
+      "width": 3755.1953125,
+      "height": 1554.12109375,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1T",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1548694159,
+      "version": 65,
+      "versionNonce": 1157725665,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787092965986,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "oH6D1hKHgp9eWju7F4v3n",
+      "type": "text",
+      "x": -4002.918033525942,
+      "y": 4845.327358367605,
+      "width": 2327.7705078125,
+      "height": 77.99479166666694,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1V",
+      "roundness": null,
+      "seed": 802208641,
+      "version": 288,
+      "versionNonce": 1718105455,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093079079,
+      "link": null,
+      "locked": false,
+      "text": "$0 architecture -> portfolio of marketable skills -> apply to enterprise scale",
+      "fontSize": 62.395833333333556,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "$0 architecture -> portfolio of marketable skills -> apply to enterprise scale",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "3sZKmCezUrL1vpvUVLuKZ",
+      "type": "text",
+      "x": -4239.4545050451525,
+      "y": 4981.648792374247,
+      "width": 2937.44287109375,
+      "height": 323.4558780077973,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1W",
+      "roundness": null,
+      "seed": 1339943137,
+      "version": 384,
+      "versionNonce": 960788431,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093179604,
+      "link": null,
+      "locked": false,
+      "text": "marketable skills: \n    agentic cli tools (codex, claude code, open code)\n    integrating open source with existing (internal) infrastructure\n    what business problem are you solving, have solved, and the impact/result/lessons learned",
+      "fontSize": 64.69117560155946,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "marketable skills: \n    agentic cli tools (codex, claude code, open code)\n    integrating open source with existing (internal) infrastructure\n    what business problem are you solving, have solved, and the impact/result/lessons learned",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "kCUuG4fwOfBral7wlnADG",
+      "type": "text",
+      "x": -2115.6100427800593,
+      "y": 4933.993157787713,
+      "width": 1010.1439278949983,
+      "height": 78.02342238708493,
+      "angle": 0,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1X",
+      "roundness": null,
+      "seed": 1921108033,
+      "version": 297,
+      "versionNonce": 166639247,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093208012,
+      "link": null,
+      "locked": false,
+      "text": "demonstrating applied tech stack",
+      "fontSize": 62.418737909667975,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "demonstrating applied tech stack",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "6iXaN2OEELDV-XkAgMI0r",
+      "type": "rectangle",
+      "x": -3350.5143756859006,
+      "y": 5490.668309286927,
+      "width": 730.5529201120631,
+      "height": 361.3989350591611,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1Y",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1082113327,
+      "version": 325,
+      "versionNonce": 741845327,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "F_tF1ZbdHFPUOvjn-DyQ_",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1787093961713,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "v_LpS66ubMFp4xhoATCUs",
+      "type": "text",
+      "x": -3036.398710398027,
+      "y": 5497.557773794077,
+      "width": 234.1198272705078,
+      "height": 125,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1Z",
+      "roundness": null,
+      "seed": 874885839,
+      "version": 102,
+      "versionNonce": 1596874529,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093342771,
+      "link": null,
+      "locked": false,
+      "text": "Vercel\n(AWS)\n\nTypescript (HTML, CSS)\nPython (SQL, C/C++) ",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Vercel\n(AWS)\n\nTypescript (HTML, CSS)\nPython (SQL, C/C++) ",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "7XUdeU59dol96er-U0gUO",
+      "type": "rectangle",
+      "x": -3307.3804000351015,
+      "y": 5661.182659907057,
+      "width": 230.52129434487654,
+      "height": 93.28369298943109,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1a",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1572310959,
+      "version": 113,
+      "versionNonce": 772788961,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "qjYw_trJvl1mHDspYJCUE",
+          "type": "arrow"
+        },
+        {
+          "id": "sSQLkMhlAtJQXoFa0bbTD",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1787093997265,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "kzmfkvZDY0_i356Pie054",
+      "type": "text",
+      "x": -3258.1486440110393,
+      "y": 5666.798199668321,
+      "width": 145.71990966796875,
+      "height": 50,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1b",
+      "roundness": null,
+      "seed": 219690159,
+      "version": 112,
+      "versionNonce": 1823322881,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "QxLkIu-mvGJ1Q53iLXHoH",
+          "type": "arrow"
+        },
+        {
+          "id": "qJx2GyCsZ1GJbBGxTOrO2",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1787093409214,
+      "link": null,
+      "locked": false,
+      "text": "google gemini\n(text-to-text)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "google gemini\n(text-to-text)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "QxLkIu-mvGJ1Q53iLXHoH",
+      "type": "arrow",
+      "x": -3202.856074603226,
+      "y": 5731.1300409692185,
+      "width": 4.547473508864641e-13,
+      "height": 65.77625490609171,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1c",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 28600833,
+      "version": 65,
+      "versionNonce": 1163851407,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093407776,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          4.547473508864641e-13,
+          65.77625490609171
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "kzmfkvZDY0_i356Pie054",
+        "focus": 0.24111167054933702,
+        "gap": 14.331841300897395
+      },
+      "endBinding": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "qJx2GyCsZ1GJbBGxTOrO2",
+      "type": "arrow",
+      "x": -3107.8401712581103,
+      "y": 5727.52118620514,
+      "width": 72.04840530653928,
+      "height": 41.597166198414925,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1d",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 147401967,
+      "version": 39,
+      "versionNonce": 232800033,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093409214,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          72.04840530653928,
+          41.597166198414925
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "kzmfkvZDY0_i356Pie054",
+        "focus": -0.13407649786722708,
+        "gap": 11.66350511010569
+      },
+      "endBinding": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "QQ_ZhHcgApzpd0FWuYsry",
+      "type": "text",
+      "x": -3305.022631053518,
+      "y": 5808.586305550942,
+      "width": 242.8998260498047,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1e",
+      "roundness": null,
+      "seed": 1489708705,
+      "version": 59,
+      "versionNonce": 582273807,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1787093437138,
+      "link": null,
+      "locked": false,
+      "text": "Portfolio Resume R/CAG",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Portfolio Resume R/CAG",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "d0g8zqBuOGPsa7IMJpV3Z",
+      "type": "text",
+      "x": -3026.6409390663457,
+      "y": 5777.136843172765,
+      "width": 101.5599365234375,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1f",
+      "roundness": null,
+      "seed": 1923580257,
+      "version": 17,
+      "versionNonce": 1281088161,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1787093427069,
+      "link": null,
+      "locked": false,
+      "text": "Job Board",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Job Board",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "FHtwmNGaRNjYGm81eviIF",
+      "type": "rectangle",
+      "x": -2580.6761797745894,
+      "y": 5488.1921883894975,
+      "width": 730.5529201120631,
+      "height": 361.3989350591611,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1h",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1947741729,
+      "version": 392,
+      "versionNonce": 772733103,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1787093490655,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "-giAFapyv1Tq--1b5N5bi",
+      "type": "text",
+      "x": -2262.24417248886,
+      "y": 5497.678803926661,
+      "width": 113.39988708496094,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "dotted",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1i",
+      "roundness": null,
+      "seed": 1857794433,
+      "version": 42,
+      "versionNonce": 1399795791,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093496496,
+      "link": null,
+      "locked": false,
+      "text": "Huggingface",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Huggingface",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "SLD8ZELIlY4lo8B3ISV00",
+      "type": "rectangle",
+      "x": -2548.9131923257232,
+      "y": 5615.993147920054,
+      "width": 404.44843331342537,
+      "height": 197.6112233305585,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1j",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1102847727,
+      "version": 225,
+      "versionNonce": 2095767393,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "SZsti5bXEkP4QXQOtqr51",
+          "type": "arrow"
+        },
+        {
+          "id": "qjYw_trJvl1mHDspYJCUE",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1787093976561,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "ttWArMYM8Z8dIyDPKuaRj",
+      "type": "text",
+      "x": -2509.8629509245975,
+      "y": 5626.088016998162,
+      "width": 297.1997985839844,
+      "height": 50,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "dotted",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1k",
+      "roundness": null,
+      "seed": 1126955407,
+      "version": 96,
+      "versionNonce": 972699311,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093704789,
+      "link": null,
+      "locked": false,
+      "text": "quantized small language model\nCPU",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "quantized small language model\nCPU",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "j3WZsrs55IzN_nw9rRB4A",
+      "type": "rectangle",
+      "x": -2430.7844686053427,
+      "y": 5677.764983447187,
+      "width": 277.37482628563384,
+      "height": 126.24884803820532,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "dotted",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1l",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 107316111,
+      "version": 99,
+      "versionNonce": 1380411521,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "N0VDZERg4KSss3v0WebTF"
+        }
+      ],
+      "updated": 1787093648330,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "N0VDZERg4KSss3v0WebTF",
+      "type": "text",
+      "x": -2376.586999920534,
+      "y": 5715.889407466289,
+      "width": 168.97988891601562,
+      "height": 50,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1lV",
+      "roundness": null,
+      "seed": 1227525423,
+      "version": 105,
+      "versionNonce": 1630056545,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093648330,
+      "link": null,
+      "locked": false,
+      "text": "NVIDIA Blackwell\n(large, xl)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "j3WZsrs55IzN_nw9rRB4A",
+      "originalText": "NVIDIA Blackwell\n(large, xl)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "f7p4Zc6hIgt1Hjh3INgkC",
+      "type": "text",
+      "x": -2336.0301107092682,
+      "y": 5685.903607777234,
+      "width": 91.77995300292969,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "dotted",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1m",
+      "roundness": null,
+      "seed": 1434233967,
+      "version": 9,
+      "versionNonce": 1690701167,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093518708,
+      "link": null,
+      "locked": false,
+      "text": "ZeroGPU",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "ZeroGPU",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "qVbUe7Rg_QxCwKb7fs86s",
+      "type": "rectangle",
+      "x": -1819.5363770737442,
+      "y": 5483.563332943579,
+      "width": 730.5529201120631,
+      "height": 361.3989350591611,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1n",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1581330383,
+      "version": 519,
+      "versionNonce": 765028097,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1787093581947,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "okF4SBa4XwZvpHEhf2IN4",
+      "type": "text",
+      "x": -1539.8308993522319,
+      "y": 5508.862596307328,
+      "width": 125.63993835449219,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "dotted",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1o",
+      "roundness": null,
+      "seed": 945819361,
+      "version": 24,
+      "versionNonce": 226763777,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093531152,
+      "link": null,
+      "locked": false,
+      "text": "Google Colab",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Google Colab",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "AdyJo9QRC14CkUc9Kgb-7",
+      "type": "rectangle",
+      "x": -1793.6270241082552,
+      "y": 5653.124762875062,
+      "width": 296.3662720740965,
+      "height": 163.27376843048842,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1p",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1765398465,
+      "version": 175,
+      "versionNonce": 1630825999,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093549655,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "0XkkyTL4dG_tidymLF_GX",
+      "type": "text",
+      "x": -1686.5678442471408,
+      "y": 5670.55669058047,
+      "width": 44.15997314453125,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1q",
+      "roundness": null,
+      "seed": 1496305057,
+      "version": 89,
+      "versionNonce": 1922112111,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093550846,
+      "link": null,
+      "locked": false,
+      "text": "GPU",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "GPU",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "3Z6izgvo4tGELCIe7f-2d",
+      "type": "rectangle",
+      "x": -1454.6444771399324,
+      "y": 5654.2116879257865,
+      "width": 296.3662720740965,
+      "height": 163.27376843048842,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1r",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 392912079,
+      "version": 241,
+      "versionNonce": 452999041,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1787093553897,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "uu_2iZsI32U7-DLTI3HS2",
+      "type": "text",
+      "x": -1331.2549828004967,
+      "y": 5674.369741163823,
+      "width": 45.699981689453125,
+      "height": 75,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1s",
+      "roundness": null,
+      "seed": 1321597729,
+      "version": 9,
+      "versionNonce": 1806699041,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093557761,
+      "link": null,
+      "locked": false,
+      "text": "TPU\n\nv5",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "TPU\n\nv5",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "8fOEPBAx5xHc5UaNNi8F6",
+      "type": "text",
+      "x": -1695.2397435707608,
+      "y": 5717.987749685879,
+      "width": 112.23995971679688,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1t",
+      "roundness": null,
+      "seed": 1069432591,
+      "version": 23,
+      "versionNonce": 76310575,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093579502,
+      "link": null,
+      "locked": false,
+      "text": "NVIDIA T4",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "NVIDIA T4",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "wDQ6ALhctMaMB6lz5PW1v",
+      "type": "rectangle",
+      "x": -2591.620951085006,
+      "y": 5929.754543213538,
+      "width": 730.5529201120631,
+      "height": 361.3989350591611,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1u",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 353477135,
+      "version": 453,
+      "versionNonce": 1983251201,
+      "isDeleted": false,
+      "boundElements": [],
+      "updated": 1787093708589,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "rbsHSVlHKjqU9Le0yTMqu",
+      "type": "text",
+      "x": -2269.8909088136647,
+      "y": 5947.208670180415,
+      "width": 48.9599609375,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1v",
+      "roundness": null,
+      "seed": 1567979169,
+      "version": 67,
+      "versionNonce": 1215150671,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093715847,
+      "link": null,
+      "locked": false,
+      "text": "Local",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Local",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "8nFzGjUDlPfkR3iHr7sWc",
+      "type": "rectangle",
+      "x": -2559.596895022603,
+      "y": 6058.03303283015,
+      "width": 404.44843331342537,
+      "height": 197.6112233305585,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1w",
+      "roundness": {
+        "type": 3
+      },
+      "seed": 1447288257,
+      "version": 274,
+      "versionNonce": 13895169,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "SZsti5bXEkP4QXQOtqr51",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1787093942473,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "LzfiUG5MM3EMatonzgPks",
+      "type": "text",
+      "x": -2490.374036572446,
+      "y": 6132.510081841511,
+      "width": 218.87985229492188,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1x",
+      "roundness": null,
+      "seed": 277641615,
+      "version": 90,
+      "versionNonce": 1916749185,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093740889,
+      "link": null,
+      "locked": false,
+      "text": "OBS (video and audio)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "OBS (video and audio)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "07rlA470gCCvV-AM3JzrS",
+      "type": "text",
+      "x": -2460.6718636104774,
+      "y": 6179.343887897229,
+      "width": 151.8798828125,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1y",
+      "roundness": null,
+      "seed": 2116485391,
+      "version": 75,
+      "versionNonce": 1180183009,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093740055,
+      "link": null,
+      "locked": false,
+      "text": "OpenAI Whisper",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "OpenAI Whisper",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "r2agRTjrNmeReXbhF7_km",
+      "type": "text",
+      "x": -4103.022437312574,
+      "y": 5992.845169155573,
+      "width": 1388.739013671875,
+      "height": 125,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b1z",
+      "roundness": null,
+      "seed": 1084069231,
+      "version": 338,
+      "versionNonce": 194164257,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093895642,
+      "link": null,
+      "locked": false,
+      "text": "Youtube data pipeline:\n 1. record video -> upload the video -> video is processed -> gemini encodes -> \"ask AI\" to get transcript/subtitles/text \n\n2. record video + realtime transcription (voice-to-text) -> video is processed + transcripts and timestamps (title, body, hashtags; takeaways)\n",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "Youtube data pipeline:\n 1. record video -> upload the video -> video is processed -> gemini encodes -> \"ask AI\" to get transcript/subtitles/text \n\n2. record video + realtime transcription (voice-to-text) -> video is processed + transcripts and timestamps (title, body, hashtags; takeaways)\n",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "CojkGGnz73Gna0rue6feI",
+      "type": "text",
+      "x": -2810.7395603727646,
+      "y": 6013.263588844147,
+      "width": 136.61780459633334,
+      "height": 31.554396068607723,
+      "angle": 0,
+      "strokeColor": "#2f9e44",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b20",
+      "roundness": null,
+      "seed": 1223834607,
+      "version": 150,
+      "versionNonce": 506543919,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093803597,
+      "link": null,
+      "locked": false,
+      "text": "timestamps",
+      "fontSize": 25.243516854886188,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "timestamps",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "SZsti5bXEkP4QXQOtqr51",
+      "type": "arrow",
+      "x": -2437.9035618616076,
+      "y": 6063.946109934821,
+      "width": 0,
+      "height": 255.4382336143799,
+      "angle": 0,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b21",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1406256417,
+      "version": 49,
+      "versionNonce": 524656097,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093942474,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -255.4382336143799
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "8nFzGjUDlPfkR3iHr7sWc",
+        "focus": -0.3982257161239143,
+        "gap": 5.913077104671174
+      },
+      "endBinding": {
+        "elementId": "SLD8ZELIlY4lo8B3ISV00",
+        "focus": 0.4510566919264598,
+        "gap": 5.096494930171502
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "F_tF1ZbdHFPUOvjn-DyQ_",
+      "type": "arrow",
+      "x": -3355.5143756859006,
+      "y": 5671.267776816508,
+      "width": 0,
+      "height": 0,
+      "angle": 0,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b23",
+      "roundness": null,
+      "seed": 1684255713,
+      "version": 7,
+      "versionNonce": 1829660463,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093961713,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "lastCommittedPoint": [
+        0,
+        0
+      ],
+      "startBinding": {
+        "elementId": "6iXaN2OEELDV-XkAgMI0r",
+        "fixedPoint": [
+          -0.0068441311537472535,
+          0.49972329746908745
+        ],
+        "focus": 0,
+        "gap": 0
+      },
+      "endBinding": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": true,
+      "fixedSegments": null,
+      "startIsSpecial": null,
+      "endIsSpecial": null
+    },
+    {
+      "id": "qjYw_trJvl1mHDspYJCUE",
+      "type": "arrow",
+      "x": -2362.9343716056237,
+      "y": 5611.053343477399,
+      "width": 932.4360069011923,
+      "height": 234.73316518635966,
+      "angle": 0,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b24",
+      "roundness": null,
+      "seed": 1620033359,
+      "version": 219,
+      "versionNonce": 307909487,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093980809,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -186.18846190315526
+        ],
+        [
+          -932.4360069011923,
+          -186.18846190315526
+        ],
+        [
+          -932.4360069011923,
+          48.5447032832044
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "SLD8ZELIlY4lo8B3ISV00",
+        "fixedPoint": [
+          0.4598332083931603,
+          -0.024997590518389196
+        ],
+        "focus": 0,
+        "gap": 0
+      },
+      "endBinding": {
+        "elementId": "7XUdeU59dol96er-U0gUO",
+        "fixedPoint": [
+          0.05318376481724138,
+          -0.016987032735010153
+        ],
+        "focus": 0,
+        "gap": 0
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": true,
+      "fixedSegments": [
+        {
+          "index": 2,
+          "start": [
+            0,
+            -186.18846190315526
+          ],
+          "end": [
+            -932.4360069011923,
+            -186.18846190315526
+          ]
+        }
+      ],
+      "startIsSpecial": false,
+      "endIsSpecial": false
+    },
+    {
+      "id": "sSQLkMhlAtJQXoFa0bbTD",
+      "type": "arrow",
+      "x": -3293.095573367399,
+      "y": 5711.26893691309,
+      "width": 133.87034527269134,
+      "height": 0,
+      "angle": 0,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b25",
+      "roundness": null,
+      "seed": 1107334881,
+      "version": 62,
+      "versionNonce": 1107352321,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787093997265,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -133.87034527269134,
+          0
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "7XUdeU59dol96er-U0gUO",
+        "focus": -0.07384850236809236,
+        "gap": 14.284826667702418
+      },
+      "endBinding": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "y8ZxHN9R2PDEYgrXvrtaz",
+      "type": "text",
+      "x": -3578.157824768476,
+      "y": 5699.712262628171,
+      "width": 127.95994567871094,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1971c2",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "b26",
+      "roundness": null,
+      "seed": 391041665,
+      "version": 69,
+      "versionNonce": 248243023,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1787094024315,
+      "link": null,
+      "locked": false,
+      "text": "YouTube API",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "YouTube API",
+      "autoResize": true,
       "lineHeight": 1.25
     }
   ],
-  "appState": {},
+  "appState": {
+    "showWelcomeScreen": false,
+    "theme": "light",
+    "currentChartType": "bar",
+    "currentItemBackgroundColor": "transparent",
+    "currentItemEndArrowhead": "arrow",
+    "currentItemFillStyle": "solid",
+    "currentItemFontFamily": 5,
+    "currentItemFontSize": 20,
+    "currentItemOpacity": 100,
+    "currentItemRoughness": 1,
+    "currentItemStartArrowhead": null,
+    "currentItemStrokeColor": "#1971c2",
+    "currentItemRoundness": "round",
+    "currentItemArrowType": "sharp",
+    "currentItemStrokeStyle": "solid",
+    "currentItemStrokeWidth": 2,
+    "currentItemTextAlign": "center",
+    "currentHoveredFontFamily": null,
+    "cursorButton": "up",
+    "activeEmbeddable": null,
+    "editingTextElement": null,
+    "editingGroupId": null,
+    "activeTool": {
+      "type": "selection",
+      "customType": null,
+      "locked": false,
+      "lastActiveTool": null
+    },
+    "penMode": false,
+    "penDetected": false,
+    "errorMessage": null,
+    "exportBackground": true,
+    "exportScale": 1,
+    "exportEmbedScene": false,
+    "exportWithDarkMode": false,
+    "fileHandle": null,
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "isBindingEnabled": true,
+    "defaultSidebarDockedPreference": false,
+    "isLoading": false,
+    "isResizing": false,
+    "isRotating": false,
+    "lastPointerDownWith": "mouse",
+    "multiElement": null,
+    "name": "Untitled-2026-08-18-1542",
+    "openMenu": null,
+    "pasteDialog": {
+      "shown": false,
+      "data": null
+    },
+    "previousSelectedElementIds": {},
+    "scrolledOutside": false,
+    "scrollX": 4364.186679344539,
+    "scrollY": -5190.353837034636,
+    "selectedElementIds": {},
+    "hoveredElementIds": {},
+    "selectedGroupIds": {},
+    "selectedElementsAreBeingDragged": false,
+    "shouldCacheIgnoreZoom": false,
+    "stats": {
+      "open": false,
+      "panels": 3
+    },
+    "startBoundElement": null,
+    "suggestedBindings": [],
+    "frameRendering": {
+      "enabled": true,
+      "clip": true,
+      "name": true,
+      "outline": true
+    },
+    "frameToHighlight": null,
+    "editingFrame": null,
+    "elementsToHighlight": null,
+    "viewBackgroundColor": "#ffffff",
+    "zenModeEnabled": false,
+    "zoom": {
+      "value": 0.445753
+    },
+    "viewModeEnabled": false,
+    "pendingImageElementId": null,
+    "showHyperlinkPopup": false,
+    "selectedLinearElement": null,
+    "snapLines": [],
+    "originSnapOffset": null,
+    "objectsSnapModeEnabled": false,
+    "userToFollow": null,
+    "isCropping": false,
+    "croppingElementId": null,
+    "searchMatches": [],
+    "offsetLeft": 17,
+    "offsetTop": 206.5,
+    "width": 1579,
+    "height": 599
+  },
   "files": {
     "2fa866449da0cd92a69571dc46d27a83264aa59f": {
       "mimeType": "image/png",
