@@ -39,10 +39,17 @@ export const PROJECT_TOC_ITEMS: ChangelogTocItem[] = CHANGELOG_PROJECTS.map((pro
 
 export const FAQ_TOC_ITEM: ChangelogTocItem = { id: 'faq', label: 'FAQ' };
 
-// Full, flat TOC — 7 essay sections + 4 project ids + faq — the exact set
-// ChangelogSidebar's single useActiveSection call is scoped to.
+// The Project Pipeline section (11 Kanban-sourced cards, grouped by status) —
+// one entry, not one per card, since these aren't ChangelogProjects and 11
+// individual sidebar rows would be clutter. Cards remain deep-linkable by
+// their own id even without a dedicated TOC row each.
+export const PIPELINE_TOC_ITEM: ChangelogTocItem = { id: 'project-pipeline', label: 'Project Pipeline' };
+
+// Full, flat TOC — 7 essay sections + 4 project ids + pipeline + faq — the
+// exact set ChangelogSidebar's single useActiveSection call is scoped to.
 export const CHANGELOG_TOC_ITEMS: ChangelogTocItem[] = [
   ...MENTAL_MODEL_TOC_ITEMS,
   ...PROJECT_TOC_ITEMS,
+  PIPELINE_TOC_ITEM,
   FAQ_TOC_ITEM,
 ];

@@ -1,7 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AXIS_COLOR_CLASSES, type SweCompassAxis } from '@/components/features/SweCompassDiagram';
-import { SYSTEM_DESIGN_QUESTIONS } from '@/constants/systemDesignPrep/questions';
+import { RIPPLE_LOOKUP_QUESTIONS } from '@/constants/systemDesignPrep/questions';
 import type { SystemDesignQuestion } from '@/constants/systemDesignPrep/questions/types';
 
 interface SystemDesignQuestionCardProps {
@@ -23,11 +23,12 @@ const SUB_QUESTION_CLASS =
  * AXIS_COLOR_CLASSES, not a reinvented color scheme), approach options as a
  * compact bordered list, implementation notes behind a "Go deeper"
  * disclosure (FaqAccordionItem's <details> idiom), and ripplesInto resolved
- * against SYSTEM_DESIGN_QUESTIONS and rendered as anchor-link chips.
+ * against RIPPLE_LOOKUP_QUESTIONS (the full question bank plus the
+ * Components of System Design cards) and rendered as anchor-link chips.
  */
 const SystemDesignQuestionCard = ({ question }: SystemDesignQuestionCardProps) => {
   const rippleTargets = question.ripplesInto
-    .map((id) => SYSTEM_DESIGN_QUESTIONS.find((candidate) => candidate.id === id))
+    .map((id) => RIPPLE_LOOKUP_QUESTIONS.find((candidate) => candidate.id === id))
     .filter((target): target is SystemDesignQuestion => Boolean(target));
 
   return (

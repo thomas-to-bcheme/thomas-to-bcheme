@@ -6,6 +6,10 @@ export interface FrameworkStep {
   label: string;
   description: string;
   detail?: string[];
+  /** Optional time-budget badge (e.g. "~5 min") rendered next to the label.
+   *  Omit entirely on pages that don't need timing (Behavioural, Effective
+   *  Communication) — purely additive, no other consumer is affected. */
+  durationLabel?: string;
 }
 
 interface FrameworkStepListProps {
@@ -24,7 +28,14 @@ const FrameworkStepList = ({ steps }: FrameworkStepListProps) => (
     {steps.map((step) => (
       <li key={step.id} id={step.id} className="step-divider pb-1 scroll-mt-24">
         <span className="step-circle">{step.marker}</span>
-        <h3 className="text-sm font-bold text-zinc-900 dark:text-white">{step.label}</h3>
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <h3 className="text-sm font-bold text-zinc-900 dark:text-white">{step.label}</h3>
+          {step.durationLabel && (
+            <span className="px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-800 text-xs font-medium text-zinc-500 dark:text-zinc-500">
+              {step.durationLabel}
+            </span>
+          )}
+        </div>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
           {step.description}
         </p>

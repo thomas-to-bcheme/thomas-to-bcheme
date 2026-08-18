@@ -73,7 +73,7 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
     title: 'roadmap.sh/system-design',
     url: 'https://roadmap.sh/system-design',
     whatItOffers:
-      'A visual roadmap of system-design building blocks (DNS, CDN, load balancers, databases, caching, message queues, monitoring, cloud design patterns) — the reference taxonomy behind this page\'s Hosting & Infrastructure question, which fills a gap this roadmap explicitly leaves to a separate DevOps track.',
+      'A visual roadmap of system-design building blocks (DNS, CDN, load balancers, databases, caching, message queues, monitoring, cloud design patterns) — the reference taxonomy behind this page\'s Hosting & Infrastructure question and the Components of System Design section\'s networking, storage, load-balancer-vs-gateway-vs-proxy, and security cards, filling a gap this roadmap explicitly leaves to a separate DevOps track.',
   },
   {
     id: 'roadmap-software-architect',

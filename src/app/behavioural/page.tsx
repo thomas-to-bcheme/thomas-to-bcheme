@@ -8,12 +8,13 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import FrameworkStepList from '@/components/ui/FrameworkStepList';
 import PageSectionNav from '@/components/ui/PageSectionNav';
 import BehaviouralCategoryCard from '@/components/sections/behavioural/BehaviouralCategoryCard';
+import SeniorVsStaffSection from '@/components/sections/behavioural/SeniorVsStaffSection';
 import { STAR_FRAMEWORK, BEHAVIOURAL_QUESTION_CATEGORIES } from '@/constants/behavioural';
 
 export const metadata: Metadata = {
   title: 'Behavioural — Thomas To',
   description:
-    'A reference for structuring behavioural interview answers with the STAR method, plus category-specific guidance for resistance to change, scope creep, conflict resolution, ambiguity, mentoring, and leadership.',
+    'A reference for structuring behavioural interview answers with the STAR method, 11 recurring question archetypes spanning scope, conflict, ambiguity, initiative, failure, and prioritization, plus a junior-to-principal career ladder — scope, contribution, impact, and difficulty at every level — for reading how the same story signals seniority.',
 };
 
 const FOCUS_RING =
@@ -21,12 +22,18 @@ const FOCUS_RING =
 
 const SECTION_NAV_ITEMS = [
   { id: 'star-method', label: 'STAR Method' },
+  { id: 'senior-vs-staff', label: 'Career Ladder' },
   { id: 'resistance-to-change', label: 'Resistance to Change' },
   { id: 'scope-creep', label: 'Scope Creep' },
   { id: 'conflict-resolution', label: 'Conflict' },
   { id: 'navigating-ambiguity', label: 'Ambiguity' },
   { id: 'mentoring-juniors', label: 'Mentoring' },
   { id: 'leadership-style', label: 'Leadership' },
+  { id: 'owning-failure', label: 'Failure & Feedback' },
+  { id: 'hardest-technical-problem', label: 'Hardest Problem' },
+  { id: 'taking-initiative', label: 'Initiative' },
+  { id: 'disagreeing-with-leadership', label: 'Disagreeing Up' },
+  { id: 'prioritizing-competing-deadlines', label: 'Prioritization' },
 ];
 
 export default function BehaviouralPage() {
@@ -51,9 +58,10 @@ export default function BehaviouralPage() {
             Behavioural interviews, <span className="gradient-text-blue">answered with STAR</span>
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            The STAR method, generalized, plus how it applies to the behavioural questions that
-            come up most often — resistance to change, scope creep, conflict, ambiguity,
-            mentoring, and leadership.
+            The STAR method, generalized, plus 11 recurring behavioural-question archetypes — from
+            scope creep and conflict to owning a failure and prioritizing competing deadlines —
+            and how the same story can read anywhere from junior to principal depending on scope,
+            contribution, and impact.
           </p>
         </div>
       </div>
@@ -67,6 +75,8 @@ export default function BehaviouralPage() {
           <SectionHeading eyebrow="The Framework" title="The STAR method, generalized" />
           <FrameworkStepList steps={STAR_FRAMEWORK} />
         </section>
+
+        <SeniorVsStaffSection />
 
         <section className="mb-4">
           <SectionHeading eyebrow="By Category" title="Common behavioural question archetypes" />

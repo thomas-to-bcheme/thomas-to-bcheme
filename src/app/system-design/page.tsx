@@ -11,6 +11,7 @@ import CoreCharacteristicsSection from '@/components/sections/systemDesignPrep/C
 import InterviewFrameworkSection from '@/components/sections/systemDesignPrep/InterviewFrameworkSection';
 import SystemDesignQuestionsSection from '@/components/sections/systemDesignPrep/SystemDesignQuestionsSection';
 import ReferenceGridSection from '@/components/sections/systemDesignPrep/ReferenceGridSection';
+import ComponentsOfSystemDesignSection from '@/components/sections/systemDesignPrep/ComponentsOfSystemDesignSection';
 import ScoringRubricSection from '@/components/sections/systemDesignPrep/ScoringRubricSection';
 import StaffSignalsSection from '@/components/sections/systemDesignPrep/StaffSignalsSection';
 import CommunicationScriptsSection from '@/components/sections/systemDesignPrep/CommunicationScriptsSection';
@@ -19,7 +20,7 @@ import ExternalReferencesSection from '@/components/sections/systemDesignPrep/Ex
 export const metadata: Metadata = {
   title: 'System Design — Thomas To',
   description:
-    'A working reference for system design judgment — the core characteristics (Chip Huyen\'s four plus CAP theorem) every decision is checked against, a 4-step interview framework, a question bank of decision cascades organized by the SWE Compass\'s six lifecycle stages, a 6-column building-block reference grid, a scoring rubric, staff-level signals, and reusable communication scripts.',
+    'A working reference for system design judgment — the core characteristics (Chip Huyen\'s four plus CAP theorem) every decision is checked against, a timed 4-step interview framework, a question bank of decision cascades organized by the SWE Compass\'s six lifecycle stages, a 6-column building-block reference grid, a dedicated components-of-system-design reference (networking, storage, partitioning vs sharding, load balancer vs API gateway vs reverse proxy, authentication vs authorization vs security) with closing design principles, a scoring rubric, staff-level signals, and reusable communication scripts.',
 };
 
 const FOCUS_RING =
@@ -66,6 +67,7 @@ export default function SystemDesignPage() {
           <InterviewFrameworkSection />
           <SystemDesignQuestionsSection />
           <ReferenceGridSection />
+          <ComponentsOfSystemDesignSection />
           <ScoringRubricSection />
           <StaffSignalsSection />
           <CommunicationScriptsSection />

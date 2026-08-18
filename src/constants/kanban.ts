@@ -2,7 +2,7 @@
  * Kanban pipeline data
  *
  * Centralizes project pipeline items displayed
- * in the KanbanBoard component.
+ * in the Project Pipeline section on /projects.
  */
 
 export type KanbanStatus = 'in-queue' | 'in-development' | 'completed';

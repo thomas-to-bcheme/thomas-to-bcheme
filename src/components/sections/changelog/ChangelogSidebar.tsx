@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Compass, Layers, HelpCircle } from 'lucide-react';
+import { Compass, Layers, Workflow, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import {
   CHANGELOG_TOC_ITEMS,
   MENTAL_MODEL_TOC_ITEMS,
   PROJECT_TOC_ITEMS,
+  PIPELINE_TOC_ITEM,
   FAQ_TOC_ITEM,
 } from '@/constants/changelogToc';
 
@@ -60,6 +61,13 @@ const ChangelogSidebar = () => {
           <Layers size={12} className="stroke-[2.5]" /> Projects
         </span>
         {PROJECT_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
+      </div>
+
+      <div className="space-y-1">
+        <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
+          <Workflow size={12} className="stroke-[2.5]" /> Pipeline
+        </span>
+        {renderLink(PIPELINE_TOC_ITEM.id, PIPELINE_TOC_ITEM.label)}
       </div>
 
       <div className="space-y-1">

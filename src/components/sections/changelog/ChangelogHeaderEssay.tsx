@@ -21,17 +21,20 @@ const BULLET_CLASS =
  * shorten it, including the inline notes distinguishing newly-authored
  * synthesis from direct quotes.
  *
- * Five additions are deliberate, later exceptions to that rule, made by
+ * Six additions are deliberate, later exceptions to that rule, made by
  * explicit user decision outside the original §4 plan: the
  * business-driven-development paragraphs and "AI Growth & Adoption"
  * pull-quote appended to system-design-philosophy; the
  * benchmark-before-automating paragraphs appended immediately after that
- * pull-quote, in the same section; the prompt-engineering paragraphs
- * appended to agent-definition; the standalone effective-communication
- * section (plus the non-section mental-models-synthesis closing block after
- * it); and the standalone unintended-consequences section, inserted between
- * system-design-philosophy and effective-communication. Leave every original
- * section's pre-existing sentences untouched when editing any of the five.
+ * pull-quote, in the same section; the designing-for-today's-problem
+ * paragraph appended at the very end of that same section, after the
+ * benchmark-is-the-gate-on-scale paragraph; the prompt-engineering
+ * paragraphs appended to agent-definition; the standalone
+ * effective-communication section (plus the non-section
+ * mental-models-synthesis closing block after it); and the standalone
+ * unintended-consequences section, inserted between system-design-philosophy
+ * and effective-communication. Leave every original section's pre-existing
+ * sentences untouched when editing any of the six.
  */
 const ChangelogHeaderEssay = () => {
   return (
@@ -396,6 +399,21 @@ const ChangelogHeaderEssay = () => {
             automated process replacing one they trusted by hand — repeats the exact mistake the
             pull-quote warns against: capacity spent on scale nobody asked for yet, instead of on
             earning the trust scale depends on.
+          </p>
+          <p className={PARAGRAPH_CLASS}>
+            <strong className={STRONG_CLASS}>
+              Designing for today&apos;s problem, not a guessed-at tomorrow.
+            </strong>{' '}
+            The harder half of applying reliability, maintainability, adaptability, and resilience
+            isn&apos;t knowing the four axes exist — it&apos;s navigating the ambiguity of which
+            one a given problem actually needs, right now, and building only that much of it. A
+            system over-built for failure modes today&apos;s traffic will never hit, or scale
+            today&apos;s budget will never reach, isn&apos;t more resilient than one sized to
+            what&apos;s real — it&apos;s slower to ship and harder to reason about, which is its
+            own reliability and maintainability cost. The version that adapts tomorrow is the one
+            built honestly for what&apos;s true today, with room left to change, not the one
+            pre-built for a future that was only ever a guess. None of this is really about the
+            code; it&apos;s about architecting the system the code has to live inside.
           </p>
         </div>
       </section>

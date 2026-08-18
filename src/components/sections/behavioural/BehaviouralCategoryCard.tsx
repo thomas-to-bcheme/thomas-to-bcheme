@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
+import Badge from '@/components/ui/Badge';
 import type { BehaviouralQuestionCategory, StarGuidance } from '@/constants/behavioural';
 
 interface BehaviouralCategoryCardProps {
@@ -60,6 +61,27 @@ const BehaviouralCategoryCard = ({ category }: BehaviouralCategoryCardProps) => 
           </div>
         ))}
       </dl>
+      <div>
+        <span className="text-micro text-zinc-400 mb-1.5 block">Senior vs. Staff</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 border-l-2 border-l-blue-400 dark:border-l-blue-500 p-3">
+            <Badge color="blue" variant="outline">
+              Senior
+            </Badge>
+            <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              {category.levelSignal.senior}
+            </p>
+          </div>
+          <div className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 border-l-2 border-l-purple-400 dark:border-l-purple-500 p-3">
+            <Badge color="purple" variant="outline">
+              Staff
+            </Badge>
+            <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              {category.levelSignal.staff}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </details>
 );

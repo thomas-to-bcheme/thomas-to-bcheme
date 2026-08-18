@@ -25,7 +25,7 @@ const ReferenceGridSection = () => (
             </div>
             <ul className="space-y-2.5">
               {column.entries.map((entry) => (
-                <li key={entry.label}>
+                <li key={entry.id} id={entry.id} className="scroll-mt-24">
                   <p className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">
                     {entry.label}
                   </p>

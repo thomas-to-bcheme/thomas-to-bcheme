@@ -6,14 +6,14 @@ import { MODEL_QUESTIONS } from './model';
 import { BACKEND_QUESTIONS } from './backend';
 import { FRONTEND_QUESTIONS } from './frontend';
 import { OPS_QUESTIONS } from './ops';
+import { COMPONENTS_OF_SYSTEM_DESIGN_QUESTIONS } from './components';
 
 export type { SystemDesignQuestion, QuestionCategoryId, ApproachOption, ImplementationNote } from './types';
 
 // Aggregates all 6 lifecycle-stage files, in the fixed reading order the
 // page renders them in (matches the SWE Compass's end-to-end axis
 // direction: design -> data -> model -> backend -> frontend -> ops) — the
-// single source of truth SystemDesignQuestionsSection and
-// SystemDesignQuestionCard's ripplesInto lookup both read from.
+// single source of truth SystemDesignQuestionsSection reads from.
 export const SYSTEM_DESIGN_QUESTIONS: SystemDesignQuestion[] = [
   ...DESIGN_QUESTIONS,
   ...DATA_QUESTIONS,
@@ -21,6 +21,16 @@ export const SYSTEM_DESIGN_QUESTIONS: SystemDesignQuestion[] = [
   ...BACKEND_QUESTIONS,
   ...FRONTEND_QUESTIONS,
   ...OPS_QUESTIONS,
+];
+
+// Separate from SYSTEM_DESIGN_QUESTIONS (which drives the category-filtered
+// rendering in SystemDesignQuestionsSection) — this wider pool exists only
+// so SystemDesignQuestionCard's ripplesInto lookup can resolve links to/from
+// the Components of System Design section without double-rendering those
+// cards inside the category-filtered question bank.
+export const RIPPLE_LOOKUP_QUESTIONS: SystemDesignQuestion[] = [
+  ...SYSTEM_DESIGN_QUESTIONS,
+  ...COMPONENTS_OF_SYSTEM_DESIGN_QUESTIONS,
 ];
 
 export interface QuestionCategory {

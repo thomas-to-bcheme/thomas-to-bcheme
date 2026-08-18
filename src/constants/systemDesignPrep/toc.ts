@@ -42,6 +42,7 @@ export const QUESTIONS_TOC_ITEMS: SystemDesignTocItem[] = SYSTEM_DESIGN_CATEGORI
 // The remaining reference sections, in page order.
 export const REFERENCE_TOC_ITEMS: SystemDesignTocItem[] = [
   toItem('reference-grid', 'Reference Grid'),
+  toItem('components-of-system-design', 'Components'),
   toItem('scoring-rubric', 'Scoring Rubric'),
   toItem('staff-signals', 'Staff-Level Signals'),
   toItem('communication-scripts', 'Communication Scripts'),

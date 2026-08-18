@@ -10,12 +10,13 @@ import ChangelogMobileToc from '@/components/sections/changelog/ChangelogMobileT
 import ChangelogHeaderEssay from '@/components/sections/changelog/ChangelogHeaderEssay';
 import ExecutiveSummary from '@/components/sections/changelog/ExecutiveSummary';
 import ProjectChangelogSection from '@/components/sections/changelog/ProjectChangelogSection';
+import ProjectPipelineSection from '@/components/sections/changelog/ProjectPipelineSection';
 import { CHANGELOG_PROJECTS } from '@/constants/changelog';
 
 export const metadata: Metadata = {
   title: 'Projects — Thomas To',
   description:
-    'The mental model behind this $0-infrastructure portfolio — mission, outbound/inbound funnel, the SWE Compass, what "agent" means here, and a system-design philosophy beyond CAP theorem — plus a per-project version history, lessons learned, and FAQ for the Job Board, Hugging Face/ZeroGPU backend, Study Plan, and Chat/RAG agent.',
+    'The mental model behind this $0-infrastructure portfolio — mission, outbound/inbound funnel, the SWE Compass, what "agent" means here, and a system-design philosophy beyond CAP theorem — plus a per-project version history, lessons learned, the open-source & content project pipeline with its own tier-by-tier architecture, and FAQ for the Job Board, Hugging Face/ZeroGPU backend, Study Plan, and Chat/RAG agent.',
 };
 
 const FOCUS_RING =
@@ -62,6 +63,10 @@ export default function ChangelogPage() {
             {CHANGELOG_PROJECTS.map((project) => (
               <ProjectChangelogSection key={project.id} project={project} />
             ))}
+          </div>
+
+          <div className="mt-20">
+            <ProjectPipelineSection />
           </div>
 
           <div className="mt-20">

@@ -13,8 +13,8 @@ import { cn } from '@/lib/utils';
 
 // ---------------------------------------------------------------------------
 // Tier display config — color/label metadata kept out of render logic
-// (mirrors COLUMN_CONFIG in KanbanBoard.tsx). Dark mode via `dark:` variants
-// only, since the app uses @media (prefers-color-scheme).
+// (mirrors STATUS_CONFIG in ProjectPipelineSection.tsx). Dark mode via
+// `dark:` variants only, since the app uses @media (prefers-color-scheme).
 // ---------------------------------------------------------------------------
 const TIER_CONFIG: Record<SystemTier, { label: string; dot: string; iconBox: string }> = {
   client: {

@@ -1,10 +1,11 @@
 /**
  * System-design diagram data
  *
- * A single, data-driven model that powers the interactive system-design
- * carousel. Every entry describes one project's end-to-end architecture as an
- * ordered list of tier-tagged nodes (client → frontend → backend → model →
- * data) plus its key design considerations.
+ * A single, data-driven model that powers the per-item architecture breakdown
+ * in the Project Pipeline section on /projects. Every entry describes one
+ * project's end-to-end architecture as an ordered list of tier-tagged nodes
+ * (client → frontend → backend → model → data) plus its key design
+ * considerations.
  *
  * Sources of truth:
  *  - Project list & stack: KANBAN_ITEMS (src/constants/kanban.ts)
