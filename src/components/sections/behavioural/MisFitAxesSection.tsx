@@ -1,5 +1,5 @@
 import React from 'react';
-import { FIT_TENSION_AXES } from '@/constants/behavioural';
+import { FIT_TENSION_AXES } from '@/constants/behavioural/fitTensionAxes';
 
 /**
  * Grid of FIT_TENSION_AXES — each a left↔right spectrum where the same story reads as

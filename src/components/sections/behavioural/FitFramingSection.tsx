@@ -1,5 +1,5 @@
 import React from 'react';
-import { FIT_SIGNAL_GROUPS } from '@/constants/behavioural';
+import { FIT_SIGNAL_GROUPS } from '@/constants/behavioural/fitSignals';
 
 const BULLET_CLASS =
   "text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-zinc-300 dark:before:text-zinc-700";

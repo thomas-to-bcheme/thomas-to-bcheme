@@ -7,8 +7,9 @@ import {
   LEVEL_PITFALLS,
   LEVEL_SELF_CHECK_QUESTIONS,
   SENIOR_TO_STAFF_SHIFT,
+  SELF_ASSESSMENT_GUIDANCE,
   type CareerLevelId,
-} from '@/constants/behavioural';
+} from '@/constants/behavioural/careerLevels';
 
 const LIST_ITEM_CLASS =
   "text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-zinc-300 dark:before:text-zinc-700";
@@ -87,6 +88,36 @@ const SeniorVsStaffSection = () => (
           </div>
         </div>
       ))}
+    </div>
+
+    <div className="mt-8 card-base p-4">
+      <h3 className="text-sm font-bold text-zinc-900 dark:text-white mb-3">
+        Self-assessment: where do your stories actually land?
+      </h3>
+      <ol className="space-y-1.5 mb-4">
+        {SELF_ASSESSMENT_GUIDANCE.process.map((step, index) => (
+          <li key={step} className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-6 relative">
+            <span className="absolute left-0 top-0 text-xs font-bold text-zinc-400">{index + 1}.</span>
+            {step}
+          </li>
+        ))}
+      </ol>
+      <span className="text-micro text-zinc-400 mb-2 block">If a specific dimension is weak</span>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {SELF_ASSESSMENT_GUIDANCE.fixesByDimension.map((fix) => {
+          const dimensionLabel =
+            LEVEL_DIMENSIONS.find((dim) => dim.id === fix.dimensionId)?.dimension ?? fix.dimensionId;
+          return (
+            <div
+              key={fix.dimensionId}
+              className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 p-3"
+            >
+              <span className="block mb-1 text-xs font-bold text-zinc-900 dark:text-white">{dimensionLabel}</span>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{fix.ifWeak}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
 
     <div className="mt-8 card-base p-4">
