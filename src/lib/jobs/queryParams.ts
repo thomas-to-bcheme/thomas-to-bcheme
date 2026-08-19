@@ -1,5 +1,5 @@
 /**
- * The Job Board's URL contract: ?range=recent|older&company=<name>&q=<text>&pageSize=<n|all>&page=<n>.
+ * The Job Board's URL contract: ?range=recent|older&company=<name>&q=<text>&pageSize=<n|all>&page=<n>&fitSort=best|worst.
  * Parsing and serialization both live here so src/app/jobs/page.tsx (Server
  * Component), src/app/api/jobs/route.ts (public API), JobFilters, and
  * JobPagination all agree on what these params mean instead of each
@@ -11,6 +11,16 @@ import { JOBS_PAGE_SIZE_OPTIONS, DEFAULT_JOBS_PAGE_SIZE, type JobsPageSize } fro
 
 export type JobsDateRange = 'recent' | 'older';
 
+/**
+ * Secondary sort by the pipeline's fit_score (qualification-fit score
+ * against the base resume, 0-100 — see src/lib/db/jobs.ts). 'best' = highest
+ * score first, 'worst' = lowest score first, null = default (unchanged
+ * date order, no fit_score involvement at all). Deliberately just these two
+ * directions — not a general sort-by-column control (no alphabetical/
+ * numerical sort by other fields is offered here).
+ */
+export type JobsFitSort = 'best' | 'worst' | null;
+
 export interface JobsQueryParams {
   range: JobsDateRange;
   company: string | null;
@@ -18,15 +28,21 @@ export interface JobsQueryParams {
   search: string | null;
   pageSize: JobsPageSize;
   page: number;
+  fitSort: JobsFitSort;
 }
 
 const DEFAULT_RANGE: JobsDateRange = 'recent';
 const DEFAULT_PAGE = 1;
+const DEFAULT_FIT_SORT: JobsFitSort = null;
 /** Defensive cap on search input length — a search box, not a text field. */
 const MAX_SEARCH_LENGTH = 100;
 
 function isJobsDateRange(value: string | null): value is JobsDateRange {
   return value === 'recent' || value === 'older';
+}
+
+function parseFitSort(value: string | null): JobsFitSort {
+  return value === 'best' || value === 'worst' ? value : DEFAULT_FIT_SORT;
 }
 
 /**
@@ -78,6 +94,7 @@ export function parseJobsQueryParams(searchParams: URLSearchParams): JobsQueryPa
     search: parseSearch(searchParams.get('q')),
     pageSize,
     page: parsePage(searchParams.get('page'), pageSize),
+    fitSort: parseFitSort(searchParams.get('fitSort')),
   };
 }
 
@@ -94,6 +111,7 @@ export function buildJobsSearch(params: JobsQueryParams): string {
   if (params.search !== null) searchParams.set('q', params.search);
   if (params.pageSize !== DEFAULT_JOBS_PAGE_SIZE) searchParams.set('pageSize', String(params.pageSize));
   if (params.pageSize !== 'all' && params.page !== DEFAULT_PAGE) searchParams.set('page', String(params.page));
+  if (params.fitSort !== null) searchParams.set('fitSort', params.fitSort);
 
   const query = searchParams.toString();
   return query.length > 0 ? `/jobs?${query}` : '/jobs';

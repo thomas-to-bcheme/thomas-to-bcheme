@@ -30,12 +30,24 @@ const JobCard = ({ job }: { job: JobListing }) => {
   // second line is dropped since it would just repeat the same date.
   const usesAcceptedUntilLabel = job.company === NVIDIA_COMPANY_NAME && applicationsAcceptedUntil !== null;
 
+  // fitScore is null for any not-yet-ranked role — currently every NVIDIA
+  // row, since rank_fit.ts's ranking is scoped to Apple only — see
+  // JobListingSchema's doc comment. Phrased as "Not yet ranked" rather than
+  // left blank or shown as 0, so a reader sorting by relevance can tell
+  // "unscored" apart from "scored zero".
+  const fitScoreLabel = job.fitScore !== null ? `Fit: ${job.fitScore}/100` : 'Not yet ranked';
+
   return (
     <div className="card-base p-5 flex flex-col h-full space-y-3">
       <div>
-        <h5 className="text-base font-bold text-zinc-900 dark:text-white leading-tight">
-          {job.title}
-        </h5>
+        <div className="flex items-start justify-between gap-2">
+          <h5 className="text-base font-bold text-zinc-900 dark:text-white leading-tight">
+            {job.title}
+          </h5>
+          <span className="shrink-0 text-micro font-semibold text-subtle bg-zinc-100 dark:bg-zinc-900 rounded-full px-2 py-1">
+            {fitScoreLabel}
+          </span>
+        </div>
         {job.company && <p className="text-sm text-subtle mt-0.5">{job.company}</p>}
       </div>
 

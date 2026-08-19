@@ -26,7 +26,14 @@ export const metadata: Metadata = {
 };
 
 interface JobsPageProps {
-  searchParams: Promise<{ range?: string; company?: string; q?: string; pageSize?: string; page?: string }>;
+  searchParams: Promise<{
+    range?: string;
+    company?: string;
+    q?: string;
+    pageSize?: string;
+    page?: string;
+    fitSort?: string;
+  }>;
 }
 
 function logJobsError(message: string, error: unknown) {
@@ -67,6 +74,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   if (resolvedSearchParams.q) urlSearchParams.set('q', resolvedSearchParams.q);
   if (resolvedSearchParams.pageSize) urlSearchParams.set('pageSize', resolvedSearchParams.pageSize);
   if (resolvedSearchParams.page) urlSearchParams.set('page', resolvedSearchParams.page);
+  if (resolvedSearchParams.fitSort) urlSearchParams.set('fitSort', resolvedSearchParams.fitSort);
   const params = parseJobsQueryParams(urlSearchParams);
 
   const [jobsResult, companyOptions] = await Promise.all([

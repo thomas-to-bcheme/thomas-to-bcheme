@@ -84,6 +84,20 @@ function escapeLikePattern(raw: string): string {
  * above), so it doesn't hit that limitation while keeping the expression
  * from drifting out of sync between clauses.
  *
+ * params.fitSort adds an optional secondary sort by fit_score (the pipeline's
+ * qualification-fit score, 0-100 — see src/types/jobs.ts's fitScore doc
+ * comment): 'best' orders highest-scored first, 'worst' lowest-scored first,
+ * null leaves the existing date-only ORDER BY untouched. Expressed as bound
+ * CASE WHEN expressions inside the same static template (not a composed
+ * fragment — still respects the driver limitation described above): when
+ * fitSort is null both CASE branches evaluate to NULL for every row, so
+ * ORDER BY collapses back to the original date-only order with zero behavior
+ * change. NULLS LAST is stated explicitly on both branches — Postgres's
+ * default differs by direction (NULLS LAST for ASC, NULLS FIRST for DESC),
+ * and an unranked row (fit_score IS NULL — every NVIDIA row today, since
+ * rank_fit.ts's ranking is scoped to Apple only) must always sort to the
+ * bottom regardless of direction, never float to the top under 'best'.
+ *
  * Page clamping is intentionally NOT done here: this function always honors
  * the requested page verbatim (an out-of-range page legitimately returns
  * zero rows plus an accurate totalCount/totalPages). src/app/jobs/page.tsx
@@ -134,7 +148,7 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
     ? sql`
         WITH scoped AS (
           SELECT
-            job_id, title, url, company, resume_pdf_path, applications_accepted_until,
+            job_id, title, url, company, resume_pdf_path, applications_accepted_until, fit_score,
             CASE WHEN company = ${NVIDIA_COMPANY_NAME} THEN COALESCE(applications_accepted_until, posted_date) ELSE posted_date END AS effective_date
           FROM "PORTFOLIO".roles
         )
@@ -145,19 +159,23 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
           company,
           effective_date::text AS "postedDate",
           resume_pdf_path AS "resumePdfPath",
-          applications_accepted_until::text AS "applicationsAcceptedUntil"
+          applications_accepted_until::text AS "applicationsAcceptedUntil",
+          fit_score AS "fitScore"
         FROM scoped
         WHERE effective_date >= ${cutoff}::date
           AND (${params.company}::text IS NULL OR company = ${params.company})
           AND (${searchPattern}::text IS NULL OR title ILIKE ${searchPattern} OR company ILIKE ${searchPattern})
-        ORDER BY effective_date DESC NULLS LAST
+        ORDER BY
+          CASE WHEN ${params.fitSort}::text = 'best' THEN fit_score END DESC NULLS LAST,
+          CASE WHEN ${params.fitSort}::text = 'worst' THEN fit_score END ASC NULLS LAST,
+          effective_date DESC NULLS LAST
         LIMIT ${limitValue}
         OFFSET ${offset}
       `
     : sql`
         WITH scoped AS (
           SELECT
-            job_id, title, url, company, resume_pdf_path, applications_accepted_until,
+            job_id, title, url, company, resume_pdf_path, applications_accepted_until, fit_score,
             CASE WHEN company = ${NVIDIA_COMPANY_NAME} THEN COALESCE(applications_accepted_until, posted_date) ELSE posted_date END AS effective_date
           FROM "PORTFOLIO".roles
         )
@@ -168,12 +186,16 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
           company,
           effective_date::text AS "postedDate",
           resume_pdf_path AS "resumePdfPath",
-          applications_accepted_until::text AS "applicationsAcceptedUntil"
+          applications_accepted_until::text AS "applicationsAcceptedUntil",
+          fit_score AS "fitScore"
         FROM scoped
         WHERE (effective_date < ${cutoff}::date OR effective_date IS NULL)
           AND (${params.company}::text IS NULL OR company = ${params.company})
           AND (${searchPattern}::text IS NULL OR title ILIKE ${searchPattern} OR company ILIKE ${searchPattern})
-        ORDER BY effective_date DESC NULLS LAST
+        ORDER BY
+          CASE WHEN ${params.fitSort}::text = 'best' THEN fit_score END DESC NULLS LAST,
+          CASE WHEN ${params.fitSort}::text = 'worst' THEN fit_score END ASC NULLS LAST,
+          effective_date DESC NULLS LAST
         LIMIT ${limitValue}
         OFFSET ${offset}
       `;
@@ -194,6 +216,7 @@ export async function getFilteredJobs(params: JobsQueryParams): Promise<JobsPage
       postedDate: row.postedDate ?? null,
       resumePdfPath: row.resumePdfPath ?? null,
       applicationsAcceptedUntil: row.applicationsAcceptedUntil ?? null,
+      fitScore: row.fitScore ?? null,
     })
   );
 

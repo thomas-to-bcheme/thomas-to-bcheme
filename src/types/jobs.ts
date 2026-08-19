@@ -28,6 +28,13 @@ import { z } from 'zod';
 // for this job will be accepted at least until <date>" sentence. It's a
 // stated floor, not a hard cutoff (the posting may still be open past this
 // date) — see JobCard.tsx for how that's phrased to the visitor.
+// `fitScore` is the pipeline's fit_score column: a 0-100 qualification-fit
+// score from an LLM reranker judging the posting against the base resume
+// (see apply-to-jobs/src/pipeline/transform/rank_fit.ts) — a score, not a
+// positional rank. Null means "not yet ranked" — currently every NVIDIA row
+// (ranking is scoped to Apple only) plus any Apple role pending ranking.
+// See src/lib/db/jobs.ts for the fitSort ordering built on top of it and
+// JobCard.tsx for how a null score is phrased to the visitor.
 export const JobListingSchema = z.object({
   id: z.coerce.string(),
   title: z.string(),
@@ -36,6 +43,7 @@ export const JobListingSchema = z.object({
   postedDate: z.string().nullable(),
   resumePdfPath: z.string().nullable(),
   applicationsAcceptedUntil: z.string().nullable(),
+  fitScore: z.number().int().nullable(),
 });
 
 export type JobListing = z.infer<typeof JobListingSchema>;

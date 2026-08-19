@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
-import { buildJobsSearch, type JobsQueryParams, type JobsDateRange } from '@/lib/jobs/queryParams';
+import { buildJobsSearch, type JobsQueryParams, type JobsDateRange, type JobsFitSort } from '@/lib/jobs/queryParams';
 import { RECENT_WINDOW_DAYS, JOBS_SEARCH_DEBOUNCE_MS, type JobsPageSize } from '@/lib/jobs/constants';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { cn } from '@/lib/utils';
@@ -18,9 +18,19 @@ const RANGE_OPTIONS: { value: JobsDateRange; label: string }[] = [
   { value: 'older', label: 'Older' },
 ];
 
+// Secondary sort by the pipeline's fit_score (see JobsFitSort's doc comment)
+// — deliberately just these three states, not a general sort-by-column
+// control (no alphabetical/numerical sort by other fields is offered).
+const FIT_SORT_OPTIONS: { value: JobsFitSort; label: string }[] = [
+  { value: null, label: 'Default' },
+  { value: 'best', label: 'Most relevant' },
+  { value: 'worst', label: 'Least relevant' },
+];
+
 /**
- * Segmented date-range toggle + company filter + search box + page-size
- * selector for the Job Board. Reads its current state entirely from props
+ * Segmented date-range toggle + relevance-sort toggle + company filter +
+ * search box + page-size selector for the Job Board. Reads its current state
+ * entirely from props
  * (already resolved server-side by src/app/jobs/page.tsx) rather than
  * useSearchParams(), so it needs no Suspense boundary. Every control
  * navigates via router.push() inside a transition, which re-renders the
@@ -40,6 +50,7 @@ const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
     company?: string | null;
     search?: string | null;
     pageSize?: JobsPageSize;
+    fitSort?: JobsFitSort;
   }) => {
     startTransition(() => {
       router.push(
@@ -48,6 +59,7 @@ const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
           company: next.company !== undefined ? next.company : params.company,
           search: next.search !== undefined ? next.search : params.search,
           pageSize: next.pageSize ?? params.pageSize,
+          fitSort: next.fitSort !== undefined ? next.fitSort : params.fitSort,
           page: 1,
         }),
         { scroll: false }
@@ -109,6 +121,40 @@ const JobFilters = ({ params, companyOptions }: JobFiltersProps) => {
                 {isActive && (
                   <motion.span
                     layoutId="job-range-indicator"
+                    className="absolute inset-0 bg-zinc-900 dark:bg-white rounded-md"
+                    transition={prefersReducedMotion ? { duration: 0 } : { type: 'spring', bounce: 0.2, duration: 0.4 }}
+                  />
+                )}
+                <span className="relative">{option.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <span className="text-micro text-zinc-400">Relevance</span>
+        <div className="inline-flex p-1 bg-zinc-100 dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800">
+          {FIT_SORT_OPTIONS.map((option) => {
+            const isActive = params.fitSort === option.value;
+            return (
+              <button
+                key={String(option.value)}
+                type="button"
+                onClick={() => navigate({ fitSort: option.value })}
+                disabled={isPending}
+                aria-pressed={isActive}
+                className={cn(
+                  'relative px-4 py-1.5 text-sm font-semibold rounded-md transition-colors disabled:cursor-wait',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black',
+                  isActive
+                    ? 'text-white dark:text-black'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                )}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="job-fitsort-indicator"
                     className="absolute inset-0 bg-zinc-900 dark:bg-white rounded-md"
                     transition={prefersReducedMotion ? { duration: 0 } : { type: 'spring', bounce: 0.2, duration: 0.4 }}
                   />
