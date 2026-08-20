@@ -60,19 +60,19 @@ export const STORY_COUNT_BY_COMPANY_TYPE: StoryCountByCompanyType[] = [
     id: 'startups-high-growth',
     companyType: 'Startups & High-Growth',
     guidance:
-      'Lean toward Initiative, Delivery, Innovation, and Learning — with Customer Focus as a useful extra if the role touches the product directly.',
+      'Eight to ten stories total is a reasonable target — lean toward Initiative, Delivery, Innovation, and Learning, with Customer Focus as a useful extra if the role touches the product directly.',
   },
   {
     id: 'large-tech',
     companyType: 'Large Tech',
     guidance:
-      'Problem Solving, Cross-Team Leadership, and Trust & Conflict tend to be the core set, with Strategic Leadership, Innovation, and Developing Others expected once you’re interviewing for a senior role.',
+      'Closer to ten to twelve stories given the broader competency spread — Problem Solving, Cross-Team Leadership, and Trust & Conflict tend to be the core set, with Strategic Leadership, Innovation, and Developing Others expected once you’re interviewing for a senior role.',
   },
   {
     id: 'traditional-enterprise',
     companyType: 'Traditional Enterprise',
     guidance:
-      'Delivery, Trust, Customer Focus, and Developing Others carry the most weight, plus Strategic Leadership specifically for roles framed around transformation or modernization work.',
+      'Nine to eleven stories usually covers it — Delivery, Trust, Customer Focus, and Developing Others carry the most weight, plus Strategic Leadership specifically for roles framed around transformation or modernization work.',
   },
 ];
 
@@ -84,28 +84,29 @@ export interface StoryCountByLevel {
 
 /**
  * Rough story-count guidance by target level — how many distinct
- * competencies your story bank needs to cover, not how many stories
- * total (several stories can double up on the same competency).
- * Rendered alongside STORY_COUNT_BY_COMPANY_TYPE.
+ * competencies your story bank needs to cover, plus a rough total story
+ * count derived from a two-to-three-stories-per-competency rule of thumb
+ * (several stories can double up across competencies, so the real number
+ * often runs lower). Rendered alongside STORY_COUNT_BY_COMPANY_TYPE.
  */
 export const STORY_COUNT_BY_LEVEL: StoryCountByLevel[] = [
   {
     id: 'entry',
     level: 'Entry',
     guidance:
-      'Four to six competencies covers it — anchor on Problem Solving, Delivery, and Learning, then round out with one or two stories that speak to culture fit.',
+      'Four to six competencies covers it, so roughly eight to twelve stories total at two to three per competency — anchor on Problem Solving, Delivery, and Learning, then round out with one or two stories that speak to culture fit.',
   },
   {
     id: 'mid',
     level: 'Mid',
     guidance:
-      'Five to seven competencies — everything at entry level, plus Initiative and Trust & Conflict, and at least one of Customer Focus or Innovation.',
+      'Five to seven competencies, or roughly ten to fourteen stories at the same two-to-three-per-competency rate — everything at entry level, plus Initiative and Trust & Conflict, and at least one of Customer Focus or Innovation.',
   },
   {
     id: 'senior-plus',
     level: 'Senior+',
     guidance:
-      'Seven to ten competencies — Strategic Leadership and Developing Others become non-negotiable, plus Innovation and whatever else your target company specifically values.',
+      'Seven to ten competencies, which puts you in the fourteen-to-eighteen-story range even though several will double up across categories — Strategic Leadership and Developing Others become non-negotiable, plus Innovation and whatever else your target company specifically values.',
   },
 ];
 

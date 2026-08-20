@@ -79,10 +79,22 @@ export const LEARNING_AND_GROWTH: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Learns just enough of an unfamiliar tool to complete their own assigned task, leaning on documentation and a reviewer to catch what they missed rather than filling every gap solo.',
+        mid: 'Ramps up on an unfamiliar technology independently to ship their own feature, without a mentor walking them through each step, and closes remaining gaps as real problems surface.',
         senior:
           'Gets a feature to a working state on an unfamiliar stack by learning just enough to be productive quickly, then filling in gaps as real problems surface.',
         staff:
           'Builds a transferable mental model of the new technology fast enough to also unblock teammates ramping up alongside them, not just themselves.',
+        seniorStaff:
+          'Ramps up fast enough to set the adoption pattern and guardrails other teams use when picking up the same unfamiliar technology, rather than leaving each team to rediscover the same pitfalls.',
+        principal:
+          'Ramps up on an emerging technology fast enough to make the org-level call on whether to adopt it at all, and the evaluation framework built along the way becomes how the org vets new technology going forward.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "When our team inherited a Kafka-based pipeline two weeks before a deadline, I got it into a working state by learning just enough to ship safely, then turned that mental model into a runbook so three teammates ramping alongside me didn't each have to relearn it from scratch. I skipped the official certification path and instead traced one message end-to-end through the actual codebase, then paired with a teammate to test failure modes before writing anything down. We shipped the migration on schedule, and the runbook became the team's reference every time someone new touched the pipeline afterward.",
       },
     },
     {
@@ -101,9 +113,21 @@ export const LEARNING_AND_GROWTH: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Teaches a peer by walking them through what they just learned in a single conversation, focused on unblocking that one person on the task in front of them.',
+        mid: "Writes up what they learned — a short doc, a code comment, a quick demo — so a teammate working on the same feature doesn't have to rediscover it independently.",
         senior: 'Teaches a concept effectively enough that one teammate can independently apply it without further help.',
         staff:
           'Builds a resource — a document, a workshop, a shared framework — that scales the teaching past any single one-on-one conversation.',
+        seniorStaff:
+          'Builds teaching that spreads a shared mental model across a whole product area, so multiple teams reason about the concept the same way instead of each developing their own incompatible version.',
+        principal:
+          'Creates a teaching artifact or framework that becomes how the org onboards engineers to the concept going forward, outliving any single team, workshop, or the person who originally wrote it.',
+      },
+      workedExample: {
+        level: 'mid',
+        story:
+          "After spending a week untangling how our feature-flag rollout logic actually worked, I wrote it up as a short doc with a diagram instead of just explaining it once to the teammate who'd asked, since I owned that part of the codebase myself. I mapped the three states a flag could be in and the real decision path between them, then walked that teammate through it directly so they could apply it to their own change without me. They shipped their change without pinging me again, and two other engineers found the doc on their own before it went stale.",
       },
     },
   ],

@@ -17,7 +17,7 @@ export const CUSTOMER_AND_USER_FOCUS: CompetencyChapter = {
   centralTension:
     "Users describe symptoms and current pain, rarely the real underlying need directly. Implementing every literal request produces a cluttered system full of one-off workarounds; ignoring user input entirely produces a technically clean product nobody actually wants. The skill sitting between those two failure modes is investigating the 'why' behind each ask before deciding what to build.",
   culturalConsiderations:
-    "Engineers who never speak with an external customer still practice this competency directly — for infrastructure, platform, or internal-tooling roles, your 'customer' is simply the next team consuming your output, and their friction is exactly as valid a signal as an external user's complaint. At a consumer product company, this competency is tested through direct end-user research and usage data. At an infrastructure or platform team, it shows up as tracing how an API or tooling decision ripples into other teams' daily work. At an enterprise or B2B company, the person using the software and the person who requested the feature are often different people with different needs entirely, and untangling that gap is itself part of the skill being assessed.",
+    "Engineers who never speak with an external customer still practice this competency directly — for infrastructure, platform, or internal-tooling roles, your 'customer' is simply the next team consuming your output, and their friction is exactly as valid a signal as an external user's complaint. At a consumer product company, this competency is tested through direct end-user research and usage data. At an infrastructure or platform team, it shows up as tracing how an API or tooling decision ripples into other teams' daily work — data contracts and lineage tracking exist specifically to formalize that producer/consumer relationship, spelling out schema, freshness, and who gets paged when it breaks. At an enterprise or B2B company, the person using the software and the person who requested the feature are often different people with different needs entirely, and untangling that gap is itself part of the skill being assessed.",
   namedCompanyValues: [{ company: 'Amazon', value: 'Customer Obsession' }],
   relatedCompetencies: [
     {
@@ -70,9 +70,21 @@ export const CUSTOMER_AND_USER_FOCUS: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          "Asks a clarifying question about a specific ticket before building it exactly as spec'd, catching a case where the literal request would have missed the actual need.",
+        mid: 'Independently investigates the real need behind their own feature\'s request — talking to the requester or digging into usage data — without waiting to be told to look deeper.',
         senior: 'Uncovers the real need behind one team or user segment\'s request and builds the right solution instead of the literal one.',
         staff:
           'Notices the same underlying need surfacing as different literal requests across multiple teams, and builds one solution that serves all of them instead of a one-off fix for each.',
+        seniorStaff:
+          "Establishes how a whole product area's teams distinguish real need from literal request in the first place, shaping the intake or discovery process multiple teams now use before committing engineering time to a request.",
+        principal:
+          'Turns need-validation into a durable practice or standard adopted org-wide, changing how the company intakes and vets requests before engineering time is committed, not just how one team does it.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "When three different teams each requested a way to export raw pipeline logs, I noticed all three were really trying to debug failed jobs faster, not archive log files. I built one shared job-inspection dashboard with failure-reason surfacing and one-click replay instead of three one-off export buttons. Debugging time across those teams dropped from roughly a day of Slack back-and-forth to under thirty minutes, and two other teams later adopted the same dashboard unprompted.",
       },
     },
     {
@@ -91,9 +103,21 @@ export const CUSTOMER_AND_USER_FOCUS: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          "Flags a user-facing problem they noticed while implementing a ticket, even though raising it wasn't asked of them, and escalates it to someone senior enough to act on it rather than staying quiet.",
+        mid: 'Pushes back directly on a decision affecting their own feature\'s users with their immediate team or PM, backed by evidence they gathered themselves, without needing someone more senior to carry the case.',
         senior: "Pushes back on a decision affecting their own feature's users, backed by concrete evidence, even when it costs schedule time.",
         staff:
           'Pushes back on a decision affecting users across multiple teams\' surfaces, and earns buy-in from stakeholders who do not report to them.',
+        seniorStaff:
+          "Pushes back on a decision at the level of a whole product area's strategy, aligning leadership and multiple staff engineers around a user-protecting stance that changes the roadmap, not just a single feature's implementation.",
+        principal:
+          'Spends real organizational capital pushing back on a company-wide policy or executive-level bet because of its user impact, significant enough to change a decision that was otherwise already made at the top.',
+      },
+      workedExample: {
+        level: 'principal',
+        story:
+          "I refused to sign off on a platform-wide default opt-in for a new data-sharing feature that leadership wanted to ship to hit an aggressive quarterly growth target, because the design would quietly erode trust with the users most likely to churn. I made the case to the VP sponsoring the rollout using retention data broken out by segment, not just my own read of the risk. The company shipped an explicit opt-in flow instead, missed the quarter's original growth number by a small margin, but retention in the exposed segment held steady rather than dropping the six points our data projected.",
       },
     },
   ],

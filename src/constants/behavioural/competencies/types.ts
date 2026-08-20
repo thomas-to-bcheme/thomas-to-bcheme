@@ -5,14 +5,15 @@
  * rendering component depends on — get this shape right before authoring
  * the 9 chapters against it.
  *
- * `LevelSignal` is reused unchanged from `../careerLevels` — it's still a
- * valid two-point Senior/Staff contrast regardless of which storytelling
+ * `LevelSignal` is reused unchanged from `../careerLevels` — it now spans
+ * the full Junior→Principal ladder (one sentence per rung) rather than a
+ * two-point Senior/Staff contrast, regardless of which storytelling
  * framework (STAR or HSS) wraps the sample question. `HssStoryGuidance`
  * replaces the old `StarGuidance` shape now that High-Signal Storytelling,
  * not STAR, is the page's hero framework.
  */
 
-import type { LevelSignal } from '../careerLevels';
+import type { CareerLevelId, LevelSignal } from '../careerLevels';
 
 export type CompetencyId =
   | 'taking-initiative'
@@ -53,6 +54,11 @@ export interface CompetencySampleQuestion {
   framingNotes: string;
   hssGuidance: HssStoryGuidance;
   levelSignal: LevelSignal;
+  /** One concrete 2–4 sentence HSS-shaped narrated example (a headline, one
+   *  core beat, a result) anchored at whichever rung of the ladder is most
+   *  illustrative for this specific prompt — a single worked example per
+   *  sample question, not one per level. */
+  workedExample: { level: CareerLevelId; story: string };
 }
 
 export interface CompetencyKeyTakeaways {

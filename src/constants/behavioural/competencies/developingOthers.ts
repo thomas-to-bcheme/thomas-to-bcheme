@@ -87,8 +87,20 @@ export const DEVELOPING_OTHERS: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Helps a peer debug or walks a newer teammate through a piece of code they own, informally and without any mentoring title or relationship behind it.',
+        mid: "Takes on an informal mentoring role for one junior teammate inside their own feature area, explaining the reasoning behind a design decision rather than just handing over the fix.",
         senior: 'Invests deliberately in one or two engineers, calibrating in code review and handing over stretch work, then confirms the skill actually transferred by stepping back.',
         staff: 'Builds a mentoring approach that scales past a single relationship, delegating well-understood parts of the work to develop others while personally retaining the highest-risk, least-understood parts.',
+        seniorStaff:
+          'Shapes how mentoring works across a whole product area, getting other seniors and staff engineers to adopt a consistent calibration approach rather than mentoring individuals directly.',
+        principal:
+          'Sets the org-level expectation for how junior engineers get grown at all, embedding it into leveling criteria or onboarding structure that outlives any single mentoring relationship.',
+      },
+      workedExample: {
+        level: 'senior',
+        story:
+          "I turned a junior engineer's dependency on me for code review into independent judgment by narrating my own reasoning instead of leaving 'fix this' comments. For six weeks I paired with them on every PR, explaining the trade-off behind each suggestion rather than dictating the fix, then handed them a stretch ticket outside their comfort zone and stayed hands-off unless asked. They shipped it with two clarifying questions instead of the dozen they'd have needed a quarter earlier, and their review turnaround on other people's PRs got fast enough that I stopped being their team's bottleneck.",
       },
     },
     {
@@ -109,9 +121,21 @@ export const DEVELOPING_OTHERS: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Helps a peer on their own team debug a specific problem when asked, building goodwill through being useful rather than attempting to teach anything unsolicited.',
+        mid: 'Offers input to a peer on an adjacent workstream when asked, sharing what worked on their own feature without assuming the peer wants a mentor.',
         senior: 'Builds credibility with one peer or adjacent-team engineer through real help first, then influences their approach on a specific problem without any reporting relationship.',
         staff:
           'Develops people across several teams they have no authority over at all, relying entirely on earned credibility and reusable resources rather than 1:1 time, since staff-level impact runs mostly through people outside their own reporting line.',
+        seniorStaff:
+          'Shapes how several staff engineers across a product area approach a recurring class of problem, mostly through written guidance and design reviews rather than any single relationship.',
+        principal:
+          "Shifts how engineers across the org think about a whole practice area, mostly through frameworks or writing that reaches people they'll never work with directly, rather than through any individual relationship at all.",
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "I earned enough credibility across three teams with no reporting relationship to any of them that they started defaulting to my judgment on caching strategy without me pushing it. I picked up an unowned bug on another team's service purely to be useful, then wrote up the root cause and a reusable caching pattern rather than just fixing it and moving on, and shared it in a design review instead of a DM. Two of the three teams adopted the pattern directly, and one of their engineers now teaches it to new hires without me in the room.",
       },
     },
   ],

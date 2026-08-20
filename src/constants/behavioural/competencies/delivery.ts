@@ -72,8 +72,17 @@ export const DELIVERY: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior: 'Flags to their lead when new requests get added on top of an assigned task, rather than silently absorbing the extra work into their own estimate.',
+        mid: "Owns the scope of their own feature end-to-end and renegotiates newly added requests directly with whoever is asking, without needing a lead to step in.",
         senior: 'Recognizes creeping scope on their own project and renegotiates it directly with the requester before it threatens the deadline.',
         staff: 'Recognizes scope creep as a symptom of a missing prioritization process across a program, and establishes a lightweight mechanism the team reuses on future projects.',
+        seniorStaff: 'Recognizes scope creep as a recurring failure mode across a whole product area and puts a scoping or intake discipline in place that multiple staff engineers and their teams adopt.',
+        principal: 'Establishes an org-wide scoping or change-control norm for how new requests get weighed against a committed deadline, one other divisions adopt as their default rather than a one-off fix for a single program.',
+      },
+      workedExample: {
+        level: 'senior',
+        story:
+          "I kept our onboarding launch on schedule by renegotiating which of five new integration requests actually needed to ship on day one, instead of absorbing all of them into the same deadline. When the integration count grew from three to eight two weeks before launch, I ranked each addition against what the public launch date actually required, then took that ranking to the requester and got sign-off to defer the two lowest-risk integrations by two weeks. We hit the original launch date with everything that mattered, and the deferred two shipped cleanly two weeks later with no incident.",
       },
     },
     {
@@ -92,8 +101,46 @@ export const DELIVERY: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior: 'Flags to their lead when two assigned tasks have competing deadlines, rather than silently trying to do both in parallel and risking both slipping.',
+        mid: "Independently prioritizes between two competing deadlines within their own feature's scope, ranking by impact, without waiting for a lead to make the call.",
         senior: 'Prioritizes between two of their own competing deadlines using clear impact reasoning, and communicates the trade-off proactively.',
         staff: 'Prioritizes across deadlines owned by multiple teams, aligning stakeholders on shared criteria so the trade-off does not need to be re-litigated each time it recurs.',
+        seniorStaff: "Establishes the prioritization framework a whole product area's teams use to rank competing deadlines against each other, so staff engineers across multiple teams apply the same criteria instead of renegotiating it from scratch each time.",
+        principal: 'Sets an org-wide standard for how competing deadlines get triaged against business priority, one multiple divisions adopt as their default rather than resolving each conflict ad hoc at the top.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "I was staffed on two independent efforts — a payments migration due in three weeks and a compliance fix due in two — and neither team lead knew the other deadline existed until I flagged it. I ranked the two by blast radius: the compliance fix blocked a hard regulatory deadline, while the payments migration had two weeks of buffer built into its target date. I proposed leading the compliance fix myself for two weeks and handing the payments migration's implementation to a teammate I paired in on the codebase for a single afternoon. The compliance fix shipped on the regulatory deadline, and the payments migration landed four days after its original date with no missed downstream commitments.",
+      },
+    },
+    {
+      id: 'managing-delivery-expectations-upward',
+      category: 'Managing Delivery Expectations',
+      prompt: 'Tell me about a time you had to communicate a delivery risk or likely delay to leadership or stakeholders.',
+      framingNotes:
+        'Tests whether you surface risk proactively, with enough lead time for a decision to still be made, rather than whether you delivered bad news gracefully after the deadline was already unrecoverable.',
+      hssGuidance: {
+        contextHint: 'State how far out from the deadline you were when you first recognized delivery was genuinely at risk — the lead time you gave is the whole point.',
+        headlineHint: 'Your headline should assert the risk you surfaced and the option or recommendation you brought with it, not just that you told someone about a delay.',
+        behavioralCoreMoments: [
+          'The specific signal that told you the deadline was genuinely at risk, not just tight.',
+          'How you framed the risk to leadership — with options or a recommendation, not just a warning.',
+          'What leadership decided, and the confirmed outcome versus the original date.',
+        ],
+      },
+      levelSignal: {
+        junior: "Tells their lead as soon as they suspect their piece of a deadline is slipping, rather than waiting until the day it's due to say something.",
+        mid: "Proactively tells their own feature's stakeholders about a likely delay as soon as they see it coming, along with the cause, without waiting to be asked for a status update.",
+        senior: 'Surfaces a delivery risk to leadership early enough that a decision can still be made, and brings a recommendation or options rather than just a warning.',
+        staff: "Surfaces a delivery risk that spans multiple teams to leadership, first aligning the affected team leads on one shared framing so leadership isn't hearing conflicting versions of the same risk.",
+        seniorStaff: 'Manages delivery-risk communication for a whole product area\'s roadmap, setting the norm for how far in advance leadership across the division expects to hear about a likely slip.',
+        principal: 'Establishes how the org communicates delivery risk to executive leadership in the first place, changing an expectation multiple divisions now operate under rather than just handling one escalation well.',
+      },
+      workedExample: {
+        level: 'senior',
+        story:
+          "Six weeks into a twelve-week migration, I extrapolated our first three sprints' actual velocity and saw we were tracking to land three weeks late. I brought that projection to my director along with two options — cut the migration's least-used legacy format from scope, or push the date by three weeks — six weeks before the original deadline, instead of waiting to see if we'd somehow catch up. Leadership chose to cut scope, and the migration shipped on the original date, with the deferred format following four weeks later as a separate, lower-priority release.",
       },
     },
   ],
@@ -101,6 +148,7 @@ export const DELIVERY: CompetencyChapter = {
     'Shipping despite obstacles or changing plans — blockers slow the work down, they do not stop it.',
     'Making smart trade-offs: protecting what is critical, deliberately dropping nice-to-haves.',
     'Maintaining momentum by catching issues early, so stakeholders are never surprised at the deadline.',
+    'Citing delivery health in concrete terms — a before/after in deployment frequency, lead time for changes, change failure rate, or mean time to recovery (the DORA metrics) — instead of a vague sense that shipping felt smoother.',
   ],
   redFlags: [
     'Blaming others or circumstances for a delivery failure instead of owning what was within your control.',

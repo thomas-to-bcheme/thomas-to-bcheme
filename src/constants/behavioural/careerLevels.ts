@@ -10,21 +10,19 @@
  */
 
 /**
- * Senior vs. staff framing for a single category — used by the per-category
- * cards below, which intentionally stay a two-point contrast (senior vs.
- * staff) rather than the full ladder, to keep each card scannable.
- */
-export interface LevelSignal {
-  senior: string;
-  staff: string;
-}
-
-/**
  * The full career ladder the general framework section walks through —
  * ordered Junior → Principal. Array order (not object key order) drives
  * render order everywhere this is consumed.
  */
 export type CareerLevelId = 'junior' | 'mid' | 'senior' | 'staff' | 'seniorStaff' | 'principal';
+
+/**
+ * Level-by-level framing for a single category — one sentence per rung of
+ * the full Junior→Principal ladder, used by every competency chapter's
+ * sample-question cards so each question's level signal matches the same
+ * ladder shape as `LEVEL_DIMENSIONS` rather than a narrower senior/staff slice.
+ */
+export type LevelSignal = Record<CareerLevelId, string>;
 
 export interface CareerLevelMeta {
   id: CareerLevelId;
@@ -141,11 +139,11 @@ export const LEVEL_DIMENSIONS: LevelDimension[] = [
       mid: 'The hardest part was a design decision scoped entirely to your own feature, with a fairly clear — if not trivial — right answer once you dug in.',
       senior: "The hardest part of the story is an architectural trade-off scoped to your own team's system.",
       staff:
-        'The hardest part of the story is reconciling competing trade-offs held by multiple teams at once — the difficulty is organizational as much as it is technical.',
+        'The hardest part of the story is reconciling competing trade-offs held by multiple teams at once — the difficulty is organizational as much as it is technical, like reconciling conflicting SLOs or error budgets that two different teams each own.',
       seniorStaff:
         'The hardest part was choosing between multiple defensible strategic directions for a whole division, each with real champions and real costs, with no clean answer.',
       principal:
-        'The hardest part was a trade-off with no local optimum — any choice meaningfully disadvantages some part of the org, and the job is choosing well anyway and owning that call.',
+        'The hardest part was a trade-off with no local optimum — any choice meaningfully disadvantages some part of the org, and the job is choosing well anyway and owning that call, the kind of decision that gets settled through a formal RFC or ADR-style review rather than a hallway conversation.',
     },
   },
 ];

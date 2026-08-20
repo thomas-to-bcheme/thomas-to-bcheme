@@ -76,10 +76,22 @@ export const EARNING_TRUST_AND_CONFLICT: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Raises a technical concern to a reviewer or more senior teammate instead of silently going along with it, then implements the agreed approach without still quietly resenting the call.',
+        mid: "Disagrees with a design choice on their own feature, backs it with a working prototype or a clear trade-off write-up, and defers to the tech lead's final call without re-litigating it later.",
         senior:
           'Resolves a disagreement with a peer or manager on their own team by making a well-reasoned case once, then commits fully once a decision is made.',
         staff:
           "Resolves a standoff between peers at their own level with no shared manager to appeal to, settling it on the technical and business merits alone.",
+        seniorStaff:
+          'Reconciles opposing technical approaches held by two staff engineers whose teams both have a legitimate claim, and lands a direction the whole product area commits to.',
+        principal:
+          'Settles a disagreement over an org-wide technical direction with no single authority who can simply rule on it, using a formal review like an ADR to make the trade-offs and the final call explicit.',
+      },
+      workedExample: {
+        level: 'senior',
+        story:
+          "I disagreed with my tech lead's choice of a write-through cache for a new endpoint and made the case for write-behind instead, backed by data rather than a preference. I ran a two-day load-test spike showing write-through added 40ms to p99 latency under peak traffic, then walked her through the numbers in a fifteen-minute sync and let her make the final call once she'd seen them. She switched the design, and when a later review questioned the caching strategy, I defended it as the right call on the merits, not just as something I'd pushed for.",
       },
     },
     {
@@ -98,9 +110,21 @@ export const EARNING_TRUST_AND_CONFLICT: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Raises a concern to their manager privately rather than staying silent or venting to peers about it, and executes the final decision fully once it is made.',
+        mid: "Pushes back on a decision from their manager or tech lead with a specific technical reason, drops it after one round if the reasoning doesn't land, and executes without visible resentment either way.",
         senior: 'Raises a disagreement once, backed by a clear rationale, and commits fully to executing the decision regardless of which way it goes.',
         staff:
           "Has already built enough credibility with leadership that their pushback gets seriously reconsidered rather than read as insubordination, and knows how to earn that credibility deliberately rather than assuming it.",
+        seniorStaff:
+          'Times a disagreement with a director- or VP-level decision affecting a whole product area to land before it is locked in rather than after, and rallies the other staff engineers behind whichever direction ultimately wins.',
+        principal:
+          'Challenges a company-wide bet made by the executive team, accepting the risk of being read as difficult rather than rigorous, and stakes their own credibility on being right rather than simply on being heard.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "My director wanted to ship a new onboarding flow two weeks ahead of the original plan to hit a quarterly OKR, but I disagreed because we hadn't load-tested the new signup path. I raised it once in our weekly sync with load numbers from a staging run showing the service degrading past 200 concurrent signups, and asked for one more week rather than escalating past her. She held the original date but agreed to ship behind a feature flag we could kill instantly if latency spiked, and when that flag saved us during a traffic spike on launch day, she started asking me directly for input on the next two launches without my having to volunteer it.",
       },
     },
     {
@@ -119,10 +143,56 @@ export const EARNING_TRUST_AND_CONFLICT: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Accepts feedback on a code review or a missed edge case without getting defensive, and visibly applies it on the very next piece of work rather than just saying "noted."',
+        mid: 'Owns a bug they shipped that broke a feature for their own team, writes the fix themselves, and flags the root cause in standup instead of waiting for someone else to notice it.',
         senior:
           "Owns a mistake affecting their own team, changes a specific, nameable behavior, and rebuilds trust through consistency over the following months.",
         staff:
           'Owns a mistake with consequences reaching beyond their own team, surfaces it proactively before being asked, and uses the moment to model psychological safety for people watching how they handle it.',
+        seniorStaff:
+          'Owns a strategic misstep that cost a whole product area real time or money, names the decision-making flaw that caused it rather than just the outcome, and changes how the whole area makes that class of decision going forward.',
+        principal:
+          'Owns a company-level failure in front of executives or the board, absorbs the reputational cost publicly rather than letting it land on a more junior person who happened to be in the room, and turns the postmortem into a lasting change to how the org operates.',
+      },
+      workedExample: {
+        level: 'mid',
+        story:
+          "I shipped a migration script with a missing null-check that silently corrupted about 200 user preference records over a weekend before anyone noticed. I flagged it myself in Monday standup before my manager saw the support tickets, walked through exactly which check I'd skipped and why my test coverage hadn't caught it, and had a fix and a backfill script ready within the hour. I also added a dry-run-against-a-snapshot step to our migration checklist, which caught two similar bugs in the following two months before either one shipped.",
+      },
+    },
+    {
+      id: 'building-trust-proactively',
+      category: 'Building Trust Before You Need It',
+      prompt: 'Tell me about how you earned the trust of a new team or a skeptical stakeholder before you needed to draw on that trust.',
+      framingNotes:
+        'Tests the proactive half of this competency rather than the reactive half — consistent, low-drama reliability sustained over time, not a single dramatic save under pressure.',
+      hssGuidance: {
+        contextHint: 'Name specifically who was skeptical of you and why — a new team, a stakeholder burned by a past engineer — not just that trust needed building in the abstract.',
+        headlineHint: 'Your headline should assert the deliberate thing you did to build trust, not just that trust eventually developed over time.',
+        behavioralCoreMoments: [
+          'The specific small commitments you made and kept, visibly, before anyone was watching closely.',
+          'A moment you chose transparency over looking good, even when it cost you something in the short term.',
+          'The evidence that the trust actually paid off later, when you needed it.',
+        ],
+      },
+      levelSignal: {
+        junior:
+          'Delivers on small commitments consistently — showing up prepared, hitting deadlines on assigned tickets — so a new team stops double-checking their work within the first few weeks.',
+        mid: 'Proactively over-communicates status on their own feature to a team still unfamiliar with their work, surfacing risk early rather than waiting to be asked, until check-ins stop being necessary.',
+        senior:
+          'Builds credibility with a skeptical stakeholder by being the person who tells them uncomfortable truths early, rather than the person who always brings good news.',
+        staff:
+          "Earns trust across a team they don't manage by making a visible, no-strings-attached investment in their success first — unblocking their work or sharing hard-won context — well before asking anything of them in return.",
+        seniorStaff:
+          "Builds trust with other staff engineers and directors across a product area through a track record of calling their own initiatives' failures honestly, not just their wins, so their assessments get taken at face value.",
+        principal:
+          'Earns trust at the executive level by consistently giving an accurate, unvarnished read on technical risk even when a rosier answer would be easier to hear, so their voice carries weight on decisions no one else in the room can independently verify.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "When I joined a project alongside a product lead who'd been burned by two previous eng leads missing dates without warning, I started sending her a Friday risk update every week, whether the news was good or bad, before she ever asked for one. Three weeks in, I flagged that a third-party API dependency was going to slip our launch by a week, well before it became a crisis, and gave her the option to communicate it early rather than finding out from a delay notice. By the time we hit a genuinely hard trade-off two months later, she let me make the call on scope myself without escalating it to her VP first.",
       },
     },
   ],
@@ -130,6 +200,7 @@ export const EARNING_TRUST_AND_CONFLICT: CompetencyChapter = {
     'Constructive conflict resolution — disagreeing on ideas, not people, and fully supporting the final call even when it was not your preference.',
     'Direct, transparent communication, including surfacing bad news early rather than letting it surface on its own.',
     'Reliability and accountability sustained over time, not just in the one moment being asked about.',
+    'Surfacing your own contribution to an incident in the postmortem before being asked, in line with blameless-postmortem norms — owning your part of the timeline without turning the review into blame-assignment.',
     'Bridging genuinely different perspectives instead of just picking a side.',
     'Creating psychological safety for others to disagree with you.',
   ],

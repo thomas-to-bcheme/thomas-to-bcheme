@@ -12,7 +12,7 @@ export const INNOVATION: CompetencyChapter = {
   keyDistinction: {
     label: 'Innovation vs. Optimization',
     explanation:
-      "Optimization takes an existing method and makes it work better — adding an index to speed up a slow query. Innovation replaces the method entirely so the original problem stops existing — redesigning the data-access layer so that slow query is no longer something anyone needs to run. The test: could someone else have reached the same result by refining what already existed? If yes, it's optimization. If it required inventing something incremental refinement couldn't reach, it's innovation. Sometimes you set out to optimize and realize partway through that only a new approach will actually work — that pivot is itself the innovation story.",
+      "Optimization takes an existing method and makes it work better — adding a cache in front of a slow synchronous call between two services. Innovation replaces the method entirely so the original problem stops existing — replacing that same synchronous, point-to-point coupling with an event-driven architecture, so the calling service no longer needs to know the downstream service exists at all. The test: could someone else have reached the same result by refining what already existed? If yes, it's optimization. If it required inventing something incremental refinement couldn't reach, it's innovation. Sometimes you set out to optimize and realize partway through that only a new approach will actually work — that pivot is itself the innovation story.",
   },
   centralTension:
     'Pure creativity with no constraints produces ideas that are interesting but impractical; pure feasibility-focus never risks anything ambitious enough to count as new. The best innovation resolves this by simplifying — it removes a layer of complexity the old approach required, rather than adding a clever new layer on top of it.',
@@ -76,8 +76,19 @@ export const INNOVATION: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior: 'Invents a small new approach that solves a real problem in their own individual work, even if nobody beyond them has adopted it yet.',
+        mid: 'Invents a new approach inside their own feature or workstream and gets teammates to adopt it too, beyond just their own use of it.',
         senior: 'Builds a new approach deliberately for their whole team, replacing a known limitation with something the team adopts as the new default.',
         staff: 'Builds a new approach that crosses team boundaries, changing how more than one team solves a shared class of problem going forward.',
+        seniorStaff:
+          'Builds a new approach that becomes the default across a whole product area, with multiple staff engineers and their teams adopting it as the standard.',
+        principal:
+          "Builds a new approach that becomes an org-wide or industry-wide standard, reshaping how many divisions — or other companies — solve the same class of problem.",
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "I retired a fraud-scoring rules engine — hundreds of hand-tuned if/else thresholds three teams were each patching independently — and replaced it with a single trained model, because no amount of further threshold tuning could close the gap between what the rules could express and what the data actually showed. I built a shared feature store the model trained against and all three teams' services read from at inference time, eliminating the training-serving skew that came from each team computing similar features slightly differently in their own service. Fraud catch rate improved by double digits, and the three teams stopped shipping conflicting threshold changes into the same underlying decision.",
       },
     },
     {
@@ -97,9 +108,20 @@ export const INNOVATION: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior: 'Recognizes when their own first attempt at a new approach did not work, asks for help diagnosing why, and ships a corrected version with guidance.',
+        mid: 'Recognizes when their own first attempt at a new approach falls short, diagnoses the specific cause themselves, and ships a corrected version their team adopts.',
         senior: 'Recognizes their own failed first attempt quickly, iterates based on the specific reason it fell short, and lands an adopted version within their team.',
         staff:
           'Treats a failed first attempt as a signal about a flawed shared assumption across teams, and course-corrects the approach so the second attempt succeeds where multiple teams had separately struggled.',
+        seniorStaff:
+          'Treats a failed first attempt as a signal about a flawed assumption held across a whole product area, and resets the approach so the corrected version becomes the standard other staff engineers and their teams adopt.',
+        principal:
+          "Treats a failed first attempt at an org-wide approach as a signal the whole company was reasoning about the problem incorrectly, and resets the direction so the corrected version becomes the org's new standard.",
+      },
+      workedExample: {
+        level: 'junior',
+        story:
+          "My first attempt at automating a manual weekly report broke because I'd assumed the source spreadsheet's column order was fixed, and reading by header name instead of position was what actually made the automation reliable. I flagged the mislabeled output to my lead as soon as I noticed it rather than letting it run unnoticed, then rewrote the script to read columns by header with a mentor reviewing the fix. The corrected version ran unattended for the rest of the quarter with no further mislabeling incidents.",
       },
     },
   ],

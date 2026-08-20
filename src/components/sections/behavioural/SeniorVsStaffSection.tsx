@@ -8,35 +8,11 @@ import {
   LEVEL_SELF_CHECK_QUESTIONS,
   SENIOR_TO_STAFF_SHIFT,
   SELF_ASSESSMENT_GUIDANCE,
-  type CareerLevelId,
 } from '@/constants/behavioural/careerLevels';
+import { LEVEL_BADGE_COLORS, LEVEL_BORDER_CLASSES } from '@/lib/careerLevelPresentation';
 
 const LIST_ITEM_CLASS =
   "text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-4 relative before:content-['—'] before:absolute before:left-0 before:text-zinc-300 dark:before:text-zinc-700";
-
-/**
- * Badge color per rung of the ladder — purely presentational, kept out of
- * the constants file since color isn't content. Reads cool-to-warm as
- * scope grows, reusing the Badge component's existing palette (no new
- * tokens): zinc → green → blue → purple → amber → rose.
- */
-const LEVEL_BADGE_COLORS: Record<CareerLevelId, 'zinc' | 'green' | 'blue' | 'purple' | 'amber' | 'rose'> = {
-  junior: 'zinc',
-  mid: 'green',
-  senior: 'blue',
-  staff: 'purple',
-  seniorStaff: 'amber',
-  principal: 'rose',
-};
-
-const LEVEL_BORDER_CLASSES: Record<CareerLevelId, string> = {
-  junior: 'border-l-zinc-300 dark:border-l-zinc-600',
-  mid: 'border-l-emerald-400 dark:border-l-emerald-500',
-  senior: 'border-l-blue-400 dark:border-l-blue-500',
-  staff: 'border-l-purple-400 dark:border-l-purple-500',
-  seniorStaff: 'border-l-amber-400 dark:border-l-amber-500',
-  principal: 'border-l-rose-400 dark:border-l-rose-500',
-};
 
 /**
  * General level-signaling framework, rendered once before the per-category

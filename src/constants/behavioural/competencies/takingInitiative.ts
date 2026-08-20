@@ -17,7 +17,7 @@ export const TAKING_INITIATIVE: CompetencyChapter = {
   centralTension:
     'Knowing when to just act versus when to check first — total autonomy risks chaos, needing permission for everything guarantees stagnation. Good initiative is judgment about which problems you can solve independently while still respecting what others already own.',
   culturalConsiderations:
-    'At a startup, initiative is close to the default expectation — the org depends on people picking up unowned work constantly. At a large, process-heavy company, the same unrequested action can read as overstepping unless you loop in the right owner first; the skill is the same, but who you check with before acting changes. The same tension shows up in whether to mention working nights or weekends to fix something: there is no universally right answer, only whether that detail matches the work style the target company actually rewards.',
+    "At a startup, initiative is close to the default expectation — the org depends on people picking up unowned work constantly. At a large, process-heavy company, the same unrequested action can read as overstepping unless you loop in the right owner first; the skill is the same, but who you check with before acting changes. The same tension shows up in whether to mention working nights or weekends to fix something. At some companies, especially early-stage startups, that detail reads as dedication — a sign you'll do what it takes when something breaks. At others, especially larger, process-mature companies, the same detail reads as poor prioritization or a burnout risk — evidence you couldn't get the work done inside normal hours, not evidence of commitment. There's a level dimension underneath this too: repeatedly being the one who saves a project by working nights and weekends signals you're a bottleneck once you're operating at senior and above, not that you scale — if the team can only ship when you personally burn extra hours, that's a gap in the system, not a strength in you. The more senior-calibrated version of that story usually isn't repeating the heroics; it's what you did afterward — growing someone else into the scope you'd been quietly covering, or fixing the process or coverage gap that made the heroics necessary in the first place. So there's no universally right answer to whether you mention the nights-and-weekends detail — only whether it matches the work style the target company actually rewards, and whether you pair it with the fix, not just the sacrifice.",
   namedCompanyValues: [
     { company: 'Amazon', value: 'Bias for Action' },
     { company: 'Netflix', value: 'Freedom and Responsibility' },
@@ -79,9 +79,21 @@ export const TAKING_INITIATIVE: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Notices a small inefficiency or bug inside their own assigned component, fixes it alongside the task they were given, and flags it to their reviewer rather than expanding scope on their own.',
+        mid: 'Notices a gap affecting their own feature or workstream and fixes it independently, without waiting on a lead to sign off, though the fix still stays inside the surface area they already own.',
         senior: "Notices and fixes a gap affecting their own team's day-to-day effectiveness, on their own initiative, without being asked.",
         staff:
           'Notices a gap affecting multiple teams that nobody owns because it falls between team boundaries, and builds something durable enough that other teams adopt it as shared infrastructure or practice.',
+        seniorStaff:
+          'Notices a gap spanning a whole product area that no single team was ever assigned to own, and gets several staff engineers aligned on adopting the fix as the new default rather than an optional extra.',
+        principal:
+          "Notices a structural gap no division's mandate actually covers, and creates a capability or standard multiple divisions later build on as a foundation rather than treating it as a one-off patch.",
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "I noticed three teams were each quietly building their own version of a deploy health-check script because no team owned CI reliability tooling, so I built a shared library and got it adopted as the default before anyone assigned me to. I spotted the duplication while debugging an unrelated incident, prototyped a single reusable health-check module over a few days without asking permission first, then walked it past the three team leads and asked what would make switching worth it to them. All three teams migrated onto it within the quarter, and it's now the template every new service scaffolds against.",
       },
     },
     {
@@ -98,9 +110,21 @@ export const TAKING_INITIATIVE: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Asks clarifying questions to narrow an ambiguous task down to something well-specified, then checks their interpretation with their lead before building much on top of it.',
+        mid: "Interprets an ambiguous task inside their own feature scope, makes a reasonable call about what 'done' means without waiting for someone to define it, and course-corrects quickly if that read turns out wrong.",
         senior: 'Defines the goal and success criteria for their own unclear task, then delivers against the bar they set.',
         staff:
           "Defines the goal for a problem where the right approach isn't obvious to anyone yet, producing enough structure that other teams can align around it.",
+        seniorStaff:
+          'Defines the goal and success criteria for a problem nobody in the product area has framed yet, and gets several staff engineers to align their own teams around the direction set.',
+        principal:
+          "Frames the problem itself when even the question being asked is unclear at the org level, and the definition of success they set becomes the reference other divisions plan against.",
+      },
+      workedExample: {
+        level: 'senior',
+        story:
+          "I was asked to 'improve our alerting' with no further spec, so I spent the first week defining what 'improved' would even mean before writing any code. I interviewed the on-call rotation about which alerts they trusted versus muted, turned that into three concrete success criteria — lower false-positive rate, faster time-to-acknowledge, zero missed sev-1s — and built against those bars instead of guessing at scope. False-positive alerts dropped by half within the quarter, and the criteria I wrote became the checklist other engineers used to evaluate new alerts before merging them.",
       },
     },
   ],

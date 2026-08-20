@@ -32,7 +32,7 @@ export const FIT_TENSION_AXES: FitTensionAxis[] = [
     description:
       'Whether shipping a rough version fast is judgment or a red flag depends entirely on what breaks if you’re wrong.',
     example:
-      'Shipping an MVP and iterating on feedback reads as good instinct at a startup and as recklessness at a company where a bug reaches a hospital chart or a bank balance.',
+      'Shipping an MVP and iterating on feedback reads as good instinct at a startup, but a mature org reconciles the tension with canary releases, feature flags, and blast-radius-limited rollouts instead of a bug reaching a hospital chart or a bank balance.',
   },
   {
     id: 'excellence-pragmatism',
@@ -67,7 +67,7 @@ export const FIT_TENSION_AXES: FitTensionAxis[] = [
     description:
       'Whether a decision needs a number behind it, or whether experienced judgment is trusted to stand on its own.',
     example:
-      'Running three tests to settle a small decision reads as rigor at a data-driven company and as overkill — even mildly concerning — at one that trusts a senior engineer’s gut.',
+      'Running a structured A/B test on an experimentation platform to settle a small decision reads as rigor at a data-driven company and as overkill — even mildly concerning — at one that trusts a senior engineer’s gut.',
   },
   {
     id: 'specialist-generalist',

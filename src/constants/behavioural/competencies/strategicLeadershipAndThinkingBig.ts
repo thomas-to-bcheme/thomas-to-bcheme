@@ -15,7 +15,7 @@ export const STRATEGIC_LEADERSHIP_AND_THINKING_BIG: CompetencyChapter = {
       'Strategic leadership is the seeing-and-aligning skill — spotting the shared root cause and getting multiple teams to act on it together. Thinking big is the ambition skill — proposing a rebuild rather than a patch. A story can have one without the other: a well-run, purely local improvement has thinking-big without the cross-team leadership; a grand company-wide proposal that never got adopted has thinking-big without the strategic leadership needed to land it.',
   },
   centralTension:
-    'Announcing a sweeping, company-wide vision all at once invites reflexive resistance and usually stalls before it starts. Staying purely incremental never produces change at the scale thinking big actually requires. The resolution is sequencing: win over the one team hurting enough to try something new, make their success visible, and use that proof to pull in the next team — a chain of proof points, not a single announcement.',
+    'Announcing a sweeping, company-wide vision all at once invites reflexive resistance and usually stalls before it starts. Staying purely incremental never produces change at the scale thinking big actually requires. The resolution is sequencing: win over the one team hurting enough to try something new, make their success visible, and use that proof to pull in the next team — a chain of proof points, not a single announcement. Mature orgs formalize that chain into a written record too — an RFC, an architecture decision record (ADR), or a Well-Architected-Framework-style structured trade-off review — so the reasoning and the trade-off survive past the conversation that produced it.',
   culturalConsiderations:
     "Amazon names this directly as a leadership principle — Think Big. Google doesn't name it as a formal value, but treats it as the deciding factor in staff-and-above promotion committees; the skill is identical, it's just packaged as a leveling bar instead of a stated value. Either way, the sequencing this competency requires — winning one team before the next — matters more in large, multi-team orgs where you have no positional authority over most of the people whose buy-in you need; in a small org, the same change might only need one conversation.",
   namedCompanyValues: [{ company: 'Amazon', value: 'Think Big' }],
@@ -69,9 +69,21 @@ export const STRATEGIC_LEADERSHIP_AND_THINKING_BIG: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          "Notices friction with how their own small piece of work has always been done, proposes a narrow fix scoped to their own task, and defers to their reviewer's judgment rather than pressing the case if it meets pushback.",
+        mid: "Proposes a change scoped to their own feature or workstream, wins over their immediate team with a before/after comparison, and doesn't need to coordinate anyone outside it to make the change stick.",
         senior: 'Wins over their own team and one adjacent team using a low-risk pilot or data, converting specific holdouts rather than issuing a mandate.',
         staff:
           'Recognizes the resistance as one symptom of a pattern spanning several teams, and re-sequences the change into a chain of proof points that lands across all of them without needing each team persuaded individually from scratch.',
+        seniorStaff:
+          "Recognizes the resistance as evidence of an outdated assumption baked into a whole product area, and sequences the same chain-of-proof-points approach across several staff engineers' teams until it becomes the product area's new default.",
+        principal:
+          'Recognizes the resistance as evidence of an assumption baked into how the org itself operates, and turns the change into a standard that multiple divisions adopt without each needing to be individually persuaded from scratch.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "Three teams were each manually verifying deploy safety before every release because our pipeline had never had automated rollback checks — I recognized that shared root cause and proposed a canary-based auto-rollback service instead of asking each team to fix their own process. I piloted it with the team feeling the most pain first, showed them the manual-verification time it removed, then used that concrete result to bring the next two teams on board without re-litigating the case each time. Six months later, all three teams had adopted it, and manual pre-release verification was gone entirely from our deploy process.",
       },
     },
     {
@@ -90,9 +102,21 @@ export const STRATEGIC_LEADERSHIP_AND_THINKING_BIG: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior:
+          'Leads by example within their own task or component — voicing a clear opinion on a technical question when asked, but not yet driving a decision beyond what they personally own.',
+        mid: 'Leads through influence on decisions scoped to their own feature or workstream, stating a clear recommendation to their immediate team instead of deferring every call upward.',
         senior: 'Leads through influence on a specific decision inside their own team plus one neighboring team, stating a clear position instead of a neutral menu of options.',
         staff:
           "Leads through influence across teams that don't report to them at all, aligning them around a direction they choose to follow because the reasoning and the sequencing hold up — not because of positional authority.",
+        seniorStaff:
+          'Leads through influence across a whole product area, aligning several staff engineers and their teams around a direction by making the reasoning legible enough that each of them chooses to adopt it independently.',
+        principal:
+          'Leads through influence at the org level, shaping a direction multiple divisions choose to follow because the reasoning holds up under scrutiny from people who have no obligation to listen to them at all.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          "Two platform teams were headed toward incompatible service-mesh configurations, and neither reported to me, so I got them aligned by tracing both proposals back to a shared latency constraint neither team had stated explicitly. I built a small prototype comparing both approaches against that constraint, then walked it to both tech leads separately and let the data, not my title, make the case. Both teams adopted the same configuration within a month, and the alignment held a year later without me needing to keep pushing it.",
       },
     },
   ],
@@ -100,7 +124,7 @@ export const STRATEGIC_LEADERSHIP_AND_THINKING_BIG: CompetencyChapter = {
     'Spotting a cross-team problem nobody owns because it lives in the gaps between groups, and tracing it to a shared root cause.',
     'Building a vision concrete enough that other people can actually work toward it, not just agree with it in a meeting.',
     'Sequencing changes deliberately for adoption — who goes first, what proof point unlocks the next team — instead of just announcing them.',
-    'Systems thinking: anticipating second- and third-order ripple effects before acting, not discovering them afterward.',
+    'Systems thinking: anticipating second- and third-order ripple effects before acting — the concrete practice behind this is blast-radius and dependency-mapping analysis, not discovering the effects afterward.',
   ],
   redFlags: [
     "Dressing up a team-local improvement as 'strategic' — if it stayed entirely inside your team's boundary, this isn't the right competency for it.",

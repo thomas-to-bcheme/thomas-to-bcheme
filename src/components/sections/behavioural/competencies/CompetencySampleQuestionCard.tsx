@@ -2,6 +2,8 @@ import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import Badge from '@/components/ui/Badge';
 import type { CompetencySampleQuestion, HssStoryGuidance } from '@/constants/behavioural/competencies/types';
+import { CAREER_LEVELS } from '@/constants/behavioural/careerLevels';
+import { LEVEL_BADGE_COLORS, LEVEL_BORDER_CLASSES } from '@/lib/careerLevelPresentation';
 
 interface CompetencySampleQuestionCardProps {
   question: CompetencySampleQuestion;
@@ -22,8 +24,9 @@ const HSS_ROWS: HssRow[] = [
  * idiom as BehaviouralCategoryCard, swapped from STAR guidance to HSS
  * (High-Signal Storytelling) guidance. Summary surfaces the question's
  * category and prompt; the body expands into framing notes plus
- * context/headline hints and behavioral-core moments, then a senior/staff
- * level-signal contrast identical in styling to BehaviouralCategoryCard's.
+ * context/headline hints and behavioral-core moments, then a full
+ * Junior→Principal level-signal ladder styled identically to
+ * SeniorVsStaffSection's dimension rows, followed by one worked example.
  */
 const CompetencySampleQuestionCard = ({ question }: CompetencySampleQuestionCardProps) => (
   <details className="group card-base p-0 overflow-hidden">
@@ -66,25 +69,31 @@ const CompetencySampleQuestionCard = ({ question }: CompetencySampleQuestionCard
         </div>
       </div>
       <div>
-        <span className="text-micro text-zinc-400 mb-1.5 block">Senior vs. Staff</span>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 border-l-2 border-l-blue-400 dark:border-l-blue-500 p-3">
-            <Badge color="blue" variant="outline">
-              Senior
-            </Badge>
-            <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              {question.levelSignal.senior}
-            </p>
-          </div>
-          <div className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 border-l-2 border-l-purple-400 dark:border-l-purple-500 p-3">
-            <Badge color="purple" variant="outline">
-              Staff
-            </Badge>
-            <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              {question.levelSignal.staff}
-            </p>
-          </div>
+        <span className="text-micro text-zinc-400 mb-1.5 block">Level Signal</span>
+        <div className="space-y-2.5">
+          {CAREER_LEVELS.map((level) => (
+            <div
+              key={level.id}
+              className={`rounded-lg border-l-2 pl-3 ${LEVEL_BORDER_CLASSES[level.id]}`}
+            >
+              <Badge color={LEVEL_BADGE_COLORS[level.id]} variant="outline">
+                {level.label}
+              </Badge>
+              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                {question.levelSignal[level.id]}
+              </p>
+            </div>
+          ))}
         </div>
+      </div>
+      <div className="rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 p-3">
+        <span className="text-micro text-zinc-400 mb-1.5 block">Worked Example</span>
+        <Badge color={LEVEL_BADGE_COLORS[question.workedExample.level]} variant="outline">
+          {CAREER_LEVELS.find((level) => level.id === question.workedExample.level)?.label ?? question.workedExample.level}
+        </Badge>
+        <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          {question.workedExample.story}
+        </p>
       </div>
     </div>
   </details>

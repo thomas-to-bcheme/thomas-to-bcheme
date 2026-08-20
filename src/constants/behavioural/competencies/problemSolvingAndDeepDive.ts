@@ -17,7 +17,7 @@ export const PROBLEM_SOLVING_AND_DEEP_DIVE: CompetencyChapter = {
   centralTension:
     'Investigating everything exhaustively risks analysis paralysis on problems that do not warrant it; patching everything quickly risks the same class of failure recurring indefinitely. Good judgment means triaging how deep to investigate based on impact and likelihood of recurrence, and knowing when to bring in help rather than keep digging alone.',
   culturalConsiderations:
-    'Teams differ in how much investigation depth they reward: some orgs prize fast mitigation above all and treat a deep root-cause writeup as a follow-up task, while others (especially ones running critical infrastructure) expect the root cause to be found before the incident is considered closed. Calibrate how much investigative depth to describe to what the target team actually values, not to an abstract standard of thoroughness.',
+    'Teams differ in how much investigation depth they reward: some orgs prize fast mitigation above all and treat a deep root-cause writeup as a follow-up task, while others (especially ones running critical infrastructure) expect the root cause to be found before the incident is considered closed. Calibrate how much investigative depth to describe to what the target team actually values, not to an abstract standard of thoroughness. Some orgs make that bar concrete with SLOs and error budgets: while an incident\'s impact stays within budget, further digging is a choice, but breaching it triggers a mandatory root-cause review — naming that mechanism, if you know your target org uses it, shows you understand why the depth bar moves.',
   namedCompanyValues: [
     { company: 'Datadog', value: 'Solve Problems Once' },
     { company: 'Twilio', value: 'Draw the Owl' },
@@ -72,8 +72,17 @@ export const PROBLEM_SOLVING_AND_DEEP_DIVE: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior: 'Debugs a problem inside a single component they own, following a checklist or reproducing the failure under a mentor\'s guidance rather than independently generating hypotheses about the wider system.',
+        mid: 'Independently forms and tests hypotheses about a bug scoped to a feature they own end-to-end, ruling out causes systematically without needing someone else to point them at the right subsystem.',
         senior: 'Runs a structured, repeatable investigation on a problem within their own system and lands on the true root cause rather than a symptom-level fix.',
         staff: 'Runs the investigation across a problem that spans systems or teams they do not fully own, and converts the finding into durable shared knowledge — a runbook, a monitor, a documented failure mode — that outlives the individual incident.',
+        seniorStaff: 'Recognizes that the same class of root cause has now bitten multiple teams across a product area and drives the fix — a shared diagnostic tool, a standard, a changed default — that closes the gap for everyone, not just the team that hit it first.',
+        principal: 'Notices the investigation itself was harder than it needed to be because the org lacks a shared diagnostic practice, and establishes the tooling or discipline that changes how every team in the company investigates hard problems going forward.',
+      },
+      workedExample: {
+        level: 'staff',
+        story:
+          'I found that a shared library\'s connection-pool default — not any one team\'s code — was causing intermittent latency spikes that three teams had each separately "fixed" with a restart for months. I traced the pattern across teams\' incident logs, confirmed the hypothesis with a load test before touching production, then changed the library\'s default and published a runbook so the fix applied everywhere the library was used, not just my own service. The failure mode has not recurred on any of the three teams since.',
       },
     },
     {
@@ -92,22 +101,33 @@ export const PROBLEM_SOLVING_AND_DEEP_DIVE: CompetencyChapter = {
         ],
       },
       levelSignal: {
+        junior: 'Notices the symptom sits outside their own component and escalates to a mentor or lead rather than attempting to trace across the boundary themselves.',
+        mid: 'Traces the problem to the edge of their own system with a clear, reproducible handoff — logs, a minimal repro, a timeline — even without driving the other team\'s side of the investigation.',
         senior: 'Drives a cross-boundary investigation to a clear conclusion by working effectively with the owning team, without needing authority over their system.',
         staff: 'Recognizes a pattern of recurring cross-boundary failures and pushes for a structural fix — shared tooling, a clearer ownership boundary, or a new escalation path — that prevents the next several incidents of the same shape.',
+        seniorStaff: 'Establishes a shared incident-ownership protocol across a product area so cross-boundary investigations no longer stall at the outset on whose problem it actually is.',
+        principal: 'Changes how the whole org defines system-ownership boundaries and incident command, so cross-boundary investigations converge faster company-wide rather than depending on which individuals happen to know each other.',
+      },
+      workedExample: {
+        level: 'senior',
+        story:
+          'Our checkout service started timing out under normal load, and the obvious suspicion was our own connection handling since that\'s where the symptom surfaced. I ruled that out with metrics showing our thread pool was idle, then traced the delay upstream to a shared message queue owned by the platform team, whose consumer lag had spiked after an unrelated deploy. I brought them a reproducible timeline and the queue metrics instead of just an alert, which let them confirm the regression within the hour. We also agreed on a queue-depth alert that pages their team directly next time, instead of surfacing as a mystery timeout on ours.',
       },
     },
   ],
   keySignals: [
     'A methodical, repeatable investigation process — isolate variables, form a hypothesis, test it — rather than trial and error.',
-    'Explicitly distinguishing symptom from root cause.',
+    'Explicitly distinguishing symptom from root cause — the "5 Whys" technique (asking why repeatedly until you hit a systemic cause, not a proximate one) is one concrete way to demonstrate this.',
     'Recognizing when to ask for help versus keep digging solo, treated as a maturity signal rather than a weakness.',
     'Turning the investigation into durable team knowledge — a runbook, a tool, a shared mental model — not just a closed ticket.',
+    'For teams running ML systems, applying that same instinct to sort a failure into the right bucket — a data problem, a code bug, or model/data drift — rather than treating "the model is wrong" as one undifferentiated root cause.',
   ],
   redFlags: [
     '"I tried X, then Y, then Z" with no reasoning chain connecting the steps — random troubleshooting rather than investigation.',
     'Stopping at "I restarted it and it worked" with no explanation of why it actually broke.',
     'Deep technical detail with no stated business or user impact.',
     'Investigating indefinitely without ever reaching an actionable conclusion.',
+    'Explaining an incident by blaming a person or team ("someone forgot to...") instead of the process or system gap that let it happen — the opposite of the blameless-postmortem framing interviewers expect.',
   ],
   reflectionQuestions: [
     'What bug took you the longest to actually understand, not just to make disappear?',

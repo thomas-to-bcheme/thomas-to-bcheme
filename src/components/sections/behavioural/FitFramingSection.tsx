@@ -16,10 +16,11 @@ const FitFramingSection = () => (
         <h3 className="text-base font-bold text-zinc-900 dark:text-white">{group.label}</h3>
         <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{group.description}</p>
         <span className="text-micro text-zinc-400 block mt-4 mb-2">Signals to check for</span>
-        <ul className="space-y-1.5">
-          {group.signals.map((signal) => (
+        <ul className="space-y-3">
+          {group.signals.map(({ signal, example }) => (
             <li key={signal} className={BULLET_CLASS}>
               {signal}
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-500 leading-relaxed italic">{example}</p>
             </li>
           ))}
         </ul>
