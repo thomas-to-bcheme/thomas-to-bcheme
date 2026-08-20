@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import HeroSection from '@/components/sections/HeroSection';
 import FeaturedIn from '@/components/sections/FeaturedIn';
 import AboutMeSection from '@/components/sections/AboutMeSection';
+import ImpactMetricsSection from '@/components/sections/ImpactMetricsSection';
 import BeyondTheTerminal from '@/components/sections/BeyondTheTerminal';
 import ChatWidget from '@/components/features/ChatWidget';
 import { ChatWidgetProvider } from '@/components/layout/ChatWidgetProvider';
@@ -37,6 +38,7 @@ export default function Home() {
           <HeroSection />
           <FeaturedIn />
           <AboutMeSection />
+          <ImpactMetricsSection />
         </div>
 
         {/* --- OFF THE CLOCK: personal photo section (follows Leadership & Recognition) --- */}

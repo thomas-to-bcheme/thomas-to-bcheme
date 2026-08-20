@@ -1,12 +1,14 @@
 /**
  * Authoritative credentials data — the SINGLE source of truth for press
- * mentions, recognition/leadership programs, and leadership activities.
+ * mentions, recognition/leadership programs, leadership activities, and
+ * quantified career-impact metrics.
  *
  * Consumed by:
- *  - src/components/sections/FeaturedIn.tsx        (press callout)
- *  - src/components/sections/AboutMeSection.tsx    (leadership + recognition)
- *  - src/data/AiSystemInformation.ts               (RAG system prompt)
- *  - src/app/layout.tsx                            (Person JSON-LD)
+ *  - src/components/sections/FeaturedIn.tsx          (press callout)
+ *  - src/components/sections/AboutMeSection.tsx      (leadership + recognition)
+ *  - src/components/sections/ImpactMetricsSection.tsx (quantified impact stats)
+ *  - src/data/AiSystemInformation.ts                 (RAG system prompt)
+ *  - src/app/layout.tsx                              (Person JSON-LD)
  *
  * IMPORTANT: this module must stay free of React / lucide-react imports. It is
  * transitively imported by the server-side chat route via AiSystemInformation.ts;
@@ -18,6 +20,7 @@ import type {
   PressFeature,
   RecognitionItem,
   LeadershipActivity,
+  ImpactMetric,
 } from '@/types/credentials';
 import { PUBLICATION_URL } from '@/constants/site';
 
@@ -113,5 +116,57 @@ export const LEADERSHIP_ACTIVITIES: LeadershipActivity[] = [
   {
     iconName: 'Dumbbell',
     text: 'Coach students ages 3 to adult in Brazilian jiu-jitsu, delivering structured athletic training to build discipline, resilience, and community belonging in Oakland.',
+  },
+];
+
+/**
+ * Quantified career-impact metrics. Each `value`/`label` pair is traceable
+ * verbatim to a real bullet in src/docs/Thomas_To_Resume.md — deliberately
+ * spread across 4 different roles and 6 different metric types (cost avoided,
+ * risk prevented, speed, accuracy, hours saved, adoption) rather than
+ * repeating one company or one kind of number.
+ */
+export const IMPACT_METRICS: ImpactMetric[] = [
+  {
+    id: 'modeled-cost-reduction',
+    iconName: 'TrendingDown',
+    value: '$63.2M',
+    label: 'in modeled manufacturing cost reductions from computational optimization models',
+    context: 'UC Davis — Research Engineer',
+  },
+  {
+    id: 'stockout-prevented',
+    iconName: 'ShieldCheck',
+    value: '$2M',
+    label: 'inventory stockout prevented through data-driven demand forecasting',
+    context: 'Canventa Life Sciences — Founding Fullstack Engineer',
+  },
+  {
+    id: 'processing-time-cut',
+    iconName: 'Gauge',
+    value: '99%',
+    label: 'cut in data processing time — weeks of manual work down to minutes',
+    context: 'Genentech — Process Engineer',
+  },
+  {
+    id: 'document-digitization-accuracy',
+    iconName: 'BadgeCheck',
+    value: '95%+',
+    label: 'accuracy digitizing 5,000+ handwritten laboratory documents via a fine-tuned model',
+    context: 'Canventa Life Sciences — Founding Fullstack Engineer',
+  },
+  {
+    id: 'revenue-query-hours-saved',
+    iconName: 'Clock',
+    value: '500+',
+    label: 'hours saved annually by replacing manual revenue queries with a natural-language RAG agent',
+    context: 'Canventa Life Sciences — Founding Fullstack Engineer',
+  },
+  {
+    id: 'rag-agent-adoption',
+    iconName: 'Users',
+    value: '10+',
+    label: 'engineers adopted a production RAG AI agent shipped 0-to-1, from system design through open-source distribution',
+    context: 'Founding AI Engineer — Open Source',
   },
 ];

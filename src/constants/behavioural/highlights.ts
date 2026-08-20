@@ -1,18 +1,24 @@
 import type { LucideIcon } from 'lucide-react';
-import { Compass, Network, Eye, ArrowRightLeft } from 'lucide-react';
+import { Compass, Network, Eye, ArrowRightLeft, Filter, ShieldCheck } from 'lucide-react';
 
 /**
- * The four highest-signal, most-repeated takeaways across the ByteByteGo
- * course — surfaced as an executive-summary/TL;DR at the top of the page for
- * readers who want the main point without reading the full notes below.
+ * The highest-signal, most-repeated takeaways across the ByteByteGo course —
+ * surfaced as an executive-summary/TL;DR at the top of the page for readers
+ * who want the main point without reading the full notes below.
  *
- * Every `quote` here is verbatim, verified directly against the live
- * ByteByteGo chapter pages (not reconstructed from this repo's own paraphrased
- * study notes) — Introduction and What Companies Are Looking For are publicly
+ * Every `quote` is verbatim, verified directly against the live ByteByteGo
+ * chapter pages (not reconstructed from this repo's own paraphrased study
+ * notes) — Introduction and What Companies Are Looking For are publicly
  * readable; High-Signal Storytelling and Developing Others required an
  * authenticated fetch. `sourceId` resolves against `SOURCES` in
  * `src/constants/behavioural/sources.ts`, the page's single authoritative list
  * of chapter URLs, so the href isn't duplicated here as its own literal.
+ *
+ * One entry (`accountability-without-deflection`) is the exception: it's this
+ * page's own original-voice synthesis of a theme that recurs across the HSS
+ * hero framework and three separate Part-II competency chapters, rather than
+ * one ByteByteGo chapter's verbatim line — so it omits `sourceId` and is
+ * attributed directly to the author instead.
  */
 export interface Highlight {
   id: string;
@@ -20,7 +26,8 @@ export interface Highlight {
   label: string;
   quote: string;
   attribution: string;
-  sourceId: string;
+  /** Omit for an original-voice entry with no single ByteByteGo chapter to cite. */
+  sourceId?: string;
   color: 'blue' | 'emerald' | 'purple' | 'amber';
 }
 
@@ -61,5 +68,23 @@ export const HIGHLIGHTS: Highlight[] = [
     attribution: 'ByteByteGo — Developing Others',
     sourceId: 'ch-12-developing-others',
     color: 'amber',
+  },
+  {
+    id: 'litmus-test',
+    icon: Filter,
+    label: 'The Litmus Test',
+    quote: 'Would an interviewer actually write this in their notes?',
+    attribution: 'ByteByteGo — High-Signal Storytelling',
+    sourceId: 'ch-03-hss',
+    color: 'purple',
+  },
+  {
+    id: 'accountability-without-deflection',
+    icon: ShieldCheck,
+    label: 'Accountability Without Deflection',
+    quote:
+      "The strongest accountability stories own the failure outright; the weakest ones explain it away as the process, the circumstances, or someone else’s fault.",
+    attribution: '— Thomas To',
+    color: 'emerald',
   },
 ];

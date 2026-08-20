@@ -1,7 +1,6 @@
 import React from 'react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import FrameworkStepList from '@/components/ui/FrameworkStepList';
-import SourceQuote from '@/components/ui/SourceQuote';
 import {
   HSS_PYRAMID_STEPS,
   BEHAVIORAL_CORE_STEPS,
@@ -128,13 +127,6 @@ const HighSignalStorytellingSection = () => (
           </ul>
         </div>
       </div>
-      <SourceQuote
-        label="The Litmus Test"
-        quote="Would an interviewer actually write this in their notes?"
-        attribution="ByteByteGo — High-Signal Storytelling"
-        href={HSS_CHAPTER_URL}
-        color="blue"
-      />
     </div>
 
     <div className="mt-8">

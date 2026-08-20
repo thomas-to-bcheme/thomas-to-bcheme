@@ -26,25 +26,27 @@ const resolveSourceUrl = (sourceId: string): string => {
  * takeaways without reading the full page — the first thing inside `<main>`,
  * mirroring where `ExecutiveSummary` sits on `/projects`. Built from
  * `SourceQuote` cards rather than the anchor-jump cards that component uses,
- * since these are verbatim quotes pulled from the ByteByteGo source chapters,
- * not links back into this page's own sections.
+ * since most of these are verbatim quotes pulled from the ByteByteGo source
+ * chapters, not links back into this page's own sections. The one entry with
+ * no `sourceId` (this guide's own synthesis) renders with no link at all —
+ * `SourceQuote` falls back to a plain, non-linked attribution.
  */
 const ExecutiveSummarySection = () => (
   <section id="highlights" className="scroll-mt-24 mb-16">
-    <SectionHeading eyebrow="Read This First" title="If you only take four things from this page" />
+    <SectionHeading eyebrow="Read This First" title="If you only take six things from this page" />
     <p className="mb-6 max-w-3xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
-      Four takeaways worth remembering above everything else below — the recurring signal across
+      Six takeaways worth remembering above everything else below — the recurring signal across
       experienced engineers, ByteByteGo&apos;s own course, and every competency chapter on this page,
       distilled down for anyone who wants the point before the notes.
     </p>
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {HIGHLIGHTS.map((highlight) => (
         <SourceQuote
           key={highlight.id}
           label={highlight.label}
           quote={highlight.quote}
           attribution={highlight.attribution}
-          href={resolveSourceUrl(highlight.sourceId)}
+          href={highlight.sourceId ? resolveSourceUrl(highlight.sourceId) : undefined}
           color={highlight.color}
           icon={highlight.icon}
         />

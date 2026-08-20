@@ -1,10 +1,11 @@
 /**
  * Credential domain types
  *
- * Models the three distinct credibility artifacts surfaced across the site:
- * verifiable press mentions, named recognition/leadership programs, and
- * ongoing leadership activities. Kept as three precise interfaces (rather than
- * one nullable-heavy shape) because the data shapes are genuinely different.
+ * Models the four distinct credibility artifacts surfaced across the site:
+ * verifiable press mentions, named recognition/leadership programs, ongoing
+ * leadership activities, and quantified career-impact metrics. Kept as
+ * precise interfaces (rather than one nullable-heavy shape) because the data
+ * shapes are genuinely different.
  *
  * The consuming data module (src/data/credentials.ts) is deliberately free of
  * React/icon imports so it can be shared safely between the client UI and the
@@ -18,6 +19,15 @@ export type LeadershipIconName =
   | 'Users'
   | 'BookOpen'
   | 'Dumbbell';
+
+/** Icon keys mapped to lucide components in the JSX layer (never imported into data). */
+export type ImpactMetricIconName =
+  | 'TrendingDown'
+  | 'ShieldCheck'
+  | 'Gauge'
+  | 'BadgeCheck'
+  | 'Clock'
+  | 'Users';
 
 export interface PressFeature {
   id: string;
@@ -45,4 +55,15 @@ export interface RecognitionItem {
 export interface LeadershipActivity {
   iconName: LeadershipIconName;
   text: string;
+}
+
+export interface ImpactMetric {
+  id: string;
+  iconName: ImpactMetricIconName;
+  /** Short bold stat, e.g. "$63.2M", "99%", "10+". */
+  value: string;
+  /** One sentence describing what the stat measures — no trailing period, reads as a caption. */
+  label: string;
+  /** Role/company attribution, e.g. "UC Davis — Research Engineer". */
+  context: string;
 }
