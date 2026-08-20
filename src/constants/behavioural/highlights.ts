@@ -1,24 +1,38 @@
 import type { LucideIcon } from 'lucide-react';
-import { Compass, Network, Eye, ArrowRightLeft, Filter, ShieldCheck } from 'lucide-react';
+import { Compass, Network, ArrowRightLeft, ShieldCheck, Milestone, HelpCircle } from 'lucide-react';
 
 /**
  * The highest-signal, most-repeated takeaways across the ByteByteGo course —
  * surfaced as an executive-summary/TL;DR at the top of the page for readers
- * who want the main point without reading the full notes below.
+ * who want the main point without reading the full notes below. Curated
+ * specifically for domain-agnostic (data/software/ML-engineering-neutral)
+ * senior-or-staff-and-above behavioral signals, not general interview-process
+ * framing — every entry below is itself a signal of high-scope, high-impact
+ * work, not commentary about how stories get evaluated.
  *
- * Every `quote` is verbatim, verified directly against the live ByteByteGo
- * chapter pages (not reconstructed from this repo's own paraphrased study
- * notes) — Introduction and What Companies Are Looking For are publicly
- * readable; High-Signal Storytelling and Developing Others required an
- * authenticated fetch. `sourceId` resolves against `SOURCES` in
- * `src/constants/behavioural/sources.ts`, the page's single authoritative list
- * of chapter URLs, so the href isn't duplicated here as its own literal.
+ * Every `quote` that carries a `sourceId` is verbatim, verified directly
+ * against the live ByteByteGo chapter pages (not reconstructed from this
+ * repo's own paraphrased study notes) — Introduction and What Companies Are
+ * Looking For are publicly readable; High-Signal Storytelling and Developing
+ * Others required an authenticated fetch. `sourceId` resolves against
+ * `SOURCES` in `src/constants/behavioural/sources.ts`, the page's single
+ * authoritative list of chapter URLs, so the href isn't duplicated here as
+ * its own literal.
  *
- * One entry (`accountability-without-deflection`) is the exception: it's this
- * page's own original-voice synthesis of a theme that recurs across the HSS
- * hero framework and three separate Part-II competency chapters, rather than
- * one ByteByteGo chapter's verbatim line — so it omits `sourceId` and is
- * attributed directly to the author instead.
+ * Three entries are the exception and deliberately omit `sourceId`, attributed
+ * directly to the author instead — each synthesizes a theme that recurs
+ * across this guide rather than quoting one ByteByteGo chapter verbatim:
+ * - `accountability-without-deflection` — this page's own synthesis of a
+ *   theme recurring across the HSS hero framework and three separate Part-II
+ *   competency chapters.
+ * - `sequencing-change` — sourced from this repo's own `openingHook` for the
+ *   Strategic Leadership and Thinking Big chapter
+ *   (`competencies/strategicLeadershipAndThinkingBig.ts`), documented in
+ *   `competencies/types.ts` as "original phrasing," not a book excerpt.
+ * - `counterfactual-test` — sourced from this repo's own
+ *   `LEVEL_SELF_CHECK_QUESTIONS` in `careerLevels.ts`, whose header comment
+ *   describes the file as "paraphrased, not quoted" from Hello Interview and
+ *   ByteByteGo.
  */
 export interface Highlight {
   id: string;
@@ -51,12 +65,12 @@ export const HIGHLIGHTS: Highlight[] = [
     color: 'purple',
   },
   {
-    id: 'how-you-work',
-    icon: Eye,
-    label: "What Interviewers Are Actually Watching",
-    quote: 'Interviewers are carefully evaluating how you work, how you make decisions, and whether you can actually deliver results.',
-    attribution: 'ByteByteGo — Introduction',
-    sourceId: 'ch-intro',
+    id: 'sequencing-change',
+    icon: Milestone,
+    label: 'The Sequencing Skill',
+    quote:
+      "This is the competency that decides most senior-to-staff-and-beyond promotion cases, and the hardest part it tests isn't the size of your vision — it's whether you know which team to win over first.",
+    attribution: '— Thomas To',
     color: 'emerald',
   },
   {
@@ -70,12 +84,12 @@ export const HIGHLIGHTS: Highlight[] = [
     color: 'amber',
   },
   {
-    id: 'litmus-test',
-    icon: Filter,
-    label: 'The Litmus Test',
-    quote: 'Would an interviewer actually write this in their notes?',
-    attribution: 'ByteByteGo — High-Signal Storytelling',
-    sourceId: 'ch-03-hss',
+    id: 'counterfactual-test',
+    icon: HelpCircle,
+    label: 'The Counterfactual Test',
+    quote:
+      'Can I point to impact that specifically would not have happened with an average engineer in the seat — not just impact that happened while I was in it?',
+    attribution: '— Thomas To',
     color: 'purple',
   },
   {

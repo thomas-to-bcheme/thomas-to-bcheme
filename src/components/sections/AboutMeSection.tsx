@@ -17,11 +17,11 @@ const AboutMeSection: React.FC = () => {
 
         <div className="space-y-4 text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
           <p>
-            Full Stack AI Engineer with <strong className="text-zinc-900 dark:text-white">7+ years of professional experience</strong> designing and deploying production systems across the full software engineering and machine learning lifecycle. Architects end-to-end platforms spanning React and Next.js frontends, Python and Node.js backend services, and RESTful APIs exposing ML capabilities to end users.
+            Full Stack AI Engineer with <strong className="text-zinc-900 dark:text-white">7+ years of professional experience</strong> designing and deploying production systems across the full software engineering and machine learning lifecycle. Architects end-to-end platforms spanning React and Next.js frontends, Python and Node.js backend services, and RESTful APIs exposing ML capabilities to end users — including a production RAG AI agent shipped 0-to-1 from system design through open-source distribution that other engineers have since adopted on their own.
           </p>
 
           <p>
-            Builds and operates <strong className="text-zinc-900 dark:text-white">containerized MLOps pipelines</strong> on GCP and AWS with CI/CD automation, prompt engineering, and model monitoring for domain-specific LLM accuracy. Owns <strong className="text-zinc-900 dark:text-white">0-to-1 system design</strong> through production observability, collaborating with technical and non-technical stakeholders to evaluate engineering trade-offs and deliver measurable business outcomes.
+            Builds and operates <strong className="text-zinc-900 dark:text-white">containerized MLOps pipelines</strong> on GCP and AWS with CI/CD automation, prompt engineering, and model monitoring for domain-specific LLM accuracy — including migrating drug-discovery pipelines to run hardware-agnostically across CUDA, TPU, and Apple Silicon rather than one fixed target platform. Owns <strong className="text-zinc-900 dark:text-white">0-to-1 system design</strong> through production observability, collaborating with technical and non-technical stakeholders to evaluate engineering trade-offs and deliver measurable business outcomes — for example, replacing a manual, spreadsheet-driven revenue analysis with a natural-language RAG agent non-technical stakeholders can query directly.
           </p>
         </div>
       </div>
