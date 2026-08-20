@@ -10,7 +10,7 @@ interface SourceQuoteProps {
   attribution: string;
   /** When present, wraps the attribution line in an outbound link. */
   href?: string;
-  color?: 'blue' | 'emerald' | 'purple';
+  color?: 'blue' | 'emerald' | 'purple' | 'amber';
   icon?: React.ElementType;
 }
 
@@ -32,6 +32,12 @@ const COLOR_CLASSES = {
     label: 'text-purple-700 dark:text-purple-400',
     quote: 'text-purple-900 dark:text-purple-200 border-purple-300 dark:border-purple-700',
     attribution: 'text-purple-700 dark:text-purple-400 hover:underline',
+  },
+  amber: {
+    box: 'border-amber-100 dark:border-amber-900/40 bg-amber-50/50 dark:bg-amber-900/10',
+    label: 'text-amber-700 dark:text-amber-400',
+    quote: 'text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700',
+    attribution: 'text-amber-700 dark:text-amber-400 hover:underline',
   },
 } as const;
 

@@ -7,11 +7,13 @@ import Footer from '@/components/sections/Footer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import BehaviouralSidebar from '@/components/sections/behavioural/BehaviouralSidebar';
 import BehaviouralMobileToc from '@/components/sections/behavioural/BehaviouralMobileToc';
+import ExecutiveSummarySection from '@/components/sections/behavioural/ExecutiveSummarySection';
 import BehaviouralIntroEssay from '@/components/sections/behavioural/BehaviouralIntroEssay';
 import RoadmapSection from '@/components/sections/behavioural/RoadmapSection';
 import FitFramingSection from '@/components/sections/behavioural/FitFramingSection';
 import MisFitAxesSection from '@/components/sections/behavioural/MisFitAxesSection';
 import SeniorVsStaffSection from '@/components/sections/behavioural/SeniorVsStaffSection';
+import HighImpactSignalsSection from '@/components/sections/behavioural/HighImpactSignalsSection';
 import ResearchChecklistSection from '@/components/sections/behavioural/ResearchChecklistSection';
 import HighSignalStorytellingSection from '@/components/sections/behavioural/HighSignalStorytellingSection';
 import StarCarlComparisonSection from '@/components/sections/behavioural/StarCarlComparisonSection';
@@ -68,6 +70,7 @@ export default function BehaviouralPage() {
         <BehaviouralSidebar />
 
         <main className="min-w-0">
+          <ExecutiveSummarySection />
           <BehaviouralMobileToc />
 
           <BehaviouralIntroEssay />
@@ -99,6 +102,7 @@ export default function BehaviouralPage() {
           </section>
 
           <SeniorVsStaffSection />
+          <HighImpactSignalsSection />
 
           <section id="company-research" className="scroll-mt-24 mb-16">
             <SectionHeading eyebrow="Before The Interview" title="Researching what a company really values" />

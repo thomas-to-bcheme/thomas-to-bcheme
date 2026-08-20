@@ -22,7 +22,7 @@ const RANGE_OPTIONS: { value: JobsDateRange; label: string }[] = [
 // — deliberately just these three states, not a general sort-by-column
 // control (no alphabetical/numerical sort by other fields is offered).
 const FIT_SORT_OPTIONS: { value: JobsFitSort; label: string }[] = [
-  { value: null, label: 'Default' },
+  { value: null, label: 'Date' },
   { value: 'best', label: 'Most relevant' },
   { value: 'worst', label: 'Least relevant' },
 ];
