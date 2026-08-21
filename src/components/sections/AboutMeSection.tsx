@@ -52,7 +52,11 @@ const AboutMeSection: React.FC = () => {
           </p>
 
           <p>
-            Builds and operates <strong className="text-zinc-900 dark:text-white">containerized MLOps pipelines</strong> on GCP and AWS with CI/CD automation, prompt engineering, and model monitoring for domain-specific LLM accuracy — including migrating drug-discovery pipelines to run hardware-agnostically across CUDA, TPU, and Apple Silicon rather than one fixed target platform. Owns <strong className="text-zinc-900 dark:text-white">0-to-1 system design</strong> through production observability, collaborating with technical and non-technical stakeholders to evaluate engineering trade-offs and deliver measurable business outcomes — for example, replacing a manual, spreadsheet-driven revenue analysis with a natural-language RAG agent non-technical stakeholders can query directly.
+            Builds and operates <strong className="text-zinc-900 dark:text-white">containerized MLOps pipelines</strong> on GCP and AWS with CI/CD automation, prompt engineering, and model monitoring for domain-specific LLM accuracy — including migrating drug-discovery pipelines to run hardware-agnostically across CUDA, TPU, and Apple Silicon rather than one fixed target platform. Owns <strong className="text-zinc-900 dark:text-white">0-to-1 system design</strong> through production observability, collaborating with technical and non-technical stakeholders — up through executives at a parent company — to evaluate engineering trade-offs and deliver measurable business outcomes, for example replacing a manual, spreadsheet-driven revenue analysis with a natural-language RAG agent non-technical stakeholders can query directly.
+          </p>
+
+          <p>
+            Supports multi-year strategic roadmap planning as the technical liaison between Canventa and its parent company, STEMCELL Technologies — translating a 3–5 year plan into realistic year-by-year and quarter-by-quarter goals and coordinating GCP-hosted, HIPAA-compliant infrastructure decisions across both organizations&apos; engineering, management, and executive stakeholders.
           </p>
         </div>
       </div>
@@ -89,6 +93,16 @@ const AboutMeSection: React.FC = () => {
                   </li>
                 ))}
               </ul>
+              {story.evidenceLink && (
+                <a
+                  href={story.evidenceLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-block mb-3 text-xs font-semibold text-pink-600 dark:text-pink-400 hover:underline rounded-sm ${FOCUS_RING}`}
+                >
+                  {story.evidenceLink.label} →
+                </a>
+              )}
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 {story.baseDetail ? (
                   <details className="group max-w-[85%]">

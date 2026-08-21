@@ -96,4 +96,11 @@ export interface CompetencyStory {
    *  link, not an outbound one, so it's a plain optional href, not the
    *  external-tab-forcing pattern `SourceQuote` uses for ByteByteGo sources. */
   attributionHref?: string;
+  /** Optional supporting outbound link distinct from `attribution` — e.g.
+   *  "View the pull requests" pointing at real, independently-checkable
+   *  evidence (a GitHub PR search) rather than a site-internal anchor.
+   *  Rendered as a small link beneath the Core bullets, mirroring the
+   *  "Read the ByteByteGo chapter" outbound-link idiom already used in
+   *  CompetencyChapterSection.tsx. */
+  evidenceLink?: { label: string; href: string };
 }

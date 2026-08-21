@@ -188,11 +188,24 @@ export const IMPACT_METRICS: ImpactMetric[] = [
  * a real, already-published line in this portfolio — most from
  * `ChangelogHeaderEssay.tsx` (rendered on /projects), a genuine "mental
  * models" essay in Thomas's own words — not reconstructed from a résumé
- * bullet. `influence-without-authority` is the one exception: no equivalent
- * artifact exists anywhere on this site for that dimension (confirmed via an
- * exhaustive grep of every `— Thomas To`-attributed quote in the repo), so
- * its headline is an explicit synthesis inferred from the pattern common to
- * the other 4 verified philosophies, pending Thomas's own correction.
+ * bullet.
+ *
+ * `handling-ambiguity`, `translating-technical-into-business-impact`,
+ * `influence-without-authority`, and `strategic-leadership-and-thinking-big`
+ * each carry one bullet grounded in a real, previously-undocumented
+ * experience: supporting Canventa Life Sciences' 3–5 year strategic roadmap
+ * and standing up GCP-hosted, HIPAA-/legally-compliant enterprise
+ * infrastructure, coordinated across Canventa and its parent company,
+ * STEMCELL Technologies. `influence-without-authority`'s headline/Core was
+ * previously an explicit unverified synthesis (no artifact existed anywhere
+ * in the repo for that dimension, confirmed via an exhaustive grep) — this
+ * cross-enterprise coordination is real evidence that resolves that gap, so
+ * it's now the primary story rather than a placeholder. `developing-others`
+ * is deliberately untouched by this material: coordinating a roadmap across
+ * two organizations is Influence/stakeholder management, not "building
+ * another person's lasting, independent capability" per that competency's
+ * own definition — stretching it there would be exactly the "forcing every
+ * question into the same story" failure interviewers are trained to catch.
  */
 export const COMPETENCY_STORIES: CompetencyStory[] = [
   {
@@ -203,7 +216,7 @@ export const COMPETENCY_STORIES: CompetencyStory[] = [
     coreBullets: [
       'Built a 3-axis mental model instead of treating each ambiguous problem as a one-off — an end-to-end lifecycle (design→data→model→backend→frontend→ops), an abstraction ladder (hardware→distributed systems), and a time axis (iteration, legacy, scale).',
       'Applied it to a genuinely open-ended research problem with no known-good mutation to start from, publishing 3 novel β-glucosidase B variants (UC Davis).',
-      'The same lifecycle now organizes every project on this portfolio, from the Job Board pipeline to the RAG chat agent.',
+      "Applied the same instinct where there was no clean answer either side would fully own: stood up 0-to-1 enterprise and onboarding infrastructure on GCP with no existing template to follow, building it to satisfy HIPAA and legal-compliance requirements for two organizations — Canventa and its parent, STEMCELL Technologies — before either side had fully defined what \"compliant\" meant for this specific system.",
     ],
     baseDetail:
       "There's too much to know. From lessons learned in university, we apply mental models and derive solutions from first principles — applying what's needed to the problem we're actually trying to solve.",
@@ -218,7 +231,7 @@ export const COMPETENCY_STORIES: CompetencyStory[] = [
     coreBullets: [
       "A technically elegant model nobody trusts or uses doesn't move any of those four levers.",
       'Architected Canventa’s revenue-optimization system specifically to be queried in plain language by finance and ops, not just to be technically correct.',
-      'Benchmarked the manual process first, so the "after" number had a real "before" to be checked against.',
+      'Applied the same rubric translating GCP infrastructure\'s HIPAA and legal-compliance requirements into terms executives at both Canventa and its parent, STEMCELL Technologies, could act on — not just "this meets the requirement," but what it protects, what it unblocks, and why the timeline is worth it.',
     ],
     baseDetail:
       "You can design this amazing technology that can support 1M users, but from grassroots, if your users are afraid of the technology, then what's the point in designing a system that can scale to 1M users when you don't have that many users?",
@@ -228,15 +241,14 @@ export const COMPETENCY_STORIES: CompetencyStory[] = [
     id: 'influence-without-authority',
     competency: 'Influence Without Authority',
     color: 'purple',
-    headline: 'Build something rigorous and checkable enough that it earns adoption on its own evidence — not by asking anyone to trust me personally.',
+    headline: 'Aligning two entire organizations around one shared timeline — no reporting line into either, no shared manager to force it, and no obligation on their part to listen at all.',
     coreBullets: [
-      'Shipped a production RAG AI agent 0-to-1 with LLM output validation and guardrails, open-sourced with no mandate requiring anyone to use it.',
-      'The guardrails and system design were the actual argument — other engineers could verify the reasoning themselves rather than take it on faith.',
-      'Adopted independently by engineers with no reporting line to him at all.',
+      'Canventa is a vertically-integrated subsidiary of STEMCELL Technologies (~2,000 employees) — a roadmap decision on one side routinely depends on a counterpart team on the other, with no shared manager to arbitrate.',
+      "Coordinated the GCP-hosted enterprise/onboarding infrastructure rollout's scope and timeline directly with STEMCELL's own engineers, managers, and executives, rather than finalizing Canventa's plan first and imposing it after the fact.",
     ],
     baseDetail:
-      'The same no-authority pattern shows up outside engineering too — as Student Outreach Ambassador, organizing peer mentorship across multiple community colleges with no formal authority over any of them.',
-    attribution: 'Founding AI Engineer, Open Source',
+      'The same no-authority pattern at smaller scale: a production RAG AI agent shipped 0-to-1 and open-sourced, since adopted by other engineers with no reporting line to him at all.',
+    attribution: 'Founding Fullstack Engineer, Canventa Life Sciences (a STEMCELL Technologies subsidiary)',
   },
   {
     id: 'developing-others',
@@ -258,13 +270,17 @@ export const COMPETENCY_STORIES: CompetencyStory[] = [
     color: 'rose',
     headline: "The harder half of a big technical bet isn't knowing the levers exist — it's navigating which one a given problem actually needs, right now.",
     coreBullets: [
-      'Drug-discovery pipelines were hard-coded to CUDA, blocking contributors on TPU or Apple Silicon.',
-      'Migrated to the unified torch.accelerator API (PR #24), plus deterministic seeding for reproducibility across backends.',
-      "The pattern became the shared codebase's new default, not a personal fork; a follow-on contribution (PR #25) shows sustained, trusted involvement in that project's direction.",
+      "Landed 5 separate pull requests to a shared open-source codebase (nrflynn2/ml-drug-discovery), each merged by the maintainer, replacing hardcoded CUDA-only device selection with the unified torch.accelerator API across 5 different chapters — the maintainer adopting the same fix five separate times is the real signal, not one lucky patch.",
+      "Supports Canventa's 3–5 year strategic roadmap — not one team's plan, but one whose infrastructure decisions ripple across both Canventa's and STEMCELL's engineering, operations, and compliance functions — translated into realistic year-by-year and quarter-by-quarter goals against current operational capacity, not an aspirational target, including standing up 0-to-1 enterprise and onboarding infrastructure on GCP built to be HIPAA- and legally-compliant for sensitive data across both organizations.",
+      "Both reflect the same instinct: a big technical bet only counts if it's built for the constraint that's actually real — a shared codebase's existing contributors in one case, two organizations' compliance and timeline requirements in the other.",
     ],
     baseDetail:
       "The same judgment generalized past that one PR — this portfolio's own architecture swaps “scalability” for “resilience” against a $0-budget constraint, on the same reasoning: design for today's real constraint, not a guessed-at tomorrow.",
     attribution: 'System-design philosophy',
     attributionHref: '/projects#system-design-philosophy',
+    evidenceLink: {
+      label: 'View the pull requests',
+      href: 'https://github.com/nrflynn2/ml-drug-discovery/pulls?q=is%3Apr+author%3Athomas-to-bcheme+is%3Aclosed',
+    },
   },
 ];
