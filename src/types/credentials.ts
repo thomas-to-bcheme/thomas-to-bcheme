@@ -53,6 +53,7 @@ export interface RecognitionItem {
 }
 
 export interface LeadershipActivity {
+  id: string;
   iconName: LeadershipIconName;
   text: string;
 }
@@ -66,4 +67,33 @@ export interface ImpactMetric {
   label: string;
   /** Role/company attribution, e.g. "UC Davis — Research Engineer". */
   context: string;
+}
+
+/**
+ * One behavioral-signal story for the homepage's Leadership & Recognition
+ * section, shaped like `/behavioural`'s own High-Signal Storytelling pyramid
+ * (Headline → Behavioral Core → Base) rather than a program/activity blurb.
+ * `attribution` is a plain string, not a foreign key into `RecognitionItem`/
+ * `LeadershipActivity` — most of these stories are anchored in a Professional
+ * Experience role, a résumé section this module doesn't model as its own
+ * array and doesn't need to just for this.
+ */
+export interface CompetencyStory {
+  id: string;
+  /** Verbatim dimension label, e.g. "Handling Ambiguity". */
+  competency: string;
+  color: 'blue' | 'amber' | 'purple' | 'emerald' | 'rose';
+  /** One sentence — the card's thesis, the most prominent text on it. */
+  headline: string;
+  /** 2–3 thought → action → result beats, always visible. */
+  coreBullets: string[];
+  /** 1–2 sentences of supporting depth, revealed on a "+ Details" toggle. */
+  baseDetail?: string;
+  /** e.g. "Founding Fullstack Engineer, Canventa Life Sciences". */
+  attribution: string;
+  /** Present only when the attribution is itself a page on this site (e.g. the
+   *  SWE Compass essay) rather than a résumé role — an internal same-site
+   *  link, not an outbound one, so it's a plain optional href, not the
+   *  external-tab-forcing pattern `SourceQuote` uses for ByteByteGo sources. */
+  attributionHref?: string;
 }
