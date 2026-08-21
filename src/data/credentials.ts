@@ -179,10 +179,17 @@ export const IMPACT_METRICS: ImpactMetric[] = [
 
 /**
  * Behavioral-signal stories for the homepage's Leadership & Recognition
- * section — 5 named dimensions (a superset of `/behavioural`'s own 9 Part-II
- * competencies), each shaped Headline → Core → Base per that page's own
- * High-Signal Storytelling framework, in place of leading with an
- * institutional program name.
+ * section — 12 cards, each shaped Headline → Core → Base per `/behavioural`'s
+ * own High-Signal Storytelling framework. The first 9, in this order, map
+ * 1:1 onto ByteByteGo's own Part-II competency chapters (Ch.05–13, see
+ * `src/constants/behavioural/competencies/*.ts` — the same source
+ * `/behavioural` renders), each answered at that chapter's own `staff`
+ * `levelSignal` bar wherever real evidence supports it. The last 3
+ * (`handling-ambiguity`, `translating-technical-into-business-impact`,
+ * `influence-without-authority`) aren't part of ByteByteGo's taxonomy —
+ * they're dimensions Thomas considers equally interview-relevant from his
+ * own reading and real interview loops, appended after the mapped 9 rather
+ * than mixed in with them.
  *
  * Every headline/base quote marked "verbatim"/"near-verbatim" below traces to
  * a real, already-published line in this portfolio — most from
@@ -190,32 +197,178 @@ export const IMPACT_METRICS: ImpactMetric[] = [
  * models" essay in Thomas's own words — not reconstructed from a résumé
  * bullet.
  *
- * `handling-ambiguity`, `translating-technical-into-business-impact`,
- * `influence-without-authority`, and `strategic-leadership-and-thinking-big`
- * each carry one bullet grounded in a real, previously-undocumented
- * experience: supporting Canventa Life Sciences' 3–5 year strategic roadmap
- * and standing up GCP-hosted, HIPAA-/legally-compliant enterprise
- * infrastructure, coordinated across Canventa and its parent company,
- * STEMCELL Technologies. `influence-without-authority`'s headline/Core was
- * previously an explicit unverified synthesis (no artifact existed anywhere
- * in the repo for that dimension, confirmed via an exhaustive grep) — this
- * cross-enterprise coordination is real evidence that resolves that gap, so
- * it's now the primary story rather than a placeholder. `developing-others`
- * is deliberately untouched by this material: coordinating a roadmap across
- * two organizations is Influence/stakeholder management, not "building
- * another person's lasting, independent capability" per that competency's
- * own definition — stretching it there would be exactly the "forcing every
- * question into the same story" failure interviewers are trained to catch.
+ * OPEN / PARTIAL — flagged here, not on the page, so visible copy always
+ * reads as complete while this file stays honest about what's thin:
+ * - `delivery`: résumé bullets are outcome-stated, not obstacle-narrated —
+ *   no real "a deadline was threatened, here's the trade-off I made" story
+ *   yet. Ship the closest available (delivery-velocity acceleration +
+ *   caught-early risk prevention) until a sharper one exists.
+ * - `problem-solving-and-deep-dive`: the Arctic-TILT fine-tuning bullet has
+ *   the right shape (systematic evaluation → result) but no explicit
+ *   hypothesis-formed/ruled-out narrative, which is what this chapter's own
+ *   sample questions actually probe for.
+ * - `earning-trust-and-conflict`: only the proactive-trust half is real and
+ *   sourced. The reactive half — a genuine disagreement worked through, a
+ *   mistake owned — has zero résumé material and is not fabricated here.
+ * - `developing-others`: the only real material is community/peer
+ *   facilitation (bootcamp sessions, conference forums, a content pipeline),
+ *   not a staff-level "stepped back so one engineer's independent capability
+ *   grew" story. Placeholder pending that real anecdote.
+ *
+ * `taking-initiative`, `learning-and-growth`, `customer-and-user-focus`,
+ * `innovation`, `earning-trust-and-conflict`, and `strategic-leadership-and-
+ * thinking-big` — 6 of the 9 — pull one bullet each from the same two real,
+ * previously-undocumented bodies of work: the `ml-drug-discovery` open-source
+ * contributions, and Canventa Life Sciences' cross-org roadmap/GCP-
+ * infrastructure work with parent company STEMCELL Technologies. Reused
+ * deliberately from a different angle each time (unassigned-fix-adopted /
+ * ramp-up-and-transfer / credibility-earned / sequencing-proof-points), the
+ * same discipline `handling-ambiguity`, `translating-technical-into-
+ * business-impact`, and `influence-without-authority` already applied to
+ * this material — never the same bullet text twice, to avoid the "forcing
+ * every question into the same story" failure interviewers are trained to
+ * catch. `customer-and-user-focus` specifically inherited the ad-hoc-data-
+ * request/self-serve story from a former `developing-others` placement: it's
+ * a near-exact match to that chapter's own worked example (several teams'
+ * literal requests tracing to one underlying need), and never actually built
+ * another *person's* capability, which `developing-others` requires by its
+ * own definition.
  */
 export const COMPETENCY_STORIES: CompetencyStory[] = [
   {
+    id: 'taking-initiative',
+    competency: 'Taking Initiative',
+    color: 'blue',
+    headline: "The best proof of initiative isn't the first fix — it's the maintainer trusting you enough to merge the second one.",
+    coreBullets: [
+      "nrflynn2/ml-drug-discovery's CUDA-only device selection was hardcoded, quietly blocking any contributor on TPU or Apple Silicon — not his repo, nobody assigned him to fix another maintainer's infrastructure debt.",
+      'Migrated the pipeline to the unified torch.accelerator API and added deterministic seeding for cross-backend reproducibility (PR #24), merged by the maintainer.',
+      'Followed it with a second, unprompted contribution — refactoring active learning loops and data ingestion, centralizing RDKit/Morgan fingerprint extraction, and hardening error handling for OpenBabel and OpenMM (PR #25) — a second unrelated PR getting merged is the real signal, not the first fix alone.',
+    ],
+    baseDetail:
+      'The same pattern outside this one repo: shipped a production RAG AI agent 0-to-1 and open-sourced it before anyone asked for one, since adopted by 10+ engineers with no reporting line to him at all.',
+    attribution: 'Founding AI Engineer, Open Source',
+    evidenceLink: {
+      label: 'View the pull requests',
+      href: 'https://github.com/nrflynn2/ml-drug-discovery/pulls?q=is%3Apr+author%3Athomas-to-bcheme+is%3Aclosed',
+    },
+  },
+  {
+    id: 'delivery',
+    competency: 'Delivery',
+    color: 'amber',
+    headline: 'Protecting a deadline is a series of small trade-offs made early, not one heroic push at the end.',
+    coreBullets: [
+      'Accelerated feature delivery from 4+ weeks to under 1 week for internal tooling at Genentech by folding stakeholder feedback directly into the development cycle instead of collecting it at the end, across 5+ scientific teams.',
+      'Applied the same instinct to risk, not just velocity: caught a demand-forecasting gap early enough to prevent a $2M inventory stockout and $200K in material waste at Canventa, instead of discovering it once it was too late to act.',
+    ],
+    baseDetail:
+      "The same trade-off either way: catching what's about to become a problem is worth more than pushing harder once it already is one.",
+    attribution: 'Software Engineer, Genentech',
+  },
+  {
+    id: 'problem-solving-and-deep-dive',
+    competency: 'Problem Solving and Deep Dive',
+    color: 'purple',
+    headline: "Getting to 95% wasn't the model getting lucky — it was ruling things out systematically instead of shipping whatever looked better first.",
+    coreBullets: [
+      "Off-the-shelf OCR on 5,000+ handwritten laboratory documents wasn't clearing the accuracy bar needed to trust the digitized output.",
+      'Fine-tuned Snowflake Arctic-TILT with custom embeddings and annotated training data, evaluating systematically against held-out documents rather than shipping the first pass that looked better.',
+      "Reached 95%+ accuracy, saving 1,000+ hours of manual transcription — the evaluation discipline is what got it from 'looks better' to 'trustworthy enough to replace a manual process entirely.'",
+    ],
+    baseDetail:
+      "The same evaluation discipline applies whether the model is predicting revenue or reading handwriting — a result that looks better on the first pass isn't trustworthy until it's been checked against what would actually break it.",
+    attribution: 'Founding Fullstack Engineer, Canventa Life Sciences',
+  },
+  {
+    id: 'earning-trust-and-conflict',
+    competency: 'Earning Trust and Dealing with Conflict',
+    color: 'emerald',
+    headline: "Trust gets tested once — but it's built in every unscored interaction before that moment ever arrives.",
+    coreBullets: [
+      "Being a founding engineer at the smaller ~2,000-employee parent's subsidiary didn't come with automatic standing — earned enough credibility on the GCP infrastructure rollout that STEMCELL's own engineers, managers, and executives worked scope and timeline directly with him, rather than routing everything through Canventa's leadership first.",
+      'Built that same credibility from scratch at Genentech, streamlining workflows for 5+ scientific teams as an engineer with no prior standing in a scientific organization.',
+    ],
+    baseDetail:
+      "Reliability compounds quietly — small commitments delivered consistently before anyone's specifically watching are what let both of these hold up once real pressure showed up.",
+    attribution: 'Founding Fullstack Engineer, Canventa Life Sciences (a STEMCELL Technologies subsidiary)',
+  },
+  {
+    id: 'learning-and-growth',
+    competency: 'Learning and Growth',
+    color: 'rose',
+    headline: 'The transferable model was never the CUDA-specific syntax — it was what actually has to stay invariant when the hardware underneath changes.',
+    coreBullets: [
+      'Ramped up on TPU/GPU-accelerated distributed training internals — outside his own prior specialization — well enough to contribute to OpenXLA, JAX, and Kubernetes rather than stay a user of them.',
+      'Applied that model directly: implemented deterministic seeding and global graph-determinism flags tied to device type, so reproducibility held across CUDA, TPU, and Apple Silicon instead of just the backend he started on.',
+    ],
+    baseDetail:
+      'The compounding asset was never the CUDA-specific syntax — it was the mental model of what has to stay invariant when the hardware underneath changes, which is what transferred to TPU and Apple Silicon without starting over.',
+    attribution: 'Founding AI Engineer, Open Source',
+  },
+  {
+    id: 'customer-and-user-focus',
+    competency: 'Customer and User Focus',
+    color: 'blue',
+    headline: 'Every team’s literal request was a different report; the underlying need behind all of them was the same one dashboard could answer.',
+    coreBullets: [
+      'Finance, ops, and lab teams were each filing their own ad-hoc data requests — different literal asks that all traced back to the same underlying need: a way to answer their own questions without waiting on engineering.',
+      'Built one shared system instead of one-off exports — data-validation pipelines (Python, dbt, Snowflake) with a Streamlit self-serve layer and Tableau dashboards, calibrated to what each audience actually needed, not just handed a dashboard.',
+      'Ad-hoc requests dropped 70%, recovering 30+ production hours a week — the behavior changed because the underlying need got solved once, not the literal request answered three separate times.',
+    ],
+    baseDetail:
+      "The same “read the audience, then decide what needs translating” instinct stated elsewhere on this site — a non-technical stakeholder doesn't need a term left undefined either; they need it translated into what it does, instead of what it's called. That's what made the tooling something people actually adopted, not another dashboard nobody opened.",
+    attribution: 'Founding Fullstack Engineer, Canventa Life Sciences',
+  },
+  {
+    id: 'innovation',
+    competency: 'Innovation',
+    color: 'amber',
+    headline: 'Replacing a manual spreadsheet with a faster spreadsheet is optimization; replacing it with something finance can just ask a question is a different approach entirely.',
+    coreBullets: [
+      'Revenue analysis at Canventa was a manual, spreadsheet-driven process with a real ceiling — no amount of better spreadsheet tooling would let finance or ops query it directly.',
+      'Architected a revenue-optimization system integrating a predictive ML model with a RAG AI agent on Snowflake, replacing the spreadsheet with natural-language query access instead of a faster version of the same workflow.',
+      'Reduced decision cycles from 3+ hours to under 10 minutes, saving 500+ hours annually — adopted directly by non-technical stakeholders, not just handed to them.',
+    ],
+    baseDetail:
+      "The same test applies elsewhere on this site: could refining the existing approach have gotten there? If yes, it's optimization, not innovation — this replaced the spreadsheet's ceiling entirely instead of raising it.",
+    attribution: 'Founding Fullstack Engineer, Canventa Life Sciences',
+  },
+  {
+    id: 'developing-others',
+    competency: 'Developing Others',
+    color: 'purple',
+    headline: 'Scaling teaching past a single relationship means building something people return to without you in the room.',
+    coreBullets: [
+      'Organizes and contributes to peer-learning sessions and community forums — Interview Kickstart bootcamp peer sessions, Databricks weekly seminars, and enterprise analytics community forums — supporting data engineering and analytics practitioners outside any formal reporting relationship.',
+      'Produces MLOps-focused educational content on YouTube and LinkedIn through an automated CI/CD publishing pipeline, scaling the same teaching instinct past any single 1:1 conversation.',
+    ],
+    baseDetail:
+      'Community-facing teaching threads through both the content pipeline and the peer-session facilitation — the same instinct, aimed at people outside any single team or company.',
+    attribution: 'Educational Content & Community Facilitation',
+  },
+  {
+    id: 'strategic-leadership-and-thinking-big',
+    competency: 'Strategic Leadership and Thinking Big',
+    color: 'emerald',
+    headline: "Think big by knowing which lever a bet actually needs, who else has to live with the choice, and why it's worth the timeline.",
+    coreBullets: [
+      "Canventa's 3–5 year strategic roadmap isn't one team's plan to execute — its infrastructure decisions ripple across both Canventa's and STEMCELL's engineering, operations, and compliance functions, translated into realistic year-by-year and quarter-by-quarter goals against current operational capacity, not an aspirational target.",
+      "Sequenced the GCP-hosted enterprise/onboarding infrastructure rollout by proving the compliance approach out directly with STEMCELL's own engineers first, rather than finalizing Canventa's plan and asking STEMCELL to simply ratify it afterward.",
+      'The scale of the bet was never the point on its own — the sequencing of who signs off on what, and in which order, is what actually determines whether a big technical bet ships or stalls.',
+    ],
+    baseDetail:
+      "The same judgment generalized past any one project — this portfolio's own architecture swaps “scalability” for “resilience” against a $0-budget constraint, on the same reasoning: design for today's real constraint, not a guessed-at tomorrow.",
+    attribution: 'System-design philosophy',
+    attributionHref: '/projects#system-design-philosophy',
+  },
+  {
     id: 'handling-ambiguity',
     competency: 'Handling Ambiguity',
-    color: 'blue',
+    color: 'rose',
     headline: 'Navigate ambiguity by understanding what to use, when to use it, and why to use it.',
     coreBullets: [
       'Built a 3-axis mental model instead of treating each ambiguous problem as a one-off — an end-to-end lifecycle (design→data→model→backend→frontend→ops), an abstraction ladder (hardware→distributed systems), and a time axis (iteration, legacy, scale).',
-      'Applied it to a genuinely open-ended research problem with no known-good mutation to start from, publishing 3 novel β-glucosidase B variants (UC Davis).',
       "Applied the same instinct where there was no clean answer either side would fully own: stood up 0-to-1 enterprise and onboarding infrastructure on GCP with no existing template to follow, building it to satisfy HIPAA and legal-compliance requirements for two organizations — Canventa and its parent, STEMCELL Technologies — before either side had fully defined what \"compliant\" meant for this specific system.",
     ],
     baseDetail:
@@ -226,10 +379,9 @@ export const COMPETENCY_STORIES: CompetencyStory[] = [
   {
     id: 'translating-technical-into-business-impact',
     competency: 'Translating Technical Into Business Impact',
-    color: 'amber',
+    color: 'blue',
     headline: 'Every design decision gets checked against one rubric: does it drive revenue, reduce risk, save time, or streamline a process?',
     coreBullets: [
-      "A technically elegant model nobody trusts or uses doesn't move any of those four levers.",
       'Architected Canventa’s revenue-optimization system specifically to be queried in plain language by finance and ops, not just to be technically correct.',
       'Applied the same rubric translating GCP infrastructure\'s HIPAA and legal-compliance requirements into terms executives at both Canventa and its parent, STEMCELL Technologies, could act on — not just "this meets the requirement," but what it protects, what it unblocks, and why the timeline is worth it.',
     ],
@@ -240,47 +392,13 @@ export const COMPETENCY_STORIES: CompetencyStory[] = [
   {
     id: 'influence-without-authority',
     competency: 'Influence Without Authority',
-    color: 'purple',
+    color: 'amber',
     headline: 'Aligning two entire organizations around one shared timeline — no reporting line into either, no shared manager to force it, and no obligation on their part to listen at all.',
     coreBullets: [
-      'Canventa is a vertically-integrated subsidiary of STEMCELL Technologies (~2,000 employees) — a roadmap decision on one side routinely depends on a counterpart team on the other, with no shared manager to arbitrate.',
-      "Coordinated the GCP-hosted enterprise/onboarding infrastructure rollout's scope and timeline directly with STEMCELL's own engineers, managers, and executives, rather than finalizing Canventa's plan first and imposing it after the fact.",
+      "Canventa is a vertically-integrated subsidiary of STEMCELL Technologies (~2,000 employees) with no shared manager to arbitrate a cross-company roadmap decision, so coordinated the GCP-hosted enterprise/onboarding infrastructure rollout's scope and timeline directly with STEMCELL's own engineers, managers, and executives — rather than finalizing Canventa's plan first and imposing it after the fact.",
     ],
     baseDetail:
       'The same no-authority pattern at smaller scale: a production RAG AI agent shipped 0-to-1 and open-sourced, since adopted by other engineers with no reporting line to him at all.',
     attribution: 'Founding Fullstack Engineer, Canventa Life Sciences (a STEMCELL Technologies subsidiary)',
-  },
-  {
-    id: 'developing-others',
-    competency: 'Developing Others',
-    color: 'emerald',
-    headline: "Turned a flood of one-off data requests into a self-serve habit finance, ops, and lab teams didn't need me for anymore.",
-    coreBullets: [
-      'Engineering was fielding a steady stream of ad-hoc data requests from teams with no way to answer their own questions.',
-      'Built data-validation pipelines (Python, dbt, Snowflake) with a Streamlit self-serve layer and Tableau dashboards, calibrated to what each audience actually needed translated, not just handed a dashboard.',
-      'Ad-hoc requests dropped 70%, recovering 30+ production hours a week — the behavior changed, not just the backlog.',
-    ],
-    baseDetail:
-      "The same “read the audience, then decide what needs translating” instinct stated elsewhere on this site — a non-technical stakeholder doesn't need a term left undefined either; they need it translated into what it does, instead of what it's called. That's what made the tooling something people actually adopted, not another dashboard nobody opened.",
-    attribution: 'Founding Fullstack Engineer, Canventa Life Sciences',
-  },
-  {
-    id: 'strategic-leadership-and-thinking-big',
-    competency: 'Strategic Leadership and Thinking Big',
-    color: 'rose',
-    headline: "The harder half of a big technical bet isn't knowing the levers exist — it's navigating which one a given problem actually needs, right now.",
-    coreBullets: [
-      "Landed 5 separate pull requests to a shared open-source codebase (nrflynn2/ml-drug-discovery), each merged by the maintainer, replacing hardcoded CUDA-only device selection with the unified torch.accelerator API across 5 different chapters — the maintainer adopting the same fix five separate times is the real signal, not one lucky patch.",
-      "Supports Canventa's 3–5 year strategic roadmap — not one team's plan, but one whose infrastructure decisions ripple across both Canventa's and STEMCELL's engineering, operations, and compliance functions — translated into realistic year-by-year and quarter-by-quarter goals against current operational capacity, not an aspirational target, including standing up 0-to-1 enterprise and onboarding infrastructure on GCP built to be HIPAA- and legally-compliant for sensitive data across both organizations.",
-      "Both reflect the same instinct: a big technical bet only counts if it's built for the constraint that's actually real — a shared codebase's existing contributors in one case, two organizations' compliance and timeline requirements in the other.",
-    ],
-    baseDetail:
-      "The same judgment generalized past that one PR — this portfolio's own architecture swaps “scalability” for “resilience” against a $0-budget constraint, on the same reasoning: design for today's real constraint, not a guessed-at tomorrow.",
-    attribution: 'System-design philosophy',
-    attributionHref: '/projects#system-design-philosophy',
-    evidenceLink: {
-      label: 'View the pull requests',
-      href: 'https://github.com/nrflynn2/ml-drug-discovery/pulls?q=is%3Apr+author%3Athomas-to-bcheme+is%3Aclosed',
-    },
   },
 ];

@@ -85,7 +85,7 @@ export interface CompetencyStory {
   color: 'blue' | 'amber' | 'purple' | 'emerald' | 'rose';
   /** One sentence — the card's thesis, the most prominent text on it. */
   headline: string;
-  /** 2–3 thought → action → result beats, always visible. */
+  /** 1–3 thought → action → result beats, always visible. */
   coreBullets: string[];
   /** 1–2 sentences of supporting depth, revealed on a "+ Details" toggle. */
   baseDetail?: string;
