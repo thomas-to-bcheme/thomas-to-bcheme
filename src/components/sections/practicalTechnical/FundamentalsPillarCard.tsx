@@ -1,19 +1,8 @@
-import Badge from '@/components/ui/Badge';
-import type { FundamentalsPillar, InterviewMode } from '@/constants/practicalTechnical';
+import type { FundamentalsPillar } from '@/constants/practicalTechnical';
 
 interface FundamentalsPillarCardProps {
   pillar: FundamentalsPillar;
 }
-
-const MODE_BADGE_COLOR: Record<InterviewMode, 'blue' | 'purple'> = {
-  synchronous: 'blue',
-  asynchronous: 'purple',
-};
-
-const MODE_BADGE_LABEL: Record<InterviewMode, string> = {
-  synchronous: 'Synchronous',
-  asynchronous: 'Asynchronous',
-};
 
 /**
  * Presentational card for one of the two fundamentals pillars
@@ -37,14 +26,6 @@ const FundamentalsPillarCard = ({ pillar }: FundamentalsPillarCardProps) => (
         </li>
       ))}
     </ul>
-
-    <div className="mt-5 flex flex-wrap gap-2">
-      {pillar.supportsMode.map((mode) => (
-        <Badge key={mode} color={MODE_BADGE_COLOR[mode]} variant="outline">
-          {MODE_BADGE_LABEL[mode]}
-        </Badge>
-      ))}
-    </div>
   </div>
 );
 

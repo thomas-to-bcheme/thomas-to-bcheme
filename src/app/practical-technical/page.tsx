@@ -8,6 +8,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import PageSectionNav from '@/components/ui/PageSectionNav';
 import FundamentalsPillarCard from '@/components/sections/practicalTechnical/FundamentalsPillarCard';
 import PracticePlatformCard from '@/components/sections/practicalTechnical/PracticePlatformCard';
+import CodeProgressionDeepDive from '@/components/sections/practicalTechnical/CodeProgressionDeepDive';
 import {
   FUNDAMENTALS_PILLARS,
   INTERVIEW_MODES,
@@ -17,15 +18,15 @@ import {
 export const metadata: Metadata = {
   title: 'Practical Technical — Thomas To',
   description:
-    'Two fundamentals pillars — programming fundamentals and agentic CLI tool fundamentals — mapped against synchronous and asynchronous interview formats, and the platforms (LeetCode, HackerRank, CoderPad) where they show up.',
+    "What to expect first: the two interview delivery formats (live pairing and take-home), then the two fundamentals pillars — programming fundamentals and agentic CLI tool fundamentals — that get exercised across them, and the platforms (LeetCode, HackerRank, CoderPad) where they show up. Includes a deep dive on 'make it work, make it right, make it fast' as a live discussion with the interviewer, with worked SQL and Python examples at each stage.",
 };
 
 const FOCUS_RING =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black';
 
 const SECTION_NAV_ITEMS = [
-  { id: 'fundamentals', label: 'Fundamentals' },
   { id: 'interview-modes', label: 'Interview Modes' },
+  { id: 'fundamentals', label: 'Fundamentals' },
   { id: 'practice-platforms', label: 'Practice Platforms' },
 ];
 
@@ -48,7 +49,7 @@ export default function PracticalTechnicalPage() {
             Interview Prep
           </span>
           <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-tight">
-            Fundamentals that hold up <span className="gradient-text-blue">sync or async</span>
+            Fundamentals that hold up <span className="gradient-text-blue">live or take-home</span>
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
             Two pillars — programming fundamentals and agentic CLI tool fundamentals — carry across
@@ -62,17 +63,8 @@ export default function PracticalTechnicalPage() {
       <PageSectionNav items={SECTION_NAV_ITEMS} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-        <section id="fundamentals" className="scroll-mt-32 mb-16">
-          <SectionHeading eyebrow="The Two Pillars" title="Fundamentals that transfer" />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {FUNDAMENTALS_PILLARS.map((pillar) => (
-              <FundamentalsPillarCard key={pillar.id} pillar={pillar} />
-            ))}
-          </div>
-        </section>
-
         <section id="interview-modes" className="scroll-mt-32 mb-16">
-          <SectionHeading eyebrow="Two Delivery Formats" title="Synchronous vs. asynchronous" />
+          <SectionHeading eyebrow="What To Expect First" title="Live pairing vs. take-home" />
           <div className="grid gap-4 sm:grid-cols-2">
             {INTERVIEW_MODES.map((modeProfile) => (
               <div key={modeProfile.mode} className="card-base p-5 sm:p-6">
@@ -95,6 +87,17 @@ export default function PracticalTechnicalPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section id="fundamentals" className="scroll-mt-32 mb-16">
+          <SectionHeading eyebrow="The Two Pillars" title="Fundamentals that transfer" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {FUNDAMENTALS_PILLARS.map((pillar) => (
+              <FundamentalsPillarCard key={pillar.id} pillar={pillar} />
+            ))}
+          </div>
+
+          <CodeProgressionDeepDive />
         </section>
 
         <section id="practice-platforms" className="scroll-mt-32">

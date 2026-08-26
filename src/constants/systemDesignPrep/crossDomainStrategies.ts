@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   DollarSign,
   Activity,
+  Waves,
   type LucideIcon,
 } from 'lucide-react';
 import type { SweCompassLifecycleStage } from './sweCompassLifecycle';
@@ -299,6 +300,55 @@ export const STRATEGY_LEVERS: StrategyLever[] = [
         domain: 'security',
         approach: "Audit logging and anomaly detection are observability applied to 'who did what' — the same discipline, a different question.",
         crossLink: { label: 'Secrets management →', href: '#secrets-management' },
+      },
+    ],
+  },
+  {
+    id: 'lever-batch-vs-streaming',
+    label: 'Batch vs. Streaming',
+    icon: Waves,
+    summary:
+      "Whether data moves in scheduled batches or continuously, and whether an answer is computed ahead of time or the moment it's asked for — the same fork, showing up at every layer.",
+    treatments: [
+      {
+        domain: 'design',
+        approach:
+          'This gets decided at the data-flow-topology stage, before any component gets drawn — it shapes the whole diagram, not one box in it.',
+        crossLink: { label: 'Requirements engineering →', href: '#requirements-engineering' },
+      },
+      {
+        domain: 'data',
+        approach:
+          'Batch ETL (Spark/Hadoop) processes the full dataset on a schedule; streaming ingestion (Kafka/Flink) processes one event at a time as it arrives.',
+        crossLink: { label: 'MapReduce vs. stream processing →', href: '#mapreduce-vs-stream-processing' },
+      },
+      {
+        domain: 'model',
+        approach:
+          'The same fork shows up twice in one pipeline: batch vs. streaming feature computation on the way in, online vs. batch prediction on the way out.',
+        crossLink: { label: 'Batch vs. streaming feature computation →', href: '#batch-vs-streaming-feature-computation' },
+      },
+      {
+        domain: 'backend',
+        approach:
+          'WebSockets/SSE push updates continuously; a plain REST/GraphQL request pulls a fresh answer once, on demand.',
+        crossLink: { label: 'Real-time vs. Batch →', href: '#real-time-vs-batch' },
+      },
+      {
+        domain: 'frontend',
+        approach: 'SSR/CSR compute the page live, per request; SSG precomputes it once, in a batch, at build time.',
+        crossLink: { label: 'Rendering strategies →', href: '#rendering-strategies' },
+      },
+      {
+        domain: 'ops',
+        approach: 'Continuous deployment ships each change as it lands; a scheduled release batches several changes into one planned window.',
+        crossLink: { label: 'Deployment strategies →', href: '#deployment-strategies' },
+      },
+      {
+        domain: 'security',
+        approach:
+          'Streaming anomaly detection catches fraud as it happens; a batch compliance audit reviews a fixed window after the fact — both are needed, for different failure speeds.',
+        crossLink: { label: 'Compliance →', href: '#compliance' },
       },
     ],
   },

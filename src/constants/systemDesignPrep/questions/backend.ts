@@ -4,7 +4,6 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'real-time-vs-batch',
     category: 'backend',
-    axes: ['end-to-end', 'abstraction'],
     question:
       'Does the consumer need this the instant it changes, or is periodic/on-demand delivery acceptable?',
     clarifyingSubQuestions: [
@@ -66,7 +65,6 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'sync-vs-async',
     category: 'backend',
-    axes: ['end-to-end'],
     question:
       'Does the caller block waiting for a response, or fire a request and move on?',
     clarifyingSubQuestions: [
@@ -104,7 +102,6 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'server-vs-serverless',
     category: 'backend',
-    axes: ['end-to-end'],
     question: 'Should this run on a long-lived server process, or as short-lived, event-triggered functions?',
     clarifyingSubQuestions: [
       'Is there state that needs to persist between requests in-memory (favors server)?',
@@ -136,7 +133,6 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'stateless-vs-stateful',
     category: 'backend',
-    axes: ['abstraction'],
     question:
       'Can any instance handle any request, or does a request need to land on the instance holding its state?',
     clarifyingSubQuestions: [
@@ -169,7 +165,6 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'latency-vs-throughput',
     category: 'backend',
-    axes: ['abstraction'],
     question: 'Are you optimizing for how fast one request completes, or how many requests complete per unit time?',
     clarifyingSubQuestions: [
       'Does the user directly experience per-request latency (interactive UI), or only aggregate system throughput (batch pipeline)?',
@@ -201,7 +196,6 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'live-compute-vs-precompute',
     category: 'backend',
-    axes: ['time', 'end-to-end'],
     question:
       'Should this result be computed live, in the request path, or precomputed ahead of time and served from a cached or materialized store?',
     clarifyingSubQuestions: [

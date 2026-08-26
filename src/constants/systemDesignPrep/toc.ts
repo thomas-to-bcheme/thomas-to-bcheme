@@ -8,6 +8,7 @@
  */
 
 import { INTERVIEW_FRAMEWORK_STEPS } from './interviewFramework';
+import { ML_FRAMEWORK_STEPS } from './mlSystemDesignFramework';
 import { SYSTEM_DESIGN_CATEGORIES } from './questions';
 
 export interface SystemDesignTocItem {
@@ -20,15 +21,26 @@ const toItem = (id: string, label: string): SystemDesignTocItem => ({ id, label,
 
 // The framing/intro section, rendered first in main content, followed by
 // the Core Characteristics section (Chip Huyen's 4 + CAP's 3 as the
-// baseline every question-bank decision below gets checked against).
+// baseline every question-bank decision below gets checked against), the
+// scoring rubric itself, then the communication scripts — generic,
+// placeholder-driven examples of what scores high on that rubric — so the
+// reader sees how to talk before the framework below applies it in context.
 export const FRAMING_TOC_ITEMS: SystemDesignTocItem[] = [
   toItem('framing-intro', 'Framing'),
   toItem('core-characteristics', 'Core Characteristics'),
+  toItem('scoring-rubric', 'Scoring Rubric'),
+  toItem('communication-scripts', 'Communication Scripts'),
 ];
 
 // One entry per interview-framework step, in order — matches the ids
 // FrameworkStepList assigns to each <li> via INTERVIEW_FRAMEWORK_STEPS.
 export const FRAMEWORK_TOC_ITEMS: SystemDesignTocItem[] = INTERVIEW_FRAMEWORK_STEPS.map((step) =>
+  toItem(step.id, step.label),
+);
+
+// Same pattern, for MLSystemDesignFrameworkSection's own FrameworkStepList —
+// the ML-specific adaptation of the general framework above.
+export const ML_FRAMEWORK_TOC_ITEMS: SystemDesignTocItem[] = ML_FRAMEWORK_STEPS.map((step) =>
   toItem(step.id, step.label),
 );
 
@@ -44,9 +56,7 @@ export const REFERENCE_TOC_ITEMS: SystemDesignTocItem[] = [
   toItem('reference-grid', 'Reference Grid'),
   toItem('components-of-system-design', 'Components'),
   toItem('cross-domain-strategies', 'Cross-Domain Strategies'),
-  toItem('scoring-rubric', 'Scoring Rubric'),
   toItem('staff-signals', 'Staff-Level Signals'),
-  toItem('communication-scripts', 'Communication Scripts'),
   toItem('development-lifecycles', 'Development Lifecycles'),
   toItem('sources', 'Sources'),
 ];
@@ -57,6 +67,7 @@ export const REFERENCE_TOC_ITEMS: SystemDesignTocItem[] = [
 export const SYSTEM_DESIGN_TOC_ITEMS: SystemDesignTocItem[] = [
   ...FRAMING_TOC_ITEMS,
   ...FRAMEWORK_TOC_ITEMS,
+  ...ML_FRAMEWORK_TOC_ITEMS,
   ...QUESTIONS_TOC_ITEMS,
   ...REFERENCE_TOC_ITEMS,
 ];

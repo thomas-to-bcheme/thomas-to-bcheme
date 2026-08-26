@@ -2,9 +2,44 @@ import type { SystemDesignQuestion } from './types';
 
 export const MODEL_QUESTIONS: SystemDesignQuestion[] = [
   {
+    id: 'offline-vs-online-metrics',
+    category: 'model',
+    question: "Before this model ships, how do you know it's actually good — and how do you know it's still good once it's live?",
+    clarifyingSubQuestions: [
+      'What held-out data and metric (precision/recall/AUC, RMSE, etc.) will gate the ship decision, decided before training even starts?',
+      "What live, business-facing metric (CTR, conversion, revenue) will actually prove the model helped, once it's serving real traffic?",
+      'Is the training/eval data class-imbalanced or otherwise unrepresentative of live traffic in a way that could make offline metrics misleading?',
+    ],
+    approachOptions: [
+      {
+        label: 'Offline metrics',
+        whenToUse: 'Gating the ship/no-ship decision — the last checkpoint before a model reaches real users, measured against a held-out test set.',
+        tradeoffs: "Cheap, fast, and reproducible, but measures fit to historical data — not what happens once the model's own predictions start changing user behavior.",
+      },
+      {
+        label: 'Online metrics',
+        whenToUse: 'The real, business-facing measure of whether the model helped — what the ML deployment risk ladder above is actually gating for.',
+        tradeoffs: 'Measures true impact, including feedback loops offline metrics can\'t see, but takes real traffic, real time, and a live experiment to get a read.',
+      },
+      {
+        label: 'Both, in sequence',
+        whenToUse: 'The standard approach for any production model — offline gates deployment, online then validates it actually worked.',
+        tradeoffs: "Offline metrics can look great while online metrics disagree (the \"offline/online gap\") — a model that improved held-out accuracy can still lose on the metric that actually matters live.",
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'Offline and online metrics can diverge — and often do',
+        dependsOn:
+          "Class imbalance, label noise, and a training distribution that no longer matches live traffic are the usual causes of the offline/online gap — a model can top the held-out benchmark and still underperform once it's actually shaping what users see.",
+      },
+    ],
+    ripplesInto: ['ml-deployment-risk-ladder', 'drift-vs-staleness'],
+    sourceNote: 'synthesized',
+  },
+  {
     id: 'batch-vs-streaming',
     category: 'model',
-    axes: ['end-to-end'],
     question: 'Should this data be processed in scheduled batches, or continuously as it arrives?',
     clarifyingSubQuestions: [
       'How fresh does the processed output need to be for downstream consumers?',
@@ -36,7 +71,6 @@ export const MODEL_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'online-vs-batch-prediction',
     category: 'model',
-    axes: ['end-to-end'],
     question: 'Does inference happen per-request in real time, or precomputed on a schedule?',
     clarifyingSubQuestions: [
       'Does the prediction depend on features only known at request time (current session context), or can it be precomputed ahead of need?',
@@ -68,7 +102,6 @@ export const MODEL_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'drift-vs-staleness',
     category: 'model',
-    axes: ['time'],
     question: 'Is the input distribution shifting, the input-to-label relationship shifting, or is the model simply out of date?',
     clarifyingSubQuestions: [
       'Have the statistical properties of incoming inputs changed since training (data drift), even if the underlying relationship to the label hasn’t?',
@@ -105,7 +138,6 @@ export const MODEL_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'ml-deployment-risk-ladder',
     category: 'model',
-    axes: ['time'],
     question: 'How much production traffic should see this new model before it fully replaces the old one?',
     clarifyingSubQuestions: [
       'Can the new model’s predictions be evaluated against real traffic without actually affecting what users see (shadow mode)?',

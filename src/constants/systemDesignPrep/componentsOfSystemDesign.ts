@@ -1,14 +1,27 @@
-// Supporting content for ComponentsOfSystemDesignSection, alongside the 5
-// full decision-cascade cards in questions/components.ts. These two arrays
-// deliberately do NOT re-derive content that already has real trade-off
-// depth elsewhere on the page (Reference Grid entries, the scaling-progression
-// question) — they frame it in one place and cross-link to the existing
-// authoritative source instead, per DATA INTEGRITY.
+// Supporting content for ComponentsOfSystemDesignSection. The 5 full
+// decision-cascade cards that used to render here now live inline in "The
+// Questions" (under Design and Data) — see RELOCATED_COMPONENT_QUESTIONS
+// below for the cross-link index back to them. COMPONENT_FRAMING_TOPICS and
+// DESIGN_PRINCIPLES deliberately do NOT re-derive content that already has
+// real trade-off depth elsewhere on the page (Reference Grid entries, the
+// scaling-progression question) — they frame it in one place and cross-link
+// to the existing authoritative source instead, per DATA INTEGRITY.
 
 export interface ComponentCrossLink {
   label: string;
   href: string;
 }
+
+// The 5 decision cascades that used to render directly inside this section,
+// now living inline in "The Questions" (under Design and Data) — a
+// cross-link index back to them for readers landing on this section first.
+export const RELOCATED_COMPONENT_QUESTIONS: ComponentCrossLink[] = [
+  { label: 'Load balancer vs. API gateway vs. reverse proxy →', href: '#lb-vs-gateway-vs-proxy' },
+  { label: 'Storage types →', href: '#storage-types' },
+  { label: 'Partitioning vs. sharding →', href: '#partitioning-vs-sharding' },
+  { label: 'Networking, DNS & CDN →', href: '#networking-dns-cdn' },
+  { label: 'AuthN vs. AuthZ vs. security →', href: '#authn-vs-authz-vs-security' },
+];
 
 export interface ComponentFramingTopic {
   id: string;

@@ -1,31 +1,46 @@
 import SectionHeading from '@/components/ui/SectionHeading';
-import SystemDesignQuestionCard from './SystemDesignQuestionCard';
-import { COMPONENTS_OF_SYSTEM_DESIGN_QUESTIONS } from '@/constants/systemDesignPrep/questions/components';
-import { COMPONENT_FRAMING_TOPICS, DESIGN_PRINCIPLES } from '@/constants/systemDesignPrep/componentsOfSystemDesign';
+import {
+  COMPONENT_FRAMING_TOPICS,
+  DESIGN_PRINCIPLES,
+  RELOCATED_COMPONENT_QUESTIONS,
+} from '@/constants/systemDesignPrep/componentsOfSystemDesign';
 
 /**
  * The building blocks every system-design answer pulls from — networking,
- * traffic management, storage, partitioning, and security — worked as full
- * decision cascades (reusing SystemDesignQuestionCard directly, outside the
- * category-filtered question bank) for the genuinely multi-way forks, and
- * cross-linked rather than duplicated for topics (caching, replication,
- * scaling, API protocol choice) that already have real depth elsewhere on
- * this page. Closes with the standard every choice above gets checked
- * against: simple, built for scale, designed for failure, automated with
- * observability, and revisited as requirements evolve.
+ * traffic management, storage, partitioning, and security. The 5 genuinely
+ * multi-way forks among these now render as full decision cascades inline
+ * in "The Questions" (under Design and Data); this section links to them
+ * rather than re-rendering them, and instead frames the topics (caching,
+ * replication, scaling, API protocol choice) that already have real depth
+ * elsewhere on this page without duplicating it here. Closes with the
+ * standard every choice above gets checked against: simple, built for
+ * scale, designed for failure, automated with observability, and revisited
+ * as requirements evolve.
  */
 const ComponentsOfSystemDesignSection = () => (
   <section id="components-of-system-design" className="scroll-mt-24 mt-20">
     <SectionHeading eyebrow="Reference" title="The components of system design" />
     <p className="max-w-2xl text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-8">
-      The building blocks underneath any high-level design — worked as full trade-off comparisons
-      where the choice genuinely forks, and cross-linked to where the depth already lives on this
-      page where it doesn&apos;t need repeating.
+      The building blocks underneath any high-level design — framed here, with the genuinely
+      multi-way forks worked as full decision cascades in{' '}
+      <a href="#design" className="font-semibold text-blue-700 dark:text-blue-400 hover:underline">
+        The Questions
+      </a>{' '}
+      below, and cross-linked to where the rest of the depth already lives on this page.
     </p>
 
-    <div className="space-y-4">
-      {COMPONENTS_OF_SYSTEM_DESIGN_QUESTIONS.map((question) => (
-        <SystemDesignQuestionCard key={question.id} question={question} />
+    <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">
+      These five are now full decision cascades inside The Questions — Design and Data:
+    </p>
+    <div className="flex flex-wrap gap-2">
+      {RELOCATED_COMPONENT_QUESTIONS.map((item) => (
+        <a
+          key={item.href}
+          href={item.href}
+          className="tag-blue hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1"
+        >
+          {item.label}
+        </a>
       ))}
     </div>
 

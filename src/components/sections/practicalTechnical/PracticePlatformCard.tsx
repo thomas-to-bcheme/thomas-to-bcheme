@@ -1,19 +1,9 @@
 import Badge from '@/components/ui/Badge';
-import type { InterviewMode, PracticePlatform } from '@/constants/practicalTechnical';
+import type { PracticePlatform } from '@/constants/practicalTechnical';
 
 interface PracticePlatformCardProps {
   platform: PracticePlatform;
 }
-
-const MODE_BADGE_COLOR: Record<InterviewMode, 'blue' | 'purple'> = {
-  synchronous: 'blue',
-  asynchronous: 'purple',
-};
-
-const MODE_BADGE_LABEL: Record<InterviewMode, string> = {
-  synchronous: 'Synchronous',
-  asynchronous: 'Asynchronous',
-};
 
 /**
  * Presentational card for a single practice platform (LeetCode, HackerRank,
@@ -23,9 +13,6 @@ const PracticePlatformCard = ({ platform }: PracticePlatformCardProps) => (
   <div className="card-base p-5 sm:p-6">
     <div className="flex flex-wrap items-center gap-2">
       <h3 className="text-lg font-bold text-zinc-900 dark:text-white">{platform.label}</h3>
-      <Badge color={MODE_BADGE_COLOR[platform.primaryMode]} variant="outline">
-        {MODE_BADGE_LABEL[platform.primaryMode]}
-      </Badge>
       {platform.mostCommon && <Badge color="amber">Most Common</Badge>}
     </div>
 

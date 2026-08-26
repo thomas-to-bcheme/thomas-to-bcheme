@@ -1,17 +1,27 @@
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Youtube, Instagram } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { EXTERNAL_REFERENCES, EXTERNAL_REFERENCE_GROUPS } from '@/constants/systemDesignPrep/externalReferences';
+import {
+  EXTERNAL_REFERENCES,
+  EXTERNAL_REFERENCE_GROUPS,
+  type ExternalReferenceMedium,
+} from '@/constants/systemDesignPrep/externalReferences';
 
 const FOCUS_RING =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1';
 
+/** Per-medium icon override — reference.medium selects one of these, undefined falls back to ExternalLink. */
+const MEDIUM_ICON: Record<ExternalReferenceMedium, typeof ExternalLink> = {
+  video: Youtube,
+  social: Instagram,
+};
+
 /**
- * The 12 external citations (opens in a new tab), grouped into Framework &
+ * The 30 external citations (opens in a new tab), grouped into Framework &
  * System Design / Development Lifecycles / Cross-Lifecycle Operating
- * Standards (EXTERNAL_REFERENCE_GROUPS), plus the 2 internal
- * /study-plan?board=... links to the raw source whiteboards this page's
- * content was synthesized from.
+ * Standards / Video Walkthroughs / Social Media Roundups / ML System Design
+ * (EXTERNAL_REFERENCE_GROUPS), plus the 2 internal /study-plan?board=... links
+ * to the raw source whiteboards this page's content was synthesized from.
  */
 const ExternalReferencesSection = () => (
   <section id="sources" className="scroll-mt-24 mt-20">
@@ -23,21 +33,24 @@ const ExternalReferencesSection = () => (
           <h3 className="text-sm font-bold text-zinc-900 dark:text-white">{group.label}</h3>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{group.description}</p>
           <ul className="mt-3 space-y-3">
-            {EXTERNAL_REFERENCES.filter((reference) => reference.group === group.id).map((reference) => (
-              <li key={reference.id} className="card-base p-4">
-                <a
-                  href={reference.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 dark:text-blue-400 hover:underline rounded-sm ${FOCUS_RING}`}
-                >
-                  {reference.title} <ExternalLink size={13} className="stroke-[2.5]" aria-hidden="true" />
-                </a>
-                <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  {reference.whatItOffers}
-                </p>
-              </li>
-            ))}
+            {EXTERNAL_REFERENCES.filter((reference) => reference.group === group.id).map((reference) => {
+              const ReferenceIcon = reference.medium ? MEDIUM_ICON[reference.medium] : ExternalLink;
+              return (
+                <li key={reference.id} className="card-base p-4">
+                  <a
+                    href={reference.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 dark:text-blue-400 hover:underline rounded-sm ${FOCUS_RING}`}
+                  >
+                    {reference.title} <ReferenceIcon size={13} className="stroke-[2.5]" aria-hidden="true" />
+                  </a>
+                  <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                    {reference.whatItOffers}
+                  </p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}

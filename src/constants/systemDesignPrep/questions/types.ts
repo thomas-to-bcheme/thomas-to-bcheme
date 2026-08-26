@@ -2,13 +2,7 @@
  * Shared shape for every entry in the System Design question bank
  * (design.ts, data.ts, model.ts, backend.ts, frontend.ts, ops.ts),
  * aggregated by questions/index.ts.
- *
- * `axes` tags each question with which real SWE Compass axis/axes it
- * touches (see src/components/features/SweCompassDiagram.tsx) — this is an
- * organizing lens applied on top of the question/cascade structure below,
- * not a redefinition of the Compass itself.
  */
-import type { SweCompassAxis } from '@/components/features/SweCompassDiagram';
 import type { SweCompassLifecycleStage } from '../sweCompassLifecycle';
 
 export interface ApproachOption {
@@ -29,7 +23,6 @@ type QuestionCategoryId = SweCompassLifecycleStage;
 export interface SystemDesignQuestion {
   id: string;
   category: QuestionCategoryId;
-  axes: SweCompassAxis[];
   question: string;
   clarifyingSubQuestions: string[];
   approachOptions: ApproachOption[];
@@ -39,4 +32,12 @@ export interface SystemDesignQuestion {
   /** Whether this question was transcribed/adapted from the source
    *  Excalidraw boards, or is original synthesis filling a confirmed gap. */
   sourceNote: 'board' | 'synthesized';
+  /** Optional — renders a small divider + micro-label before this card,
+   *  marking the start of a labeled subsection within a category's flat
+   *  question list (e.g. "Big Data" within Data). Generic and reusable:
+   *  any category's question can opt in, not specific to one category. */
+  subsectionLabel?: string;
+  /** Optional 1-sentence description shown under subsectionLabel. Only
+   *  meaningful when subsectionLabel is also set. */
+  subsectionDescription?: string;
 }

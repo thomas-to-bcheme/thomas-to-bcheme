@@ -1,4 +1,4 @@
-export type ExternalReferenceGroup = 'framework' | 'lifecycles' | 'standards';
+export type ExternalReferenceGroup = 'framework' | 'lifecycles' | 'standards' | 'videos' | 'social' | 'ml-system-design';
 
 export interface ExternalReferenceGroupMeta {
   id: ExternalReferenceGroup;
@@ -7,7 +7,7 @@ export interface ExternalReferenceGroupMeta {
 }
 
 /**
- * Single source of truth for the 3 labeled subgroups ExternalReferencesSection
+ * Single source of truth for the 6 labeled subgroups ExternalReferencesSection
  * renders under "Sources" — mirrors how sweCompassLifecycle.ts's 6 stages drive
  * SYSTEM_DESIGN_CATEGORIES: add a group here, tag references with its id, and
  * the component picks it up with no other changes.
@@ -31,7 +31,27 @@ export const EXTERNAL_REFERENCE_GROUPS: ExternalReferenceGroupMeta[] = [
     description:
       "Practices that don't care whether what's running is deterministic code or a served model: tests and validation gating what ships, CI/CD moving it into production, and monitoring, drift detection, and on-call watching it once it's there. This is the domain-agnostic layer the Data, Model, and Ops stages all draw on — data engineering, ML engineering, software engineering, and the DevOps/MLOps/LLMOps/Ops umbrella are different domains running the same underlying operating discipline.",
   },
+  {
+    id: 'videos',
+    label: 'Video Walkthroughs',
+    description:
+      "Narrated, watchable alternatives to the written references above — full courses, rapid concept explainers, and a multi-part playlist covering the same system-design fundamentals from a different angle.",
+  },
+  {
+    id: 'social',
+    label: 'Social Media Roundups',
+    description:
+      "Carousel-post checklists from System Design content creators on Instagram — useful for a fast topic scan or an interview-trap call-out, though the full notes behind several of these are only handed out by commenting or DMing the poster directly rather than posted publicly.",
+  },
+  {
+    id: 'ml-system-design',
+    label: 'ML System Design',
+    description:
+      "Where the ML-Specific Framework section above and its offline/online-metrics and normalization additions come from — the extra layer of decisions a model in production adds on top of the general framework, plus two real production case studies to ground it.",
+  },
 ];
+
+export type ExternalReferenceMedium = 'video' | 'social';
 
 export interface ExternalReference {
   id: string;
@@ -39,6 +59,8 @@ export interface ExternalReference {
   title: string;
   url: string;
   whatItOffers: string;
+  /** Optional — selects a source-specific icon in ExternalReferencesSection. Omit for the default written-source icon. */
+  medium?: ExternalReferenceMedium;
 }
 
 export const EXTERNAL_REFERENCES: ExternalReference[] = [
@@ -150,5 +172,168 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
     url: 'https://huyenchip.com/2023/04/11/llm-engineering.html',
     whatItOffers:
       'The LLMOps-specific layer on top of the MLOps references above — where prompt/context engineering, evaluation, and deployment risk diverge once the "model" is a hosted LLM API rather than one trained in-house.',
+  },
+
+  // --- Video Walkthroughs ---
+  {
+    id: 'hayk-simonyan-design-systems-course',
+    group: 'videos',
+    medium: 'video',
+    title: 'Hayk Simonyan — "Design Systems Like a Senior Engineer (Full Course)"',
+    url: 'https://www.youtube.com/watch?v=vOn6wUcOXzI',
+    whatItOffers:
+      "A full-length course walking through system-design fundamentals end-to-end — a slower, narrated first pass before drilling into this page's own four-step interview framework and question bank.",
+  },
+  {
+    id: 'neetcode-20-concepts',
+    group: 'videos',
+    medium: 'video',
+    title: 'NeetCode — "20 System Design Concepts Explained in 10 Minutes"',
+    url: 'https://www.youtube.com/watch?v=i53Gi_K3o7I',
+    whatItOffers:
+      'A rapid-fire glossary of 20 core terms (load balancing, caching, sharding, CAP theorem, and more) — a fast way to sanity-check the same vocabulary covered in the Reference grid above.',
+  },
+  {
+    id: 'kodekloud-beginners-2026',
+    group: 'videos',
+    medium: 'video',
+    title: 'KodeKloud — "System Design for Beginners (2026)"',
+    url: 'https://www.youtube.com/watch?v=SE2KF-vxvS0',
+    whatItOffers:
+      "An up-to-date beginner-oriented primer on system-design thinking — a good entry point before working through this page's Core Characteristics and Interview Framework sections.",
+  },
+  {
+    id: 'caleb-curry-system-design-playlist',
+    group: 'videos',
+    medium: 'video',
+    title: 'Caleb Curry — "System Design" (playlist)',
+    url: 'https://www.youtube.com/playlist?list=PL_c9BZzLwBRLSs6x50D5WIH76VCUxJs9E',
+    whatItOffers:
+      'A multi-video playlist working through system-design topics individually — useful for going deep on one concept (caching, databases, etc.) instead of a single long-form course.',
+  },
+  {
+    id: 'hayk-simonyan-apis-databases-infra',
+    group: 'videos',
+    medium: 'video',
+    title:
+      'Hayk Simonyan — "System Design Explained: APIs, Databases, Caching, CDNs, Load Balancing & Production Infra"',
+    url: 'https://www.youtube.com/watch?v=adOkTjIIDnk',
+    whatItOffers:
+      'A component-by-component walkthrough of the same building blocks covered in the Components of System Design section — APIs, databases, caching, CDNs, load balancing, and production infrastructure.',
+  },
+  {
+    id: 'caleb-curry-essential-concepts',
+    group: 'videos',
+    medium: 'video',
+    title: 'Caleb Curry — "Essential System Design Concepts You Should Know"',
+    url: 'https://www.youtube.com/watch?v=uxskKNcsFLU',
+    whatItOffers:
+      'A tutorial-style tour of the concepts most system-design interviews probe first — a supporting companion to the beginner-oriented videos above.',
+  },
+
+  // --- Social Media Roundups ---
+  {
+    id: 'java-interview-prep-complete-guide',
+    group: 'social',
+    medium: 'social',
+    title: '@java_interview_prep — "System Design – Complete Interview Guide"',
+    url: 'https://www.instagram.com/p/DcGPOkqjVE5/',
+    whatItOffers:
+      'A 9-topic carousel outline (requirements, scalability, load balancing/caching, SQL vs NoSQL, sync vs async, reliability, common interview traps) plus a stated approach — Requirements → Scale → High-Level Design → Data → Communication → Scalability → Reliability → Security → Observability → Trade-offs — that lines up closely with this page\'s own framework.',
+  },
+  {
+    id: 'darpan-decoded-series',
+    group: 'social',
+    medium: 'social',
+    title: '@darpan.decoded — System Design carousel series',
+    url: 'https://www.instagram.com/p/DcYi7g3Eiqd/',
+    whatItOffers:
+      'Part of an ongoing System Design carousel series; the full notes PDF is distributed by commenting on the post rather than posted publicly.',
+  },
+  {
+    id: 'mastercode-sagar-handwritten-notes',
+    group: 'social',
+    medium: 'social',
+    title: '@mastercode.sagar — "System Design & Architecture Handwritten Notes"',
+    url: 'https://www.instagram.com/p/DcTYBzrk8x2/',
+    whatItOffers:
+      'A topic checklist (HLD/LLD, client-server architecture, scalability, caching, APIs, microservices, distributed systems) aimed at placement prep; the handwritten notes themselves are sent out by commenting "SYSTEM."',
+  },
+  {
+    id: 'mastercode-sagar-handwriting-notes-2',
+    group: 'social',
+    medium: 'social',
+    title: '@mastercode.sagar — "System Design Handwriting Notes"',
+    url: 'https://www.instagram.com/p/Dbk4mOukzIU/',
+    whatItOffers:
+      'A second handwritten-notes carousel from the same account — image-only, no caption text describing scope.',
+  },
+  {
+    id: 'code2careerai-roadmap',
+    group: 'social',
+    medium: 'social',
+    title: '@code2careerai — System Design roadmap graphic',
+    url: 'https://www.instagram.com/p/DbxYIstMOZY/',
+    whatItOffers:
+      'A single roadmap graphic positioned as an at-a-glance study path — the value is in the image itself, not the caption.',
+  },
+  {
+    id: 'pradeep-kumar-iiitd-docs',
+    group: 'social',
+    medium: 'social',
+    title: '@pradeep_kumar_iiitd — System Design doc',
+    url: 'https://www.instagram.com/p/DbzX6n3iSHx/',
+    whatItOffers: "A shared System Design document image — no caption describing scope, content is in the post's image.",
+  },
+  {
+    id: 'pradeep-kumar-iiitd-questions',
+    group: 'social',
+    medium: 'social',
+    title: '@pradeep_kumar_iiitd — "System Design Important Questions"',
+    url: 'https://www.instagram.com/p/DcEYCBWCese/',
+    whatItOffers: 'A curated interview-question list from the same account, image-only.',
+  },
+  {
+    id: 'codedsoul-05-qa',
+    group: 'social',
+    medium: 'social',
+    title: '@codedsoul_05 — "System Design Interview Questions & Answers"',
+    url: 'https://www.instagram.com/p/DcGv3phDbMX/',
+    whatItOffers:
+      'Caption names 15 interview topics (scalability, caching, sharding, CAP theorem, Kafka, CDN, microservices, fault tolerance, and more); the actual Q&A pairs are distributed by commenting on the post rather than shown inline.',
+  },
+
+  // --- ML System Design ---
+  {
+    id: 'tds-ml-system-design-framework',
+    group: 'ml-system-design',
+    title: 'Towards Data Science — "How to Answer Any Machine Learning System Design Interview Question"',
+    url: 'https://towardsdatascience.com/how-to-answer-any-machine-learning-system-design-interview-question-a98656bb7ff0',
+    whatItOffers:
+      'A 9-part evaluation framework (business problem → success metrics → problem formulation → architecture → feature engineering → data quality/bias → baseline modeling → training pipeline → evaluation) that calibrates expectations by seniority — the closest external match to this page\'s own ML-Specific Framework section.',
+  },
+  {
+    id: 'cracking-ml-interview-github',
+    group: 'ml-system-design',
+    title: 'CrackingMachineLearningInterview (GitHub)',
+    url: 'https://github.com/shafaypro/CrackingMachineLearningInterview',
+    whatItOffers:
+      'A broad topic index spanning classic ML, deep learning, MLOps, data engineering, and cloud ML platforms, with a dedicated system-design track covering RAG pipelines, agent architectures, and batch-vs-real-time systems.',
+  },
+  {
+    id: 'techcrunch-quora-ranking-2011',
+    group: 'ml-system-design',
+    title: 'TechCrunch — "Quora Reveals The Secret Sauce Behind Its Content Ranking Algorithm"',
+    url: 'https://techcrunch.com/2011/02/05/quora-ranking/',
+    whatItOffers:
+      "Quora's original (2011, pre-ML) answer-ranking system — votes weighted by the voter's own reputation, with spam/collusion filtering. Worth reading alongside the Uber Michelangelo case study below as the \"before\" to a modern ML-ranked feed.",
+  },
+  {
+    id: 'uber-michelangelo',
+    group: 'ml-system-design',
+    title: 'Uber Engineering — "Meet Michelangelo: Uber\'s Machine Learning Platform"',
+    url: 'https://www.uber.com/blog/michelangelo-machine-learning-platform/',
+    whatItOffers:
+      "Uber's own account of its internal ML platform — a 6-stage architecture (data management → training → evaluation → deployment → prediction serving → monitoring) built on a shared feature store, cited directly in this page's ML-Specific Framework's High-Level Architecture step.",
   },
 ];

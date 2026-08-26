@@ -1,6 +1,7 @@
 import { Check, X } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
 import FrameworkStepList from '@/components/ui/FrameworkStepList';
+import DiagrammingGuide from './DiagrammingGuide';
 import {
   INTERVIEW_FRAMEWORK_STEPS,
   INTERVIEW_DOS,
@@ -88,6 +89,8 @@ const InterviewFrameworkSection = () => (
     </div>
 
     <FrameworkStepList steps={INTERVIEW_FRAMEWORK_STEPS} />
+
+    <DiagrammingGuide />
 
     <div className="card-base p-4 mt-4">
       <h3 className="flex items-center gap-1.5 text-sm font-bold text-zinc-900 dark:text-white mb-1">

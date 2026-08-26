@@ -1,46 +1,29 @@
 import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { AXIS_COLOR_CLASSES, type SweCompassAxis } from '@/components/features/SweCompassDiagram';
-import { RIPPLE_LOOKUP_QUESTIONS } from '@/constants/systemDesignPrep/questions';
+import { SYSTEM_DESIGN_QUESTIONS } from '@/constants/systemDesignPrep/questions';
 import type { SystemDesignQuestion } from '@/constants/systemDesignPrep/questions/types';
 
 interface SystemDesignQuestionCardProps {
   question: SystemDesignQuestion;
 }
 
-const AXIS_LABELS: Record<SweCompassAxis, string> = {
-  'end-to-end': 'End-to-end',
-  abstraction: 'Abstraction',
-  time: 'Time',
-};
-
 const SUB_QUESTION_CLASS =
   'text-sm text-zinc-500 dark:text-zinc-500 leading-relaxed pl-4 relative before:content-[\'—\'] before:absolute before:left-0 before:text-zinc-300 dark:before:text-zinc-700';
 
 /**
  * The per-question decision cascade card — question + clarifying
- * sub-questions always visible, axis chips (reusing SweCompassDiagram's own
- * AXIS_COLOR_CLASSES, not a reinvented color scheme), approach options as a
- * compact bordered list, implementation notes behind a "Go deeper"
- * disclosure (FaqAccordionItem's <details> idiom), and ripplesInto resolved
- * against RIPPLE_LOOKUP_QUESTIONS (the full question bank plus the
- * Components of System Design cards) and rendered as anchor-link chips.
+ * sub-questions always visible, approach options as a compact bordered
+ * list, implementation notes behind a "Go deeper" disclosure
+ * (FaqAccordionItem's <details> idiom), and ripplesInto resolved directly
+ * against SYSTEM_DESIGN_QUESTIONS (the single unified question bank) and
+ * rendered as anchor-link chips.
  */
 const SystemDesignQuestionCard = ({ question }: SystemDesignQuestionCardProps) => {
   const rippleTargets = question.ripplesInto
-    .map((id) => RIPPLE_LOOKUP_QUESTIONS.find((candidate) => candidate.id === id))
+    .map((id) => SYSTEM_DESIGN_QUESTIONS.find((candidate) => candidate.id === id))
     .filter((target): target is SystemDesignQuestion => Boolean(target));
 
   return (
     <article id={question.id} className="card-base p-5 scroll-mt-24 space-y-4">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        {question.axes.map((axis) => (
-          <span key={axis} className={cn('text-micro', AXIS_COLOR_CLASSES[axis])}>
-            {AXIS_LABELS[axis]}
-          </span>
-        ))}
-      </div>
-
       <div>
         <h3 className="text-base font-bold text-zinc-900 dark:text-white leading-snug">
           {question.question}

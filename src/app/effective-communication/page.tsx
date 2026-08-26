@@ -20,16 +20,16 @@ import {
 export const metadata: Metadata = {
   title: 'Effective Communication — Thomas To',
   description:
-    'A reusable reference for audience-aware communication — five stakeholder archetypes (engineer, manager, PM, executive, cross-functional partner) to calibrate depth and framing against, a five-step framework for navigating any conversation, and a guide to structuring the story of completed work.',
+    'A reusable reference for audience-aware communication — a five-step, active-interviewing and active-listening framework for navigating any conversation, a guide to structuring the story of completed work, and five stakeholder archetypes (engineer, manager, PM, executive, cross-functional partner) applying both to match how each one actually communicates.',
 };
 
 const FOCUS_RING =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black';
 
 const PAGE_SECTION_NAV_ITEMS = [
-  { id: 'know-your-stakeholder', label: 'Stakeholders' },
   { id: 'conversation-navigation', label: 'Navigating the Conversation' },
   { id: 'structuring-the-story', label: 'Structuring the Story' },
+  { id: 'know-your-stakeholder', label: 'Stakeholders' },
 ];
 
 export default function EffectiveCommunicationPage() {
@@ -55,10 +55,10 @@ export default function EffectiveCommunicationPage() {
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
             The same technical answer lands differently depending on who&apos;s asking. This is a
-            reusable reference for reading the room — five stakeholder archetypes to calibrate
-            against, a step-by-step framework for navigating a conversation even before you
-            know who&apos;s in it, and a structure to reach for when the moment calls for telling
-            the story of something already done.
+            reusable reference for reading the room — a step-by-step framework for actively
+            interviewing and actively listening your way to who&apos;s in it, a structure to reach
+            for when the moment calls for telling the story of something already done, and five
+            stakeholder archetypes to calibrate against once you know.
           </p>
         </div>
       </div>
@@ -66,22 +66,13 @@ export default function EffectiveCommunicationPage() {
       <PageSectionNav items={PAGE_SECTION_NAV_ITEMS} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-        <section id="know-your-stakeholder" className="scroll-mt-24">
-          <SectionHeading eyebrow="The Framework" title="Know your stakeholder" />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {STAKEHOLDER_ARCHETYPES.map((archetype) => (
-              <StakeholderArchetypeCard key={archetype.id} archetype={archetype} />
-            ))}
-          </div>
-        </section>
-
-        <section id="conversation-navigation" className="scroll-mt-24 mt-16">
-          <SectionHeading eyebrow="Putting It Into Practice" title="Navigating any conversation" />
+        <section id="conversation-navigation" className="scroll-mt-24">
+          <SectionHeading eyebrow="The Framework" title="Navigating any conversation" />
           <FrameworkStepList steps={CONVERSATION_NAVIGATION_FRAMEWORK} />
         </section>
 
         <section id="structuring-the-story" className="scroll-mt-24 mt-16">
-          <SectionHeading eyebrow="Telling The Story" title="Structuring the story" />
+          <SectionHeading eyebrow="Putting It Into Practice" title="Structuring the story" />
           <div className="grid gap-4 sm:grid-cols-2">
             {STORY_STRUCTURE_APPROACHES.map((approach) => (
               <StoryStructureCard key={approach.id} approach={approach} />
@@ -105,6 +96,22 @@ export default function EffectiveCommunicationPage() {
                 </p>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section id="know-your-stakeholder" className="scroll-mt-24 mt-16">
+          <SectionHeading eyebrow="Applied Examples" title="Know your stakeholder" />
+          <p className="mb-4 max-w-3xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            The active-interviewing and active-listening moves from the framework above look
+            different depending on who&apos;s actually in the room — the same probe-and-read
+            instinct, aimed at a different signal. Five concrete archetypes below: what they
+            care about, what to listen for, and how to adapt the delivery to match how each one
+            actually communicates.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {STAKEHOLDER_ARCHETYPES.map((archetype) => (
+              <StakeholderArchetypeCard key={archetype.id} archetype={archetype} />
+            ))}
           </div>
         </section>
       </main>

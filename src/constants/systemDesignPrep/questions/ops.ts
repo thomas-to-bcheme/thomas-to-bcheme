@@ -4,7 +4,6 @@ export const OPS_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'hosting-model',
     category: 'ops',
-    axes: ['end-to-end', 'time'],
     question:
       'Where does this actually run: self-hosted hardware, a native cloud provider, or a third-party PaaS/edge vendor?',
     clarifyingSubQuestions: [
@@ -55,7 +54,6 @@ export const OPS_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'compute-vs-memory-bound',
     category: 'ops',
-    axes: ['abstraction'],
     question: 'Is the bottleneck CPU cycles, or RAM and data movement?',
     clarifyingSubQuestions: [
       'When this workload is under load, is the CPU pegged, or is it waiting on memory/disk/network I/O?',
@@ -87,7 +85,6 @@ export const OPS_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'deploy-health-and-oncall',
     category: 'ops',
-    axes: ['end-to-end', 'time'],
     question: "Once this is deployed, how do you know it's healthy — and what actually happens when it isn't?",
     clarifyingSubQuestions: [
       "What gates code before it ships — tests, staged rollout, manual approval — versus what only observes it after it's already live?",

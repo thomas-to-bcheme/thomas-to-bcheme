@@ -47,14 +47,15 @@ export const STAKEHOLDER_ARCHETYPES: StakeholderArchetype[] = [
       'Risk to the plan they’ve already committed to stakeholders above them',
     ],
     howToReadTheirDepth:
-      'Their depth is broad and shallow by default — a dozen workstreams instead of one deep system — but confirm it fast by clocking their first follow-up question: a scope-and-impact question like "what does this mean for the launch" or "does this move the date" is the signature of breadth, while a specific-system question like "is that migration synchronous or does it queue" only comes from someone who’s actually gone deep on this one piece. Calibrate to whichever you hear, or one notch above it — never below — pitching a broad PM slightly technical and a deep one with the added precision their question implied, because undershooting reads as condescension and burns credibility faster than a term they’ll just ask you to define.',
+      'Their depth is broad and shallow by default — a dozen workstreams instead of one deep system — but confirm it fast by clocking their first follow-up question: a scope-and-impact question like "what does this mean for the launch" or "does this move the date" is the signature of breadth, while a specific-system question like "is that migration synchronous or does it queue" only comes from someone who’s actually gone deep on this one piece. Calibrate to whichever you hear, or one notch above it — never below — pitching a broad PM slightly technical and a deep one with the added precision their question implied, because undershooting reads as condescension and burns credibility faster than a term they’ll just ask you to define. The exception worth actively listening for: a PM with a genuine technical background — a CS degree, a past engineering role, or just years of proximity to this exact codebase — won’t stay in scope-and-timeline territory even on that first question; they’ll ask about the actual mechanism, the same way an engineer peer would. That signal is in the vocabulary, not just the topic, so listen for how the question is phrased, not only what it’s about.',
     howToAdaptCommunication:
-      'Frame everything in terms of the roadmap: state the user-facing outcome first, then the timeline impact, and only bring in technical detail if it changes one of those two things. A technical constraint is worth mentioning to a PM only when it changes scope or date — otherwise it’s noise that buries the answer they actually need. Give a real date or a real range, not "soon," and flag risk to the plan as soon as it’s known rather than after it’s already slipped.',
+      'Frame everything in terms of the roadmap: state the user-facing outcome first, then the timeline impact, and only bring in technical detail if it changes one of those two things. A technical constraint is worth mentioning to a PM only when it changes scope or date — otherwise it’s noise that buries the answer they actually need. Give a real date or a real range, not "soon," and flag risk to the plan as soon as it’s known rather than after it’s already slipped. When the technical-background signal shows up, the calibration flips on purpose: matching a technically fluent PM means actually going into the mechanism and the trade-off, not retreating to the roadmap-safe version out of habit — one of the few places in a loop where depth is a differentiator against other candidates rather than a risk. It’s worth treating as a real conversation past that point, not just a calibration exercise: ask what they worked on before product, follow their read on a trade-off a layer deeper than the interview strictly requires, and — if the exchange is going well — ask what they’d recommend reading or exploring to go deeper on it yourself. Genuine curiosity about their expertise reads as engagement, not padding, and it’s the kind of exchange that outlasts the loop.',
     questionsToAsk: [
       'What decision are they trying to make with this information — ship, cut scope, or reset expectations upward?',
       'Is there a date already committed externally that this answer needs to protect or has already put at risk?',
       'Do they need the full trade-off space, or just the recommendation and the headline risk?',
       'Which stakeholder are they going to relay this to next, and what will that person actually ask?',
+      'If their first question already reads technical, is there a natural opening to ask about their own background — and would following that thread a layer deeper make the rest of the conversation more useful for both of us?',
     ],
   },
   {
@@ -131,7 +132,7 @@ export interface StoryStructureApproach {
 export const STORY_STRUCTURE_APPROACHES: StoryStructureApproach[] = [
   {
     id: 'chronological',
-    name: 'Chronological (Top-Down)',
+    name: 'Chronological (Bottom-Up)',
     storyBeats: [
       'Background — the context and constraints in place before the work started',
       'Scope of the problem — how big it was and what made it worth solving',
@@ -143,7 +144,7 @@ export const STORY_STRUCTURE_APPROACHES: StoryStructureApproach[] = [
   },
   {
     id: 'reverse-chronological',
-    name: 'Reverse-Chronological (Bottom-Up)',
+    name: 'Reverse-Chronological (Top-Down)',
     storyBeats: [
       'Impact, result, and lessons learned — a completed outcome with real proof behind it, not a still-in-progress status update',
       'How it was resolved — the approach taken, at the same design-level abstraction as the impact statement',
@@ -164,11 +165,13 @@ export interface HybridNarrativeGuidance {
 export const HYBRID_NARRATIVE_GUIDANCE: HybridNarrativeGuidance = {
   label: 'What Actually Works in Practice',
   summary:
-    'Reverse-chronological is the right instinct — lead with completed proof, not a slow build-up — but mechanically reversing the chronological list, walking backward through the same abstraction the whole way, is too convenient a shape. It reads as rehearsed, and an audience that assesses competence for a living tends to notice the seam.',
+    'Match your interviewer — that’s the umbrella rule this whole section is really an application of. Reverse-chronological is the right instinct — lead with completed proof, not a slow build-up — but mechanically reversing the chronological list, walking backward through the same abstraction the whole way, is too convenient a shape. It reads as rehearsed, and an audience that assesses competence for a living tends to notice the seam.',
   body: [
     'What tends to work better: open with the headline in one or two sentences — the problem it solved and the outcome, stated as a claim rather than built up to, closer to fifteen seconds than a minute. Then skip the abstract middle layer entirely and go straight into the real implementation depth of the work — the actual mechanism, the actual trade-off, the actual cross-team dependency or disagreement with a peer that had to get resolved — not a sanitized summary of it.',
     'The difference isn’t the order, it’s the altitude. Pure reverse-chronological retelling tends to stay at the same high level the whole way through, just walked backward. Diving into real depth, and continuously reconnecting each detail back to the headline already stated, is what separates a story that reads as lived experience from one that reads as a rehearsed answer — and it’s that same depth (cross-team dependencies, real trade-offs, real conflict resolved with senior peers) that actually signals seniority, not just claiming to have been critical to the project.',
+    'A number does more work in that opening line than an adjective does — "cut checkout latency 40%" survives a follow-up question that "significantly improved performance" doesn’t, because the specific claim invites "how" and the vague one just invites doubt. The same goes for attribution: naming the exact decision that was actually yours — "I chose to stage the migration over three releases instead of one" — reads as ownership, while "we shipped the migration" reads as attendance, even when the work behind both sentences is identical.',
     'Calibrate the jargon the same way the rest of this page argues for — plain enough that a non-technical listener could still follow the shape of the situation and the result, saving the deepest technical vocabulary for when a coding or system-design round actually asks for it. And the same instinct from the conversation framework above still applies here: read what’s actually being asked before deciding how deep to go — a follow-up question is usually pointing at the layer someone wants more of, not a request to start over.',
+    'Matching your interviewer isn’t a one-time calibration made at the start and left alone — it’s a live setting, actively interviewed and actively listened to, that gets adjusted as the story unfolds. The five stakeholder archetypes below are that same match-your-interviewer read applied to five concrete cases — what to listen for, and what to ask, when the person on the other side of the story is an engineer, a PM, an executive, a cross-functional partner, or a manager.',
   ],
 };
 
@@ -189,7 +192,7 @@ export const CONVERSATION_NAVIGATION_FRAMEWORK: FrameworkStep[] = [
     marker: '2',
     label: 'Ask',
     description:
-      'Ask one calibrating question before assuming a level of depth or a shared vocabulary — it costs one sentence and prevents either over-explaining or losing the room.',
+      'This is active interviewing: communication is a two-way street, and unless the room has told you explicitly who they are, ask one calibrating question before assuming a level of depth or a shared vocabulary — it costs one sentence and prevents either over-explaining or losing the room.',
     detail: [
       '"How familiar are you with X?" beats guessing and being wrong in either direction',
       'A calibrating question signals respect for their time, not uncertainty',
@@ -200,10 +203,11 @@ export const CONVERSATION_NAVIGATION_FRAMEWORK: FrameworkStep[] = [
     marker: '3',
     label: 'Listen',
     description:
-      'Read the response for the actual concern behind it, not just the literal question asked — the real question is often one layer beneath the words.',
+      'This is active listening: read the response for the actual concern behind it, not just the literal question asked — the real question is often one layer beneath the words.',
     detail: [
       '"Will this scale?" from an executive is usually "is this a safe bet," not a request for throughput numbers',
       'Follow-up questions reveal where their real uncertainty is',
+      'Naming the concern back before answering — "so the real question is whether this ships safely" — confirms the read instead of guessing',
     ],
   },
   {
@@ -215,6 +219,8 @@ export const CONVERSATION_NAVIGATION_FRAMEWORK: FrameworkStep[] = [
     detail: [
       'Swap jargon for its plain-language consequence, or vice versa, mid-conversation',
       'Reorder the explanation — headline-first for risk-driven audiences, chronological for lay ones',
+      'Answer what the current decision needs, not everything known on the topic — a complete explanation is often less useful than a scoped one',
+      'Start from where their understanding already sits, then add depth in small steps rather than one full-depth pass',
     ],
   },
   {
@@ -226,6 +232,7 @@ export const CONVERSATION_NAVIGATION_FRAMEWORK: FrameworkStep[] = [
     detail: [
       'Ask them to state back the decision or the takeaway, not just "does that make sense?"',
       'A confirmation gap here is cheaper to close now than after a decision gets made on a misunderstanding',
+      'The same check belongs at the end of the whole exchange, not just one explanation — leaving without a stated next step is a gap too',
     ],
   },
 ];

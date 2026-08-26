@@ -4,7 +4,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'consistency-spectrum',
     category: 'data',
-    axes: ['abstraction'],
     question: 'How stale can a read be, and does it matter whose read it is?',
     clarifyingSubQuestions: [
       'Does the reader need to see their own writes immediately, even if other users’ writes lag (read-your-writes)?',
@@ -52,7 +51,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'sql-vs-nosql',
     category: 'data',
-    axes: ['end-to-end'],
     question:
       'Is this structured, relational data that needs transactional guarantees, or flexible-schema data that prioritizes availability and scale?',
     clarifyingSubQuestions: [
@@ -87,7 +85,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'db-selection',
     category: 'data',
-    axes: ['end-to-end'],
     question:
       'Walking the decision tree: what’s the access pattern, the write:read ratio, the consistency requirement, and the scale target?',
     clarifyingSubQuestions: [
@@ -146,7 +143,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'structured-vs-unstructured',
     category: 'data',
-    axes: ['end-to-end'],
     question:
       'Does this data have a fixed, known schema, or is it fundamentally unstructured?',
     clarifyingSubQuestions: [
@@ -184,7 +180,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'oltp-vs-olap',
     category: 'data',
-    axes: ['end-to-end'],
     question:
       'Is this system serving live transactional reads/writes for a product, or aggregating historical data for reporting and analytics?',
     clarifyingSubQuestions: [
@@ -217,7 +212,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'scaling-progression',
     category: 'data',
-    axes: ['time'],
     question: "What's the next cheapest lever before reaching for the expensive one?",
     clarifyingSubQuestions: [
       'Have the cheap, low-risk levers (indexing, query optimization) actually been exhausted, or is this jumping straight to sharding?',
@@ -279,7 +273,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'cache-eviction-policies',
     category: 'data',
-    axes: ['abstraction', 'time'],
     question: 'When the cache is full and a new entry needs to be inserted, which existing entry gets evicted?',
     clarifyingSubQuestions: [
       'Is access to cached entries roughly uniform, or is it skewed/long-tail with a small hot set?',
@@ -316,7 +309,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'consistent-hashing-routing',
     category: 'data',
-    axes: ['abstraction', 'end-to-end'],
     question:
       'When traffic or data needs to be assigned to one of many nodes — and nodes are added or removed over time — how do you avoid remapping almost everything on every change?',
     clarifyingSubQuestions: [
@@ -361,7 +353,6 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'lake-vs-warehouse-vs-mesh',
     category: 'data',
-    axes: ['end-to-end', 'abstraction'],
     question:
       'Once data lands somewhere durable, what architecture organizes it for consumption — and is the constraint technical or organizational?',
     clarifyingSubQuestions: [
@@ -409,9 +400,216 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
     sourceNote: 'synthesized',
   },
   {
+    id: 'normalization',
+    category: 'data',
+    question: 'Should this table be decomposed further to eliminate redundancy, or is some redundancy an acceptable trade for read performance?',
+    clarifyingSubQuestions: [
+      'Does every non-key column depend on the whole primary key, or only part of a composite key (partial dependency)?',
+      'Do any non-key columns depend on each other rather than directly on the key (transitive dependency)?',
+      'Is this schema serving a write-heavy transactional path, or a read-heavy path where some redundancy might be a deliberate, faster trade?',
+    ],
+    approachOptions: [
+      {
+        label: 'First Normal Form (1NF)',
+        whenToUse: 'The baseline for any relational table — every cell holds a single atomic value, no repeating groups.',
+        tradeoffs: "Necessary starting point, but doesn't remove redundancy on its own — that's what the next forms do.",
+      },
+      {
+        label: 'Second Normal Form (2NF)',
+        whenToUse: 'Tables with a composite primary key, where a non-key column only actually depends on part of it.',
+        tradeoffs: "Removes partial-dependency redundancy by splitting the table, but doesn't yet catch redundancy between non-key columns.",
+      },
+      {
+        label: 'Third Normal Form (3NF)',
+        whenToUse: 'The practical default target for most OLTP schemas — no non-key column depends on another non-key column.',
+        tradeoffs: "Removes transitive-dependency redundancy; most production schemas stop here since it's the best trade of integrity vs. query complexity.",
+      },
+      {
+        label: 'Boyce-Codd Normal Form (BCNF)',
+        whenToUse: 'Tables with multiple overlapping candidate keys, where 3NF alone still allows an anomaly.',
+        tradeoffs: 'The strictest common form — every determinant is a candidate key — but stricter normalization means more joins to reassemble a full record.',
+      },
+      {
+        label: 'Deliberate denormalization',
+        whenToUse: 'Read-heavy paths where the extra joins a normalized schema requires are the actual bottleneck (see the Scaling progression question).',
+        tradeoffs: 'Trades write-time integrity risk and storage duplication for fewer joins and faster reads — a conscious reversal of everything above, not a failure to normalize.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: "Higher isn't automatically better",
+        dependsOn:
+          "Each step up trades write-side integrity and storage efficiency for more joins on read — 3NF is the common stopping point for OLTP schemas precisely because BCNF's marginal integrity gain rarely justifies its added query complexity.",
+      },
+    ],
+    ripplesInto: ['db-selection', 'scaling-progression'],
+    sourceNote: 'synthesized',
+  },
+  {
+    id: 'storage-types',
+    category: 'data',
+    question: "What's the underlying storage medium for this data, independent of what database sits on top of it?",
+    subsectionLabel: 'Components of System Design',
+    subsectionDescription:
+      "The concrete building blocks underneath any database choice — the physical medium data actually sits on, and how it or the load against it gets split across a boundary — worked as full trade-off comparisons rather than named in passing.",
+    clarifyingSubQuestions: [
+      'Is this large, mostly-immutable content (media, backups, logs), or small records needing low-latency random access?',
+      'Does more than one instance need concurrent access to the same files, or is it exclusive to one attached instance?',
+      "How often does the content change after it's first written?",
+    ],
+    approachOptions: [
+      {
+        label: 'Object storage (S3-style)',
+        whenToUse:
+          'Large, infrequently-modified blobs — images, video, backups, data-lake files — accessed by key, not by path.',
+        tradeoffs:
+          'Durable and effectively infinitely scalable at low cost, but no partial-file edits and higher per-request latency than block storage.',
+      },
+      {
+        label: 'Block storage (EBS-style)',
+        whenToUse: 'Low-latency, random-access disk for a database or any workload needing filesystem semantics on one instance.',
+        tradeoffs: 'Fast, but tied to a single attached instance at a time — not natively shareable across a fleet.',
+      },
+      {
+        label: 'File storage (EFS/NFS-style)',
+        whenToUse: 'A shared, POSIX-compliant filesystem multiple instances need to read/write concurrently.',
+        tradeoffs:
+          'Simplifies sharing, but adds network-filesystem latency and its own scaling ceiling compared to block storage.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: "This is a different axis than the Reference Grid's \"Database taxonomy\"",
+        dependsOn:
+          "Database taxonomy is about data model — relational vs NoSQL, and so on. Storage type is about the medium underneath any of those — a relational database still needs to sit on block storage, and its backups still need to land somewhere object storage makes sense.",
+      },
+    ],
+    ripplesInto: ['db-selection', 'oltp-vs-olap'],
+    sourceNote: 'synthesized',
+  },
+  {
+    id: 'partitioning-vs-sharding',
+    category: 'data',
+    question: 'Is this a general split of data or load across a boundary, or specifically a distributed-database sharding strategy?',
+    clarifyingSubQuestions: [
+      'Is the split by responsibility/domain (functional), by column (vertical), or by row across identical nodes (horizontal)?',
+      "Has this outgrown a single database instance, or is it still one database being reorganized internally?",
+      "What's the shard/partition key, and does it risk creating a hot spot?",
+    ],
+    approachOptions: [
+      {
+        label: 'Functional / vertical partitioning',
+        whenToUse:
+          'Splitting by responsibility — a users table on one database, orders on another — usually the first, cheapest lever before any horizontal split.',
+        tradeoffs:
+          "Simple and requires no new distributed-systems infrastructure, but has a hard ceiling: it doesn't help once one functional area itself outgrows a single node.",
+      },
+      {
+        label: 'Horizontal sharding (range/hash/directory)',
+        whenToUse:
+          'One functional area\'s write volume has outgrown a single primary — the next lever once vertical partitioning is exhausted.',
+        tradeoffs:
+          "Real horizontal write scaling, at the cost of cross-shard queries and transactions becoming much harder — see the Reference Grid's Sharding strategies entry for the range vs hash vs directory trade-off.",
+      },
+      {
+        label: 'Directory-based partitioning',
+        whenToUse:
+          "Shard assignment needs to change without re-hashing everything — a lookup service maps keys to shards instead of a fixed formula.",
+        tradeoffs:
+          'Most flexible for rebalancing, but the lookup service itself becomes a new dependency and potential bottleneck.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'Partitioning is the general concept; sharding is one specific case of it',
+        dependsOn:
+          "Every sharding strategy is a horizontal partitioning strategy, but not every partitioning strategy is sharding — vertical/functional partitioning splits a schema or a system, not necessarily across a fleet of identical database nodes. Naming which one you mean avoids a common interview ambiguity.",
+      },
+    ],
+    ripplesInto: ['scaling-progression', 'db-selection', 'cap-vs-pacelc'],
+    sourceNote: 'synthesized',
+  },
+
+  // --- Big Data: data too large in volume, or arriving too fast, for one
+  // machine to process synchronously — the capstone of the Data category,
+  // read after everything above it. ---
+  {
+    id: 'message-queue-delivery-model',
+    category: 'data',
+    subsectionLabel: 'Big Data',
+    subsectionDescription:
+      "Data too large in volume, or arriving too fast, for one machine to process synchronously — message queues buffer the surge, MapReduce distributes the computation across a cluster.",
+    question:
+      'When a surge of requests arrives faster than your servers can process them synchronously, how does a message queue actually get each one to a consumer?',
+    clarifyingSubQuestions: [
+      'Does the work need to happen immediately, or can it be queued and processed slightly later without the user noticing?',
+      'Is scaling the consumer horizontally or vertically actually the cheaper fix here, or is queuing genuinely more cost-effective for this traffic pattern?',
+      'If a consumer crashes mid-processing, does the message need to be redelivered, or is losing it acceptable?',
+    ],
+    approachOptions: [
+      {
+        label: 'Pull-based consumption',
+        whenToUse:
+          'The consumer monitors the queue itself and pulls a new message only when it has spare capacity — Kafka-style consumers are the classic example.',
+        tradeoffs:
+          "Keeps the consumer in control of its own load, so it's never overwhelmed, but an empty queue with a slow polling interval adds latency before a waiting message gets picked up.",
+      },
+      {
+        label: 'Push-based delivery',
+        whenToUse:
+          'The queue delivers a message to the consumer as soon as one is available — SQS long-polling and RabbitMQ delivery both work this way.',
+        tradeoffs:
+          'Lower latency between message arrival and processing, but a burst of incoming messages can push faster than a fixed consumer fleet can keep up, risking overload.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: "Delivery isn't confirmed until the consumer says so",
+        dependsOn:
+          "Whichever model delivers the message, the consumer sends an acknowledgement back once it's finished processing — the same ack mechanism as reliable network delivery. If the queue doesn't see an ack within a timeout window, it assumes the consumer failed and redelivers the message, which is why consumers of at-least-once queues need to be idempotent — see Idempotency in the Backend column.",
+      },
+    ],
+    ripplesInto: ['message-queue-topology', 'sync-vs-async'],
+    sourceNote: 'synthesized',
+  },
+  {
+    id: 'message-queue-topology',
+    category: 'data',
+    question:
+      'Does exactly one consumer need to process each message, or should many independent services all react to the same event?',
+    clarifyingSubQuestions: [
+      'When this event fires, is there one clear owner of the resulting work, or do multiple unrelated services each need to know about it?',
+      'Should a new consumer be addable later without changing anything the publisher does?',
+      'Do consumers need to process at their own pace, independently of each other?',
+    ],
+    approachOptions: [
+      {
+        label: 'Point-to-point queue',
+        whenToUse: 'A single logical operation with one owner — e.g. exactly one worker fleet processing payment jobs from a queue.',
+        tradeoffs:
+          "Simple and load-balances naturally across a consumer fleet, but doesn't fan an event out to multiple independent interested parties.",
+      },
+      {
+        label: 'Publish/subscribe (topic-based)',
+        whenToUse:
+          "One event needs to reach several independent subscribers who don't need to know about each other — placing an order might need to update inventory, trigger billing, and notify shipping, all from one published event.",
+        tradeoffs:
+          "New subscribers can be added to a topic without changing the publisher at all, which is the model's biggest strength — but message ordering across independent subscribers isn't guaranteed unless the broker specifically supports it.",
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'The publisher never needs to know who is listening',
+        dependsOn:
+          "A publisher only knows it's sending to a topic — it has no awareness of which, or how many, subscribers exist. That decoupling is what lets a system add a completely new consumer for an existing event without touching the code that publishes it, at the cost of the publisher having no guarantee its message was actually acted on by anyone in particular.",
+      },
+    ],
+    ripplesInto: ['message-queue-delivery-model'],
+    sourceNote: 'synthesized',
+  },
+  {
     id: 'mapreduce-vs-stream-processing',
     category: 'data',
-    axes: ['end-to-end'],
     question:
       'Is this a general-purpose big-data processing pattern — batch jobs across a cluster, or a continuous stream pipeline — independent of whether the output feeds a dashboard, a warehouse, or an ML feature store?',
     clarifyingSubQuestions: [
@@ -442,6 +640,11 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
         consideration: 'This is the general pattern; ML feature computation is one specific instance of it',
         dependsOn:
           'MapReduce popularized the "split a big job across a cluster of commodity machines" pattern that both traditional OLAP-warehouse ETL jobs and ML feature-computation pipelines are built on — the existing `batch-vs-streaming` question (ML-feature-computation-scoped) is the ML-specific instance of this same general fork, not a separate concept.',
+      },
+      {
+        consideration: 'What actually happens inside a MapReduce job',
+        dependsOn:
+          "A master node splits the input and assigns chunks to worker nodes, then coordinates the job and reassigns work if a worker fails. Each worker's Map phase transforms its chunk into key-value pairs (e.g. mapping a word to a count of 1 per occurrence). A Shuffle-and-Sort phase then regroups those pairs across the cluster so every value for the same key ends up together, regardless of which worker originally produced it. Finally, each worker's Reduce phase aggregates the grouped values for its keys into a final result (e.g. summing all the 1s for a given word into its total count) — the same shape underlies redacting a column across billions of rows just as easily as counting words across a library.",
       },
     ],
     ripplesInto: ['oltp-vs-olap', 'batch-vs-streaming', 'lake-vs-warehouse-vs-mesh'],

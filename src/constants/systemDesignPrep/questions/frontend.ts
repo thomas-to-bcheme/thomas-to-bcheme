@@ -4,7 +4,6 @@ export const FRONTEND_QUESTIONS: SystemDesignQuestion[] = [
   {
     id: 'server-vs-client-component',
     category: 'frontend',
-    axes: ['end-to-end'],
     question:
       'Should this render as a Server Component, a Client Component, or be generated statically at build time — and where does interactive state actually need to live?',
     clarifyingSubQuestions: [
