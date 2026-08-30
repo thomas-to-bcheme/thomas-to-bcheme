@@ -50,6 +50,9 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
           'SLO: the internal target, usually stricter than the SLA',
           'SLI: the actual metric measured to know if the SLO is being met — e.g. p99 request latency, error rate, throughput, uptime',
           "Business-facing evaluation criteria (conversion rate, revenue per request, task-completion rate) are the same idea one level up: they're KPIs the system's SLIs are ultimately in service of, even though they're not usually expressed in this same SLA/SLO/SLI vocabulary",
+          'Uptime %: Uptime / (Uptime + Downtime) × 100 — the number an SLA\'s "99.9%" is actually measuring',
+          "MTBF (Mean Time Between Failures) and MTTR (Mean Time To Recovery): how often something breaks vs. how fast it's fixed — a system can hit the same uptime target either way, so they're worth tracking as separate SLIs, not collapsed into one blended availability number",
+          'Latency SLIs are usually reported as p50/p95/p99 together, not a single average — the tail (p99) is often the story the median hides; round out the panel with cache hit ratio and DB connection count as the other metrics worth watching alongside error rate and uptime %',
         ],
       },
       {
@@ -59,6 +62,7 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         details: [
           'See the Data & Consistency question bank for the full PACELC extension.',
           "The theorem this bounds: replication (how copies stay in sync), sharding (which node owns which data), and partitioning (how a schema or dataset is split) in the Data column all inherit this trade-off — they don't escape it, they each just make it at a different layer.",
+          'Real-world classification: Google Spanner and HBase choose CP; Cassandra and DynamoDB choose AP; a single-region RDBMS is CA by default (no partition risk to begin with, since there is only one node).',
         ],
       },
       {
@@ -69,6 +73,7 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
           'Redundancy and replication',
           'Graceful degradation — partial functionality over total outage',
           'Circuit breakers and bulkheads to contain failure',
+          'Common tooling: Resilience4j or Hystrix implement circuit breakers, retries, and bulkheads as a library instead of hand-rolling them',
         ],
       },
       {
@@ -222,6 +227,7 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         details: [
           'Each optimized for a different access pattern — see the DB-selection decision tree question',
           'AWS equivalents: RDS/Aurora (relational) · DynamoDB (key-value) · DocumentDB (document) · Neptune (graph) · Redshift (OLAP/warehouse)',
+          'NewSQL (CockroachDB, Google Spanner, TiDB) is a third SQL category alongside traditional RDBMS — relational schema and ACID transactions, but built to scale horizontally the way NoSQL does, instead of the classic scale-up-only RDBMS story',
         ],
       },
       {
@@ -241,6 +247,7 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         details: [
           'See the Partitioning vs Sharding question for the full range/hash/directory trade-off.',
           'Which shard owns a given key is a routing decision — what guarantee a read/write to it gets is the CAP theorem question in the Design column.',
+          "Geo-based sharding is a fourth option alongside range/hash/directory: data is split by region so it sits physically close to the users reading/writing it — lower latency and easier data-residency compliance, at the cost of uneven shard sizes when usage isn't evenly distributed geographically",
         ],
       },
       {
@@ -251,6 +258,7 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
           'Sync: strong consistency, higher write latency',
           'Async: lower latency, replicas can lag (reintroduces the consistency-spectrum trade-off)',
           'This is CAP theorem in the Design column applied concretely: sync replication is the CP choice, async is the AP choice',
+          'Topology is a separate axis from sync/async: master-slave (primary-replica) routes every write through one primary; master-master (multi-primary) accepts writes on multiple nodes and has to reconcile conflicts between them',
         ],
       },
       {
@@ -260,6 +268,8 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         details: [
           'Common approaches: ZooKeeper (ephemeral sequential nodes), Raft consensus, Paxos, the Bully algorithm',
           'Also used outside replication: distributed locks, singleton scheduled jobs, coordinating which node owns a partition',
+          'Quorum (R/W): requires a minimum number of nodes to agree on a read or write (e.g. W + R > N) before it counts as successful — how a system stays correct without every node participating in every operation',
+          "Gossip protocol: nodes periodically exchange state with a few random peers instead of broadcasting to everyone — how membership and failure info (e.g. Cassandra's ring state) propagates without a central coordinator",
         ],
       },
       {
@@ -363,6 +373,8 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
           'Write-through: writes go to cache and store together, always consistent, higher write latency',
           'Write-behind: writes go to cache first and flush to store async, fastest writes, risk of data loss on cache failure',
           'Write-around: writes go directly to the backing store, bypassing the cache — avoids polluting the cache with data that may never be re-read, at the cost of a guaranteed miss on the first read after a write',
+          "Read-through: the cache itself loads on a miss instead of the app doing it — same effect as cache-aside from the caller's perspective, but the load logic lives in the cache layer",
+          'Refresh-ahead: the cache proactively re-fetches a hot key before it expires, trading extra background reads for avoiding a cold-cache latency spike right after expiry',
         ],
       },
       {
@@ -371,6 +383,17 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         summary: 'Kafka, RabbitMQ, SQS — decoupling producers from consumers.',
         details: [
           'See the Message queue delivery model question (push vs. pull) and Message queue topology question (point-to-point vs. pub/sub) in the Data section for the full trade-offs.',
+        ],
+      },
+      {
+        id: 'rest-api-fundamentals',
+        label: 'REST API fundamentals',
+        summary: 'The concrete mechanics behind the "REST" line in API patterns below — the 6 constraints, the verbs, and the wire-level conventions.',
+        details: [
+          'The 6 REST constraints: client-server, stateless, cacheable, uniform interface, layered system, code-on-demand (optional, rarely used) — a REST API is more or less RESTful by how many of these it actually satisfies, not all-or-nothing',
+          'HTTP methods: GET (safe, idempotent), PUT (idempotent, replaces a resource), DELETE (idempotent), PATCH (not idempotent by default, partial update), POST (not idempotent, creates/triggers) — safe means no server-side side effects, idempotent means repeating it leaves the same end state',
+          'Status codes: 2xx success (200 OK, 201 Created, 204 No Content), 3xx redirect, 4xx client error (400 bad request, 401 unauthenticated, 403 unauthorized, 404 not found, 429 too many requests), 5xx server error',
+          "URL conventions: plural nouns for collections (/users not /user), hierarchical nesting for relationships (/users/{id}/orders), verbs kept out of the path entirely, filter/sort/pagination pushed into query params (?status=active&sort=-created_at&page=2) rather than new endpoints",
         ],
       },
       {
@@ -442,7 +465,14 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         id: 'load-balancing',
         label: 'Load balancing',
         summary: 'Round-robin, least-connections, consistent hashing across backend instances.',
-        details: ['See the Load Balancer vs API Gateway vs Reverse Proxy question for how this compares to its neighbors.'],
+        details: [
+          'See the Load Balancer vs API Gateway vs Reverse Proxy question for how this compares to its neighbors.',
+          'IP hash: routes by a hash of the client IP, keeping a given client on the same backend without needing sticky-session state',
+          'Weighted round robin: round robin, but a heavier-capacity instance gets a proportionally larger share of requests',
+          'Least response time: routes to whichever backend is fastest right now, combining connection count with observed latency',
+          'Random: picks a backend uniformly at random — cheap to compute, converges to an even split at high volume, weaker guarantees at low volume',
+          "LBs commonly terminate SSL/TLS at the edge too, so backend instances handle plaintext traffic and don't each need their own certificate",
+        ],
       },
       {
         id: 'health-checks',
@@ -488,6 +518,8 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         details: [
           'See the Networking, DNS & CDN question for cache-invalidation and static/dynamic-split trade-offs.',
           'AWS: CloudFront (CDN) · Route 53 (DNS)',
+          'Other vendors: Google Cloud CDN, Azure CDN, Fastly, Akamai, Cloudflare — same edge-cache model, different points of presence and pricing',
+          "Core benefit is three-fold: lower latency (served from a nearby edge, not the origin), higher availability (the edge absorbs traffic spikes instead of the origin taking the full hit), and reduced origin bandwidth cost",
         ],
       },
       {
@@ -553,6 +585,18 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
           'USE (resource-scoped metrics): Utilization, Saturation, Errors',
           "Logs: the diagnostic detail an aggregated metric can't carry — what actually happened on one specific failed request, with full context, not just that the error count went up",
           "Traces: a single request's path across every service it touched, with per-hop timing — the pillar that answers \"which of these five services is actually where my latency is coming from\"",
+          'Common tooling: Prometheus + Grafana for metrics collection and dashboards, Datadog or CloudWatch as managed alternatives',
+        ],
+      },
+      {
+        id: 'logging',
+        label: 'Logging',
+        summary: 'Structured, centralized logs — the raw detail behind the "Logs" pillar in Observability (RED/USE) above, elaborated on its own terms.',
+        details: [
+          "Structured over free-text: JSON logs with consistent fields (timestamp, service, level, request/correlation id) are queryable and aggregable — a printf string isn't",
+          'Consistent log levels: DEBUG/INFO/WARN/ERROR, applied the same way across services so a WARN in one service signals the same urgency as a WARN in another',
+          "Correlation/request IDs: one ID generated at the edge and threaded through every downstream call, so a single request's full path across services can be reconstructed from logs alone",
+          "Centralized pipeline: app → collector (Fluentd, Filebeat) → storage/search (the ELK stack's Elasticsearch, or Grafana Loki) → dashboard (Kibana or Grafana) — shipping logs off-instance means they survive the instance dying, and become searchable across the whole fleet at once",
         ],
       },
       {
@@ -588,7 +632,10 @@ export const REFERENCE_GRID_COLUMNS: ReferenceGridColumn[] = [
         id: 'input-validation',
         label: 'Input validation',
         summary: 'OWASP Top 10 — the standard reference for common vulnerability classes.',
-        details: [],
+        details: [
+          'Security goal is the CIA triad: Confidentiality (only authorized parties can read data), Integrity (data isn\'t tampered with, in transit or at rest), Availability (the system stays usable under load or attack) — everything below is in service of one of these three',
+          "Concrete threat catalog: XSS (untrusted input rendered as executable script), CSRF (a forged request riding an authenticated session), SQL/NoSQL injection (untrusted input reaching a query unescaped), IDOR / broken access control (an authenticated user reaching another user's resource by guessing an ID), DoS/DDoS (overwhelming the system with volume rather than exploiting a flaw)",
+        ],
       },
       {
         id: 'network-security',

@@ -4,6 +4,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import {
   EXTERNAL_REFERENCES,
   EXTERNAL_REFERENCE_GROUPS,
+  PRACTICE_SYSTEM_CATEGORIES,
   type ExternalReferenceMedium,
 } from '@/constants/systemDesignPrep/externalReferences';
 
@@ -20,8 +21,10 @@ const MEDIUM_ICON: Record<ExternalReferenceMedium, typeof ExternalLink> = {
  * The 30 external citations (opens in a new tab), grouped into Framework &
  * System Design / Development Lifecycles / Cross-Lifecycle Operating
  * Standards / Video Walkthroughs / Social Media Roundups / ML System Design
- * (EXTERNAL_REFERENCE_GROUPS), plus the 2 internal /study-plan?board=... links
- * to the raw source whiteboards this page's content was synthesized from.
+ * (EXTERNAL_REFERENCE_GROUPS), a condensed "practice these next" categorized
+ * name list (PRACTICE_SYSTEM_CATEGORIES) bridging into the Real-World Designs
+ * section above, plus the 2 internal /study-plan?board=... links to the raw
+ * source whiteboards this page's content was synthesized from.
  */
 const ExternalReferencesSection = () => (
   <section id="sources" className="scroll-mt-24 mt-20">
@@ -54,6 +57,41 @@ const ExternalReferencesSection = () => (
           </ul>
         </div>
       ))}
+    </div>
+
+    <div className="mt-10 pt-8 border-t border-zinc-100 dark:border-zinc-800">
+      <h3 className="text-sm font-bold text-zinc-900 dark:text-white">Practice these next</h3>
+      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+        The{' '}
+        <a
+          href="#real-world-designs"
+          className={`font-semibold text-blue-700 dark:text-blue-400 hover:underline rounded-sm ${FOCUS_RING}`}
+        >
+          Real-World Designs
+        </a>{' '}
+        section above works six classics — URL Shortener, Ride Sharing, Social Media Feed, Video
+        Streaming, E-commerce, Chat App — in full depth. Condensed from the wider Top-100-style
+        catalogs these boards draw on, here are ~25 more highest-signal named systems worth
+        running through the same framework, grouped rather than ranked.
+      </p>
+      <div className="mt-4 space-y-4">
+        {PRACTICE_SYSTEM_CATEGORIES.map((category) => (
+          <div key={category.id}>
+            <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-200">{category.label}</h4>
+            <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-500 leading-relaxed">{category.synthesis}</p>
+            <ul className="mt-2 flex flex-wrap gap-1.5">
+              {category.systems.map((system) => (
+                <li
+                  key={system}
+                  className="text-micro font-semibold text-zinc-600 dark:text-zinc-400 rounded-full border border-zinc-100 dark:border-zinc-800 px-2 py-0.5"
+                >
+                  {system}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
 
     <div className="mt-6 grid gap-3 sm:grid-cols-2">

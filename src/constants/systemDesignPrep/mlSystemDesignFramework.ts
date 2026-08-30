@@ -54,7 +54,8 @@ export const ML_FRAMEWORK_STEPS: FrameworkStep[] = [
     detail: [
       "Think through multiple ways to generate data and labels: implicit signals (a logged purchase), explicit signals (a user 'saves' an item), human-labeled data, or some combination",
       'Engineer features that leverage the product\'s unique properties, and consider feature crosses (combining features) where a single feature alone underspecifies the signal',
-      "Start with a non-ML heuristic or the simplest viable model before reaching for something more complex — debate complexity, data requirements, accuracy, and latency for each option, the same 'name at least two options' discipline as the general framework",
+      'Transform raw features into a usable format: scale numeric values (min-max normalization, z-score standardization, or log-scaling for skew), encode categoricals (one-hot for low-cardinality, embedding learning for high-cardinality IDs like user/item), and decide deletion vs. imputation (mean/median/mode) for missing values — each with a real trade-off, not a default',
+      "Start with a non-ML heuristic or a simple baseline (logistic regression) before reaching for something more complex (gradient-boosted trees/random forests, then neural networks) — debate data volume needed, training speed, compute/GPU requirements, and interpretability for each option, the same 'name at least two options' discipline as the general framework",
     ],
   },
   {
@@ -93,7 +94,7 @@ export const ML_VS_GENERAL_SIMILARITIES: string[] = [
 export const ML_VS_GENERAL_DIFFERENCES: string[] = [
   'The focus shifts toward the modeling task itself — metrics and evaluation criteria, and where the training data actually comes from',
   'Data pipelines become a first-class design concern: batch vs. streaming ingestion, and transforming raw data into features the model can actually learn from',
-  'Training and serving infrastructure adds a new axis entirely — CPU vs. GPU, training time, and on-device vs. cloud inference latency',
+  'Training and serving infrastructure adds a new axis entirely — CPU vs. GPU, distributed training at scale (splitting the workload via data parallelism vs. model parallelism), and on-device vs. cloud inference latency',
   'Not every ML system is client-server — on-device inference is a growing deployment mode with no server round-trip at all',
   'Offline and online data can genuinely disagree — a model can look great against held-out data and still underperform once it\'s shaping what real users see',
 ];

@@ -4,6 +4,7 @@ import {
   FRAMING_TOC_ITEMS,
   FRAMEWORK_TOC_ITEMS,
   ML_FRAMEWORK_TOC_ITEMS,
+  GENAI_FRAMEWORK_TOC_ITEMS,
   QUESTIONS_TOC_ITEMS,
   REFERENCE_TOC_ITEMS,
 } from '@/constants/systemDesignPrep/toc';
@@ -44,6 +45,14 @@ const SystemDesignPrepMobileToc = () => (
       <div className="space-y-1">
         <span className="block px-3 text-micro text-zinc-400 mb-1">ML Framework</span>
         {ML_FRAMEWORK_TOC_ITEMS.map((item) => (
+          <a key={item.id} href={item.href} className={LINK_CLASS}>
+            {item.label}
+          </a>
+        ))}
+      </div>
+      <div className="space-y-1">
+        <span className="block px-3 text-micro text-zinc-400 mb-1">GenAI Framework</span>
+        {GENAI_FRAMEWORK_TOC_ITEMS.map((item) => (
           <a key={item.id} href={item.href} className={LINK_CLASS}>
             {item.label}
           </a>

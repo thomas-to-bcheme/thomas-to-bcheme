@@ -33,6 +33,11 @@ export const MODEL_QUESTIONS: SystemDesignQuestion[] = [
         dependsOn:
           "Class imbalance, label noise, and a training distribution that no longer matches live traffic are the usual causes of the offline/online gap — a model can top the held-out benchmark and still underperform once it's actually shaping what users see.",
       },
+      {
+        consideration: 'The right offline metric depends on the task type',
+        dependsOn:
+          'Classification leans on Precision/Recall/F1/Accuracy plus ROC-AUC (or PR-AUC when classes are imbalanced) and a confusion matrix; regression uses MSE/MAE/RMSE; ranking uses Precision@k/Recall@k/MRR/mAP/nDCG — naming the wrong family for the task type is a quick tell that the metric was picked by habit, not by fit.',
+      },
     ],
     ripplesInto: ['ml-deployment-risk-ladder', 'drift-vs-staleness'],
     sourceNote: 'synthesized',
@@ -166,6 +171,11 @@ export const MODEL_QUESTIONS: SystemDesignQuestion[] = [
         consideration: 'This mirrors general software deployment risk ladders',
         dependsOn:
           'Shadow → canary → A/B is the ML-specific analog of blue-green → canary → rolling → feature-flags in general software deployment — worth naming that parallel explicitly, it signals the same risk-management instinct applies across both domains.',
+      },
+      {
+        consideration: "Deployment risk isn't just traffic ramp — inference cost is part of the same decision",
+        dependsOn:
+          'Model compression trades a small accuracy hit for materially lower serving latency and cost: knowledge distillation (a small student model mimics the trained teacher), pruning (zeroing out least-useful parameters), or quantization (fewer bits per parameter, at training time or post-training) — worth proposing before assuming the trained model ships as-is.',
       },
     ],
     ripplesInto: ['drift-vs-staleness', 'deploy-health-and-oncall'],

@@ -234,4 +234,109 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
     ripplesInto: ['online-vs-batch-prediction', 'sync-vs-async', 'real-time-vs-batch'],
     sourceNote: 'synthesized',
   },
+  {
+    id: 'rate-limiting-strategy',
+    category: 'backend',
+    question: 'How do you protect a service from being overwhelmed by one client or a traffic spike?',
+    clarifyingSubQuestions: [
+      'Is the limit enforced per-client, or as one global ceiling across every caller?',
+      'Does legitimate traffic genuinely need short bursts above the sustained rate, or is a strictly even rate acceptable?',
+      "What identifies \"a client\" — IP address, authenticated user ID, or API key — and how reliable is that identifier (NAT/proxies flatten many real users behind one IP)?",
+      'When the limit is exceeded, does the caller get rejected outright (429 + Retry-After), or throttled/queued and served late?',
+      'Is this enforced by a single node, or does it need to hold consistent state across a horizontally-scaled fleet?',
+    ],
+    approachOptions: [
+      {
+        label: 'Token bucket',
+        whenToUse:
+          'Need to allow short bursts up to a cap while still enforcing a steady average rate — the default choice for most public APIs (variants of this back AWS and Stripe rate limits).',
+        tradeoffs:
+          'Cheap to check (compare token count, decrement), naturally burst-tolerant — but tuning bucket size and refill rate to match real traffic shape takes iteration, not a formula.',
+      },
+      {
+        label: 'Leaky bucket',
+        whenToUse:
+          'Need to smooth bursty input into a strictly constant output rate — protecting a fixed-capacity downstream (a worker pool, a legacy system) that can\'t absorb any burst at all.',
+        tradeoffs:
+          'Guarantees a constant outflow regardless of how input arrives, but excess requests queue or drop rather than passing through — under sustained overload the queue itself becomes a memory/latency liability.',
+      },
+      {
+        label: 'Fixed window counter',
+        whenToUse:
+          'Simplicity matters more than precision — a quick global cap like "1000 requests per minute" behind a single counter.',
+        tradeoffs:
+          'Trivial to implement (an atomic INCR + TTL in Redis), but allows up to ~2x the stated limit right at the window boundary — a burst at 11:59:59 and another at 12:00:00 both pass unpenalized.',
+      },
+      {
+        label: 'Sliding window counter',
+        whenToUse:
+          'Need the fixed window\'s simplicity without its boundary-burst flaw — most production rate limiters (Cloudflare, common API-gateway defaults) land here as the practical middle ground.',
+        tradeoffs:
+          "Weights the previous window's count by how much of it still overlaps the current window, which closes the boundary gap at a fraction of the memory cost of a true sliding log (which stores every request timestamp for exact precision) — an approximation that's accurate enough for almost every real use case, not an exact count.",
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'Where enforcement lives changes what it actually protects',
+        dependsOn:
+          "Edge/CDN (Cloudflare, AWS WAF) stops abusive traffic before it costs you any compute at all — the cheapest place to block a true volumetric spike. API gateway (Kong, Envoy, NGINX) is the more common day-to-day layer, enforcing per-client/per-key policy in one place for every downstream service. Application-layer limiting sees the most business context (e.g. a single expensive endpoint deserves a tighter cap than the rest of the API), but by then the request has already paid for a network hop and a process to reject it.",
+      },
+      {
+        consideration: "A single node can count in memory; more than one node can't",
+        dependsOn:
+          "Once traffic is spread across multiple app instances, an in-process counter only sees its own slice of requests — a client can blow past the intended limit just by landing on enough different nodes. Distributed rate limiting needs shared state (Redis INCR/EXPIRE, or a Lua script for atomicity) so every node is checking and incrementing the same counter, not five separate ones.",
+      },
+    ],
+    ripplesInto: ['lb-vs-gateway-vs-proxy', 'security-by-design'],
+    sourceNote: 'synthesized',
+  },
+  {
+    id: 'api-versioning',
+    category: 'backend',
+    question: "How do you evolve an API's contract without breaking the clients that are already depending on the old one?",
+    clarifyingSubQuestions: [
+      'How many external consumers depend on backward compatibility, and do you control their release cadence or not?',
+      'Is this a public API with unknown, uncoordinated consumers, or an internal API where a synchronized rollout is possible?',
+      'Is the change additive (a new optional field) or breaking (a renamed/removed field, changed semantics) — only breaking changes actually require a new version.',
+      "What's the deprecation window — how long does the old version stay live after the new one ships, and how is that communicated to consumers?",
+      'Does a client need to discover which versions exist and pick one, or is a single implicit default acceptable?',
+    ],
+    approachOptions: [
+      {
+        label: 'URI versioning (`/v1/users`)',
+        whenToUse:
+          'Public APIs and anything where discoverability and cacheability matter most — the version is visible in every log line, browser address bar, and CDN cache key.',
+        tradeoffs:
+          'Simplest to implement, test, and cache (each version is a genuinely distinct URL) — but it puts an implementation detail in the resource path, so "the same resource" now has multiple canonical URLs.',
+      },
+      {
+        label: 'Header versioning (`Accept: application/vnd.app.v1+json`)',
+        whenToUse:
+          'APIs that want the URL to stay a pure resource identifier and treat the version as metadata about the representation, not the resource\'s identity — common in stricter REST implementations.',
+        tradeoffs:
+          'Keeps URLs clean and semantically correct, but is harder to test from a browser, less discoverable to a new consumer skimming the docs, and CDNs need explicit config to vary the cache by header instead of defaulting to URL.',
+      },
+      {
+        label: 'Query-parameter versioning (`/users?version=1`)',
+        whenToUse:
+          "A middle ground — version stays visible and easy to test in a browser like URI versioning, without minting a whole new path segment or route table per version.",
+        tradeoffs:
+          'Easy to default (omit the param) and easy to test, but query params conventionally mean filtering/sorting, not identity — mixing the two is a recurring source of confusion, and caching by query string is less consistently supported than caching by path.',
+      },
+    ],
+    implementationNotes: [
+      {
+        consideration: 'Only breaking changes need a new version at all',
+        dependsOn:
+          'Adding an optional field or a new endpoint is backward-compatible and needs no version bump — versioning exists to protect consumers from changes they cannot safely ignore (removed/renamed fields, changed status codes, changed semantics). Treating every change as version-worthy fragments the API and multiplies the surface area you have to keep supporting.',
+      },
+      {
+        consideration: 'A version shipped without a deprecation policy is a version that never gets retired',
+        dependsOn:
+          "Shipping v2 without a committed sunset date for v1 means both have to be maintained indefinitely — the real ongoing cost isn't which versioning scheme you picked, it's the support burden of every version you've ever shipped and never turned off.",
+      },
+    ],
+    ripplesInto: ['lb-vs-gateway-vs-proxy', 'monolith-vs-microservices'],
+    sourceNote: 'synthesized',
+  },
 ];

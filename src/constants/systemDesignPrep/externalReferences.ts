@@ -337,3 +337,82 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
       "Uber's own account of its internal ML platform — a 6-stage architecture (data management → training → evaluation → deployment → prediction serving → monitoring) built on a shared feature store, cited directly in this page's ML-Specific Framework's High-Level Architecture step.",
   },
 ];
+
+export interface PracticeSystemCategory {
+  id: string;
+  label: string;
+  synthesis: string;
+  /** Named systems worth practicing under this category — display-only text, no individual link. */
+  systems: string[];
+}
+
+/**
+ * A condensed "practice these next" list for the Sources section — not all
+ * ~100 named systems the wider Top-100-style catalogs these boards draw on
+ * enumerate (that would be a wall of text out of proportion with the rest
+ * of this page), just the ~25 highest-signal, most-recognizable ones,
+ * collapsed from the source catalogs' 9 categories into 4 that read better
+ * at this size. Deliberately excludes the six systems the Real-World
+ * Designs section above already works in full depth (URL Shortener, Ride
+ * Sharing, Social Media Feed, Video Streaming, E-commerce, Chat App) — this
+ * is explicitly the "beyond those six" practice set, not a duplicate of it.
+ */
+export const PRACTICE_SYSTEM_CATEGORIES: PracticeSystemCategory[] = [
+  {
+    id: 'consumer-platforms',
+    label: 'Consumer platforms at scale',
+    synthesis:
+      "The names most interviewers recognize on sight, and each forces a mechanism the six designs above don't: a recommendation model, a celebrity fan-out problem, per-server channel sharding, inventory-vs-search consistency, or a pricing algorithm instead of a matching one.",
+    systems: [
+      'Netflix (recommendation ranking + adaptive bitrate streaming)',
+      'Twitter / X (celebrity fan-out + timeline ranking)',
+      'Discord (per-server channel sharding + presence)',
+      'Spotify (personalized playlists + streaming catalog)',
+      'Airbnb (search relevance + booking/inventory consistency)',
+      'Google Photos (petabyte-scale storage + face/object search)',
+      'Uber surge pricing (dynamic pricing — distinct from the ride-matching design above)',
+      'WhatsApp Status (ephemeral 24h content — distinct from the 1:1 chat design above)',
+      'Zoom (low-latency group video at scale)',
+      'Pinterest (visual discovery + recommendation feed)',
+    ],
+  },
+  {
+    id: 'developer-platform-tooling',
+    label: 'Developer & platform tooling',
+    synthesis:
+      "Less consumer-facing, but the same trade-off discipline this page argues for throughout: a crawler's politeness/dedup problem, a sandboxed compiler's resource-isolation problem, a feature flag service's fast-propagation problem.",
+    systems: [
+      'Web crawler (breadth-first crawl + politeness + dedup)',
+      'Online code compiler / sandboxed IDE (resource isolation + timeouts)',
+      'Feature flag service (config propagation + gradual rollout)',
+      'A/B testing platform (experiment assignment + statistical evaluation)',
+      'Pastebin (the URL-shortener pattern applied to arbitrary text)',
+    ],
+  },
+  {
+    id: 'trust-and-safety',
+    label: 'Trust & safety',
+    synthesis:
+      'The interesting decision here is the review pipeline, not the storage layer: real-time classification at ingest, plus what happens to content that gets flagged instead of auto-rejected.',
+    systems: [
+      'Content moderation pipeline (automated + human-review queue)',
+      'Spam detection system (real-time classification at ingest)',
+      'Anti-cheat system (server-authoritative validation)',
+    ],
+  },
+  {
+    id: 'everyday-utilities',
+    label: 'Everyday consumer utilities',
+    synthesis:
+      'Lower-stakes than the platforms above, and a good gut-check for whether the same patterns — real-time sync, ledger consistency, time-series ingestion — hold up without a famous brand attached.',
+    systems: [
+      'AI chatbot / voice assistant (streaming inference + conversation state)',
+      'Collaborative whiteboard (real-time multi-user sync)',
+      'Polling app (write-heavy vote aggregation + fraud prevention)',
+      'Expense tracker (shared ledger + reconciliation)',
+      'Health monitoring app (device ingestion + time-series storage)',
+      'Lost & found app (geo-indexed search)',
+      'Crypto wallet (key management + transaction signing)',
+    ],
+  },
+];

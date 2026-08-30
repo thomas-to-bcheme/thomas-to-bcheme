@@ -295,6 +295,16 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
         whenToUse: 'Skewed/long-tail access patterns where LRU\'s cache pollution problem is a real, recurring issue.',
         tradeoffs: 'Resists that pollution problem by tracking access frequency, but needs a decay strategy — otherwise a once-popular-now-cold key pins itself in the cache forever.',
       },
+      {
+        label: 'TTL (Time To Live)',
+        whenToUse: "Data has a natural expiry — session tokens, rate-limit counters, anything that's wrong (not just stale) past a certain age.",
+        tradeoffs: "Correctness-driven rather than access-pattern-driven — expires an entry on a schedule regardless of how hot it still is; usually layered on top of LRU/LFU rather than used as the sole policy.",
+      },
+      {
+        label: 'Random',
+        whenToUse: 'Extremely high-throughput caches where even LRU/LFU\'s O(1) bookkeeping overhead is worth avoiding.',
+        tradeoffs: 'Cheapest possible eviction — no access metadata to maintain at all — but with zero access-pattern awareness, hit rate is whatever the workload happens to give you.',
+      },
     ],
     implementationNotes: [
       {
@@ -463,7 +473,7 @@ export const DATA_QUESTIONS: SystemDesignQuestion[] = [
         whenToUse:
           'Large, infrequently-modified blobs — images, video, backups, data-lake files — accessed by key, not by path.',
         tradeoffs:
-          'Durable and effectively infinitely scalable at low cost, but no partial-file edits and higher per-request latency than block storage.',
+          "Durable (S3-class services advertise ~99.999999999% — \"11 nines\" — object durability via automatic cross-AZ replication) and effectively infinitely scalable at low cost, but no partial-file edits and higher per-request latency than block storage.",
       },
       {
         label: 'Block storage (EBS-style)',

@@ -9,6 +9,7 @@
 
 import { INTERVIEW_FRAMEWORK_STEPS } from './interviewFramework';
 import { ML_FRAMEWORK_STEPS } from './mlSystemDesignFramework';
+import { GENAI_FRAMEWORK_STEPS } from './genAiSystemDesign';
 import { SYSTEM_DESIGN_CATEGORIES } from './questions';
 
 export interface SystemDesignTocItem {
@@ -44,6 +45,12 @@ export const ML_FRAMEWORK_TOC_ITEMS: SystemDesignTocItem[] = ML_FRAMEWORK_STEPS.
   toItem(step.id, step.label),
 );
 
+// Same pattern again, for GenAiSystemDesignSection's own FrameworkStepList —
+// the GenAI-specific delta on top of the ML framework immediately above.
+export const GENAI_FRAMEWORK_TOC_ITEMS: SystemDesignTocItem[] = GENAI_FRAMEWORK_STEPS.map((step) =>
+  toItem(step.id, step.label),
+);
+
 // One entry per question category — matches the `id` prop of each
 // <section> SystemDesignQuestionsSection renders (one per
 // SYSTEM_DESIGN_CATEGORIES entry).
@@ -51,8 +58,11 @@ export const QUESTIONS_TOC_ITEMS: SystemDesignTocItem[] = SYSTEM_DESIGN_CATEGORI
   toItem(category.id, category.label),
 );
 
-// The remaining reference sections, in page order.
+// The remaining reference sections, in page order — real-world-designs
+// leads this group since it renders directly after the question-bank
+// categories and before Reference Grid (see page.tsx).
 export const REFERENCE_TOC_ITEMS: SystemDesignTocItem[] = [
+  toItem('real-world-designs', 'Real-World Designs'),
   toItem('reference-grid', 'Reference Grid'),
   toItem('components-of-system-design', 'Components'),
   toItem('cross-domain-strategies', 'Cross-Domain Strategies'),
@@ -68,6 +78,7 @@ export const SYSTEM_DESIGN_TOC_ITEMS: SystemDesignTocItem[] = [
   ...FRAMING_TOC_ITEMS,
   ...FRAMEWORK_TOC_ITEMS,
   ...ML_FRAMEWORK_TOC_ITEMS,
+  ...GENAI_FRAMEWORK_TOC_ITEMS,
   ...QUESTIONS_TOC_ITEMS,
   ...REFERENCE_TOC_ITEMS,
 ];
