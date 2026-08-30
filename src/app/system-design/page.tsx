@@ -13,14 +13,11 @@ import MLSystemDesignFrameworkSection from '@/components/sections/systemDesignPr
 import GenAiSystemDesignSection from '@/components/sections/systemDesignPrep/GenAiSystemDesignSection';
 import SystemDesignQuestionsSection from '@/components/sections/systemDesignPrep/SystemDesignQuestionsSection';
 import RealWorldDesignsSection from '@/components/sections/systemDesignPrep/RealWorldDesignsSection';
-import ReferenceGridSection from '@/components/sections/systemDesignPrep/ReferenceGridSection';
 import ComponentsOfSystemDesignSection from '@/components/sections/systemDesignPrep/ComponentsOfSystemDesignSection';
-import CrossDomainStrategiesSection from '@/components/sections/systemDesignPrep/CrossDomainStrategiesSection';
 import ScoringRubricSection from '@/components/sections/systemDesignPrep/ScoringRubricSection';
 import StaffSignalsSection from '@/components/sections/systemDesignPrep/StaffSignalsSection';
 import CommunicationScriptsSection from '@/components/sections/systemDesignPrep/CommunicationScriptsSection';
 import DevelopmentLifecyclesSection from '@/components/sections/systemDesignPrep/DevelopmentLifecyclesSection';
-import ExternalReferencesSection from '@/components/sections/systemDesignPrep/ExternalReferencesSection';
 
 export const metadata: Metadata = {
   title: 'System Design — Thomas To',
@@ -76,12 +73,9 @@ export default function SystemDesignPage() {
           <GenAiSystemDesignSection />
           <SystemDesignQuestionsSection />
           <RealWorldDesignsSection />
-          <ReferenceGridSection />
           <ComponentsOfSystemDesignSection />
-          <CrossDomainStrategiesSection />
           <StaffSignalsSection />
           <DevelopmentLifecyclesSection />
-          <ExternalReferencesSection />
         </main>
       </div>
 

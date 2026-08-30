@@ -85,8 +85,6 @@ export const GENAI_FRAMEWORK_STEPS: FrameworkStep[] = [
 // and the site's established `tag-blue` pill link style.
 export const GENAI_CROSS_REFERENCES: ComponentCrossLink[] = [
   { label: 'ML High-Level Architecture →', href: '#ml-high-level-architecture' },
-  { label: 'Vector databases (the retrieval half of RAG) →', href: '#vector-databases' },
-  { label: 'Load balancing →', href: '#load-balancing' },
   { label: 'Security by design →', href: '#security-by-design' },
   { label: 'Offline vs. online metrics →', href: '#offline-vs-online-metrics' },
 ];

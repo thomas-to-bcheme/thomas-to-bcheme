@@ -8,8 +8,7 @@ const FOCUS_RING =
 
 /**
  * Closing section — the copyright-respecting payoff of the whole page.
- * Structural copy of systemDesignPrep/ExternalReferencesSection.tsx's
- * grouped-list pattern: the 3 primary resources (course, announcement post,
+ * A grouped-list pattern: the 3 primary resources (course, announcement post,
  * book) this page is a condensed take on, plus a direct link to every
  * individual chapter this page's sections are structured around, in course
  * order, so a reader can go straight to the original for anything this page

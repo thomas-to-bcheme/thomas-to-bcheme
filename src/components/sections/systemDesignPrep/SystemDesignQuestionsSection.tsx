@@ -46,19 +46,13 @@ const SystemDesignQuestionsSection = () => (
         return (
           <section key={category.id} id={category.id} className="scroll-mt-24">
             <SectionHeading eyebrow="Category" title={category.label} />
-            <ul className="max-w-2xl -mt-2 mb-3 space-y-1.5">
+            <ul className="max-w-2xl -mt-2 mb-6 space-y-1.5">
               {category.guidingQuestions.map((guidingQuestion) => (
                 <li key={guidingQuestion} className={GUIDING_QUESTION_CLASS}>
                   {guidingQuestion}
                 </li>
               ))}
             </ul>
-            <a
-              href="#sources"
-              className="inline-block mb-6 text-sm font-semibold text-blue-700 dark:text-blue-400 hover:underline"
-            >
-              Want more depth? See Sources →
-            </a>
             <div className="space-y-4">
               {questions.map((question) => (
                 <div key={question.id}>

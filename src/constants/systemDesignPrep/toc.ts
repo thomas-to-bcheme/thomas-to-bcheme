@@ -60,15 +60,12 @@ export const QUESTIONS_TOC_ITEMS: SystemDesignTocItem[] = SYSTEM_DESIGN_CATEGORI
 
 // The remaining reference sections, in page order — real-world-designs
 // leads this group since it renders directly after the question-bank
-// categories and before Reference Grid (see page.tsx).
+// categories and before Components of System Design (see page.tsx).
 export const REFERENCE_TOC_ITEMS: SystemDesignTocItem[] = [
   toItem('real-world-designs', 'Real-World Designs'),
-  toItem('reference-grid', 'Reference Grid'),
   toItem('components-of-system-design', 'Components'),
-  toItem('cross-domain-strategies', 'Cross-Domain Strategies'),
   toItem('staff-signals', 'Staff-Level Signals'),
   toItem('development-lifecycles', 'Development Lifecycles'),
-  toItem('sources', 'Sources'),
 ];
 
 // Full, flat TOC — every section anchor on the page, in reading order — the

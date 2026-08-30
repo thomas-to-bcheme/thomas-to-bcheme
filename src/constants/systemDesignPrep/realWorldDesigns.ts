@@ -1,29 +1,24 @@
 /**
  * Six classic worked system designs — the "now apply the decision cascades
- * to a real system" payoff after `SYSTEM_DESIGN_QUESTIONS` and
- * `REFERENCE_GRID_COLUMNS` have each been argued individually. This is
- * deliberately a synthesis/index, not a full design doc: each design is
- * Requirements + Key Components + Scale Strategies, kept to a handful of
- * bullets, with `linkId` pointing back into an *existing* question-bank
- * (`SYSTEM_DESIGN_QUESTIONS`) or Reference Grid (`REFERENCE_GRID_COLUMNS`)
- * id wherever that bullet's underlying trade-off already has a full
- * treatment elsewhere on the page — so a design re-uses that cascade
- * instead of re-deriving it. `RealWorldDesignsSection` resolves each
- * `linkId` dynamically against both sources at render time (dropping it
- * silently if the id ever goes stale), the same defensive-lookup pattern
- * `SystemDesignQuestionCard` uses for `ripplesInto`.
- *
- * Referenced by `ExternalReferencesSection`'s "Practice these next" panel
- * (`href="#real-world-designs"`) — this file's section id is a load-bearing
- * anchor target for that existing link, not just a naming convention.
+ * to a real system" payoff after `SYSTEM_DESIGN_QUESTIONS` have each been
+ * argued individually. This is deliberately a synthesis/index, not a full
+ * design doc: each design is Requirements + Key Components + Scale
+ * Strategies, kept to a handful of bullets, with `linkId` pointing back into
+ * an *existing* question-bank (`SYSTEM_DESIGN_QUESTIONS`) id wherever that
+ * bullet's underlying trade-off already has a full treatment elsewhere on
+ * the page — so a design re-uses that cascade instead of re-deriving it.
+ * `RealWorldDesignsSection` resolves each `linkId` dynamically against that
+ * source at render time (dropping it silently if the id ever goes stale),
+ * the same defensive-lookup pattern `SystemDesignQuestionCard` uses for
+ * `ripplesInto`.
  */
 
 export interface RealWorldDesignPoint {
   /** The concise fact or strategy itself — a few lines, not a paragraph. */
   text: string;
-  /** Optional id of an existing SystemDesignQuestion or ReferenceGridEntry
-   *  whose full decision cascade this point leans on, resolved and
-   *  rendered as an inline link instead of restating the trade-off here. */
+  /** Optional id of an existing SystemDesignQuestion whose full decision
+   *  cascade this point leans on, resolved and rendered as an inline link
+   *  instead of restating the trade-off here. */
   linkId?: string;
 }
 

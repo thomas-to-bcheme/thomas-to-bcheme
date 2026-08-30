@@ -1,56 +1,5 @@
 export type ExternalReferenceGroup = 'framework' | 'lifecycles' | 'standards' | 'videos' | 'social' | 'ml-system-design';
 
-export interface ExternalReferenceGroupMeta {
-  id: ExternalReferenceGroup;
-  label: string;
-  description: string;
-}
-
-/**
- * Single source of truth for the 6 labeled subgroups ExternalReferencesSection
- * renders under "Sources" — mirrors how sweCompassLifecycle.ts's 6 stages drive
- * SYSTEM_DESIGN_CATEGORIES: add a group here, tag references with its id, and
- * the component picks it up with no other changes.
- */
-export const EXTERNAL_REFERENCE_GROUPS: ExternalReferenceGroupMeta[] = [
-  {
-    id: 'framework',
-    label: 'Framework & System Design',
-    description:
-      "General system-design grounding — where this page's interview framework, question-cascade format, and four-axis philosophy come from.",
-  },
-  {
-    id: 'lifecycles',
-    label: 'Development Lifecycles',
-    description:
-      "Software ships through the Software Development Lifecycle (SDLC) — plan, design, build, test, deploy, maintain. A model is one more component shipping through that same lifecycle, not a parallel track: the Model stage's own build → train → evaluate → optimize loop assumes the Data stage's pipelines already exist and are automated at scale, and the trained model comes back out as one more service the Backend and Frontend stages consume.",
-  },
-  {
-    id: 'standards',
-    label: 'Cross-Lifecycle Operating Standards',
-    description:
-      "Practices that don't care whether what's running is deterministic code or a served model: tests and validation gating what ships, CI/CD moving it into production, and monitoring, drift detection, and on-call watching it once it's there. This is the domain-agnostic layer the Data, Model, and Ops stages all draw on — data engineering, ML engineering, software engineering, and the DevOps/MLOps/LLMOps/Ops umbrella are different domains running the same underlying operating discipline.",
-  },
-  {
-    id: 'videos',
-    label: 'Video Walkthroughs',
-    description:
-      "Narrated, watchable alternatives to the written references above — full courses, rapid concept explainers, and a multi-part playlist covering the same system-design fundamentals from a different angle.",
-  },
-  {
-    id: 'social',
-    label: 'Social Media Roundups',
-    description:
-      "Carousel-post checklists from System Design content creators on Instagram — useful for a fast topic scan or an interview-trap call-out, though the full notes behind several of these are only handed out by commenting or DMing the poster directly rather than posted publicly.",
-  },
-  {
-    id: 'ml-system-design',
-    label: 'ML System Design',
-    description:
-      "Where the ML-Specific Framework section above and its offline/online-metrics and normalization additions come from — the extra layer of decisions a model in production adds on top of the general framework, plus two real production case studies to ground it.",
-  },
-];
-
 export type ExternalReferenceMedium = 'video' | 'social';
 
 export interface ExternalReference {
@@ -59,7 +8,7 @@ export interface ExternalReference {
   title: string;
   url: string;
   whatItOffers: string;
-  /** Optional — selects a source-specific icon in ExternalReferencesSection. Omit for the default written-source icon. */
+  /** Unused metadata carried over from the removed Sources section (used to select a source-specific icon there). */
   medium?: ExternalReferenceMedium;
 }
 
@@ -335,84 +284,5 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
     url: 'https://www.uber.com/blog/michelangelo-machine-learning-platform/',
     whatItOffers:
       "Uber's own account of its internal ML platform — a 6-stage architecture (data management → training → evaluation → deployment → prediction serving → monitoring) built on a shared feature store, cited directly in this page's ML-Specific Framework's High-Level Architecture step.",
-  },
-];
-
-export interface PracticeSystemCategory {
-  id: string;
-  label: string;
-  synthesis: string;
-  /** Named systems worth practicing under this category — display-only text, no individual link. */
-  systems: string[];
-}
-
-/**
- * A condensed "practice these next" list for the Sources section — not all
- * ~100 named systems the wider Top-100-style catalogs these boards draw on
- * enumerate (that would be a wall of text out of proportion with the rest
- * of this page), just the ~25 highest-signal, most-recognizable ones,
- * collapsed from the source catalogs' 9 categories into 4 that read better
- * at this size. Deliberately excludes the six systems the Real-World
- * Designs section above already works in full depth (URL Shortener, Ride
- * Sharing, Social Media Feed, Video Streaming, E-commerce, Chat App) — this
- * is explicitly the "beyond those six" practice set, not a duplicate of it.
- */
-export const PRACTICE_SYSTEM_CATEGORIES: PracticeSystemCategory[] = [
-  {
-    id: 'consumer-platforms',
-    label: 'Consumer platforms at scale',
-    synthesis:
-      "The names most interviewers recognize on sight, and each forces a mechanism the six designs above don't: a recommendation model, a celebrity fan-out problem, per-server channel sharding, inventory-vs-search consistency, or a pricing algorithm instead of a matching one.",
-    systems: [
-      'Netflix (recommendation ranking + adaptive bitrate streaming)',
-      'Twitter / X (celebrity fan-out + timeline ranking)',
-      'Discord (per-server channel sharding + presence)',
-      'Spotify (personalized playlists + streaming catalog)',
-      'Airbnb (search relevance + booking/inventory consistency)',
-      'Google Photos (petabyte-scale storage + face/object search)',
-      'Uber surge pricing (dynamic pricing — distinct from the ride-matching design above)',
-      'WhatsApp Status (ephemeral 24h content — distinct from the 1:1 chat design above)',
-      'Zoom (low-latency group video at scale)',
-      'Pinterest (visual discovery + recommendation feed)',
-    ],
-  },
-  {
-    id: 'developer-platform-tooling',
-    label: 'Developer & platform tooling',
-    synthesis:
-      "Less consumer-facing, but the same trade-off discipline this page argues for throughout: a crawler's politeness/dedup problem, a sandboxed compiler's resource-isolation problem, a feature flag service's fast-propagation problem.",
-    systems: [
-      'Web crawler (breadth-first crawl + politeness + dedup)',
-      'Online code compiler / sandboxed IDE (resource isolation + timeouts)',
-      'Feature flag service (config propagation + gradual rollout)',
-      'A/B testing platform (experiment assignment + statistical evaluation)',
-      'Pastebin (the URL-shortener pattern applied to arbitrary text)',
-    ],
-  },
-  {
-    id: 'trust-and-safety',
-    label: 'Trust & safety',
-    synthesis:
-      'The interesting decision here is the review pipeline, not the storage layer: real-time classification at ingest, plus what happens to content that gets flagged instead of auto-rejected.',
-    systems: [
-      'Content moderation pipeline (automated + human-review queue)',
-      'Spam detection system (real-time classification at ingest)',
-      'Anti-cheat system (server-authoritative validation)',
-    ],
-  },
-  {
-    id: 'everyday-utilities',
-    label: 'Everyday consumer utilities',
-    synthesis:
-      'Lower-stakes than the platforms above, and a good gut-check for whether the same patterns — real-time sync, ledger consistency, time-series ingestion — hold up without a famous brand attached.',
-    systems: [
-      'AI chatbot / voice assistant (streaming inference + conversation state)',
-      'Collaborative whiteboard (real-time multi-user sync)',
-      'Polling app (write-heavy vote aggregation + fraud prevention)',
-      'Expense tracker (shared ledger + reconciliation)',
-      'Health monitoring app (device ingestion + time-series storage)',
-      'Lost & found app (geo-indexed search)',
-      'Crypto wallet (key management + transaction signing)',
-    ],
   },
 ];

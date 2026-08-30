@@ -3,9 +3,9 @@
 // Questions" (under Design and Data) — see RELOCATED_COMPONENT_QUESTIONS
 // below for the cross-link index back to them. COMPONENT_FRAMING_TOPICS and
 // DESIGN_PRINCIPLES deliberately do NOT re-derive content that already has
-// real trade-off depth elsewhere on the page (Reference Grid entries, the
-// scaling-progression question) — they frame it in one place and cross-link
-// to the existing authoritative source instead, per DATA INTEGRITY.
+// real trade-off depth elsewhere on the page (the scaling-progression
+// question, among others) — they frame it in one place and cross-link to
+// the existing authoritative source instead, per DATA INTEGRITY.
 
 export interface ComponentCrossLink {
   label: string;
@@ -38,17 +38,14 @@ export const COMPONENT_FRAMING_TOPICS: ComponentFramingTopic[] = [
     label: 'Caching',
     summary:
       'Trading freshness for speed at whichever layer is cheapest to add — L1 in-process, L2 shared (Redis), L3 CDN/edge — with a separate choice for how writes stay in sync.',
-    crossLinks: [
-      { label: 'Caching layers →', href: '#caching-layers' },
-      { label: 'Cache write patterns →', href: '#cache-write-patterns' },
-    ],
+    crossLinks: [],
   },
   {
     id: 'replication',
     label: 'Replication',
     summary:
       'Sync vs async copies of data across nodes — the durability/latency trade-off underneath most availability guarantees, and the reason read replicas can lag.',
-    crossLinks: [{ label: 'Replication →', href: '#replication' }],
+    crossLinks: [],
   },
   {
     id: 'vertical-vs-horizontal-scaling',
@@ -62,10 +59,7 @@ export const COMPONENT_FRAMING_TOPICS: ComponentFramingTopic[] = [
     label: 'API',
     summary:
       'REST, GraphQL, or gRPC as the contract between client and service — a protocol choice, distinct from the API-gateway traffic-management decision above.',
-    crossLinks: [
-      { label: 'API patterns →', href: '#api-patterns' },
-      { label: 'Real-time vs Batch →', href: '#real-time-vs-batch' },
-    ],
+    crossLinks: [{ label: 'Real-time vs Batch →', href: '#real-time-vs-batch' }],
   },
 ];
 
@@ -95,18 +89,15 @@ export const DESIGN_PRINCIPLES: DesignPrinciple[] = [
     id: 'design-for-failure',
     label: 'Design for failure',
     summary: 'Assume components will fail — redundancy and graceful degradation, not just a happy path.',
-    crossLink: { label: 'See Fault-tolerance patterns →', href: '#fault-tolerance-patterns' },
   },
   {
     id: 'automate-observability',
     label: 'Automate with monitoring & observability',
     summary: "What isn't instrumented can't be operated — automation and visibility are the same discipline, not separate concerns.",
-    crossLink: { label: 'See Observability (RED/USE) →', href: '#observability-red-use' },
   },
   {
     id: 'iterate-and-evolve',
     label: 'Iterate and evolve',
     summary: "Know when the current design has stopped fitting, and evolve it deliberately — architecture is ongoing judgment, not a one-time decision.",
-    crossLink: { label: 'See Architecture evolution →', href: '#architecture-evolution' },
   },
 ];

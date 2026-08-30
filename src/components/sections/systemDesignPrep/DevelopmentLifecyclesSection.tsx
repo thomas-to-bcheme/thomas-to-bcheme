@@ -13,11 +13,11 @@ const FOCUS_RING =
 /**
  * Background on the 4 named engineering lifecycles this page's stage
  * ordering and Model/Ops framing are read against (SDLC, Data Engineering,
- * ML/MLOps, DevOps) — each already cited in Sources below, promoted here
- * from a one-line citation blurb into real stage-by-stage depth — followed
- * by the closing synthesis: one lifecycle-agnostic pattern all 4 repeat,
- * the guiding mental model this page's own SWE Compass (see /projects) is
- * one concrete instance of.
+ * ML/MLOps, DevOps) — each cited via its own "Source: ..." link below,
+ * promoted here from a one-line citation blurb into real stage-by-stage
+ * depth — followed by the closing synthesis: one lifecycle-agnostic pattern
+ * all 4 repeat, the guiding mental model this page's own SWE Compass (see
+ * /projects) is one concrete instance of.
  */
 const DevelopmentLifecyclesSection = () => (
   <section id="development-lifecycles" className="scroll-mt-24 mt-20">

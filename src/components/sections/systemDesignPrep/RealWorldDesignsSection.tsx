@@ -1,22 +1,17 @@
 import SectionHeading from '@/components/ui/SectionHeading';
 import { REAL_WORLD_DESIGNS, type RealWorldDesignPoint } from '@/constants/systemDesignPrep/realWorldDesigns';
 import { SYSTEM_DESIGN_QUESTIONS } from '@/constants/systemDesignPrep/questions';
-import { REFERENCE_GRID_COLUMNS } from '@/constants/systemDesignPrep/referenceGrid';
 
 /**
- * Resolves a RealWorldDesignPoint's optional `linkId` against both existing
- * id spaces on this page (the question-bank decision cascades and the
- * Reference Grid entries) — the same "look it up, drop it if it's gone"
- * defensive pattern SystemDesignQuestionCard uses for `ripplesInto`, so a
- * future rename in either source file can't silently produce a dead anchor
- * here. Built once at module scope rather than per-render.
+ * Resolves a RealWorldDesignPoint's optional `linkId` against the
+ * question-bank decision cascades — the same "look it up, drop it if it's
+ * gone" defensive pattern SystemDesignQuestionCard uses for `ripplesInto`,
+ * so a future rename in the question bank can't silently produce a dead
+ * anchor here. Built once at module scope rather than per-render.
  */
-const LINK_TARGET_LABELS = new Map<string, string>([
-  ...SYSTEM_DESIGN_QUESTIONS.map((question): [string, string] => [question.id, question.question]),
-  ...REFERENCE_GRID_COLUMNS.flatMap((column) =>
-    column.entries.map((entry): [string, string] => [entry.id, entry.label]),
-  ),
-]);
+const LINK_TARGET_LABELS = new Map<string, string>(
+  SYSTEM_DESIGN_QUESTIONS.map((question): [string, string] => [question.id, question.question]),
+);
 
 const POINT_CLASS =
   'text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pl-4 relative before:content-[\'—\'] before:absolute before:left-0 before:text-zinc-300 dark:before:text-zinc-700';
@@ -71,9 +66,7 @@ const DesignPointList = ({ label, points }: DesignPointListProps) => (
  * classic worked designs (Requirements + Key Components + Scale
  * Strategies), each kept concise since this is a synthesis/index over
  * decisions already argued in full elsewhere on the page, not a restatement
- * of them. `ExternalReferencesSection`'s "Practice these next" panel links
- * here directly (`href="#real-world-designs"`), so this section's id is a
- * load-bearing anchor target, not just a naming convention.
+ * of them.
  */
 const RealWorldDesignsSection = () => (
   <section id="real-world-designs" className="mt-16 scroll-mt-24">
