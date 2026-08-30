@@ -1,13 +1,17 @@
-// The 7-characteristic baseline every decision cascade in the question bank
-// gets checked against: Chip Huyen's 4 canonical characteristics of a
+// 13 non-functional characteristics in total, split into 3 groups. The
+// first 7 are the baseline every decision cascade in the question bank gets
+// checked against: Chip Huyen's 4 canonical characteristics of a
 // well-designed ML/software system (Designing Machine Learning Systems,
-// O'Reilly 2022) plus CAP theorem's 3. Everything else — which one matters
-// most, and how much — is situational, captured separately below and
-// cross-linked to the real question-bank entry it depends on.
+// O'Reilly 2022) plus CAP theorem's 3. A further 6 — latency, throughput,
+// bandwidth, durability, security, cost — round out the non-functional
+// picture without carrying that same baseline weight. Everything else —
+// which one matters most, and how much — is situational, captured
+// separately below and cross-linked to the real question-bank entry it
+// depends on.
 export interface CoreCharacteristic {
   id: string;
   label: string;
-  source: 'huyen' | 'cap';
+  source: 'huyen' | 'cap' | 'general';
   summary: string;
 }
 
@@ -56,6 +60,45 @@ export const CORE_CHARACTERISTICS: CoreCharacteristic[] = [
     label: 'Partition Tolerance',
     source: 'cap',
     summary: 'The system keeps working despite dropped or delayed messages between nodes.',
+  },
+  {
+    id: 'latency',
+    label: 'Latency',
+    source: 'general',
+    summary: 'How long one request takes, start to finish — the user-facing clock.',
+  },
+  {
+    id: 'throughput',
+    label: 'Throughput',
+    source: 'general',
+    summary:
+      'How many requests or operations the system completes per unit of time — its overall capacity under load.',
+  },
+  {
+    id: 'bandwidth',
+    label: 'Bandwidth',
+    source: 'general',
+    summary:
+      'How much raw data the network can carry per unit of time — the size of the pipe, not any single request’s speed through it.',
+  },
+  {
+    id: 'durability',
+    label: 'Durability',
+    source: 'general',
+    summary: 'Once written, data survives crashes and restarts — it doesn’t just respond, it persists.',
+  },
+  {
+    id: 'security',
+    label: 'Security',
+    source: 'general',
+    summary: 'Only the right users and services can access, change, or act on the system’s data.',
+  },
+  {
+    id: 'cost',
+    label: 'Cost',
+    source: 'general',
+    summary:
+      'What it takes in infrastructure and engineering time to build and run this — the constraint every other trade-off gets weighed against.',
   },
 ];
 

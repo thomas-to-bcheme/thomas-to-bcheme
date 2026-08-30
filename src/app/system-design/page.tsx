@@ -12,7 +12,6 @@ import InterviewFrameworkSection from '@/components/sections/systemDesignPrep/In
 import MLSystemDesignFrameworkSection from '@/components/sections/systemDesignPrep/MLSystemDesignFrameworkSection';
 import GenAiSystemDesignSection from '@/components/sections/systemDesignPrep/GenAiSystemDesignSection';
 import SystemDesignQuestionsSection from '@/components/sections/systemDesignPrep/SystemDesignQuestionsSection';
-import RealWorldDesignsSection from '@/components/sections/systemDesignPrep/RealWorldDesignsSection';
 import ComponentsOfSystemDesignSection from '@/components/sections/systemDesignPrep/ComponentsOfSystemDesignSection';
 import ScoringRubricSection from '@/components/sections/systemDesignPrep/ScoringRubricSection';
 import StaffSignalsSection from '@/components/sections/systemDesignPrep/StaffSignalsSection';
@@ -22,7 +21,7 @@ import DevelopmentLifecyclesSection from '@/components/sections/systemDesignPrep
 export const metadata: Metadata = {
   title: 'System Design — Thomas To',
   description:
-    'A working reference for system design judgment — the core characteristics (Chip Huyen\'s four plus CAP theorem) every decision is checked against, a timed 4-step interview framework, its ML-specific adaptation (a 6-step model-in-production framework plus a similarities/differences comparison), a GenAI-specific delta on top of that (discriminative vs generative models, GenAI risks, RAG as a subsystem, and the components a generative core model chains together with), a question bank of decision cascades organized by the SWE Compass\'s six lifecycle stages, six classic system designs worked end to end and cross-linked back into that question bank, a 6-column building-block reference grid, a dedicated components-of-system-design reference (networking, storage, partitioning vs sharding, load balancer vs API gateway vs reverse proxy, authentication vs authorization vs security) with closing design principles, a cross-domain strategy comparison spanning Design, Data, Model, Backend, Frontend, Ops, and Security, a scoring rubric, staff-level signals, reusable communication scripts, and a background section on the four named development lifecycles (SDLC, Data Engineering, MLOps, DevOps) distilled into one lifecycle-agnostic mental model.',
+    'A working reference for system design judgment — the core characteristics (Chip Huyen\'s four plus CAP theorem) every decision is checked against, a timed 4-step interview framework, its ML-specific adaptation (a 6-step model-in-production framework plus a similarities/differences comparison), a GenAI-specific delta on top of that (discriminative vs generative models, GenAI risks, RAG as a subsystem, and the components a generative core model chains together with), a question bank of decision cascades organized by the SWE Compass\'s six lifecycle stages, a dedicated components-of-system-design reference (networking, storage, partitioning vs sharding, load balancer vs API gateway vs reverse proxy, authentication vs authorization vs security) with closing design principles, a scoring rubric, staff-level signals, reusable communication scripts, and a background section on the four named development lifecycles (SDLC, Data Engineering, MLOps, DevOps) distilled into one lifecycle-agnostic mental model.',
 };
 
 const FOCUS_RING =
@@ -72,7 +71,6 @@ export default function SystemDesignPage() {
           <MLSystemDesignFrameworkSection />
           <GenAiSystemDesignSection />
           <SystemDesignQuestionsSection />
-          <RealWorldDesignsSection />
           <ComponentsOfSystemDesignSection />
           <StaffSignalsSection />
           <DevelopmentLifecyclesSection />

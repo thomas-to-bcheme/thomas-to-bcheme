@@ -15,6 +15,7 @@ const FOCUS_RING =
 const SOURCE_GROUP_LABELS: Record<CoreCharacteristic['source'], string> = {
   huyen: "Chip Huyen's 4",
   cap: "CAP's 3",
+  general: 'Other Non-Functional Characteristics',
 };
 
 const groupBySource = (source: CoreCharacteristic['source']) =>
@@ -24,22 +25,35 @@ const groupBySource = (source: CoreCharacteristic['source']) =>
  * The foundational system-quality framework rendered right after the compass
  * intro — Chip Huyen's 4 canonical characteristics (Designing Machine
  * Learning Systems, O'Reilly 2022) plus CAP theorem's 3, the baseline every
- * decision cascade in the question bank below gets checked against. The
- * situational list underneath reuses SystemDesignQuestionCard's exact
- * ripple-chip pattern (tag-blue + anchor link) rather than inventing a new
- * chip style, and cross-links each entry to the real question-bank id where
- * that trade-off gets worked through.
+ * decision cascade in the question bank below gets checked against, plus 6
+ * more common non-functional characteristics (latency, throughput,
+ * bandwidth, durability, security, cost) that round out the picture without
+ * carrying that same baseline weight. The situational list underneath
+ * reuses SystemDesignQuestionCard's exact ripple-chip pattern (tag-blue +
+ * anchor link) rather than inventing a new chip style, and cross-links each
+ * entry to the real question-bank id where that trade-off gets worked
+ * through.
  */
 const CoreCharacteristicsSection = () => (
   <section id="core-characteristics" className="scroll-mt-24 mt-16">
     <SectionHeading eyebrow="Foundation" title="The core, and what builds on it" />
     <div className="space-y-4 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
       <p>
-        These 7 characteristics are the baseline every design decision on this page gets checked
-        against. 4 are Chip Huyen&apos;s canonical characteristics of a well-designed system, from{' '}
+        Every requirement a system has splits into two kinds. Functional is{' '}
+        <strong className="text-zinc-800 dark:text-zinc-200">what</strong> the system should do —
+        its features, behaviors, API, endpoints. Non-functional is{' '}
+        <strong className="text-zinc-800 dark:text-zinc-200">how well</strong> it should do that —
+        performance, scalability, reliability, and so on. Everything below is non-functional: none
+        of it says what gets built, only the bar it has to clear once it exists.
+      </p>
+      <p>
+        The first 7 are the baseline every design decision on this page gets checked against. 4 are
+        Chip Huyen&apos;s canonical characteristics of a well-designed system, from{' '}
         <em>Designing Machine Learning Systems</em> (O&apos;Reilly, 2022). The other 3 are CAP
         theorem&apos;s triad — during a network partition, a distributed system can only fully
-        guarantee two of the three.
+        guarantee two of the three. A further 6 — latency, throughput, bandwidth, durability,
+        security, cost — round out the non-functional picture below; they&apos;re common enough to
+        be worth knowing cold, even without carrying that same baseline weight.
       </p>
       <p>
         This site&apos;s own{' '}
@@ -91,11 +105,30 @@ const CoreCharacteristicsSection = () => (
           ))}
         </div>
       </div>
+
+      <div className="border-t border-zinc-100 dark:border-zinc-800 pt-6">
+        <span className="text-micro text-zinc-400 block mb-3">{SOURCE_GROUP_LABELS.general}</span>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {groupBySource('general').map((characteristic) => (
+            <div
+              key={characteristic.id}
+              className="rounded-lg border border-zinc-100 dark:border-zinc-800 p-3"
+            >
+              <p className="text-sm font-semibold text-zinc-900 dark:text-white">
+                {characteristic.label}
+              </p>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-500 leading-relaxed">
+                {characteristic.summary}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
 
     <p className="mt-6 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-      Once these hold, everything else is situational — which characteristic matters most, and how
-      much, depends on this system&apos;s specific constraints:
+      Once the first 7 hold, everything else is situational — which characteristic matters most,
+      and how much, depends on this system&apos;s specific constraints:
     </p>
 
     <div className="flex flex-wrap gap-2 mt-4">
