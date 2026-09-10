@@ -15,6 +15,7 @@ import { LSTM } from './lstm';
 import { GRU } from './gru';
 import { TCN } from './tcn';
 import { SEQ2SEQ_ATTENTION } from './seq2seq-attention';
+import { CTC } from './ctc';
 import { GRAPH_NEURAL_NETWORK } from './graph-neural-network';
 import { TRANSFORMER } from './transformer';
 import { TWO_TOWER_RETRIEVAL } from './two-tower-retrieval';
@@ -29,6 +30,7 @@ export const DEEP_LEARNING_MODELS: AiMlModel[] = [
   GRU,
   TCN,
   SEQ2SEQ_ATTENTION,
+  CTC,
   GRAPH_NEURAL_NETWORK,
   TRANSFORMER,
   TWO_TOWER_RETRIEVAL,
