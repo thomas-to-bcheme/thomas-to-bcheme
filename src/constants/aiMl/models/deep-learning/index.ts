@@ -12,6 +12,8 @@ import { CNN } from './cnn';
 import { OBJECT_DETECTION } from './object-detection';
 import { RNN } from './rnn';
 import { LSTM } from './lstm';
+import { GRU } from './gru';
+import { TCN } from './tcn';
 import { GRAPH_NEURAL_NETWORK } from './graph-neural-network';
 import { TRANSFORMER } from './transformer';
 import { TWO_TOWER_RETRIEVAL } from './two-tower-retrieval';
@@ -23,6 +25,8 @@ export const DEEP_LEARNING_MODELS: AiMlModel[] = [
   OBJECT_DETECTION,
   RNN,
   LSTM,
+  GRU,
+  TCN,
   GRAPH_NEURAL_NETWORK,
   TRANSFORMER,
   TWO_TOWER_RETRIEVAL,
