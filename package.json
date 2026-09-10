@@ -9,6 +9,7 @@
     "lint": "next lint",
     "verify:glossary": "tsx scripts/verifyGlossary.ts",
     "verify:ai-ml": "tsx scripts/verifyAiMl.ts",
+    "audit:ai-ml": "tsx scripts/auditAiMl.ts",
     "check:ai-ml-samples": "tsx scripts/checkAiMlSamples.ts",
     "postinstall": "mkdir -p public/excalidraw && cp -r node_modules/@excalidraw/excalidraw/dist/prod/fonts public/"
   },
