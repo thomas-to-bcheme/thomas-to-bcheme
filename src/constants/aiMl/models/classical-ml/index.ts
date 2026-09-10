@@ -24,6 +24,8 @@ import { NAIVE_BAYES } from './naive-bayes';
 import { GAUSSIAN_MIXTURE } from './gaussian-mixture';
 import { GAUSSIAN_PROCESS } from './gaussian-process';
 import { DECISION_TREE } from './decision-tree';
+import { RANDOM_FOREST } from './random-forest';
+import { ISOLATION_FOREST } from './isolation-forest';
 import { GRADIENT_BOOSTING } from './gradient-boosting';
 import { PROPENSITY_IPTW } from './propensity-iptw';
 import { META_LEARNERS } from './meta-learners';
@@ -40,7 +42,9 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   GAUSSIAN_MIXTURE,
   GAUSSIAN_PROCESS,
   DECISION_TREE,
+  RANDOM_FOREST,
   GRADIENT_BOOSTING,
+  ISOLATION_FOREST,
   PROPENSITY_IPTW, 
   META_LEARNERS,
   DOUBLE_MACHINE_LEARNING,
