@@ -18,6 +18,8 @@ import { LINEAR_REGRESSION } from './linear-regression';
 import { RIDGE_LASSO } from './ridge-lasso';
 import { LOGISTIC_REGRESSION } from './logistic-regression';
 import { GENERALIZED_LINEAR_MODELS } from './generalized-linear-models';
+import { K_NEAREST_NEIGHBOURS } from './k-nearest-neighbours';
+import { SUPPORT_VECTOR_MACHINE } from './support-vector-machine';
 import { GRADIENT_BOOSTING } from './gradient-boosting';
 import { PROPENSITY_IPTW } from './propensity-iptw';
 import { META_LEARNERS } from './meta-learners';
@@ -28,6 +30,8 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   RIDGE_LASSO,
   LOGISTIC_REGRESSION,
   GENERALIZED_LINEAR_MODELS,
+  K_NEAREST_NEIGHBOURS,
+  SUPPORT_VECTOR_MACHINE,
   GRADIENT_BOOSTING,
   PROPENSITY_IPTW, 
   META_LEARNERS,
