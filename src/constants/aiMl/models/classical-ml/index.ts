@@ -32,6 +32,8 @@ import { SPECTRAL_CLUSTERING } from './spectral-clustering';
 import { MATRIX_FACTORIZATION } from './matrix-factorization';
 import { ARIMA } from './arima';
 import { EXPONENTIAL_SMOOTHING } from './exponential-smoothing';
+import { KALMAN_FILTER } from './kalman-filter';
+import { INSTRUMENTAL_VARIABLES } from './instrumental-variables';
 import { GRADIENT_BOOSTING } from './gradient-boosting';
 import { PROPENSITY_IPTW } from './propensity-iptw';
 import { META_LEARNERS } from './meta-learners';
@@ -57,7 +59,9 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   MATRIX_FACTORIZATION,
   ARIMA,
   EXPONENTIAL_SMOOTHING,
+  KALMAN_FILTER,
   PROPENSITY_IPTW, 
   META_LEARNERS,
   DOUBLE_MACHINE_LEARNING,
+  INSTRUMENTAL_VARIABLES,
 ];
