@@ -226,7 +226,7 @@ export const LOGISTIC_REGRESSION: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['linear-regression', 'ridge-lasso', 'generalized-linear-models', 'support-vector-machine', 'propensity-iptw'],
+  relatedSlugs: ['linear-regression', 'ridge-lasso', 'generalized-linear-models', 'support-vector-machine', 'naive-bayes', 'propensity-iptw'],
 
   implementations: {
     python: {

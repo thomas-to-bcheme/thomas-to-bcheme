@@ -266,7 +266,7 @@ export const RIDGE_LASSO: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['linear-regression', 'logistic-regression', 'generalized-linear-models'],
+  relatedSlugs: ['linear-regression', 'logistic-regression', 'generalized-linear-models', 'gaussian-process'],
 
   implementations: {
     python: {
