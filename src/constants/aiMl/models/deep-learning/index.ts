@@ -9,6 +9,8 @@ import type { AiMlModel } from '../../types';
 import { PERCEPTRON } from './perceptron';
 import { MLP } from './mlp';
 import { CNN } from './cnn';
+import { OBJECT_DETECTION } from './object-detection';
+import { RNN } from './rnn';
 import { LSTM } from './lstm';
 import { GRAPH_NEURAL_NETWORK } from './graph-neural-network';
 import { TRANSFORMER } from './transformer';
@@ -18,6 +20,8 @@ export const DEEP_LEARNING_MODELS: AiMlModel[] = [
   PERCEPTRON,
   MLP,
   CNN,
+  OBJECT_DETECTION,
+  RNN,
   LSTM,
   GRAPH_NEURAL_NETWORK,
   TRANSFORMER,
