@@ -6,10 +6,20 @@
  */
 
 import type { AiMlModel } from '../../types';
+import { PERCEPTRON } from './perceptron';
+import { MLP } from './mlp';
 import { CNN } from './cnn';
 import { LSTM } from './lstm';
 import { GRAPH_NEURAL_NETWORK } from './graph-neural-network';
 import { TRANSFORMER } from './transformer';
 import { TWO_TOWER_RETRIEVAL } from './two-tower-retrieval';
 
-export const DEEP_LEARNING_MODELS: AiMlModel[] = [CNN, LSTM, GRAPH_NEURAL_NETWORK, TRANSFORMER, TWO_TOWER_RETRIEVAL];
+export const DEEP_LEARNING_MODELS: AiMlModel[] = [
+  PERCEPTRON,
+  MLP,
+  CNN,
+  LSTM,
+  GRAPH_NEURAL_NETWORK,
+  TRANSFORMER,
+  TWO_TOWER_RETRIEVAL,
+];
