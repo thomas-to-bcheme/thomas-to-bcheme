@@ -3,18 +3,18 @@
  *
  * Compiles (syntax-checks) every code sample in the /ai-ml registry.
  *
- * Promoted into Phase 1 rather than left as polish: at ~9 samples per model the
- * section will carry hundreds of them, and a page that CLAIMS an optimization
- * while shipping code that does not build is worse than shipping no code at all.
- * Reviewing that by eye does not scale.
+ * OPTIONAL, and deliberately not a phase gate. These samples are reference
+ * material -- they exist so a reader can compare how the same algorithm is
+ * expressed in three languages, not to be linked and run. They are fragments
+ * with no main and no crate scaffolding, so "does it compile" is the wrong bar
+ * for most of them.
  *
- * Deliberately syntax-only (-fsyntax-only / --emit=metadata / py_compile): the
- * samples are teaching fragments, not linkable programs, so they have no main
- * and no crate scaffolding. Syntax and name resolution is the useful bar.
+ * What this is still useful for: catching outright typos in the samples that a
+ * toolchain happens to be installed for. Run it when you want that signal;
+ * verify:ai-ml is the actual gate.
  *
- * Skips rather than fails when a toolchain or third-party header/crate is
- * absent, so this never breaks a machine without rustc or Eigen. Exit 0 unless
- * an available toolchain actually rejects a sample.
+ * Deliberately syntax-only, and skips rather than fails when a toolchain or a
+ * third-party header/crate is absent.
  *
  * Usage:
  *   npx tsx scripts/checkAiMlSamples.ts [--language python|cpp|rust] [--model <slug>]

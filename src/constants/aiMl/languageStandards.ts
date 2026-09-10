@@ -54,6 +54,7 @@ export const LANGUAGE_STANDARDS: Record<CodeLanguageId, LanguageStandard> = {
       'Ensure contiguous memory layout and a single dtype',
       'Replace a closed-form solve with a numerically stabler factorization',
       'Batch work to amortize interpreter overhead',
+      'Fuse adjacent operations so intermediates are never materialized',
       'Reach for a compiled kernel (numba/JAX) only once profiled',
     ],
     ecosystem: { numeric: 'NumPy / SciPy', ml: 'scikit-learn, PyTorch' },

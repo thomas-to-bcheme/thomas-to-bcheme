@@ -1,12 +1,11 @@
 /**
- * reinforcement-learning models, in canonical general -> niche order.
+ * Reinforcement-learning models, in canonical general -> niche order.
  *
- * Intentionally empty until this category's content phase. The category page
- * renders an honest in-progress state rather than failing, and
- * MIN_MODELS_PER_CATEGORY is a WARN rather than an error precisely so this
- * scaffold can ship and be verified before the content lands.
+ * Explicit imports, never a directory scan: a glob would defeat both
+ * generateStaticParams' static analysis and Turbopack's tree-shaking.
  */
 
 import type { AiMlModel } from '../../types';
+import { Q_LEARNING } from './q-learning';
 
-export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [];
+export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [Q_LEARNING];

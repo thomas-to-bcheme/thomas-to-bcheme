@@ -73,7 +73,15 @@ export const AI_ML_CATEGORIES: AiMlCategory[] = [
         summary:
           'Models built around autocorrelation, trend, seasonality, and latent state.',
         abstraction:
-          'The most specialized group here: assumes the observations are ordered and dependent, which is exactly the assumption every other group above discards.',
+          'Assumes the observations are ordered and dependent, which is exactly the assumption every other group above discards.',
+      },
+      {
+        id: 'causal-estimation',
+        label: 'Causal Estimation',
+        summary:
+          'Estimators whose target is a treatment effect rather than a prediction, identified by design.',
+        abstraction:
+          'The most specialized group in the category, and the one that changes the question. Everything above estimates E[Y|X]; these estimate E[Y|do(X)]. The machinery is the same regression — what is added is an identification argument, and a better predictor is not a better estimator here.',
       },
     ],
   },
@@ -142,6 +150,22 @@ export const AI_ML_CATEGORIES: AiMlCategory[] = [
           'Networks trained to compress and reconstruct rather than to predict a label.',
         abstraction:
           'Specializes the objective rather than the architecture — reconstruction error becomes the signal, which is what makes this the deep anomaly-detection workhorse.',
+      },
+      {
+        id: 'retrieval',
+        label: 'Retrieval',
+        summary:
+          'Encoders trained so that relevance becomes geometric distance in a shared space.',
+        abstraction:
+          'Specializes representation learning toward a systems constraint: the embedding must be indexable, because selecting from millions of candidates in milliseconds is an infrastructure problem the model architecture has to accommodate.',
+      },
+      {
+        id: 'scientific',
+        label: 'Scientific & Continuous-Depth',
+        summary:
+          'Networks whose structure encodes a differential equation or a physical law.',
+        abstraction:
+          'The most specialized group: replaces the discrete stack of layers with a continuous dynamic, and replaces "fit the data" with "fit the data while obeying known physics" — the strongest prior in the category.',
       },
     ],
   },
