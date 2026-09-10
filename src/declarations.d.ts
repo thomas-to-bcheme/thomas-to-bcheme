@@ -1,5 +1,4 @@
 // src/declarations.d.ts
-declare module 'react-katex';
 
 // Web Speech API Type Declarations
 

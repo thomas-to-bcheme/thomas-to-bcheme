@@ -41,8 +41,13 @@ export const SITE_REGION = 'US-West (SFO)';
 
 // --- Navigation ---
 // Discriminated union: a plain route link, or a dropdown group of related
-// links (currently just "Interview", collapsing the 4 interview-prep routes
-// into one top-level slot so the header doesn't overflow at common widths).
+// links. Two groups today -- "Interview" (the 4 prep routes) and "AI/ML" (the
+// model reference) -- each collapsing many routes into one top-level slot so
+// the header doesn't overflow at common widths.
+//
+// Active state is prefix-matched via isRouteActive (src/lib/nav.ts), not by
+// equality: /ai-ml has ~58 nested model routes, and an exact match would leave
+// the group unhighlighted on nearly every page it owns.
 export type NavLink = { type: 'link'; label: string; href: string };
 export type NavGroup = { type: 'group'; label: string; items: { label: string; href: string }[] };
 export type NavEntry = NavLink | NavGroup;
@@ -57,6 +62,21 @@ export const NAV_LINKS: NavEntry[] = [
       { label: 'Technical Prep', href: '/practical-technical' },
       { label: 'System Design', href: '/system-design' },
       { label: 'Behavioural', href: '/behavioural' },
+    ],
+  },
+  {
+    type: 'group',
+    label: 'AI/ML',
+    items: [
+      { label: 'Overview', href: '/ai-ml' },
+      { label: 'Classical ML', href: '/ai-ml/classical-ml' },
+      { label: 'Deep Learning', href: '/ai-ml/deep-learning' },
+      { label: 'Generative AI', href: '/ai-ml/generative-ai' },
+      { label: 'Reinforcement Learning', href: '/ai-ml/reinforcement-learning' },
+      { label: 'Applied ML', href: '/ai-ml/applied' },
+      { label: 'Time-Series Forecasting', href: '/ai-ml/applied/time-series-forecasting' },
+      { label: 'Anomaly Detection', href: '/ai-ml/applied/anomaly-detection' },
+      { label: 'Optimization', href: '/ai-ml/applied/optimization' },
     ],
   },
   { type: 'link', label: 'Jobs', href: '/jobs' },
@@ -80,6 +100,8 @@ export const FOOTER_NAV_LINKS = [
   { label: 'Effective Communication', href: '/effective-communication' },
   { label: 'Practical Technical', href: '/practical-technical' },
   { label: 'System Design', href: '/system-design' },
+  { label: 'AI/ML', href: '/ai-ml' },
+  { label: 'Applied ML', href: '/ai-ml/applied' },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
   { label: 'Projects', href: '/projects' },

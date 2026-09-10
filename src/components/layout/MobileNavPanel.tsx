@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 
 import { NAV_LINKS } from '@/constants/site';
+import { isRouteActive } from '@/lib/nav';
 
 const FOCUS_RING =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black';
@@ -38,7 +39,7 @@ export default function MobileNavPanel({ onNavigate }: MobileNavPanelProps) {
     >
       {NAV_LINKS.map((link) => {
         if (link.type === 'link') {
-          const isActive = pathname === link.href;
+          const isActive = isRouteActive(pathname, link.href);
           return (
             <Link
               key={link.href}
@@ -52,7 +53,7 @@ export default function MobileNavPanel({ onNavigate }: MobileNavPanelProps) {
           );
         }
 
-        const isGroupActive = link.items.some((item) => pathname === item.href);
+        const isGroupActive = link.items.some((item) => isRouteActive(pathname, item.href));
         return (
           <details key={link.label} className="group" open={isGroupActive}>
             <summary
@@ -67,7 +68,7 @@ export default function MobileNavPanel({ onNavigate }: MobileNavPanelProps) {
             </summary>
             <div className="pl-3 mt-1 space-y-1">
               {link.items.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = isRouteActive(pathname, item.href);
                 return (
                   <Link
                     key={item.href}

@@ -8,6 +8,7 @@ import { ArrowRight, Menu, X } from 'lucide-react';
 import { NAV_LINKS, SITE_OWNER_EMAIL } from '@/constants/site';
 import NavDropdown from '@/components/ui/NavDropdown';
 import MobileNavPanel from '@/components/layout/MobileNavPanel';
+import { isRouteActive } from '@/lib/nav';
 
 // Shared focus-visible ring, matching the convention used across the site.
 const FOCUS_RING =
@@ -86,7 +87,7 @@ export default function SiteHeader() {
             if (link.type === 'group') {
               return <NavDropdown key={link.label} label={link.label} items={link.items} />;
             }
-            const isActive = pathname === link.href;
+            const isActive = isRouteActive(pathname, link.href);
             return (
               <Link
                 key={link.href}

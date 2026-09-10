@@ -6,6 +6,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { ChevronDown } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { isRouteActive } from '@/lib/nav';
 
 const FOCUS_RING =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black';
@@ -25,7 +26,7 @@ interface NavDropdownProps {
  */
 export default function NavDropdown({ label, items }: NavDropdownProps) {
   const pathname = usePathname();
-  const isGroupActive = items.some((item) => pathname === item.href);
+  const isGroupActive = items.some((item) => isRouteActive(pathname, item.href));
 
   return (
     <DropdownMenu.Root>
@@ -53,7 +54,7 @@ export default function NavDropdown({ label, items }: NavDropdownProps) {
           className="z-50 min-w-[200px] overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-black/95 backdrop-blur-xl shadow-lg shadow-black/5 p-1.5"
         >
           {items.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = isRouteActive(pathname, item.href);
             return (
               <DropdownMenu.Item key={item.href} asChild>
                 <Link
