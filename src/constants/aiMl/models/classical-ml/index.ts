@@ -26,6 +26,8 @@ import { GAUSSIAN_PROCESS } from './gaussian-process';
 import { DECISION_TREE } from './decision-tree';
 import { RANDOM_FOREST } from './random-forest';
 import { ISOLATION_FOREST } from './isolation-forest';
+import { PCA } from './pca';
+import { K_MEANS } from './k-means';
 import { GRADIENT_BOOSTING } from './gradient-boosting';
 import { PROPENSITY_IPTW } from './propensity-iptw';
 import { META_LEARNERS } from './meta-learners';
@@ -45,6 +47,8 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   RANDOM_FOREST,
   GRADIENT_BOOSTING,
   ISOLATION_FOREST,
+  PCA,
+  K_MEANS,
   PROPENSITY_IPTW, 
   META_LEARNERS,
   DOUBLE_MACHINE_LEARNING,
