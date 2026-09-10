@@ -30,6 +30,8 @@ import { PCA } from './pca';
 import { K_MEANS } from './k-means';
 import { SPECTRAL_CLUSTERING } from './spectral-clustering';
 import { MATRIX_FACTORIZATION } from './matrix-factorization';
+import { ARIMA } from './arima';
+import { EXPONENTIAL_SMOOTHING } from './exponential-smoothing';
 import { GRADIENT_BOOSTING } from './gradient-boosting';
 import { PROPENSITY_IPTW } from './propensity-iptw';
 import { META_LEARNERS } from './meta-learners';
@@ -53,6 +55,8 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   K_MEANS,
   SPECTRAL_CLUSTERING,
   MATRIX_FACTORIZATION,
+  ARIMA,
+  EXPONENTIAL_SMOOTHING,
   PROPENSITY_IPTW, 
   META_LEARNERS,
   DOUBLE_MACHINE_LEARNING,
