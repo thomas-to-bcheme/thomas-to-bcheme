@@ -226,7 +226,7 @@ export const LOGISTIC_REGRESSION: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['linear-regression', 'propensity-iptw'],
+  relatedSlugs: ['linear-regression', 'ridge-lasso', 'generalized-linear-models', 'propensity-iptw'],
 
   implementations: {
     python: {
@@ -522,11 +522,25 @@ std::vector<double> Fit(const std::vector<std::vector<double>>& X,
       },
       'make-it-right': {
         code: `// Logistic regression - flat storage, RAII, threshold from costs.
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <span>
 #include <stdexcept>
+#include <utility>
 #include <vector>
+
+namespace {
+
+// Free function in an anonymous namespace: both the model and the free-standing
+// Fit below need it, and neither should reach into the other's internals.
+[[nodiscard]] double Sigmoid(double z) noexcept {
+  if (z >= 0.0) return 1.0 / (1.0 + std::exp(-z));
+  const double exp_z = std::exp(z);
+  return exp_z / (1.0 + exp_z);
+}
+
+}  // namespace
 
 class LogisticModel {
  public:
@@ -556,12 +570,6 @@ class LogisticModel {
   }
 
  private:
-  static double Sigmoid(double z) noexcept {
-    if (z >= 0.0) return 1.0 / (1.0 + std::exp(-z));
-    const double exp_z = std::exp(z);
-    return exp_z / (1.0 + exp_z);
-  }
-
   std::vector<double> coefficients_;   // owned; rule of zero handles the rest
   double intercept_;
 };

@@ -15,7 +15,9 @@
 
 import type { AiMlModel } from '../../types';
 import { LINEAR_REGRESSION } from './linear-regression';
+import { RIDGE_LASSO } from './ridge-lasso';
 import { LOGISTIC_REGRESSION } from './logistic-regression';
+import { GENERALIZED_LINEAR_MODELS } from './generalized-linear-models';
 import { GRADIENT_BOOSTING } from './gradient-boosting';
 import { PROPENSITY_IPTW } from './propensity-iptw';
 import { META_LEARNERS } from './meta-learners';
@@ -23,7 +25,9 @@ import { DOUBLE_MACHINE_LEARNING } from './double-machine-learning';
 
 export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   LINEAR_REGRESSION,
+  RIDGE_LASSO,
   LOGISTIC_REGRESSION,
+  GENERALIZED_LINEAR_MODELS,
   GRADIENT_BOOSTING,
   PROPENSITY_IPTW, 
   META_LEARNERS,
