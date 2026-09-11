@@ -12,6 +12,7 @@ import { MONTE_CARLO_CONTROL } from './monte-carlo-control';
 import { TD_LEARNING } from './td-learning';
 import { SARSA } from './sarsa';
 import { Q_LEARNING } from './q-learning';
+import { DQN } from './dqn';
 
 export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   MDP_BELLMAN,
@@ -20,4 +21,5 @@ export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   TD_LEARNING,
   SARSA,
   Q_LEARNING,
+  DQN,
 ];
