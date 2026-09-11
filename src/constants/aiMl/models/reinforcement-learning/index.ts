@@ -18,6 +18,7 @@ import { ACTOR_CRITIC } from './actor-critic';
 import { PPO_TRPO } from './ppo-trpo';
 import { DDPG_TD3 } from './ddpg-td3';
 import { SAC } from './sac';
+import { MULTI_ARMED_BANDITS } from './multi-armed-bandits';
 
 export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   MDP_BELLMAN,
@@ -32,4 +33,5 @@ export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   PPO_TRPO,
   DDPG_TD3,
   SAC,
+  MULTI_ARMED_BANDITS,
 ];
