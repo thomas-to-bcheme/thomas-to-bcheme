@@ -26,6 +26,8 @@ import { N_BEATS } from './n-beats';
 import { DEEPAR } from './deepar';
 import { AUTOENCODER } from './autoencoder';
 import { ANN_INDEX } from './ann-index';
+import { NEURAL_ODE } from './neural-ode';
+import { PINN } from './pinn';
 import { TWO_TOWER_RETRIEVAL } from './two-tower-retrieval';
 
 export const DEEP_LEARNING_MODELS: AiMlModel[] = [
@@ -49,5 +51,7 @@ export const DEEP_LEARNING_MODELS: AiMlModel[] = [
   DEEPAR,
   AUTOENCODER,
   ANN_INDEX,
+  NEURAL_ODE,
+  PINN,
   TWO_TOWER_RETRIEVAL,
 ];

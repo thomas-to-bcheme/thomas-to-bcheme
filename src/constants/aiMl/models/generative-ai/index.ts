@@ -7,5 +7,7 @@
 
 import type { AiMlModel } from '../../types';
 import { VAE } from './vae';
+import { NORMALIZING_FLOWS } from './normalizing-flows';
+import { GAN } from './gan';
 
-export const GENERATIVE_AI_MODELS: AiMlModel[] = [VAE];
+export const GENERATIVE_AI_MODELS: AiMlModel[] = [VAE, NORMALIZING_FLOWS, GAN];
