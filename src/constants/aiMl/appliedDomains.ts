@@ -135,7 +135,7 @@ export const APPLIED_DOMAINS: AppliedDomain[] = [
       'reinforcement-learning': {
         verdict: 'default',
         why: 'This is the category built for it. Sequential decisions under uncertainty with delayed consequences are precisely the MDP formulation, and policy-gradient and actor-critic methods optimize expected return directly rather than through a proxy loss. For stateless repeated choices — pricing, allocation, which variant to serve — bandits are the simpler and usually correct answer.',
-        representativeSlugs: ['ppo', 'multi-armed-bandits', 'model-based-rl'],
+        representativeSlugs: ['ppo-trpo', 'multi-armed-bandits', 'model-based-rl'],
       },
     },
     industryBaseline:
@@ -389,7 +389,7 @@ export const APPLIED_DOMAINS: AppliedDomain[] = [
       'reinforcement-learning': {
         verdict: 'default',
         why: 'The canonical application: state, actions, dynamics, and a long-horizon reward are the MDP definition. Model-based RL and MPC are the practical form, because a learned world model gives the sample efficiency that pure model-free RL lacks — and lets you check a plan before executing it.',
-        representativeSlugs: ['model-based-rl', 'sac', 'ppo'],
+        representativeSlugs: ['model-based-rl', 'sac', 'ppo-trpo'],
       },
     },
     industryBaseline: 'A classical PID controller or a mixed-integer program over a point forecast.',

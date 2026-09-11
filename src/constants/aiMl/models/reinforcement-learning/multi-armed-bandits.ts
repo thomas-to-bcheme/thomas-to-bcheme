@@ -18,7 +18,7 @@ export const MULTI_ARMED_BANDITS: AiMlModel = {
   kind: 'model',
 
   paradigms: ['reinforcement'],
-  taskTypes: ['control', 'ranking'],
+  taskTypes: ['control', 'ranking', 'anomaly-detection'],
   paradigmNote:
     'Reinforcement learning with the state transition removed: an action produces an immediate reward and does not change what the next decision looks like. That single deletion is what buys back the regret guarantees the rest of this category gave up, and it is also the assumption most likely to be quietly false in practice.',
 
@@ -98,8 +98,29 @@ export const MULTI_ARMED_BANDITS: AiMlModel = {
         ],
       },
       'anomaly-detection': {
-        fit: 'not-applicable',
-        why: 'Detection scores observations rather than choosing among actions with rewards, so there is no arm to pull and no regret to accumulate — the adjacent problem of allocating scarce investigation capacity across detectors is a bandit, but the detection itself is not.',
+        fit: 'adapted',
+        how: 'Allocate a fixed investigation budget across candidate alerts, detectors or segments, treating each as an arm and the confirmed-incident rate as the reward, so that triage capacity flows toward the sources that are actually finding things.',
+        where: [
+          'Analyst review queues where only a fraction of alerts can be investigated and the split across detectors is a live decision',
+          'Threshold and detector selection under a fixed alert budget, learned online rather than fixed at deployment',
+          'Cold-start for a newly deployed detector, which needs enough investigated alerts to establish a precision estimate it will otherwise never earn',
+          'Segments or rules whose yield drifts, where an undiscounted allocation keeps serving the detector that used to work',
+        ],
+        why: 'Marked adapted with a precise boundary, because the distinction is the useful part: the bandit does not detect anything. Scoring an observation for how unusual it is has no action and no reward, so nothing here applies to the detector itself. What the bandit does is decide where scarce human attention goes, which is a genuine repeated decision under uncertainty with an observable payoff — did this investigation confirm an incident — and the feedback loop it fixes is real. A triage system that routes purely on estimated precision only ever learns about the detectors it already trusts, so a new or improved detector cannot accumulate the evidence that would justify using it. Directed exploration breaks that, cheaply, on top of whatever scoring already exists. Two cautions. Confirmation is often delayed by days, which favours Thompson sampling heavily and makes the posterior stale in a way the bounds do not model. And the reward must be defined on confirmed outcomes rather than on analyst dispositions, or the allocation optimizes for alerts that are easy to close rather than for incidents that matter.',
+        featurization: [
+          'Define the reward on confirmed incidents, not on analyst dispositions, or the allocation learns to prefer alerts that close quickly',
+          'Use a discounted variant, since detector yield drifts as the underlying behaviour changes and an undiscounted estimate outlives it',
+          'Prefer Thompson sampling, because investigation outcomes arrive days later and a deterministic rule would serve one detector for the whole delay window',
+          'Keep an allocation floor per detector, or a newly deployed one never accumulates the evidence that would justify it',
+        ],
+        evaluation:
+          'Confirmed incidents found per unit of investigation capacity, against a uniformly allocated holdout — the holdout is what makes the comparison meaningful and is also the only sample that supports an unbiased precision estimate for every detector. Report time-to-detection separately, since an allocation that maximizes total finds can systematically deprioritize a slow-burning class.',
+        pitfalls: [
+          'Treating the detection itself as a bandit problem, when only the allocation of attention is one',
+          'Reward defined on analyst disposition rather than confirmed outcome, which optimizes for closure speed',
+          'Long confirmation delays left unmodelled, so decisions are made against a badly stale posterior',
+          'No allocation floor, so a detector that has become useful is never given the chance to show it',
+        ],
       },
       optimization: {
         fit: 'primary',
@@ -176,6 +197,31 @@ export const MULTI_ARMED_BANDITS: AiMlModel = {
           'Expecting a bandit to deliver a precise estimate of a losing arm it deliberately stopped sampling',
           'Using regret minimization when the actual goal is identifying the best arm, which allocates differently',
           'Switching allocation rules mid-experiment without recording when, which makes any later analysis unreconstructable',
+        ],
+      },
+      'risk-and-fraud': {
+        fit: 'adapted',
+        how: 'Route cases among review queues, rule sets or verification challenges, learning online which routing wins per segment, with the reward defined on the confirmed outcome of the review rather than on the decision that produced it.',
+        where: [
+          'Manual review routing, where several queues or vendors have different and drifting hit rates',
+          'Step-up verification: choosing which challenge to present when several are available and their friction-versus-catch trade differs by segment',
+          'Rule and threshold selection within a fixed review budget, adapted as fraud behaviour shifts',
+          'Vendor and model bake-offs run as live allocation rather than as a fixed split',
+        ],
+        why: 'A narrow fit, and the boundary is what makes it worth stating. The adversarial core of fraud is genuinely sequential and genuinely unsuited to online learning, because exploring means deliberately approving transactions you believe are fraudulent in order to find out — a cost nobody accepts, and the reason reinforcement learning generally does not belong in the decision itself. What bandits are for here is the low-stakes decisions around it, where an exploratory choice costs some friction or some analyst time rather than a loss. Routing, challenge selection and review allocation all have that shape: a repeated choice, a measurable outcome, and a wrong answer that is recoverable. Two things constrain it in practice. Fraud is adversarial, so arm means move deliberately in response to what you do, which is a stronger form of nonstationarity than any discount factor was designed for and a reason to treat allocation shifts as signals rather than just as tuning. And confirmation is slow and often one-sided — a blocked transaction never reveals whether it was fraudulent — so the reward definition is the hardest part of the design and getting it wrong produces a system that confidently optimizes a censored outcome.',
+        featurization: [
+          'Confine the bandit to recoverable decisions — routing, challenge selection, review allocation — and keep the block-or-approve decision out of it',
+          'Define the reward on a confirmed outcome and be explicit about censoring, since a blocked case never reveals what it was',
+          'Use a discounted or sliding-window variant, because an adversary moves the arm means on purpose',
+          'Treat a sudden shift in allocation as a detection signal in its own right, not only as the algorithm adapting',
+        ],
+        evaluation:
+          'Confirmed fraud caught per unit of review capacity and per unit of customer friction, against a fixed-allocation holdout. Report the censoring assumption explicitly alongside the numbers, since the estimate of any arm that blocks cases depends entirely on it and no amount of data will settle it.',
+        pitfalls: [
+          'Putting the approve-or-block decision itself under a bandit, where exploration means knowingly approving fraud',
+          'A reward computed from censored outcomes without saying so, which makes the whole comparison rest on an unstated assumption',
+          'Undiscounted statistics against an adversary who is actively moving the arm means',
+          'Friction costs left out of the reward, so the allocation optimizes catch rate and quietly degrades the customer experience',
         ],
       },
     },
