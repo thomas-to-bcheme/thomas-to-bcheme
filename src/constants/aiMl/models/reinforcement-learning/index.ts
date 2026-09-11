@@ -8,10 +8,12 @@
 import type { AiMlModel } from '../../types';
 import { MDP_BELLMAN } from './mdp-bellman';
 import { DYNAMIC_PROGRAMMING } from './dynamic-programming';
+import { MONTE_CARLO_CONTROL } from './monte-carlo-control';
 import { Q_LEARNING } from './q-learning';
 
 export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   MDP_BELLMAN,
   DYNAMIC_PROGRAMMING,
+  MONTE_CARLO_CONTROL,
   Q_LEARNING,
 ];
