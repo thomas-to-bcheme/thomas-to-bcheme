@@ -15,6 +15,7 @@ import { Q_LEARNING } from './q-learning';
 import { DQN } from './dqn';
 import { REINFORCE } from './reinforce';
 import { ACTOR_CRITIC } from './actor-critic';
+import { PPO_TRPO } from './ppo-trpo';
 
 export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   MDP_BELLMAN,
@@ -26,4 +27,5 @@ export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   DQN,
   REINFORCE,
   ACTOR_CRITIC,
+  PPO_TRPO,
 ];
