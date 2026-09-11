@@ -13,6 +13,9 @@ import { WGAN_CONDITIONAL_GAN } from './wgan-conditional-gan';
 import { DDPM } from './ddpm';
 import { SCORE_BASED_FLOW_MATCHING } from './score-based-flow-matching';
 import { TIME_SERIES_DIFFUSION } from './time-series-diffusion';
+import { DECODER_ONLY_LM } from './decoder-only-lm';
+import { MASKED_LM } from './masked-lm';
+import { MIXTURE_OF_EXPERTS } from './mixture-of-experts';
 
 export const GENERATIVE_AI_MODELS: AiMlModel[] = [
   VAE,
@@ -22,4 +25,7 @@ export const GENERATIVE_AI_MODELS: AiMlModel[] = [
   DDPM,
   SCORE_BASED_FLOW_MATCHING,
   TIME_SERIES_DIFFUSION,
+  DECODER_ONLY_LM,
+  MASKED_LM,
+  MIXTURE_OF_EXPERTS,
 ];
