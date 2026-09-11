@@ -22,6 +22,10 @@ import { NODE2VEC } from './node2vec';
 import { TRANSFORMER } from './transformer';
 import { VISION_TRANSFORMER } from './vision-transformer';
 import { TEMPORAL_FUSION_TRANSFORMER } from './temporal-fusion-transformer';
+import { N_BEATS } from './n-beats';
+import { DEEPAR } from './deepar';
+import { AUTOENCODER } from './autoencoder';
+import { ANN_INDEX } from './ann-index';
 import { TWO_TOWER_RETRIEVAL } from './two-tower-retrieval';
 
 export const DEEP_LEARNING_MODELS: AiMlModel[] = [
@@ -41,5 +45,9 @@ export const DEEP_LEARNING_MODELS: AiMlModel[] = [
   TRANSFORMER,
   VISION_TRANSFORMER,
   TEMPORAL_FUSION_TRANSFORMER,
+  N_BEATS,
+  DEEPAR,
+  AUTOENCODER,
+  ANN_INDEX,
   TWO_TOWER_RETRIEVAL,
 ];
