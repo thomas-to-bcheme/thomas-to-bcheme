@@ -17,7 +17,11 @@ import { TCN } from './tcn';
 import { SEQ2SEQ_ATTENTION } from './seq2seq-attention';
 import { CTC } from './ctc';
 import { GRAPH_NEURAL_NETWORK } from './graph-neural-network';
+import { SPATIO_TEMPORAL_GNN } from './spatio-temporal-gnn';
+import { NODE2VEC } from './node2vec';
 import { TRANSFORMER } from './transformer';
+import { VISION_TRANSFORMER } from './vision-transformer';
+import { TEMPORAL_FUSION_TRANSFORMER } from './temporal-fusion-transformer';
 import { TWO_TOWER_RETRIEVAL } from './two-tower-retrieval';
 
 export const DEEP_LEARNING_MODELS: AiMlModel[] = [
@@ -32,6 +36,10 @@ export const DEEP_LEARNING_MODELS: AiMlModel[] = [
   SEQ2SEQ_ATTENTION,
   CTC,
   GRAPH_NEURAL_NETWORK,
+  SPATIO_TEMPORAL_GNN,
+  NODE2VEC,
   TRANSFORMER,
+  VISION_TRANSFORMER,
+  TEMPORAL_FUSION_TRANSFORMER,
   TWO_TOWER_RETRIEVAL,
 ];
