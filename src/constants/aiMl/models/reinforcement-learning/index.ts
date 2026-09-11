@@ -13,6 +13,7 @@ import { TD_LEARNING } from './td-learning';
 import { SARSA } from './sarsa';
 import { Q_LEARNING } from './q-learning';
 import { DQN } from './dqn';
+import { REINFORCE } from './reinforce';
 
 export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   MDP_BELLMAN,
@@ -22,4 +23,5 @@ export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   SARSA,
   Q_LEARNING,
   DQN,
+  REINFORCE,
 ];
