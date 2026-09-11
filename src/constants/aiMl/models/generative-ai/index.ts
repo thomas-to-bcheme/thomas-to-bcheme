@@ -17,6 +17,7 @@ import { DECODER_ONLY_LM } from './decoder-only-lm';
 import { MASKED_LM } from './masked-lm';
 import { MIXTURE_OF_EXPERTS } from './mixture-of-experts';
 import { CONTRASTIVE_EMBEDDINGS } from './contrastive-embeddings';
+import { RAG } from './rag';
 
 export const GENERATIVE_AI_MODELS: AiMlModel[] = [
   VAE,
@@ -30,4 +31,5 @@ export const GENERATIVE_AI_MODELS: AiMlModel[] = [
   MASKED_LM,
   MIXTURE_OF_EXPERTS,
   CONTRASTIVE_EMBEDDINGS,
+  RAG,
 ];
