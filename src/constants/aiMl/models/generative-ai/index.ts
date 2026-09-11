@@ -19,6 +19,7 @@ import { MIXTURE_OF_EXPERTS } from './mixture-of-experts';
 import { CONTRASTIVE_EMBEDDINGS } from './contrastive-embeddings';
 import { RAG } from './rag';
 import { LORA_PEFT } from './lora-peft';
+import { RLHF_DPO } from './rlhf-dpo';
 
 export const GENERATIVE_AI_MODELS: AiMlModel[] = [
   VAE,
@@ -34,4 +35,5 @@ export const GENERATIVE_AI_MODELS: AiMlModel[] = [
   CONTRASTIVE_EMBEDDINGS,
   RAG,
   LORA_PEFT,
+  RLHF_DPO,
 ];
