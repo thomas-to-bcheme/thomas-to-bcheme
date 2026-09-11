@@ -6,6 +6,10 @@
  */
 
 import type { AiMlModel } from '../../types';
+import { MDP_BELLMAN } from './mdp-bellman';
 import { Q_LEARNING } from './q-learning';
 
-export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [Q_LEARNING];
+export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
+  MDP_BELLMAN,
+  Q_LEARNING,
+];
