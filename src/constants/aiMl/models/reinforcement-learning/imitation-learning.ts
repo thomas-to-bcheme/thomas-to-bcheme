@@ -280,3 +280,904 @@ export const IMITATION_LEARNING: AiMlModel = {
   ],
 
   relatedSlugs: ['ppo-trpo', 'rlhf-dpo', 'sac', 'gan', 'model-based-rl', 'decoder-only-lm'],
+
+  implementations: {
+    python: {
+      'make-it-work': {
+        code: `"""Behavioural cloning and DAgger - the training-distribution swap, transcribed.
+
+Note what the loss is in BOTH functions: ordinary cross-entropy over
+(state, expert_action) pairs. No reward, no bootstrapping, no environment
+model. What DAgger changes is never the loss - it is which states end up
+labelled in the dataset the loss is computed over.
+"""
+
+import math
+
+
+def softmax(scores):
+    # Numerically stabilized: subtract the max before exponentiating.
+    m = max(scores)
+    exps = [math.exp(s - m) for s in scores]
+    total = sum(exps)
+    return [e / total for e in exps]
+
+
+def predict_action(weights, state, n_actions):
+    scores = [sum(weights[a][i] * state[i] for i in range(len(state))) for a in range(n_actions)]
+    probs = softmax(scores)
+    return max(range(n_actions), key=lambda a: probs[a])
+
+
+def fit_bc(dataset, n_actions, n_features, epochs=200, lr=0.1):
+    """Behavioural cloning: fit a linear-softmax policy to demonstrated
+    actions. This is the entire objective - no reward appears anywhere.
+    """
+    weights = [[0.0] * n_features for _ in range(n_actions)]
+
+    for _ in range(epochs):
+        for state, expert_action in dataset:
+            scores = [sum(weights[a][i] * state[i] for i in range(n_features)) for a in range(n_actions)]
+            probs = softmax(scores)
+
+            # Gradient of cross-entropy w.r.t. the scores is (prob - one_hot).
+            for a in range(n_actions):
+                target = 1.0 if a == expert_action else 0.0
+                grad_score = probs[a] - target
+                for i in range(n_features):
+                    weights[a][i] -= lr * grad_score * state[i]
+
+    return weights
+
+
+def dagger(env, expert, n_actions, n_features, initial_dataset, rounds=10, epochs=200, lr=0.1):
+    """Dataset aggregation: run the current policy, label the states it visits
+    with the expert, and refit on the union. The dataset only grows, and it is
+    refit from scratch every round.
+    """
+    dataset = list(initial_dataset)
+    weights = fit_bc(dataset, n_actions, n_features, epochs, lr)
+
+    for _ in range(rounds):
+        state = env.reset()
+        done = False
+
+        while not done:
+            action = predict_action(weights, state, n_actions)
+            # Query the expert on a state the LEARNER chose to visit - the
+            # entire mechanism that closes the distribution gap.
+            expert_action = expert(state)
+            dataset.append((state, expert_action))
+
+            state, done = env.step(action)
+
+        weights = fit_bc(dataset, n_actions, n_features, epochs, lr)
+
+    return weights`,
+        profile: 'O(n_actions x n_features) per gradient step, pure Python loops. DAgger refits from scratch each round, so total cost grows with rounds squared.',
+      },
+      'make-it-right': {
+        code: `"""Behavioural cloning / DAgger - typed, vectorized per sample, loss tracked."""
+
+from dataclasses import dataclass, field
+from typing import Protocol
+
+import numpy as np
+from numpy.typing import NDArray
+
+State = NDArray[np.float64]
+Weights = NDArray[np.float64]
+
+
+class Environment(Protocol):
+    def reset(self) -> State: ...
+    def step(self, action: int) -> tuple[State, bool]: ...
+
+
+class Expert(Protocol):
+    def act(self, state: State) -> int: ...
+
+
+@dataclass
+class BcConfig:
+    n_actions: int
+    n_features: int
+    epochs: int = 200
+    learning_rate: float = 0.1
+
+    def __post_init__(self) -> None:
+        if self.n_actions < 1 or self.n_features < 1:
+            raise ValueError("action and feature spaces must be non-empty")
+        if not self.learning_rate > 0.0:
+            raise ValueError(f"learning_rate must be positive, got {self.learning_rate}")
+
+
+@dataclass
+class TrainingResult:
+    weights: Weights
+    epoch_loss: list[float] = field(default_factory=list)
+
+    @property
+    def has_converged(self) -> bool:
+        """Falling fitting loss says the optimization worked. It says nothing
+        about whether the distribution it was fit on matches deployment -
+        that gap is the entire subject of this model."""
+        if len(self.epoch_loss) < 10:
+            return False
+        recent = float(np.mean(self.epoch_loss[-5:]))
+        earlier = float(np.mean(self.epoch_loss[-10:-5]))
+        return recent < earlier * 1.02
+
+
+def softmax(scores: NDArray[np.float64]) -> NDArray[np.float64]:
+    shifted = scores - scores.max(axis=-1, keepdims=True)
+    exps = np.exp(shifted)
+    return exps / exps.sum(axis=-1, keepdims=True)
+
+
+def fit_bc(dataset: list[tuple[State, int]], config: BcConfig) -> TrainingResult:
+    """Ordinary cross-entropy over (state, expert_action) pairs - the entire
+    objective. No reward, no environment interaction, no bootstrapping."""
+    weights = np.zeros((config.n_actions, config.n_features), dtype=np.float64)
+    result = TrainingResult(weights=weights)
+
+    for _ in range(config.epochs):
+        losses: list[float] = []
+        for state, expert_action in dataset:
+            probs = softmax(weights @ state)
+            losses.append(float(-np.log(max(probs[expert_action], 1e-12))))
+
+            target = np.zeros(config.n_actions)
+            target[expert_action] = 1.0
+            weights -= config.learning_rate * np.outer(probs - target, state)
+
+        result.epoch_loss.append(float(np.mean(losses)))
+
+    return result
+
+
+def dagger(
+    env: Environment,
+    expert: Expert,
+    config: BcConfig,
+    initial_dataset: list[tuple[State, int]],
+    rounds: int = 10,
+) -> TrainingResult:
+    """Dataset aggregation: label the states the current policy visits with
+    the expert, then refit on the union. Refitting from scratch every round is
+    what makes the total cost grow with the round count squared."""
+    dataset = list(initial_dataset)
+    result = fit_bc(dataset, config)
+
+    for _ in range(rounds):
+        state = env.reset()
+        done = False
+
+        while not done:
+            action = int(np.argmax(result.weights @ state))
+            # Query the expert on a state the LEARNER chose to visit - the
+            # mechanism that closes the distribution gap.
+            dataset.append((state, expert.act(state)))
+            state, done = env.step(action)
+
+        result = fit_bc(dataset, config)
+
+    return result`,
+        rationale:
+          'The per-feature loops become array operations: softmax and the outer-product gradient are single NumPy expressions instead of nested Python loops. The policy and expert are typed Protocols so any callable object satisfies them. And TrainingResult tracks per-epoch loss, because a falling fitting loss says the optimization worked - it says nothing about whether the distribution it was fit on matches deployment, which is the actual subject of this model.',
+        conventions: [
+          'Explicit type hints on every public signature',
+          'Dataclasses or NamedTuples over ad-hoc dicts',
+          'Raise specific exceptions, never bare except',
+          'Guard clauses over nested conditionals',
+        ],
+        libraryName: 'NumPy',
+        profile: 'O(n_actions x n_features) per sample via one matrix-vector product; DAgger still refits from scratch each round.',
+      },
+      'make-it-fast': {
+        code: `"""Behavioural cloning - full-batch vectorized gradient, no per-sample loop."""
+
+import numpy as np
+from numpy.typing import NDArray
+
+
+def softmax(scores: NDArray[np.float64]) -> NDArray[np.float64]:
+    shifted = scores - scores.max(axis=-1, keepdims=True)
+    exps = np.exp(shifted)
+    return exps / exps.sum(axis=-1, keepdims=True)
+
+
+def train_epoch(
+    weights: NDArray[np.float64],
+    states: NDArray[np.float64],
+    expert_actions: NDArray[np.intp],
+    learning_rate: float,
+) -> float:
+    """One full-batch update over the whole dataset at once.
+
+    The previous stage recomputes scores per sample inside a Python loop; here
+    the whole dataset is two matrix multiplies - one for the scores, one for
+    the gradient - and the per-sample loop is gone entirely.
+    """
+    n_samples = states.shape[0]
+
+    probs = softmax(states @ weights.T)                # (n_samples, n_actions)
+
+    targets = np.zeros_like(probs)
+    targets[np.arange(n_samples), expert_actions] = 1.0
+
+    residual = probs - targets                         # (n_samples, n_actions)
+    gradient = residual.T @ states / n_samples          # (n_actions, n_features)
+    weights -= learning_rate * gradient
+
+    sample_losses = -np.log(np.clip(probs[np.arange(n_samples), expert_actions], 1e-12, None))
+    return float(sample_losses.mean())
+
+
+def collect_dagger_round_batched(weights, rollout_states, query_expert_batch):
+    """Query the expert on an entire batch of visited states in one call,
+    instead of one state at a time - the batched analogue of full-batch
+    fitting, and it matters whenever the expert call carries fixed overhead
+    such as a model server or a human interface.
+
+    Also reports how often the policy already agrees with the expert, which
+    is a cheap convergence signal that needs no additional environment steps.
+    """
+    learner_actions = np.argmax(rollout_states @ weights.T, axis=1)
+    expert_actions = query_expert_batch(rollout_states)
+    agreement = float(np.mean(learner_actions == expert_actions))
+    return rollout_states, expert_actions, agreement`,
+        rationale:
+          'train_epoch replaces the per-sample Python loop with two matrix multiplies over the whole dataset: one for the scores, one for the gradient. The DAgger analogue is batching the expert query itself - labelling an entire round of visited states in one call instead of one state at a time - which matters whenever the expert call has fixed overhead, such as a model server or a human interface.',
+        optimizations: [
+          {
+            technique: 'Vectorize to NumPy/BLAS (@, np.dot, einsum)',
+            why: 'The scores and the gradient are each a single matrix multiply over the full dataset, so the entire epoch cost lands in BLAS rather than a Python loop over samples.',
+            tradeoff: 'The full-batch gradient is a different optimization trajectory than the per-sample updates in the previous stage, so a learning rate tuned for one does not transfer cleanly to the other.',
+          },
+          {
+            technique: 'Batch work to amortize interpreter overhead',
+            why: 'The expert is queried once per DAgger round on the whole batch of visited states rather than once per state, amortizing any fixed per-call overhead across the batch.',
+            tradeoff: 'No label is available until the entire round of rollout states has been collected, so labelling cannot start partway through an episode.',
+          },
+          {
+            technique: 'Pre-allocate output arrays and use in-place operations',
+            why: 'weights is updated in place, and the one-hot target block is allocated once per epoch as a dense array rather than assembled sample by sample.',
+            tradeoff: 'The dense one-hot target matrix costs memory proportional to n_samples times n_actions even though each row has exactly one nonzero entry.',
+          },
+        ],
+        libraryName: 'NumPy',
+        profile: 'One matrix multiply per epoch over the full dataset, in place of one update per sample. Illustrative, not a measured benchmark.',
+      },
+    },
+
+    cpp: {
+      'make-it-work': {
+        code: `// Behavioural cloning and DAgger - the training-distribution swap, transcribed.
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
+#include <functional>
+#include <utility>
+#include <vector>
+
+using State = std::vector<double>;
+using Sample = std::pair<State, int>;
+
+struct StepResult {
+  State next_state;
+  bool done;
+};
+
+// Expert is any callable mapping a state to an action.
+using Expert = std::function<int(const State&)>;
+
+std::vector<double> Softmax(const std::vector<double>& scores) {
+  const double m = *std::max_element(scores.begin(), scores.end());
+  std::vector<double> exps(scores.size());
+  double total = 0.0;
+  for (std::size_t i = 0; i < scores.size(); ++i) {
+    exps[i] = std::exp(scores[i] - m);
+    total += exps[i];
+  }
+  for (double& e : exps) e /= total;
+  return exps;
+}
+
+int PredictAction(const std::vector<std::vector<double>>& weights, const State& state) {
+  std::vector<double> scores(weights.size());
+  for (std::size_t a = 0; a < weights.size(); ++a) {
+    double score = 0.0;
+    for (std::size_t i = 0; i < state.size(); ++i) score += weights[a][i] * state[i];
+    scores[a] = score;
+  }
+  const auto probs = Softmax(scores);
+  return static_cast<int>(std::distance(probs.begin(), std::max_element(probs.begin(), probs.end())));
+}
+
+// Ordinary cross-entropy over (state, expert_action) pairs. This IS the
+// entire objective - no reward appears anywhere.
+std::vector<std::vector<double>> FitBc(const std::vector<Sample>& dataset, std::size_t n_actions,
+                                       std::size_t n_features, int epochs, double lr) {
+  std::vector<std::vector<double>> weights(n_actions, std::vector<double>(n_features, 0.0));
+
+  for (int epoch = 0; epoch < epochs; ++epoch) {
+    for (const auto& [state, expert_action] : dataset) {
+      std::vector<double> scores(n_actions);
+      for (std::size_t a = 0; a < n_actions; ++a) {
+        double score = 0.0;
+        for (std::size_t i = 0; i < n_features; ++i) score += weights[a][i] * state[i];
+        scores[a] = score;
+      }
+      const auto probs = Softmax(scores);
+
+      // Gradient of cross-entropy w.r.t. the scores is (prob - one_hot).
+      for (std::size_t a = 0; a < n_actions; ++a) {
+        const double target = (static_cast<int>(a) == expert_action) ? 1.0 : 0.0;
+        const double grad_score = probs[a] - target;
+        for (std::size_t i = 0; i < n_features; ++i) {
+          weights[a][i] -= lr * grad_score * state[i];
+        }
+      }
+    }
+  }
+
+  return weights;
+}
+
+// Environment is any type with reset()/step(action).
+template <typename Env>
+std::vector<std::vector<double>> Dagger(Env& env, const Expert& expert, std::size_t n_actions,
+                                        std::size_t n_features, std::vector<Sample> dataset,
+                                        int rounds, int epochs, double lr) {
+  auto weights = FitBc(dataset, n_actions, n_features, epochs, lr);
+
+  for (int round = 0; round < rounds; ++round) {
+    State state = env.reset();
+    bool done = false;
+
+    while (!done) {
+      const int action = PredictAction(weights, state);
+      // Query the expert on a state the LEARNER chose to visit - the
+      // mechanism that closes the distribution gap.
+      dataset.emplace_back(state, expert(state));
+
+      const StepResult result = env.step(action);
+      state = result.next_state;
+      done = result.done;
+    }
+
+    weights = FitBc(dataset, n_actions, n_features, epochs, lr);
+  }
+
+  return weights;
+}`,
+        profile: 'O(n_actions x n_features) per gradient step. DAgger refits from scratch each round, so total cost grows with rounds squared.',
+      },
+      'make-it-right': {
+        code: `// Behavioural cloning / DAgger - flat weight storage, typed errors, loss tracked.
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
+#include <functional>
+#include <numeric>
+#include <span>
+#include <stdexcept>
+#include <utility>
+#include <vector>
+
+using State = std::vector<double>;
+using Sample = std::pair<State, int>;
+using Expert = std::function<int(const State&)>;
+
+struct StepResult {
+  State next_state;
+  bool done;
+};
+
+class LinearPolicy {
+ public:
+  LinearPolicy(std::size_t n_actions, std::size_t n_features)
+      : n_actions_(n_actions),
+        n_features_(n_features),
+        // One flat allocation: an action's weight row is contiguous.
+        weights_(n_actions * n_features, 0.0) {
+    if (n_actions == 0 || n_features == 0) {
+      throw std::invalid_argument("action and feature spaces must be non-empty");
+    }
+  }
+
+  [[nodiscard]] std::span<const double> Row(std::size_t action) const {
+    return {weights_.data() + action * n_features_, n_features_};
+  }
+
+  [[nodiscard]] std::vector<double> Scores(const State& state) const {
+    std::vector<double> scores(n_actions_);
+    for (std::size_t a = 0; a < n_actions_; ++a) {
+      const auto row = Row(a);
+      scores[a] = std::inner_product(row.begin(), row.end(), state.begin(), 0.0);
+    }
+    return scores;
+  }
+
+  [[nodiscard]] int Predict(const State& state) const {
+    const auto scores = Scores(state);
+    return static_cast<int>(
+        std::distance(scores.begin(), std::max_element(scores.begin(), scores.end())));
+  }
+
+  // Cross-entropy gradient step; returns the loss so callers can track
+  // convergence without a separate pass over the dataset.
+  double Step(const State& state, int expert_action, double lr) {
+    const auto scores = Scores(state);
+    const auto probs = Softmax(scores);
+    const double loss = -std::log(std::max(probs[static_cast<std::size_t>(expert_action)], 1e-12));
+
+    for (std::size_t a = 0; a < n_actions_; ++a) {
+      const double target = (static_cast<int>(a) == expert_action) ? 1.0 : 0.0;
+      const double grad_score = probs[a] - target;
+      double* row = weights_.data() + a * n_features_;
+      for (std::size_t i = 0; i < n_features_; ++i) row[i] -= lr * grad_score * state[i];
+    }
+
+    return loss;
+  }
+
+ private:
+  static std::vector<double> Softmax(const std::vector<double>& scores) {
+    const double m = *std::max_element(scores.begin(), scores.end());
+    std::vector<double> exps(scores.size());
+    double total = 0.0;
+    for (std::size_t i = 0; i < scores.size(); ++i) {
+      exps[i] = std::exp(scores[i] - m);
+      total += exps[i];
+    }
+    for (double& e : exps) e /= total;
+    return exps;
+  }
+
+  std::size_t n_actions_;
+  std::size_t n_features_;
+  std::vector<double> weights_;
+};
+
+// One round of dataset aggregation: rolls the current policy out and queries
+// the expert on every state IT visits, returning the newly labelled samples.
+template <typename Env>
+std::vector<Sample> CollectDaggerRound(Env& env, const LinearPolicy& policy, const Expert& expert) {
+  std::vector<Sample> collected;
+  State state = env.reset();
+  bool done = false;
+
+  while (!done) {
+    const int action = policy.Predict(state);
+    collected.emplace_back(state, expert(state));
+
+    const StepResult result = env.step(action);
+    state = result.next_state;
+    done = result.done;
+  }
+
+  return collected;
+}`,
+        rationale:
+          'The nested vector becomes one flat allocation with contiguous action rows. LinearPolicy validates its dimensions in the constructor instead of leaving that to the caller, and Step returns the cross-entropy loss directly so a caller can track convergence without a second pass over the dataset. DAgger collection is factored into its own function that returns newly labelled samples rather than mutating a dataset in place.',
+        conventions: [
+          'RAII for every owned resource',
+          'const-correctness on parameters and members',
+          'std::span for non-owning views',
+          'Rule of zero — let the compiler generate special members',
+        ],
+        profile: 'O(n_actions x n_features) per sample over a contiguous row; one allocation for the whole weight table.',
+      },
+      'make-it-fast': {
+        code: `// Behavioural cloning - full-batch gradient, OpenMP data parallelism.
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
+#include <utility>
+#include <vector>
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+using State = std::vector<double>;
+using Sample = std::pair<State, int>;
+
+// One epoch computes the FULL-BATCH gradient before applying it, rather than
+// updating after every sample. That removes the data dependency between
+// samples, so the per-sample work below can run across threads with a
+// private accumulator per thread and one merge at the end.
+void TrainEpoch(std::vector<double>& weights, std::size_t n_actions, std::size_t n_features,
+                const std::vector<Sample>& dataset, double lr) {
+  std::vector<double> gradient(n_actions * n_features, 0.0);
+
+  #pragma omp parallel
+  {
+    std::vector<double> local_gradient(n_actions * n_features, 0.0);
+
+    #pragma omp for nowait
+    for (std::size_t sample_index = 0; sample_index < dataset.size(); ++sample_index) {
+      const auto& [state, expert_action] = dataset[sample_index];
+      std::vector<double> scores(n_actions);
+
+      for (std::size_t a = 0; a < n_actions; ++a) {
+        const double* __restrict row = weights.data() + a * n_features;
+        const double* __restrict feature = state.data();
+        double score = 0.0;
+        for (std::size_t i = 0; i < n_features; ++i) score += row[i] * feature[i];
+        scores[a] = score;
+      }
+
+      const double m = *std::max_element(scores.begin(), scores.end());
+      double total = 0.0;
+      for (double& s : scores) { s = std::exp(s - m); total += s; }
+
+      for (std::size_t a = 0; a < n_actions; ++a) {
+        const double prob = scores[a] / total;
+        const double target = (static_cast<int>(a) == expert_action) ? 1.0 : 0.0;
+        const double grad_score = prob - target;
+        double* __restrict grad_row = local_gradient.data() + a * n_features;
+        const double* __restrict feature = state.data();
+        for (std::size_t i = 0; i < n_features; ++i) grad_row[i] += grad_score * feature[i];
+      }
+    }
+
+    #pragma omp critical
+    for (std::size_t i = 0; i < gradient.size(); ++i) gradient[i] += local_gradient[i];
+  }
+
+  const double scale = lr / static_cast<double>(dataset.size());
+  for (std::size_t i = 0; i < weights.size(); ++i) weights[i] -= scale * gradient[i];
+}`,
+        rationale:
+          'Per-sample stochastic updates in the previous stage serialize the whole epoch, since each update depends on the weights the previous one produced. Accumulating a full-batch gradient first removes that dependency between samples, so the reduction runs across threads with a private accumulator per thread and a single merge at the end. Restrict-qualified pointers let the inner dot product vectorize since the compiler can assume the weight row and the feature vector do not alias.',
+        optimizations: [
+          {
+            technique: 'OpenMP for data-parallel loops',
+            why: 'Each sample computes an independent local gradient contribution once the epoch is expressed as a full-batch update, so the per-sample loop divides cleanly across threads with a private accumulator and one merge at the end.',
+            tradeoff: 'The full-batch gradient is a different optimization trajectory than the per-sample updates of the previous stage, and thread startup overhead is only worth paying once the dataset is large enough.',
+          },
+          {
+            technique: 'Restrict/aliasing hints so the compiler can vectorize',
+            why: 'Marking the weight row and feature pointers as non-aliasing lets the compiler vectorize the inner dot-product and gradient-accumulation loops.',
+            tradeoff: 'Relies on the caller never passing overlapping weights and state buffers, which the type system does not enforce.',
+          },
+          {
+            technique: 'Compile with -O3 -march=native',
+            why: 'The restrict hints and OpenMP loop only produce vectorized code once optimization is enabled at this level.',
+            tradeoff: '-march=native ties the resulting binary to the instruction set of the build host, which breaks on an older machine in a heterogeneous fleet.',
+          },
+        ],
+        profile: 'One full-batch gradient per epoch, parallelized across the dataset. Illustrative, not a measured benchmark.',
+      },
+    },
+
+    rust: {
+      'make-it-work': {
+        code: `//! Behavioural cloning and DAgger - the training-distribution swap, transcribed.
+
+pub struct StepResult {
+    pub next_state: Vec<f64>,
+    pub done: bool,
+}
+
+pub trait Environment {
+    fn reset(&mut self) -> Vec<f64>;
+    fn step(&mut self, action: usize) -> StepResult;
+}
+
+pub trait Expert {
+    fn act(&self, state: &[f64]) -> usize;
+}
+
+fn softmax(scores: &[f64]) -> Vec<f64> {
+    let m = scores.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+    let exps: Vec<f64> = scores.iter().map(|s| (s - m).exp()).collect();
+    let total: f64 = exps.iter().sum();
+    exps.into_iter().map(|e| e / total).collect()
+}
+
+fn predict_action(weights: &[Vec<f64>], state: &[f64]) -> usize {
+    let scores: Vec<f64> = weights
+        .iter()
+        .map(|row| row.iter().zip(state).map(|(w, s)| w * s).sum())
+        .collect();
+    let probs = softmax(&scores);
+    let mut best = 0;
+    for a in 1..probs.len() {
+        if probs[a] > probs[best] {
+            best = a;
+        }
+    }
+    best
+}
+
+/// Behavioural cloning: ordinary cross-entropy over (state, expert_action)
+/// pairs. This is the entire objective - no reward appears anywhere.
+pub fn fit_bc(
+    dataset: &[(Vec<f64>, usize)],
+    n_actions: usize,
+    n_features: usize,
+    epochs: usize,
+    lr: f64,
+) -> Vec<Vec<f64>> {
+    let mut weights = vec![vec![0.0; n_features]; n_actions];
+
+    for _ in 0..epochs {
+        for (state, expert_action) in dataset {
+            let scores: Vec<f64> = weights
+                .iter()
+                .map(|row| row.iter().zip(state).map(|(w, s)| w * s).sum())
+                .collect();
+            let probs = softmax(&scores);
+
+            // Gradient of cross-entropy w.r.t. the scores is (prob - one_hot).
+            for a in 0..n_actions {
+                let target = if a == *expert_action { 1.0 } else { 0.0 };
+                let grad_score = probs[a] - target;
+                for i in 0..n_features {
+                    weights[a][i] -= lr * grad_score * state[i];
+                }
+            }
+        }
+    }
+
+    weights
+}
+
+/// Dataset aggregation: run the current policy, label the states it visits
+/// with the expert, and refit on the union. The dataset only grows, and it
+/// is refit from scratch every round.
+pub fn dagger(
+    env: &mut dyn Environment,
+    expert: &dyn Expert,
+    n_actions: usize,
+    n_features: usize,
+    initial_dataset: Vec<(Vec<f64>, usize)>,
+    rounds: usize,
+    epochs: usize,
+    lr: f64,
+) -> Vec<Vec<f64>> {
+    let mut dataset = initial_dataset;
+    let mut weights = fit_bc(&dataset, n_actions, n_features, epochs, lr);
+
+    for _ in 0..rounds {
+        let mut state = env.reset();
+        let mut done = false;
+
+        while !done {
+            let action = predict_action(&weights, &state);
+            // Query the expert on a state the LEARNER chose to visit - the
+            // mechanism that closes the distribution gap.
+            let expert_action = expert.act(&state);
+            dataset.push((state.clone(), expert_action));
+
+            let result = env.step(action);
+            state = result.next_state;
+            done = result.done;
+        }
+
+        weights = fit_bc(&dataset, n_actions, n_features, epochs, lr);
+    }
+
+    weights
+}`,
+        profile: 'O(n_actions x n_features) per gradient step. DAgger refits from scratch each round, so total cost grows with rounds squared.',
+      },
+      'make-it-right': {
+        code: `//! Behavioural cloning / DAgger - typed errors, contiguous weights, loss tracked.
+
+use std::fmt;
+
+#[derive(Debug, PartialEq, Eq)]
+pub enum PolicyError {
+    EmptySpace,
+    ActionOutOfRange { action: usize, n_actions: usize },
+}
+
+impl fmt::Display for PolicyError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::EmptySpace => write!(f, "action and feature spaces must be non-empty"),
+            Self::ActionOutOfRange { action, n_actions } => {
+                write!(f, "action {action} is outside 0..{n_actions}")
+            }
+        }
+    }
+}
+
+impl std::error::Error for PolicyError {}
+
+pub struct LinearPolicy {
+    n_actions: usize,
+    n_features: usize,
+    /// One flat allocation: an action's weight row is contiguous.
+    weights: Vec<f64>,
+}
+
+impl LinearPolicy {
+    pub fn new(n_actions: usize, n_features: usize) -> Result<Self, PolicyError> {
+        if n_actions == 0 || n_features == 0 {
+            return Err(PolicyError::EmptySpace);
+        }
+        Ok(Self {
+            n_actions,
+            n_features,
+            weights: vec![0.0; n_actions * n_features],
+        })
+    }
+
+    fn row(&self, action: usize) -> &[f64] {
+        &self.weights[action * self.n_features..(action + 1) * self.n_features]
+    }
+
+    #[must_use]
+    pub fn scores(&self, state: &[f64]) -> Vec<f64> {
+        (0..self.n_actions)
+            .map(|a| self.row(a).iter().zip(state).map(|(w, s)| w * s).sum())
+            .collect()
+    }
+
+    #[must_use]
+    pub fn predict(&self, state: &[f64]) -> usize {
+        self.scores(state)
+            .into_iter()
+            .enumerate()
+            .max_by(|(_, a), (_, b)| a.total_cmp(b))
+            .map_or(0, |(index, _)| index)
+    }
+
+    /// Cross-entropy gradient step on one sample; returns the loss so callers
+    /// can track convergence without a second pass over the dataset.
+    pub fn step(&mut self, state: &[f64], expert_action: usize, lr: f64) -> Result<f64, PolicyError> {
+        if expert_action >= self.n_actions {
+            return Err(PolicyError::ActionOutOfRange { action: expert_action, n_actions: self.n_actions });
+        }
+
+        let scores = self.scores(state);
+        let m = scores.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+        let exps: Vec<f64> = scores.iter().map(|s| (s - m).exp()).collect();
+        let total: f64 = exps.iter().sum();
+        let probs: Vec<f64> = exps.iter().map(|e| e / total).collect();
+
+        let loss = -probs[expert_action].max(1e-12).ln();
+
+        for a in 0..self.n_actions {
+            let target = if a == expert_action { 1.0 } else { 0.0 };
+            let grad_score = probs[a] - target;
+            let row_start = a * self.n_features;
+            for (weight, feature) in self.weights[row_start..row_start + self.n_features]
+                .iter_mut()
+                .zip(state)
+            {
+                *weight -= lr * grad_score * feature;
+            }
+        }
+
+        Ok(loss)
+    }
+}
+
+/// One round of dataset aggregation: rolls the current policy out and queries
+/// the expert on every state IT visits, returning the newly labelled samples.
+pub fn collect_dagger_round(
+    mut reset: impl FnMut() -> Vec<f64>,
+    mut step: impl FnMut(usize) -> (Vec<f64>, bool),
+    expert: impl Fn(&[f64]) -> usize,
+    policy: &LinearPolicy,
+) -> Vec<(Vec<f64>, usize)> {
+    let mut collected = Vec::new();
+    let mut state = reset();
+    let mut done = false;
+
+    while !done {
+        let action = policy.predict(&state);
+        collected.push((state.clone(), expert(&state)));
+
+        let (next_state, step_done) = step(action);
+        state = next_state;
+        done = step_done;
+    }
+
+    collected
+}`,
+        rationale:
+          'The nested Vec becomes one flat allocation with contiguous action rows, matching the same change in the C++ progression. Errors are typed rather than left to panic on out-of-range input, and step returns the cross-entropy loss directly so convergence can be tracked without a second pass over the dataset.',
+        conventions: [
+          'Result<T, E> over panics for recoverable errors',
+          'Iterator chains over manual index loops',
+          'Borrow rather than clone; take &[T] not Vec<T>',
+          'Validate inputs at the constructor boundary',
+        ],
+        profile: 'O(n_actions x n_features) per sample over a contiguous slice; one allocation for the whole weight table.',
+      },
+      'make-it-fast': {
+        code: `//! Behavioural cloning - full-batch gradient accumulation via rayon.
+
+use rayon::prelude::*;
+
+/// One epoch computes the FULL-BATCH gradient before applying it, rather than
+/// updating after every sample. That removes the data dependency between
+/// samples, so the fold below gives each thread a private accumulator that is
+/// merged once at the end instead of contending over shared state.
+pub fn train_epoch(
+    weights: &mut [f64],
+    n_actions: usize,
+    n_features: usize,
+    dataset: &[(Vec<f64>, usize)],
+    lr: f64,
+) {
+    let gradient: Vec<f64> = dataset
+        .par_iter()
+        .fold(
+            || vec![0.0; n_actions * n_features],
+            |mut local, (state, expert_action)| {
+                let scores: Vec<f64> = (0..n_actions)
+                    .map(|a| {
+                        weights[a * n_features..(a + 1) * n_features]
+                            .iter()
+                            .zip(state.iter())
+                            .map(|(w, s)| w * s)
+                            .sum()
+                    })
+                    .collect();
+
+                let m = scores.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+                let exps: Vec<f64> = scores.iter().map(|s| (s - m).exp()).collect();
+                let total: f64 = exps.iter().sum();
+
+                for a in 0..n_actions {
+                    let prob = exps[a] / total;
+                    let target = if a == *expert_action { 1.0 } else { 0.0 };
+                    let grad_score = prob - target;
+                    let row = a * n_features;
+                    for (g, s) in local[row..row + n_features].iter_mut().zip(state.iter()) {
+                        *g += grad_score * s;
+                    }
+                }
+
+                local
+            },
+        )
+        .reduce(
+            || vec![0.0; n_actions * n_features],
+            |mut a, b| {
+                for (x, y) in a.iter_mut().zip(b.iter()) {
+                    *x += y;
+                }
+                a
+            },
+        );
+
+    let scale = lr / dataset.len() as f64;
+    for (w, g) in weights.iter_mut().zip(gradient.iter()) {
+        *w -= scale * g;
+    }
+}`,
+        rationale:
+          'The same full-batch argument as the other two languages: accumulating one gradient over the whole dataset removes the sequential dependency between samples. The fold/reduce pattern from rayon gives each thread a private accumulator merged once at the end, rather than a shared mutable array that every sample would otherwise contend over.',
+        optimizations: [
+          {
+            technique: 'rayon for data parallelism',
+            why: 'Each sample contributes an independent local gradient once the epoch is a full-batch update, so par_iter().fold().reduce() divides the dataset across threads with no shared mutable state during the reduction.',
+            tradeoff: 'The full-batch gradient is a different optimization trajectory than a per-sample update, and the fold/reduce overhead is only worth paying once the dataset is large enough to amortize it.',
+          },
+          {
+            technique: 'Iterator chains for bounds-check elision',
+            why: 'The row slices and zip adapters let the compiler reason about the iteration bounds directly, removing the per-index bounds checks a manual loop over weights[..] and state[..] would otherwise carry.',
+            tradeoff: 'The nested iterator chains are harder to read at a glance than the explicit index loops of the previous stage for someone unfamiliar with the adapters.',
+          },
+          {
+            technique: 'Operate on slices to keep data contiguous',
+            why: 'weights is passed as a flat &mut [f64] and each action row is viewed as a slice, keeping every read and write inside one contiguous allocation that matches the flat layout introduced in the previous stage.',
+            tradeoff: 'Slicing assumes the caller passes a weights buffer of exactly n_actions times n_features, which this function does not itself validate.',
+          },
+        ],
+        libraryName: 'rayon',
+        profile: 'One full-batch gradient per epoch, parallelized across the dataset via rayon. Illustrative, not a measured benchmark.',
+      },
+    },
+  },
+};

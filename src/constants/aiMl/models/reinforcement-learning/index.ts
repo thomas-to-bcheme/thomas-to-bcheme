@@ -20,6 +20,7 @@ import { DDPG_TD3 } from './ddpg-td3';
 import { SAC } from './sac';
 import { MULTI_ARMED_BANDITS } from './multi-armed-bandits';
 import { MODEL_BASED_RL } from './model-based-rl';
+import { IMITATION_LEARNING } from './imitation-learning';
 
 export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   MDP_BELLMAN,
@@ -36,4 +37,5 @@ export const REINFORCEMENT_LEARNING_MODELS: AiMlModel[] = [
   SAC,
   MULTI_ARMED_BANDITS,
   MODEL_BASED_RL,
+  IMITATION_LEARNING,
 ];
