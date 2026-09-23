@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, GoogleGenerativeAIFetchError } from "@google/generative-ai";
+import { GoogleGenAI, ApiError } from "@google/genai";
 import { z } from "zod";
 import AiSystemInformation, {
   formatLivePipelineKpi,
@@ -20,7 +20,12 @@ if (!GOOGLE_API_KEY) {
   );
 }
 
-const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+const ai = new GoogleGenAI({ apiKey: GOOGLE_API_KEY });
+
+// Chosen via a live ai.models.list() check against this project's API key on
+// 2026-09-22 (GA flash-tier only — no "preview"/"exp" names — replacing the
+// previously undocumented "gemini-3.1-pro-preview" pick that was quota-limited).
+const CHAT_MODEL = "gemini-3.8-flash";
 
 // Request validation schema
 const MessageSchema = z.object({
@@ -76,10 +81,29 @@ function createErrorResponse(
 // =============================================================================
 
 /**
- * Parse retry delay from Google API error message
- * Example message: "Resource has been exhausted (e.g. check quota). Retry in 30s"
+ * Parse retry delay from a Google API error message.
+ *
+ * @google/genai's ApiError.message is JSON.stringify(errorBody) — the raw
+ * Google error response. Try the structured google.rpc.RetryInfo detail
+ * first, then fall back to plain-text "Retry in Ns" parsing, since both
+ * formats have been observed in the wild for 429 responses.
  */
 function parseGoogleRetryDelay(message: string): number | null {
+  try {
+    const parsed = JSON.parse(message) as {
+      error?: { details?: Array<{ "@type"?: string; retryDelay?: string }> };
+    };
+    const retryInfo = parsed.error?.details?.find(
+      (d) => d["@type"] === "type.googleapis.com/google.rpc.RetryInfo"
+    );
+    if (retryInfo?.retryDelay) {
+      const seconds = parseFloat(retryInfo.retryDelay.replace(/s$/, ""));
+      if (!Number.isNaN(seconds)) return Math.ceil(seconds);
+    }
+  } catch {
+    // Not JSON — fall through to plain-text parsing below.
+  }
+
   const match = message.match(/retry in (\d+(?:\.\d+)?)s/i);
   return match ? Math.ceil(parseFloat(match[1])) : null;
 }
@@ -87,8 +111,8 @@ function parseGoogleRetryDelay(message: string): number | null {
 /**
  * Type guard for Google API quota exceeded errors
  */
-function isGoogleQuotaError(error: unknown): error is GoogleGenerativeAIFetchError {
-  return error instanceof GoogleGenerativeAIFetchError && error.status === 429;
+function isGoogleQuotaError(error: unknown): error is ApiError {
+  return error instanceof ApiError && error.status === 429;
 }
 
 // =============================================================================
@@ -172,27 +196,26 @@ export async function POST(req: Request) {
       livePipelineKpiText
     );
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-3.1-pro-preview",
-      systemInstruction,
-    });
-
-    const chat = model.startChat({
+    const chat = ai.chats.create({
+      model: CHAT_MODEL,
       history: history.slice(0, -1),
+      config: { systemInstruction },
     });
 
     // 4. Send Message with Streaming
     const lastMessage = history[history.length - 1].parts[0].text;
-    const result = await chat.sendMessageStream(lastMessage);
+    const result = await chat.sendMessageStream({ message: lastMessage });
 
     // 5. Stream Response with Error Handling
     const stream = new ReadableStream({
       async start(controller) {
         const encoder = new TextEncoder();
         try {
-          for await (const chunk of result.stream) {
-            const chunkText = chunk.text();
-            controller.enqueue(encoder.encode(chunkText));
+          for await (const chunk of result) {
+            const chunkText = chunk.text;
+            if (chunkText) {
+              controller.enqueue(encoder.encode(chunkText));
+            }
           }
           controller.close();
           log("INFO", "Chat stream completed successfully", logCtx);
