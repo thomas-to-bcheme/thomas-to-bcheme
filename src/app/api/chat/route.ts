@@ -22,10 +22,15 @@ if (!GOOGLE_API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: GOOGLE_API_KEY });
 
-// Chosen via a live ai.models.list() check against this project's API key on
-// 2026-09-22 (GA flash-tier only — no "preview"/"exp" names — replacing the
-// previously undocumented "gemini-3.1-pro-preview" pick that was quota-limited).
-const CHAT_MODEL = "gemini-3.8-flash";
+// Chosen via a live ai.models.list() check against this project's API key.
+// Initially set to gemini-3.8-flash on 2026-09-22 (GA flash-tier only — no
+// "preview"/"exp" names — replacing the previously undocumented
+// "gemini-3.1-pro-preview" pick that was quota-limited), but that model
+// returned repeat 503 "high demand" errors — expected for a model that had
+// only been GA for ~3 weeks. Switched on 2026-09-23 to gemini-2.5-flash,
+// GA since June 2025 and still supported by this key, for deeper, more
+// established capacity provisioning.
+const CHAT_MODEL = "gemini-2.5-flash";
 
 // Request validation schema
 const MessageSchema = z.object({
