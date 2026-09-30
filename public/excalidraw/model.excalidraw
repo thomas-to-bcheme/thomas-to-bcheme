@@ -13679,8 +13679,8 @@
     {
       "id": "h313xgy5_tOh6tqMPZh0h",
       "type": "text",
-      "x": 9489.961394656402,
-      "y": -485.50282825335375,
+      "x": 9698.91206742103,
+      "y": -498.6905605249628,
       "width": 484.45965576171875,
       "height": 25,
       "angle": 0,
@@ -13696,11 +13696,11 @@
       "index": "b3H",
       "roundness": null,
       "seed": 2522174,
-      "version": 58,
-      "versionNonce": 1112683134,
+      "version": 115,
+      "versionNonce": 2145178238,
       "isDeleted": false,
       "boundElements": null,
-      "updated": 1790794386953,
+      "updated": 1790794981003,
       "link": null,
       "locked": false,
       "text": "Endpoint / API / MCP -> frotnend chat userface",
@@ -13812,10 +13812,15 @@
     "editingTextElement": null,
     "editingGroupId": null,
     "activeTool": {
-      "type": "selection",
+      "type": "hand",
       "customType": null,
       "locked": false,
-      "lastActiveTool": null
+      "lastActiveTool": {
+        "type": "selection",
+        "customType": null,
+        "locked": false,
+        "lastActiveTool": null
+      }
     },
     "penMode": false,
     "penDetected": false,
@@ -13843,8 +13848,8 @@
     },
     "previousSelectedElementIds": {},
     "scrolledOutside": false,
-    "scrollX": -9816.694665550785,
-    "scrollY": 1080.636029197042,
+    "scrollX": -7257.569371815783,
+    "scrollY": 1315.2652210381395,
     "selectedElementIds": {},
     "hoveredElementIds": {},
     "selectedGroupIds": {},
@@ -13868,7 +13873,7 @@
     "viewBackgroundColor": "#ffffff",
     "zenModeEnabled": false,
     "zoom": {
-      "value": 0.696424
+      "value": 0.459998
     },
     "viewModeEnabled": false,
     "pendingImageElementId": null,
