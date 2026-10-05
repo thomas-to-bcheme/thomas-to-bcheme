@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Compass, ListChecks, Brain, Sparkles, MessagesSquare, BookOpen } from 'lucide-react';
+import { Compass, Layers, ListChecks, Brain, Sparkles, MessagesSquare, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import {
   SYSTEM_DESIGN_TOC_ITEMS,
   FRAMING_TOC_ITEMS,
+  FOUNDATIONS_TOC_ITEMS,
   FRAMEWORK_TOC_ITEMS,
   ML_FRAMEWORK_TOC_ITEMS,
   GENAI_FRAMEWORK_TOC_ITEMS,
@@ -23,7 +24,7 @@ const NAV_LINK_CLASS =
  * Sticky desktop sidebar — hidden below `lg:`, where
  * SystemDesignPrepMobileToc takes over instead. One useActiveSection call,
  * scoped to the full flat TOC (4-item framing group, incl. communication
- * scripts, + 4 framework steps + 6 ML framework steps + 5 GenAI framework
+ * scripts, + 4 foundations sub-sections + 4 framework steps + 6 ML framework steps + 5 GenAI framework
  * steps + 6 question categories + 7 reference sections), drives which link
  * is highlighted. Follows ChangelogSidebar's exact interaction pattern.
  */
@@ -59,6 +60,13 @@ const SystemDesignPrepSidebar = () => {
           <Compass size={12} className="stroke-[2.5]" /> Framing
         </span>
         {FRAMING_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
+      </div>
+
+      <div className="space-y-1">
+        <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
+          <Layers size={12} className="stroke-[2.5]" /> Foundations
+        </span>
+        {FOUNDATIONS_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
       </div>
 
       <div className="space-y-1">

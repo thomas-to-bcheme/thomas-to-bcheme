@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronDown, ListTree } from 'lucide-react';
 import {
   FRAMING_TOC_ITEMS,
+  FOUNDATIONS_TOC_ITEMS,
   FRAMEWORK_TOC_ITEMS,
   ML_FRAMEWORK_TOC_ITEMS,
   GENAI_FRAMEWORK_TOC_ITEMS,
@@ -29,6 +30,14 @@ const SystemDesignPrepMobileToc = () => (
       <div className="space-y-1">
         <span className="block px-3 text-micro text-zinc-400 mb-1">Framing</span>
         {FRAMING_TOC_ITEMS.map((item) => (
+          <a key={item.id} href={item.href} className={LINK_CLASS}>
+            {item.label}
+          </a>
+        ))}
+      </div>
+      <div className="space-y-1">
+        <span className="block px-3 text-micro text-zinc-400 mb-1">Foundations</span>
+        {FOUNDATIONS_TOC_ITEMS.map((item) => (
           <a key={item.id} href={item.href} className={LINK_CLASS}>
             {item.label}
           </a>

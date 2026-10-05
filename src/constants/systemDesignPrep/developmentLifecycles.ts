@@ -1,4 +1,5 @@
 import { GitBranch, Database, Brain, Infinity as InfinityIcon, type LucideIcon } from 'lucide-react';
+import { DE_LIFECYCLE_STAGES, DE_UNDERCURRENTS } from './foundations';
 
 // Background on the 4 named engineering lifecycles this page's Design→Ops
 // stage ordering, Model-stage framing, and Ops-stage framing are all read
@@ -54,14 +55,10 @@ export const DEVELOPMENT_LIFECYCLES: DevelopmentLifecycle[] = [
     icon: Database,
     summary:
       "The lifecycle raw data moves through before it's trustworthy enough for a model or a dashboard to consume — the ML/MLOps Lifecycle below assumes this one is already built and automated.",
-    stages: [
-      { label: 'Generation', summary: 'Data is produced at the source — application events, third-party APIs, user input.' },
-      { label: 'Storage', summary: 'Landed somewhere durable and queryable, at whatever tier matches its access pattern.' },
-      { label: 'Ingestion', summary: 'Moved from source into the pipeline, in batch or as a stream.' },
-      { label: 'Transformation', summary: 'Cleaned, joined, and reshaped into the form downstream consumers actually need.' },
-      { label: 'Serving', summary: 'Made available to whatever consumes it next — a dashboard, an application, or a model.' },
-    ],
-    crossCuttingConcerns: ['Security', 'Orchestration', 'DataOps'],
+    // Derived from the Foundations section's authoritative copy — never
+    // re-listed here, so the two renderings can't drift apart.
+    stages: DE_LIFECYCLE_STAGES.map(({ label, summary }) => ({ label, summary })),
+    crossCuttingConcerns: DE_UNDERCURRENTS.map((undercurrent) => undercurrent.label),
     sourceReferenceId: 'data-eng-lifecycle-fundamentals',
   },
   {
@@ -172,7 +169,10 @@ export const LIFECYCLE_SYNTHESIS_STEPS: LifecycleSynthesisStep[] = [
     summary: "Keep it running, and watch it — the step that turns \"shipped\" into \"in production.\"",
     mappings: [
       { lifecycleId: 'sdlc', stageLabel: 'Maintain' },
-      { lifecycleId: 'data-engineering', stageLabel: 'Security / Orchestration / DataOps undercurrents, continuously' },
+      {
+        lifecycleId: 'data-engineering',
+        stageLabel: `${DE_UNDERCURRENTS.map((undercurrent) => undercurrent.label).join(' / ')} undercurrents, continuously`,
+      },
       { lifecycleId: 'ml-mlops', stageLabel: 'Monitor' },
       { lifecycleId: 'devops', stageLabel: 'Operate + Monitor' },
     ],

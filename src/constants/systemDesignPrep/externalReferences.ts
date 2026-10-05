@@ -1,4 +1,11 @@
-export type ExternalReferenceGroup = 'framework' | 'lifecycles' | 'standards' | 'videos' | 'social' | 'ml-system-design';
+export type ExternalReferenceGroup =
+  | 'framework'
+  | 'foundations'
+  | 'lifecycles'
+  | 'standards'
+  | 'videos'
+  | 'social'
+  | 'ml-system-design';
 
 export type ExternalReferenceMedium = 'video' | 'social';
 
@@ -55,6 +62,32 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
       'A role-scoped competency map — architecture as ongoing judgment (decision-making under ambiguity, documentation as a continuously-maintained artifact, re-evaluating existing systems, not just greenfield design) rather than a fixed set of interview problems. The framing behind this page\'s intro.',
   },
 
+  // --- Foundations (O'Reilly "Fundamentals of ..." books) ---
+  {
+    id: 'swe-fundamentals-schutta-vega',
+    group: 'foundations',
+    title: 'Schutta & Vega — "Fundamentals of Software Engineering" (O\'Reilly, 2025)',
+    url: 'https://www.oreilly.com/library/view/fundamentals-of-software/9781098143220/',
+    whatItOffers:
+      'The skills between knowing how to code and being an effective engineer — reading and modifying existing code, modeling, automated testing, working with data, architecture drivers, and a reliable path to production. The source of the Foundations section\'s software-engineering fundamentals.',
+  },
+  {
+    id: 'software-architecture-fundamentals-richards-ford',
+    group: 'foundations',
+    title: 'Richards & Ford — "Fundamentals of Software Architecture", 2nd ed. (O\'Reilly, 2025)',
+    url: 'https://www.oreilly.com/library/view/fundamentals-of-software/9781098175504/',
+    whatItOffers:
+      'Architecture as an engineering discipline — identifying, measuring, scoping, and governing architectural characteristics, the major architecture styles and how to choose between them, decision records, risk analysis, and the laws of software architecture.',
+  },
+  {
+    id: 'data-eng-lifecycle-fundamentals',
+    group: 'foundations',
+    title: 'Reis & Housley — "Fundamentals of Data Engineering" (O\'Reilly, 2022)',
+    url: 'https://www.oreilly.com/library/view/fundamentals-of-data/9781098108298/',
+    whatItOffers:
+      'Defines the data engineering lifecycle (generation → storage → ingestion → transformation → serving) that the Model stage assumes is already built and automated, plus the cross-cutting "undercurrents" — security, orchestration, DataOps — that make it a domain-agnostic operating discipline rather than a data-specific one.',
+  },
+
   // --- Development Lifecycles ---
   {
     id: 'aws-sdlc-overview',
@@ -90,14 +123,6 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
   },
 
   // --- Cross-Lifecycle Operating Standards ---
-  {
-    id: 'data-eng-lifecycle-fundamentals',
-    group: 'standards',
-    title: 'Reis & Housley — "Fundamentals of Data Engineering"',
-    url: 'https://www.oreilly.com/library/view/fundamentals-of-data/9781098108298/',
-    whatItOffers:
-      'Defines the data engineering lifecycle (generation → storage → ingestion → transformation → serving) that the Model stage assumes is already built and automated, plus the cross-cutting "undercurrents" — security, orchestration, DataOps — that make it a domain-agnostic operating discipline rather than a data-specific one.',
-  },
   {
     id: 'google-rules-of-ml',
     group: 'standards',

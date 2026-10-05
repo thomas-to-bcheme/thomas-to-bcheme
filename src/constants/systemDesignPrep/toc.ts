@@ -33,6 +33,16 @@ export const FRAMING_TOC_ITEMS: SystemDesignTocItem[] = [
   toItem('communication-scripts', 'Communication Scripts'),
 ];
 
+// The Foundations deep reference, rendered directly after the communication
+// scripts — an overview anchor plus one per sub-section (software
+// engineering, software architecture, the data engineering lifecycle).
+export const FOUNDATIONS_TOC_ITEMS: SystemDesignTocItem[] = [
+  toItem('foundations', 'Overview'),
+  toItem('foundations-software-engineering', 'Engineering'),
+  toItem('foundations-software-architecture', 'Architecture'),
+  toItem('foundations-data-engineering', 'Data Lifecycle'),
+];
+
 // One entry per interview-framework step, in order — matches the ids
 // FrameworkStepList assigns to each <li> via INTERVIEW_FRAMEWORK_STEPS.
 export const FRAMEWORK_TOC_ITEMS: SystemDesignTocItem[] = INTERVIEW_FRAMEWORK_STEPS.map((step) =>
@@ -72,6 +82,7 @@ export const REFERENCE_TOC_ITEMS: SystemDesignTocItem[] = [
 // scoped to.
 export const SYSTEM_DESIGN_TOC_ITEMS: SystemDesignTocItem[] = [
   ...FRAMING_TOC_ITEMS,
+  ...FOUNDATIONS_TOC_ITEMS,
   ...FRAMEWORK_TOC_ITEMS,
   ...ML_FRAMEWORK_TOC_ITEMS,
   ...GENAI_FRAMEWORK_TOC_ITEMS,
