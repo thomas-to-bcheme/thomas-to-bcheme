@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Quote } from 'lucide-react';
 import SweCompassDiagram from '@/components/features/SweCompassDiagram';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { FRAMING_DECISION_TREE } from '@/constants/systemDesignPrep/framingDecisionTree';
 
 const EXTERNAL_LINK_CLASS = 'font-semibold text-blue-700 dark:text-blue-400 hover:underline';
 
@@ -10,7 +11,9 @@ const EXTERNAL_LINK_CLASS = 'font-semibold text-blue-700 dark:text-blue-400 hove
  * working reference for real engineering judgment, not interview trivia,
  * then renders the real (imported, not reinvented) SweCompassDiagram
  * statically at rest and explains how its 3 axes map onto how the rest of
- * the page reads.
+ * the page reads. Closes with the ordered what → why → how decision tree
+ * (FRAMING_DECISION_TREE) that applies the North Star — example-free by
+ * design, since examples live in Communication Scripts.
  */
 const SystemDesignCompassIntro = () => (
   <section id="framing-intro" className="scroll-mt-24">
@@ -70,6 +73,36 @@ const SystemDesignCompassIntro = () => (
             it.&quot;
           </blockquote>
           <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mt-3">— Thomas To</p>
+        </div>
+        <div>
+          <h3 className="text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-3">
+            Applying the North Star — three questions, in order
+          </h3>
+          <ol className="space-y-3">
+            {FRAMING_DECISION_TREE.map((decision) => (
+              <li key={decision.id} className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-xs font-bold text-blue-700 dark:text-blue-400">
+                  {decision.stepNumber}
+                </span>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">{decision.question}</p>
+                  <p>{decision.focus}</p>
+                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">
+                    <span className="font-semibold">Unlocks:</span> {decision.unlocks}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-4">
+            The order is the point. Whether the data leads you toward a data-intensive pipeline or a
+            customer-facing frontend, the fundamentals don&apos;t change — the what bounds the why, and
+            the why judges the how. Worked examples live in{' '}
+            <Link href="#communication-scripts" className={EXTERNAL_LINK_CLASS}>
+              Communication Scripts
+            </Link>{' '}
+            and throughout the page.
+          </p>
         </div>
       </div>
       <SweCompassDiagram activeAxis={null} />

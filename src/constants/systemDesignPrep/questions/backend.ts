@@ -170,6 +170,7 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
       'Does the user directly experience per-request latency (interactive UI), or only aggregate system throughput (batch pipeline)?',
       'Is there room to batch requests together to improve throughput, and can the use case tolerate the added per-request latency that batching introduces?',
       'What’s the actual SLA — a p99 latency target, or a requests-per-second target?',
+      'Is the link saturated (bandwidth-bound), or is it underused while requests wait on round trips (latency-bound)?',
     ],
     approachOptions: [
       {
@@ -188,6 +189,11 @@ export const BACKEND_QUESTIONS: SystemDesignQuestion[] = [
         consideration: 'These genuinely trade against each other, not just conceptually',
         dependsOn:
           'Batching requests together (e.g. for a GPU inference call) raises throughput but adds queueing delay to each individual request — the right batch size is a direct latency/throughput dial, not a free win.',
+      },
+      {
+        consideration: 'Bandwidth caps throughput, but it doesn’t set latency',
+        dependsOn:
+          'Throughput can never exceed the narrowest link’s bandwidth, and that link only fills when enough data is in flight to cover it (bandwidth × round-trip time). More bandwidth shortens the transfer time for large payloads, but it can’t shorten the round trip itself. Cutting round trips (co-location, a CDN, fewer chatty calls) lowers latency without adding bandwidth. Name which of the two is the real limit before paying to fix it.',
       },
     ],
     ripplesInto: ['compute-vs-memory-bound', 'online-vs-batch-prediction'],

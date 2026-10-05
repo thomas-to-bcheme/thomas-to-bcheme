@@ -130,10 +130,17 @@ export const SITUATIONAL_CHARACTERISTICS: SituationalCharacteristic[] = [
   },
   {
     id: 'latency-vs-throughput',
-    label: 'Latency vs. throughput',
+    label: 'Bandwidth vs. latency vs. throughput',
     summary:
-      'Optimizing one request’s speed vs. total requests handled per second — often in direct tension.',
+      'Bandwidth is the size of the pipe, latency is how long one request takes to cross it, and throughput is how much actually gets through. A wide pipe doesn’t fix a slow round trip, and optimizing one request’s speed often works against total requests per second.',
     questionId: 'latency-vs-throughput',
+  },
+  {
+    id: 'compute-vs-memory',
+    label: 'Compute vs. memory',
+    summary:
+      'Whether the bottleneck is CPU cycles or moving data in and out of memory — more cores only help the first; caching and less data movement help the second.',
+    questionId: 'compute-vs-memory-bound',
   },
   {
     id: 'consistency-spectrum',
