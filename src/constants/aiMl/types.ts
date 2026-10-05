@@ -210,7 +210,9 @@ export interface AppliedDomain {
 
 /**
  * Not everything minimizes a "loss": Q-learning converges to a Bellman fixed
- * point, a GAN plays a minimax game, a VAE maximizes an ELBO. Drives the section
+ * point, a GAN plays a minimax game, a VAE maximizes an ELBO, a linear program
+ * optimizes over a feasible polytope, and a genetic algorithm only ever ranks
+ * candidates by fitness. Drives the section
  * heading so the UI labels each honestly instead of calling everything a loss.
  */
 export type ObjectiveKind =
@@ -220,7 +222,9 @@ export type ObjectiveKind =
   | 'minimax'
   | 'fixed-point'
   | 'margin'
-  | 'reconstruction';
+  | 'reconstruction'
+  | 'constrained-program'
+  | 'fitness';
 
 export interface MathExpression {
   /** KaTeX body only, no $ delimiters. */
@@ -434,6 +438,8 @@ export const OBJECTIVE_KIND_LABELS: Record<ObjectiveKind, string> = {
   'fixed-point': 'Fixed-point condition',
   margin: 'Margin objective',
   reconstruction: 'Reconstruction objective',
+  'constrained-program': 'Constrained program',
+  fitness: 'Fitness function',
 };
 
 export const DOMAIN_FIT_LABELS: Record<DomainFit, string> = {
@@ -460,3 +466,161 @@ export const CATEGORY_VERDICT_LABELS: Record<CategoryVerdict, string> = {
 
 /** Editorial floor -- a WARN in verifyAiMl, not a hard failure. */
 export const MIN_MODELS_PER_CATEGORY = 10;
+
+// ---------------------------------------------------------------------------
+// Problem genres and similarity metrics (the /ai-ml landscape section)
+// ---------------------------------------------------------------------------
+
+/**
+ * How much structure a metric needs the data to have before it can compare two
+ * things -- the "level of vectorization". Array order in VECTORIZATION_LEVELS
+ * runs from least structure (an unordered set) to most (a whitened coordinate
+ * system that needs an estimated covariance).
+ */
+export type VectorizationLevel =
+  | 'set'
+  | 'sequence'
+  | 'coordinates'
+  | 'direction'
+  | 'centred'
+  | 'whitened';
+
+export interface VectorizationLevelInfo {
+  id: VectorizationLevel;
+  label: string;
+  /** What the data must become before this rung's metrics apply. */
+  representation: string;
+  /** What preprocessing that costs. */
+  preprocessing: string;
+}
+
+export const VECTORIZATION_LEVELS: VectorizationLevelInfo[] = [
+  {
+    id: 'set',
+    label: 'Set',
+    representation: 'An unordered bag of items. No coordinates, no order, no magnitude.',
+    preprocessing: 'None: tokenize or list the items.',
+  },
+  {
+    id: 'sequence',
+    label: 'Sequence',
+    representation: 'An ordered string of symbols. Order matters, but there is still no coordinate space.',
+    preprocessing: 'None: keep the raw characters or tokens in order.',
+  },
+  {
+    id: 'coordinates',
+    label: 'Coordinates in ℝⁿ',
+    representation: 'A point in an n-dimensional space where every axis is a feature and length is meaningful.',
+    preprocessing: 'Embed or engineer features, then put the axes on comparable scales.',
+  },
+  {
+    id: 'direction',
+    label: 'Direction',
+    representation: 'Only the direction of the vector counts; every point is projected onto the unit sphere.',
+    preprocessing: 'L2-normalise each vector, which discards magnitude on purpose.',
+  },
+  {
+    id: 'centred',
+    label: 'Centred',
+    representation: 'Each vector is measured relative to its own mean, so per-row offsets cancel.',
+    preprocessing: 'Subtract each vector’s mean, then normalise.',
+  },
+  {
+    id: 'whitened',
+    label: 'Whitened',
+    representation: 'Coordinates rotated and rescaled by the data’s covariance, so correlated axes stop double-counting.',
+    preprocessing: 'Estimate the covariance Σ and invert it, which needs n ≫ d samples.',
+  },
+];
+
+export type SimilarityMetricId =
+  | 'jaccard'
+  | 'edit-distance'
+  | 'euclidean'
+  | 'manhattan'
+  | 'chebyshev'
+  | 'dot-product'
+  | 'cosine'
+  | 'pearson'
+  | 'mahalanobis';
+
+/** Which interactive view in the explorer demonstrates the metric. */
+export type SimilarityMetricView = 'set' | 'sequence' | 'vector-plane' | 'ratings';
+
+export interface SimilarityMetricProperties {
+  /** Satisfies identity, symmetry, and the triangle inequality. */
+  isTrueMetric: boolean;
+  isBounded: boolean;
+  /** Unchanged if one input is multiplied by a positive constant. */
+  isScaleInvariant: boolean;
+  /** Unchanged if a constant is added to every coordinate of one input. */
+  isTranslationInvariant: boolean;
+  complexity: string;
+}
+
+export interface SimilarityMetric {
+  id: SimilarityMetricId;
+  label: string;
+  kind: 'similarity' | 'distance';
+  representation: VectorizationLevel;
+  view: SimilarityMetricView;
+  /** The geometry the metric implicitly assumes. */
+  coordinateSystem: string;
+  expression: MathExpression;
+  properties: SimilarityMetricProperties;
+  /** The mathematics it is built on, and why that makes it behave as it does. */
+  foundation: string;
+  whenToUse: string;
+  /** Why this one rather than its nearest alternatives. */
+  whyNotAlternatives: string;
+  failureMode: string;
+  relatedSlugs: string[];
+}
+
+export type ProblemGenreId =
+  | 'regression'
+  | 'classification'
+  | 'optimization'
+  | 'nlp-llm'
+  | 'forecasting'
+  | 'recommender-system'
+  | 'computer-vision'
+  | 'clustering';
+
+/**
+ * Where a genre attaches to the existing taxonomy: a task type when the genre
+ * IS an output shape, an applied domain when it is a data modality or
+ * business problem.
+ */
+export type ProblemGenreAnchor =
+  | { kind: 'task-type'; id: TaskType }
+  | { kind: 'domain'; id: AppliedDomainId };
+
+export interface ProblemGenreLeaf {
+  slug: string;
+  /**
+   * The label shown on the map. Must be the model's name (with or without its
+   * parenthetical) or one of its aliases -- verified, so labels never drift
+   * from the registry.
+   */
+  label: string;
+  /** Named instances of the family, e.g. Llama for decoder-only LMs. Aliases only. */
+  examples?: string[];
+}
+
+export interface ProblemGenre {
+  id: ProblemGenreId;
+  label: string;
+  /** The question a reader is asking when this is their problem. */
+  question: string;
+  /** What the model hands back. */
+  output: string;
+  /** What is typically minimized or maximized, in words. */
+  typicalObjective: string;
+  anchor: ProblemGenreAnchor;
+  leaves: ProblemGenreLeaf[];
+  /** Metrics this genre leans on, most characteristic first. */
+  metricIds: SimilarityMetricId[];
+  /** Why those metrics fit this genre's data representation. */
+  metricRationale: string;
+}

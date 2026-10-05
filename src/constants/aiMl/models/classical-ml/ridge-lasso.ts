@@ -13,7 +13,7 @@ import type { AiMlModel } from '../../types';
 export const RIDGE_LASSO: AiMlModel = {
   slug: 'ridge-lasso',
   name: 'Ridge, Lasso & Elastic Net',
-  aliases: ['L2 regularization', 'L1 regularization', 'Tikhonov regularization', 'Penalized regression'],
+  aliases: ['L2 regularization', 'L1 regularization', 'Tikhonov regularization', 'Penalized regression', 'Lasso'],
   category: 'classical-ml',
   group: 'linear-models',
   kind: 'model',
@@ -266,7 +266,14 @@ export const RIDGE_LASSO: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['linear-regression', 'logistic-regression', 'generalized-linear-models', 'gaussian-process'],
+  relatedSlugs: [
+    'linear-regression',
+    'logistic-regression',
+    'generalized-linear-models',
+    'gaussian-process',
+    'quantile-regression',
+    'stepwise-regression',
+  ],
 
   implementations: {
     python: {

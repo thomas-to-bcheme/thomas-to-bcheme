@@ -247,7 +247,7 @@ export const MATRIX_FACTORIZATION: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['pca', 'k-means', 'two-tower-retrieval'],
+  relatedSlugs: ['pca', 'k-means', 'two-tower-retrieval', 'content-based-filtering', 'association-rules'],
 
   implementations: {
     python: {

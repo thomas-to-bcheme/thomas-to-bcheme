@@ -38,14 +38,25 @@ import { GRADIENT_BOOSTING } from './gradient-boosting';
 import { PROPENSITY_IPTW } from './propensity-iptw';
 import { META_LEARNERS } from './meta-learners';
 import { DOUBLE_MACHINE_LEARNING } from './double-machine-learning';
+import { QUANTILE_REGRESSION } from './quantile-regression';
+import { STEPWISE_REGRESSION } from './stepwise-regression';
+import { CONTENT_BASED_FILTERING } from './content-based-filtering';
+import { HIERARCHICAL_CLUSTERING } from './hierarchical-clustering';
+import { DBSCAN } from './dbscan';
+import { AFFINITY_PROPAGATION } from './affinity-propagation';
+import { ASSOCIATION_RULES } from './association-rules';
+import { GENETIC_ALGORITHM } from './genetic-algorithm';
 
 export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   LINEAR_REGRESSION,
   RIDGE_LASSO,
   LOGISTIC_REGRESSION,
   GENERALIZED_LINEAR_MODELS,
+  QUANTILE_REGRESSION,
+  STEPWISE_REGRESSION,
   K_NEAREST_NEIGHBOURS,
   SUPPORT_VECTOR_MACHINE,
+  CONTENT_BASED_FILTERING,
   NAIVE_BAYES,
   GAUSSIAN_MIXTURE,
   GAUSSIAN_PROCESS,
@@ -56,7 +67,11 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   PCA,
   K_MEANS,
   SPECTRAL_CLUSTERING,
+  HIERARCHICAL_CLUSTERING,
+  DBSCAN,
+  AFFINITY_PROPAGATION,
   MATRIX_FACTORIZATION,
+  ASSOCIATION_RULES,
   ARIMA,
   EXPONENTIAL_SMOOTHING,
   KALMAN_FILTER,
@@ -64,4 +79,5 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   META_LEARNERS,
   DOUBLE_MACHINE_LEARNING,
   INSTRUMENTAL_VARIABLES,
+  GENETIC_ALGORITHM,
 ];

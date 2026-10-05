@@ -6,6 +6,7 @@
  */
 
 import { LATEST_CHANGELOG_VERSION } from './changelog';
+import { SWE_DE_BASE_PATH, SWE_DE_LEVELS } from './sweDe/levels';
 
 // --- Identity ---
 export const SITE_OWNER_NAME = 'Thomas To';
@@ -41,9 +42,10 @@ export const SITE_REGION = 'US-West (SFO)';
 
 // --- Navigation ---
 // Discriminated union: a plain route link, or a dropdown group of related
-// links. Two groups today -- "Interview" (the 4 prep routes) and "AI/ML" (the
-// model reference) -- each collapsing many routes into one top-level slot so
-// the header doesn't overflow at common widths.
+// links. Three groups today -- "Interview" (the 4 prep routes), "AI/ML" (the
+// model reference), and "SWE/DE" (the reading path and its 3 thinking levels,
+// derived from SWE_DE_LEVELS) -- each collapsing many routes into one
+// top-level slot so the header doesn't overflow at common widths.
 //
 // Active state is prefix-matched via isRouteActive (src/lib/nav.ts), not by
 // equality: /ai-ml has ~58 nested model routes, and an exact match would leave
@@ -79,6 +81,14 @@ export const NAV_LINKS: NavEntry[] = [
       { label: 'Optimization', href: '/ai-ml/applied/optimization' },
     ],
   },
+  {
+    type: 'group',
+    label: 'SWE/DE',
+    items: [
+      { label: 'Overview', href: SWE_DE_BASE_PATH },
+      ...SWE_DE_LEVELS.map((level) => ({ label: level.navLabel, href: level.href })),
+    ],
+  },
   { type: 'link', label: 'Jobs', href: '/jobs' },
   { type: 'link', label: 'Hugging Face', href: '/huggingface' },
   { type: 'link', label: 'Projects', href: '/projects' },
@@ -102,6 +112,7 @@ export const FOOTER_NAV_LINKS = [
   { label: 'System Design', href: '/system-design' },
   { label: 'AI/ML', href: '/ai-ml' },
   { label: 'Applied ML', href: '/ai-ml/applied' },
+  { label: 'SWE/DE', href: SWE_DE_BASE_PATH },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
   { label: 'Projects', href: '/projects' },

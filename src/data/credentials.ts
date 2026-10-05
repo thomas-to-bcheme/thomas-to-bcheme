@@ -24,6 +24,7 @@ import type {
   CompetencyStory,
 } from '@/types/credentials';
 import { PUBLICATION_URL } from '@/constants/site';
+import { NORTH_STAR } from '@/constants/northStar';
 
 /**
  * Press features. Grounded in the real published article — do not paraphrase the
@@ -366,7 +367,7 @@ export const COMPETENCY_STORIES: CompetencyStory[] = [
     id: 'handling-ambiguity',
     competency: 'Handling Ambiguity',
     color: 'rose',
-    headline: 'Navigate ambiguity by understanding what to use, when to use it, and why to use it.',
+    headline: NORTH_STAR.quote,
     coreBullets: [
       'Built a 3-axis mental model instead of treating each ambiguous problem as a one-off — an end-to-end lifecycle (design→data→model→backend→frontend→ops), an abstraction ladder (hardware→distributed systems), and a time axis (iteration, legacy, scale).',
       "Applied the same instinct where there was no clean answer either side would fully own: stood up 0-to-1 enterprise and onboarding infrastructure on GCP with no existing template to follow, building it to satisfy HIPAA and legal-compliance requirements for two organizations — Canventa and its parent, STEMCELL Technologies — before either side had fully defined what \"compliant\" meant for this specific system.",

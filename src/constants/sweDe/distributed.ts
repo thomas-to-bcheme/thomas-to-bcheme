@@ -1,0 +1,161 @@
+/**
+ * Distributed-level thinking: partitioning, replication, consensus, delivery
+ * semantics, reusable patterns, and why Kubernetes and Airflow became the
+ * industry-standard control planes, argued from their algorithms first and
+ * their ecosystems second.
+ */
+
+import type { FirstPrinciplesTopic } from './types';
+
+export const DISTRIBUTED_TOPICS: FirstPrinciplesTopic[] = [
+  {
+    id: 'partitioning-replication',
+    navLabel: 'Partitioning + replication',
+    level: 'distributed',
+    title: 'Partitioning and replication',
+    summary: 'Partition to scale beyond one machine; replicate to survive one. Each brings its own failure mode.',
+    what: 'Spread data and work across machines without losing it or serializing on it.',
+    why:
+      'One machine caps throughput and storage and is a single point of failure. Partitioning (sharding) splits data by key so work scales out, but a hot key or a bad partition function concentrates load on one node (skew). Replication keeps copies for availability and read scaling, but copies must agree. Single-leader replication is simple but makes the leader a bottleneck. Multi-leader and leaderless replication accept writes anywhere at the cost of conflict resolution.',
+    how: [
+      'Partition by a high-cardinality key that matches the dominant access pattern: hash partitioning for even spread, range partitioning for ordered scans.',
+      'Choose a replication scheme by write locality and conflict tolerance; use quorums (W + R > N) when leaderless.',
+      'Treat rebalancing as a design concern — consistent hashing or many fixed partitions per node keeps data movement small when nodes join.',
+    ],
+    sourceBookIds: ['designing-data-intensive-applications', 'think-distributed-systems'],
+  },
+  {
+    id: 'consensus-consistency',
+    navLabel: 'Consensus + CAP',
+    level: 'distributed',
+    title: 'Consensus, CAP, and PACELC',
+    summary: 'Agreement needs a majority. Under a partition you trade availability for consistency, and without one, latency for it.',
+    what: 'Decide which parts of the system must agree, and what each agreement costs.',
+    why:
+      'Raft and Paxos let a cluster agree on an ordered log as long as a majority of nodes are up; every committed write waits on a majority round trip. CAP says that during a network partition you must choose between consistency and availability. PACELC adds that even with no partition you trade latency for consistency. Because consensus is expensive, well-designed systems use it only for small, critical state — metadata, leadership, configuration — and keep bulk data on cheaper replication.',
+    how: [
+      'Put coordination state in a consensus store (etcd, ZooKeeper, or KRaft in Kafka); keep bulk data out of it.',
+      'Run clusters of 3 or 5 voters so they tolerate 1 or 2 failures; even counts add cost without adding fault tolerance.',
+      'State each data path\'s consistency requirement explicitly (linearizable, read-your-writes, eventual) instead of inheriting a default.',
+    ],
+    sourceBookIds: ['database-internals', 'designing-data-intensive-applications', 'think-distributed-systems'],
+  },
+  {
+    id: 'delivery-semantics',
+    navLabel: 'Delivery semantics',
+    level: 'distributed',
+    title: 'Delivery semantics, idempotency, and event time',
+    summary: 'Exactly-once is achieved by making retries harmless. Correct results come from event time, not arrival time.',
+    what: 'Produce correct results despite retries, duplicates, and late data.',
+    why:
+      'Networks cannot distinguish a lost message from a slow one, so senders retry and receivers see duplicates. At-least-once delivery plus idempotent or transactional processing gives "effectively-once" results. Separately, events arrive out of order, so grouping by arrival (processing) time gives wrong answers. Windowing by event time, with watermarks that estimate when a window is complete, gives answers that match reality.',
+    how: [
+      'Make every write idempotent: deterministic keys, upserts or MERGE, and deduplication on a stable event id.',
+      'Use the transactional outbox pattern to publish events atomically with a database write.',
+      'Window streaming aggregates by event time with an explicit watermark and an allowed-lateness policy.',
+    ],
+    sourceBookIds: ['streaming-systems', 'kafka-definitive-guide', 'building-event-driven-microservices', 'building-resilient-distributed-systems'],
+  },
+  {
+    id: 'distributed-patterns',
+    navLabel: 'Patterns',
+    level: 'distributed',
+    title: 'Reusable patterns: containers, events, and resilience',
+    summary: 'Named patterns turn failure-handling decisions into building blocks you can reuse and reason about.',
+    what: 'Compose services from known-good patterns instead of inventing coordination each time.',
+    why:
+      'The same problems recur: adding cross-cutting behavior without touching app code, fanning work out and gathering results, electing one worker, keeping services in sync without distributed transactions, and failing gracefully. Named patterns carry tested answers to these, together with their known trade-offs.',
+    how: [
+      'Use container patterns (sidecar, ambassador, adapter) for cross-cutting concerns such as proxies, log shipping, and metrics adaptation.',
+      'Use serving patterns (sharded services, scatter/gather) to scale reads and fan-out queries.',
+      'Use event patterns (event sourcing, CQRS, outbox) to keep services consistent through a shared log rather than shared databases.',
+      'Use resilience patterns (timeouts, retries with backoff and jitter, circuit breakers, bulkheads) so one failure does not cascade.',
+    ],
+    comparison: {
+      caption: 'Distributed patterns and the problem each solves',
+      rowHeader: 'Pattern',
+      columns: ['Problem', 'Mechanism', 'Trade-off'],
+      rows: [
+        { id: 'sidecar', label: 'Sidecar', cells: ['Add behavior without changing the app', 'Co-located container sharing network and volumes', 'Extra resource use and a lifecycle to manage per pod'] },
+        { id: 'ambassador', label: 'Ambassador', cells: ['Hide remote-service complexity', 'Local proxy handling sharding, retries, and discovery', 'One more hop and one more component'] },
+        { id: 'adapter', label: 'Adapter', cells: ['Heterogeneous apps, uniform interface', 'Container translating logs and metrics to a standard', 'Translation can lose fidelity'] },
+        { id: 'scatter-gather', label: 'Scatter/gather', cells: ['Query too large for one node', 'Fan out to shards, merge results', 'Tail latency is set by the slowest shard'] },
+        { id: 'work-queue', label: 'Work queue', cells: ['Bursty batch work', 'Queue plus a scalable worker pool', 'Must handle poison messages and redelivery'] },
+        { id: 'leader-election', label: 'Leader election', cells: ['Exactly one active coordinator', 'Lease in a consensus store', 'Failover gap; split-brain if leases are misused'] },
+        { id: 'event-sourcing', label: 'Event sourcing + CQRS', cells: ['Audit trail and multiple read models', 'Append-only events; projections per query need', 'Eventual consistency between write and read sides'] },
+        { id: 'outbox', label: 'Transactional outbox', cells: ['Dual write to a database and a broker', 'Write the event to an outbox table in the same transaction; relay it to the log', 'Relay lag; consumers must deduplicate'] },
+        { id: 'circuit-breaker', label: 'Circuit breaker + bulkhead', cells: ['Cascading failure', 'Fail fast after repeated errors; isolate resource pools', 'Tuning thresholds; degraded responses'] },
+      ],
+    },
+    sourceBookIds: [
+      'designing-distributed-systems',
+      'building-event-driven-microservices',
+      'release-it',
+      'building-resilient-distributed-systems',
+      'building-distributed-applications-that-work',
+    ],
+  },
+  {
+    id: 'kubernetes',
+    navLabel: 'Kubernetes',
+    level: 'distributed',
+    title: 'Why Kubernetes is the compute standard',
+    summary:
+      'A consistent store, level-triggered reconciliation loops, and an extensible API turn "run this" into a self-healing control system.',
+    what: 'Run heterogeneous workloads (services, batch jobs, Spark executors, Airflow tasks) on shared machines and keep them running.',
+    why:
+      'Kubernetes is a control system. You declare desired state; it is stored in etcd, which replicates it with Raft. Independent controllers each run a loop: observe actual state, compare it to desired state, act to close the gap. The loops are level-triggered — they react to the current state rather than to individual events — so a missed event or a crashed controller heals on the next pass. The scheduler treats placement as bin-packing, which is NP-hard in general. It solves it greedily: first filter out nodes that cannot fit the pod, then score the rest. The deciding property is extensibility: custom resources and operators let any system (the Spark operator, Strimzi for Kafka, Airflow\'s KubernetesExecutor) plug its domain logic into the same reconciliation model.',
+    how: [
+      'Express every workload declaratively and let controllers converge it — never script imperative fix-ups.',
+      'Set resource requests and limits honestly; the scheduler can only bin-pack what it is told.',
+      'Use operators for stateful data systems rather than hand-managed StatefulSets.',
+      'Honest caveat: Kubernetes also won on ecosystem — CNCF governance, managed offerings on every cloud, and the tooling built around them. For a single small service, a managed container platform may be the better answer.',
+    ],
+    comparison: {
+      caption: 'Kubernetes against the alternatives, by scheduling model',
+      rowHeader: 'Orchestrator',
+      columns: ['Scheduling and state model', 'Strength', 'Why it is not the default'],
+      rows: [
+        { id: 'kubernetes', label: 'Kubernetes', cells: ['Shared-state, Raft-backed etcd; level-triggered controllers; filter-then-score scheduler', 'Self-healing, extensible API (CRDs and operators), portable across clouds', 'Operational complexity for small deployments'] },
+        { id: 'nomad', label: 'HashiCorp Nomad', cells: ['Optimistic shared-state scheduling; Raft servers; bin-packing', 'Simpler single binary; runs non-container workloads', 'Smaller ecosystem; fewer data-platform operators'] },
+        { id: 'mesos', label: 'Apache Mesos', cells: ['Two-level scheduling: the master offers resources and frameworks accept them', 'Very large clusters; framework autonomy', 'Frameworks cannot see global state, so placement is harder; largely retired from new deployments'] },
+        { id: 'swarm', label: 'Docker Swarm', cells: ['Raft managers; service-level scheduling', 'Easiest to start with', 'Limited extensibility and ecosystem'] },
+        { id: 'ecs', label: 'AWS ECS', cells: ['Managed control plane; task placement strategies', 'No control plane to run; deep AWS integration', 'Single-cloud; no CRD/operator model'] },
+      ],
+    },
+    sourceBookIds: ['kubernetes-up-and-running', 'kubernetes-patterns', 'designing-distributed-systems'],
+  },
+  {
+    id: 'airflow',
+    navLabel: 'Airflow',
+    level: 'distributed',
+    title: 'Why Airflow is the workflow standard',
+    summary:
+      'DAGs as code, scheduled over data intervals, make every run idempotent, retryable, and backfillable.',
+    what: 'Run dependent batch steps in the right order, on schedule, and recover from failure without manual repair.',
+    why:
+      'A pipeline is a directed acyclic graph of tasks; a topological sort gives a valid execution order, and tasks whose dependencies are met can run in parallel. Airflow\'s key idea is to schedule over data intervals: each DAG run owns a time slice (its logical date), and each task processes exactly that slice. A task that overwrites only its own interval is idempotent, which makes retries, reruns, and historical backfills safe. The scheduler is a loop much like a Kubernetes controller — it compares due intervals and task states to what should exist and creates or queues the gap. Executors decouple that decision from where the work runs (Celery workers, or one Kubernetes pod per task).',
+    how: [
+      'Write tasks as pure functions of their data interval: read the interval\'s input and overwrite the interval\'s output partition.',
+      'Keep heavy compute out of the scheduler; Airflow orchestrates Spark, SQL, and Kubernetes jobs rather than doing the work itself.',
+      'Use asset- or dataset-aware scheduling (Airflow 2.4+, expanded in Airflow 3) when data arrival, not the clock, should trigger a run.',
+      'Honest caveat: Airflow\'s standing is as much ecosystem as algorithm — the earliest mature Python DAG-as-code tool, Apache governance, hundreds of provider integrations, and managed offerings (MWAA, Cloud Composer, Astronomer).',
+    ],
+    comparison: {
+      caption: 'Airflow against the alternatives, by orchestration model',
+      rowHeader: 'Orchestrator',
+      columns: ['Core model', 'Strength', 'When to choose it instead'],
+      rows: [
+        { id: 'airflow', label: 'Apache Airflow', cells: ['Task DAGs scheduled over data intervals; pluggable executors', 'Backfills, retries, a huge provider ecosystem, managed offerings', 'Default for scheduled batch orchestration'] },
+        { id: 'cron', label: 'cron', cells: ['Time trigger per command', 'Zero infrastructure', 'Single independent jobs with no dependencies or history'] },
+        { id: 'luigi', label: 'Luigi', cells: ['Target-based: a task runs if its output is missing', 'Simple, file-oriented idempotency', 'Small pipelines; it has no built-in scheduler'] },
+        { id: 'oozie', label: 'Apache Oozie', cells: ['XML workflows on Hadoop', 'Native Hadoop integration', 'Legacy Hadoop estates only'] },
+        { id: 'dagster', label: 'Dagster', cells: ['Software-defined assets: model the data, derive the tasks', 'Lineage, typing, and testing are first class', 'Asset-centric teams that want lineage-driven orchestration'] },
+        { id: 'prefect', label: 'Prefect', cells: ['Dynamic Python flows built at runtime', 'Pythonic, dynamic branching, light setup', 'Highly dynamic workflows with no fixed DAG shape'] },
+        { id: 'argo', label: 'Argo Workflows', cells: ['Kubernetes CRD; each step is a container', 'Kubernetes-native, language-agnostic, scales with the cluster', 'Kubernetes-first platforms, ML and CI pipelines'] },
+        { id: 'temporal', label: 'Temporal', cells: ['Durable execution: workflow code replayed from an event history', 'Long-running, stateful application workflows with exactly-once semantics', 'Business and microservice workflows rather than scheduled data intervals'] },
+      ],
+    },
+    sourceBookIds: ['data-pipelines-with-airflow', 'data-pipelines-pocket-reference', 'fundamentals-of-data-engineering', 'kubernetes-patterns'],
+  },
+];

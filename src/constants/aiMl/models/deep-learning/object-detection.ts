@@ -13,7 +13,7 @@ import type { AiMlModel } from '../../types';
 export const OBJECT_DETECTION: AiMlModel = {
   slug: 'object-detection',
   name: 'Object Detection Heads (IoU & Box Regression)',
-  aliases: ['Faster R-CNN', 'YOLO', 'SSD', 'RetinaNet', 'DETR', 'Non-maximum suppression'],
+  aliases: ['Faster R-CNN', 'YOLO', 'SSD', 'RetinaNet', 'DETR', 'Non-maximum suppression', 'Fast R-CNN'],
   category: 'deep-learning',
   group: 'spatial',
   kind: 'model',

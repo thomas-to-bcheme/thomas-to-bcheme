@@ -12,7 +12,7 @@ import type { AiMlModel } from '../../types';
 export const DECODER_ONLY_LM: AiMlModel = {
   slug: 'decoder-only-lm',
   name: 'Decoder-Only Language Model',
-  aliases: ['GPT', 'Causal LM', 'Autoregressive transformer', 'LLM', 'Next-token prediction'],
+  aliases: ['GPT', 'Causal LM', 'Autoregressive transformer', 'LLM', 'Next-token prediction', 'Llama', 'LaMDA', 'StableLM'],
   category: 'generative-ai',
   group: 'autoregressive',
   kind: 'model',

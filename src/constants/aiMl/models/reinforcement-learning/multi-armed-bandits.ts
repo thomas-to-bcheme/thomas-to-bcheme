@@ -324,7 +324,15 @@ export const MULTI_ARMED_BANDITS: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['mdp-bellman', 'q-learning', 'ppo-trpo', 'gaussian-process', 'propensity-iptw', 'matrix-factorization'],
+  relatedSlugs: [
+    'mdp-bellman',
+    'q-learning',
+    'ppo-trpo',
+    'gaussian-process',
+    'propensity-iptw',
+    'matrix-factorization',
+    'genetic-algorithm',
+  ],
 
   implementations: {
     python: {

@@ -268,7 +268,7 @@ export const GAUSSIAN_MIXTURE: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['naive-bayes', 'k-means', 'gaussian-process'],
+  relatedSlugs: ['naive-bayes', 'k-means', 'gaussian-process', 'hierarchical-clustering', 'dbscan'],
 
   implementations: {
     python: {

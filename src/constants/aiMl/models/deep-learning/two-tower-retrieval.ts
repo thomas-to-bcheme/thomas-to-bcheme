@@ -3,7 +3,7 @@ import type { AiMlModel } from '../../types';
 export const TWO_TOWER_RETRIEVAL: AiMlModel = {
   slug: 'two-tower-retrieval',
   name: 'Two-Tower Retrieval',
-  aliases: ['Dual encoder', 'Bi-encoder', 'Siamese retrieval network'],
+  aliases: ['Dual encoder', 'Bi-encoder', 'Siamese retrieval network', 'Two-Tower Model'],
   category: 'deep-learning',
   group: 'retrieval',
   kind: 'model',
@@ -223,7 +223,7 @@ export const TWO_TOWER_RETRIEVAL: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['transformer'],
+  relatedSlugs: ['transformer', 'content-based-filtering'],
 
   implementations: {
     python: {

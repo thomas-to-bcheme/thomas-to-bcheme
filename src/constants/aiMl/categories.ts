@@ -83,6 +83,14 @@ export const AI_ML_CATEGORIES: AiMlCategory[] = [
         abstraction:
           'The most specialized group in the category, and the one that changes the question. Everything above estimates E[Y|X]; these estimate E[Y|do(X)]. The machinery is the same regression — what is added is an identification argument, and a better predictor is not a better estimator here.',
       },
+      {
+        id: 'mathematical-optimization',
+        label: 'Mathematical Optimization',
+        summary:
+          'Procedures that search for the best decision under constraints, rather than fit parameters to data.',
+        abstraction:
+          'The group that stops learning and starts deciding. Every group above uses an optimizer to fit a model; here the optimizer IS the deliverable — exact over a convex feasible region (linear and integer programming) or stochastic over a landscape with no usable gradient (genetic algorithms). It sits last because it assumes the most: that the objective and constraints can be written down.',
+      },
     ],
   },
   {

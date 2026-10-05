@@ -247,7 +247,14 @@ export const SPECTRAL_CLUSTERING: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['k-means', 'pca', 'gaussian-mixture'],
+  relatedSlugs: [
+    'k-means',
+    'pca',
+    'gaussian-mixture',
+    'hierarchical-clustering',
+    'dbscan',
+    'affinity-propagation',
+  ],
 
   implementations: {
     python: {

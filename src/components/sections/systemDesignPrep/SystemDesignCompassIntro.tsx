@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { Quote } from 'lucide-react';
 import SweCompassDiagram from '@/components/features/SweCompassDiagram';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { FRAMING_DECISION_TREE } from '@/constants/systemDesignPrep/framingDecisionTree';
+import { NorthStarCallout, NorthStarQuestions } from '@/components/ui/NorthStarCallout';
 
 const EXTERNAL_LINK_CLASS = 'font-semibold text-blue-700 dark:text-blue-400 hover:underline';
 
@@ -64,36 +63,9 @@ const SystemDesignCompassIntro = () => (
           architecture judged by long-term maintainability, not just greenfield design. That&apos;s the
           frame this whole page is built on.
         </p>
-        <div className="rounded-xl border border-blue-100 dark:border-blue-900/40 bg-blue-50/50 dark:bg-blue-900/10 p-5 sm:p-6">
-          <span className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 mb-3">
-            <Quote size={12} className="stroke-[2.5]" /> North Star
-          </span>
-          <blockquote className="text-sm sm:text-base italic text-blue-900 dark:text-blue-200 leading-relaxed border-l-2 border-blue-300 dark:border-blue-700 pl-4">
-            &quot;Navigate ambiguity by understanding what to use, when to use it, and why to use
-            it.&quot;
-          </blockquote>
-          <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mt-3">— Thomas To</p>
-        </div>
+        <NorthStarCallout />
         <div>
-          <h3 className="text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-3">
-            Applying the North Star — three questions, in order
-          </h3>
-          <ol className="space-y-3">
-            {FRAMING_DECISION_TREE.map((decision) => (
-              <li key={decision.id} className="flex gap-3">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-xs font-bold text-blue-700 dark:text-blue-400">
-                  {decision.stepNumber}
-                </span>
-                <div>
-                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">{decision.question}</p>
-                  <p>{decision.focus}</p>
-                  <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">
-                    <span className="font-semibold">Unlocks:</span> {decision.unlocks}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <NorthStarQuestions />
           <p className="mt-4">
             The order is the point. Whether the data leads you toward a data-intensive pipeline or a
             customer-facing frontend, the fundamentals don&apos;t change — the what bounds the why, and

@@ -38,6 +38,8 @@ export { AI_ML_CATEGORIES } from './categories';
 export { APPLIED_DOMAINS } from './appliedDomains';
 export { LANGUAGE_STANDARDS, type LanguageStandard } from './languageStandards';
 export { DECISION_TREE, type DecisionTreeNode, type DecisionTarget, type DecisionTargetKind } from './decisionTree';
+export { PROBLEM_GENRES } from './problemGenres';
+export { SIMILARITY_METRICS } from './similarityMetrics';
 
 /** Canonical order: categories general -> niche, models general -> niche within. */
 export const AI_ML_MODELS: AiMlModel[] = [

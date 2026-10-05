@@ -291,7 +291,14 @@ export const ANN_INDEX: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['two-tower-retrieval', 'k-nearest-neighbours', 'k-means', 'contrastive-embeddings', 'node2vec'],
+  relatedSlugs: [
+    'two-tower-retrieval',
+    'k-nearest-neighbours',
+    'k-means',
+    'contrastive-embeddings',
+    'node2vec',
+    'content-based-filtering',
+  ],
 
   implementations: {
     python: {

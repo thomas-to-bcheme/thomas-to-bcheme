@@ -31,10 +31,27 @@ import {
 import { LANGUAGE_STANDARDS } from '../src/constants/aiMl/languageStandards';
 import { DECISION_TREE } from '../src/constants/aiMl/decisionTree';
 import { OPERATIONAL_GOALS } from '../src/constants/aiMl/operationalGoals';
+import { PROBLEM_GENRES } from '../src/constants/aiMl/problemGenres';
+import { SIMILARITY_METRICS } from '../src/constants/aiMl/similarityMetrics';
+import {
+  chebyshev,
+  correlationCovariance,
+  cosine,
+  dot,
+  editDistance,
+  euclidean,
+  mahalanobis2d,
+  manhattan,
+  pearson,
+  setOverlap,
+  vennCentreDistance,
+  circleLensArea,
+} from '../src/lib/similarity';
 import {
   AI_ML_LANGUAGES,
   AI_ML_STAGES,
   MIN_MODELS_PER_CATEGORY,
+  VECTORIZATION_LEVELS,
   type AiMlModel,
   type CodeLanguageId,
 } from '../src/constants/aiMl/types';
@@ -495,6 +512,146 @@ function checkBundleSafety(failures: string[]): void {
 }
 
 // ---------------------------------------------------------------------------
+// Problem genres and similarity metrics (the /ai-ml landscape section)
+// ---------------------------------------------------------------------------
+
+/** "Decision Tree (CART)" also answers to "Decision Tree". */
+function modelLabels(model: AiMlModel): Set<string> {
+  const withoutParenthetical = model.name.replace(/\s*\([^)]*\)\s*$/, '');
+  return new Set([model.name, withoutParenthetical, ...model.aliases].map((label) => label.toLowerCase()));
+}
+
+function checkProblemGenres(failures: string[]): void {
+  const genreIds = new Set<string>();
+  const metricIds = new Set(SIMILARITY_METRICS.map((metric) => metric.id));
+
+  for (const genre of PROBLEM_GENRES) {
+    if (genreIds.has(genre.id)) failures.push(`duplicate problem genre id "${genre.id}"`);
+    genreIds.add(genre.id);
+
+    for (const field of ['label', 'question', 'output', 'typicalObjective', 'metricRationale'] as const) {
+      if (!genre[field].trim()) failures.push(`problem genre "${genre.id}" has an empty ${field}`);
+    }
+
+    const { anchor } = genre;
+    if (anchor.kind === 'domain' && !APPLIED_DOMAINS.some((domain) => domain.id === anchor.id)) {
+      failures.push(`problem genre "${genre.id}" anchors to unknown domain "${anchor.id}"`);
+    }
+    if (anchor.kind === 'task-type' && !AI_ML_MODELS.some((model) => model.taskTypes.includes(anchor.id))) {
+      failures.push(`problem genre "${genre.id}" anchors to task type "${anchor.id}" that no model declares`);
+    }
+
+    if (genre.leaves.length === 0) failures.push(`problem genre "${genre.id}" has no leaves`);
+    const leafSlugs = new Set<string>();
+    for (const leaf of genre.leaves) {
+      if (leafSlugs.has(leaf.slug)) failures.push(`problem genre "${genre.id}" lists "${leaf.slug}" twice`);
+      leafSlugs.add(leaf.slug);
+
+      const model = getModelBySlug(leaf.slug);
+      if (!model) {
+        failures.push(`problem genre "${genre.id}" leaf "${leaf.slug}" is not a registered model`);
+        continue;
+      }
+      const labels = modelLabels(model);
+      for (const label of [leaf.label, ...(leaf.examples ?? [])]) {
+        if (!labels.has(label.toLowerCase())) {
+          failures.push(
+            `problem genre "${genre.id}" leaf "${leaf.slug}" shows "${label}", which is not the model's name or an alias`,
+          );
+        }
+      }
+    }
+
+    if (genre.metricIds.length === 0) failures.push(`problem genre "${genre.id}" lists no metrics`);
+    for (const metricId of genre.metricIds) {
+      if (!metricIds.has(metricId)) {
+        failures.push(`problem genre "${genre.id}" references unknown metric "${metricId}"`);
+      }
+    }
+  }
+}
+
+function checkSimilarityMetrics(failures: string[], warnings: string[]): void {
+  const seen = new Set<string>();
+  const levelIds = new Set(VECTORIZATION_LEVELS.map((level) => level.id));
+  const referenced = new Set(PROBLEM_GENRES.flatMap((genre) => genre.metricIds));
+
+  for (const metric of SIMILARITY_METRICS) {
+    if (seen.has(metric.id)) failures.push(`duplicate similarity metric id "${metric.id}"`);
+    seen.add(metric.id);
+
+    if (!levelIds.has(metric.representation)) {
+      failures.push(`metric "${metric.id}" sits on unknown vectorization level "${metric.representation}"`);
+    }
+    for (const field of ['coordinateSystem', 'foundation', 'whenToUse', 'whyNotAlternatives', 'failureMode'] as const) {
+      if (!metric[field].trim()) failures.push(`metric "${metric.id}" has an empty ${field}`);
+    }
+    for (const tex of [metric.expression.formula, ...metric.expression.symbols.map((entry) => entry.symbol)]) {
+      const error = renderKatex(tex);
+      if (error) failures.push(`metric "${metric.id}" KaTeX does not render: ${error}`);
+    }
+    for (const slug of metric.relatedSlugs) {
+      if (!getModelBySlug(slug)) failures.push(`metric "${metric.id}" relates to unknown model "${slug}"`);
+    }
+    if (!referenced.has(metric.id)) {
+      warnings.push(`metric "${metric.id}" is not used by any problem genre`);
+    }
+  }
+}
+
+/**
+ * The explorer renders these functions live, so a regression in the arithmetic
+ * would teach the reader something false. Known values, Arrange-Act-Assert.
+ */
+function checkSimilarityMath(failures: string[]): void {
+  const TOLERANCE = 1e-6;
+  const cases: { name: string; actual: number | null; expected: number | null }[] = [
+    { name: 'dot([1,2,3],[4,5,6])', actual: dot([1, 2, 3], [4, 5, 6]), expected: 32 },
+    { name: 'euclidean([0,0],[3,4])', actual: euclidean([0, 0], [3, 4]), expected: 5 },
+    { name: 'manhattan([0,0],[3,4])', actual: manhattan([0, 0], [3, 4]), expected: 7 },
+    { name: 'chebyshev([0,0],[3,4])', actual: chebyshev([0, 0], [3, 4]), expected: 4 },
+    { name: 'cosine(orthogonal)', actual: cosine([1, 0], [0, 1]), expected: 0 },
+    { name: 'cosine(scaled copy)', actual: cosine([1, 2], [3, 6]), expected: 1 },
+    { name: 'cosine(zero vector)', actual: cosine([0, 0], [1, 1]), expected: null },
+    { name: 'pearson(offset copy)', actual: pearson([1, 2, 3, 4], [11, 12, 13, 14]), expected: 1 },
+    { name: 'pearson(reversed)', actual: pearson([1, 2, 3], [3, 2, 1]), expected: -1 },
+    { name: 'pearson(constant)', actual: pearson([2, 2, 2], [1, 2, 3]), expected: null },
+    {
+      name: 'mahalanobis(identity) equals euclidean',
+      actual: mahalanobis2d([1, 2], [4, 6], correlationCovariance(0)),
+      expected: 5,
+    },
+    { name: 'mahalanobis(singular)', actual: mahalanobis2d([1, 2], [4, 6], correlationCovariance(1)), expected: null },
+    { name: 'jaccard({a,b},{b,c})', actual: setOverlap(new Set(['a', 'b']), new Set(['b', 'c'])).jaccard, expected: 1 / 3 },
+    { name: 'jaccard(empty, empty)', actual: setOverlap(new Set(), new Set()).jaccard, expected: null },
+    { name: 'editDistance(kitten, sitting)', actual: editDistance('kitten', 'sitting').distance, expected: 3 },
+    { name: 'editDistance(empty, abc)', actual: editDistance('', 'abc').distance, expected: 3 },
+    {
+      name: 'venn bisection hits its target overlap',
+      actual: circleLensArea(1, 1, vennCentreDistance(1, 1, 1)),
+      expected: 1,
+    },
+  ];
+
+  for (const testCase of cases) {
+    const isEqual =
+      testCase.expected === null || testCase.actual === null
+        ? testCase.actual === testCase.expected
+        : Math.abs(testCase.actual - testCase.expected) < TOLERANCE;
+    if (!isEqual) {
+      failures.push(`similarity self-test ${testCase.name}: expected ${testCase.expected}, got ${testCase.actual}`);
+    }
+  }
+
+  // The optimal alignment path must end on the answer cell.
+  const kitten = editDistance('kitten', 'sitting');
+  const lastStep = kitten.path[kitten.path.length - 1];
+  if (!lastStep || lastStep.row !== 6 || lastStep.col !== 7) {
+    failures.push('similarity self-test editDistance path does not end at the bottom-right cell');
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Complete checks — only once a category's content has landed
 // ---------------------------------------------------------------------------
 
@@ -671,6 +828,9 @@ function main(): void {
   checkOperationalGoals(failures);
   checkImplementationShape(failures, warnings);
   checkBundleSafety(failures);
+  checkProblemGenres(failures);
+  checkSimilarityMetrics(failures, warnings);
+  checkSimilarityMath(failures);
 
   if (mode === 'complete') {
     const complete = runCompleteChecks();
@@ -694,6 +854,8 @@ function main(): void {
     domain_count: APPLIED_DOMAINS.length,
     tree_nodes: DECISION_TREE.length,
     operational_goals: OPERATIONAL_GOALS.length,
+    problem_genres: PROBLEM_GENRES.length,
+    similarity_metrics: SIMILARITY_METRICS.length,
     warning_count: warnings.length,
   });
   process.exit(0);

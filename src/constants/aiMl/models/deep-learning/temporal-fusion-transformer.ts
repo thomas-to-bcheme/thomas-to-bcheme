@@ -285,7 +285,7 @@ export const TEMPORAL_FUSION_TRANSFORMER: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['transformer', 'lstm', 'deepar', 'n-beats', 'gradient-boosting'],
+  relatedSlugs: ['transformer', 'lstm', 'deepar', 'n-beats', 'gradient-boosting', 'quantile-regression'],
 
   implementations: {
     python: {

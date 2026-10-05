@@ -272,7 +272,7 @@ export const GENERALIZED_LINEAR_MODELS: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['linear-regression', 'logistic-regression', 'ridge-lasso'],
+  relatedSlugs: ['linear-regression', 'logistic-regression', 'ridge-lasso', 'stepwise-regression'],
 
   implementations: {
     python: {

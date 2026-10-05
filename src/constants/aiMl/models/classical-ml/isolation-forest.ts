@@ -230,7 +230,7 @@ export const ISOLATION_FOREST: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['random-forest', 'decision-tree', 'gaussian-mixture'],
+  relatedSlugs: ['random-forest', 'decision-tree', 'gaussian-mixture', 'dbscan'],
 
   implementations: {
     python: {

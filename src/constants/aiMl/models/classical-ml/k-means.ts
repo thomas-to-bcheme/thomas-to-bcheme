@@ -14,7 +14,7 @@ import type { AiMlModel } from '../../types';
 export const K_MEANS: AiMlModel = {
   slug: 'k-means',
   name: 'k-Means Clustering',
-  aliases: ['Lloyd’s algorithm', 'k-means++', 'Vector quantization', 'Mini-batch k-means'],
+  aliases: ['Lloyd’s algorithm', 'k-means++', 'Vector quantization', 'Mini-batch k-means', 'K-Means'],
   category: 'classical-ml',
   group: 'structure',
   kind: 'model',
@@ -268,7 +268,14 @@ export const K_MEANS: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['gaussian-mixture', 'pca', 'spectral-clustering'],
+  relatedSlugs: [
+    'gaussian-mixture',
+    'pca',
+    'spectral-clustering',
+    'hierarchical-clustering',
+    'dbscan',
+    'affinity-propagation',
+  ],
 
   implementations: {
     python: {

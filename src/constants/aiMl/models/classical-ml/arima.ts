@@ -13,7 +13,7 @@ import type { AiMlModel } from '../../types';
 export const ARIMA: AiMlModel = {
   slug: 'arima',
   name: 'ARIMA / SARIMAX',
-  aliases: ['Box-Jenkins', 'SARIMA', 'SARIMAX', 'ARMA', 'auto.arima'],
+  aliases: ['Box-Jenkins', 'SARIMA', 'SARIMAX', 'ARMA', 'auto.arima', 'ARIMA'],
   category: 'classical-ml',
   group: 'classical-time-series',
   kind: 'model',

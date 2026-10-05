@@ -232,7 +232,13 @@ export const GRADIENT_BOOSTING: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['random-forest', 'decision-tree', 'logistic-regression'],
+  relatedSlugs: [
+    'random-forest',
+    'decision-tree',
+    'logistic-regression',
+    'quantile-regression',
+    'genetic-algorithm',
+  ],
 
   implementations: {
     python: {

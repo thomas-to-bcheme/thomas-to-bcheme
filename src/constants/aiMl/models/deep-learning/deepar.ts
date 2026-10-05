@@ -283,7 +283,14 @@ export const DEEPAR: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['n-beats', 'temporal-fusion-transformer', 'lstm', 'gaussian-process', 'arima'],
+  relatedSlugs: [
+    'n-beats',
+    'temporal-fusion-transformer',
+    'lstm',
+    'gaussian-process',
+    'arima',
+    'quantile-regression',
+  ],
 
   implementations: {
     python: {

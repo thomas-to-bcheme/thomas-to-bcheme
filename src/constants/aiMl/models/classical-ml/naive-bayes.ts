@@ -14,7 +14,7 @@ import type { AiMlModel } from '../../types';
 export const NAIVE_BAYES: AiMlModel = {
   slug: 'naive-bayes',
   name: 'Naive Bayes',
-  aliases: ['Multinomial NB', 'Bernoulli NB', 'Gaussian NB', 'Idiot Bayes'],
+  aliases: ['Multinomial NB', 'Bernoulli NB', 'Gaussian NB', 'Idiot Bayes', 'Multiclass Naive Bayes'],
   category: 'classical-ml',
   group: 'probabilistic',
   kind: 'model',
@@ -230,7 +230,7 @@ export const NAIVE_BAYES: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['logistic-regression', 'gaussian-mixture', 'decision-tree'],
+  relatedSlugs: ['logistic-regression', 'gaussian-mixture', 'decision-tree', 'association-rules'],
 
   implementations: {
     python: {

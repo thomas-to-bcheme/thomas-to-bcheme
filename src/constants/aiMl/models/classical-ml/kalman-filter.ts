@@ -14,7 +14,7 @@ import type { AiMlModel } from '../../types';
 export const KALMAN_FILTER: AiMlModel = {
   slug: 'kalman-filter',
   name: 'Kalman Filter & State-Space Models',
-  aliases: ['Linear-Gaussian state space', 'LQE', 'EKF / UKF (variants)', 'RTS smoother', 'Structural time series'],
+  aliases: ['Linear-Gaussian state space', 'LQE', 'EKF / UKF (variants)', 'RTS smoother', 'Structural time series', 'BayesDLM', 'Dynamic linear model'],
   category: 'classical-ml',
   group: 'classical-time-series',
   kind: 'model',

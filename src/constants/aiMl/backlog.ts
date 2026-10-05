@@ -34,9 +34,12 @@ export const AI_ML_BACKLOG: BacklogEntry[] = [
   { slug: 'ridge-lasso', name: 'Ridge, Lasso & Elastic Net', category: 'classical-ml', group: 'linear-models' },
   { slug: 'logistic-regression', name: 'Logistic Regression', category: 'classical-ml', group: 'linear-models' },
   { slug: 'generalized-linear-models', name: 'Generalized Linear Models', category: 'classical-ml', group: 'linear-models' },
+  { slug: 'quantile-regression', name: 'Quantile Regression', category: 'classical-ml', group: 'linear-models' },
+  { slug: 'stepwise-regression', name: 'Stepwise Regression', category: 'classical-ml', group: 'linear-models' },
 
   { slug: 'k-nearest-neighbours', name: 'k-Nearest Neighbours', category: 'classical-ml', group: 'instance-and-kernel' },
   { slug: 'support-vector-machine', name: 'Support Vector Machine', category: 'classical-ml', group: 'instance-and-kernel' },
+  { slug: 'content-based-filtering', name: 'Content-Based Filtering', category: 'classical-ml', group: 'instance-and-kernel' },
 
   { slug: 'naive-bayes', name: 'Naive Bayes', category: 'classical-ml', group: 'probabilistic' },
   { slug: 'gaussian-mixture', name: 'Gaussian Mixture Models (EM)', category: 'classical-ml', group: 'probabilistic' },
@@ -50,7 +53,11 @@ export const AI_ML_BACKLOG: BacklogEntry[] = [
   { slug: 'pca', name: 'Principal Component Analysis', category: 'classical-ml', group: 'structure' },
   { slug: 'k-means', name: 'k-Means Clustering', category: 'classical-ml', group: 'structure' },
   { slug: 'spectral-clustering', name: 'Spectral Clustering', category: 'classical-ml', group: 'structure' },
+  { slug: 'hierarchical-clustering', name: 'Hierarchical (Agglomerative) Clustering', category: 'classical-ml', group: 'structure' },
+  { slug: 'dbscan', name: 'DBSCAN', category: 'classical-ml', group: 'structure' },
+  { slug: 'affinity-propagation', name: 'Affinity Propagation', category: 'classical-ml', group: 'structure' },
   { slug: 'matrix-factorization', name: 'Matrix Factorization', category: 'classical-ml', group: 'structure' },
+  { slug: 'association-rules', name: 'Association Rules (Apriori / FP-Growth)', category: 'classical-ml', group: 'structure' },
 
   { slug: 'arima', name: 'ARIMA / SARIMAX', category: 'classical-ml', group: 'classical-time-series' },
   { slug: 'exponential-smoothing', name: 'Exponential Smoothing (Holt-Winters)', category: 'classical-ml', group: 'classical-time-series' },
@@ -61,12 +68,17 @@ export const AI_ML_BACKLOG: BacklogEntry[] = [
   { slug: 'double-machine-learning', name: 'Double Machine Learning', category: 'classical-ml', group: 'causal-estimation' },
   { slug: 'instrumental-variables', name: 'Instrumental Variables & Difference-in-Differences', category: 'classical-ml', group: 'causal-estimation' },
 
+  { slug: 'linear-programming', name: 'Linear & Integer Programming', category: 'classical-ml', group: 'mathematical-optimization' },
+  { slug: 'genetic-algorithm', name: 'Genetic Algorithms & Stochastic Search', category: 'classical-ml', group: 'mathematical-optimization' },
+
   // --------------------------------------------------------------- Deep Learning
   { slug: 'perceptron', name: 'Perceptron', category: 'deep-learning', group: 'foundations' },
   { slug: 'mlp', name: 'Multilayer Perceptron', category: 'deep-learning', group: 'foundations' },
 
   { slug: 'cnn', name: 'Convolutional Neural Network', category: 'deep-learning', group: 'spatial' },
   { slug: 'object-detection', name: 'Object Detection Heads (IoU & Box Regression)', category: 'deep-learning', group: 'spatial' },
+  { slug: 'resnet', name: 'Residual Network (ResNet)', category: 'deep-learning', group: 'spatial' },
+  { slug: 'u-net', name: 'U-Net', category: 'deep-learning', group: 'spatial' },
 
   { slug: 'rnn', name: 'Recurrent Neural Network', category: 'deep-learning', group: 'sequence' },
   { slug: 'lstm', name: 'Long Short-Term Memory', category: 'deep-learning', group: 'sequence' },
@@ -88,6 +100,7 @@ export const AI_ML_BACKLOG: BacklogEntry[] = [
 
   { slug: 'autoencoder', name: 'Autoencoder', category: 'deep-learning', group: 'representation' },
 
+  { slug: 'word2vec', name: 'Word2Vec (Skip-gram & CBOW)', category: 'deep-learning', group: 'retrieval' },
   { slug: 'two-tower-retrieval', name: 'Two-Tower Retrieval', category: 'deep-learning', group: 'retrieval' },
   { slug: 'ann-index', name: 'ANN Index & Vector Search (HNSW, IVF-PQ)', category: 'deep-learning', group: 'retrieval' },
 

@@ -3,7 +3,7 @@ import type { AiMlModel } from '../../types';
 export const CNN: AiMlModel = {
   slug: 'cnn',
   name: 'Convolutional Neural Network',
-  aliases: ['CNN', 'ConvNet'],
+  aliases: ['CNN', 'ConvNet', 'AlexNet', 'VGG'],
   category: 'deep-learning',
   group: 'spatial',
   kind: 'model',

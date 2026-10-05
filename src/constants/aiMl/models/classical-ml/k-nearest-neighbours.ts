@@ -252,7 +252,14 @@ export const K_NEAREST_NEIGHBOURS: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['support-vector-machine', 'k-means', 'ann-index'],
+  relatedSlugs: [
+    'support-vector-machine',
+    'k-means',
+    'ann-index',
+    'content-based-filtering',
+    'affinity-propagation',
+    'association-rules',
+  ],
 
   implementations: {
     python: {

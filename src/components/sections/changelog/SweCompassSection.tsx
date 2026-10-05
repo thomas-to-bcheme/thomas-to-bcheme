@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Quote } from 'lucide-react';
+import { NorthStarCallout } from '@/components/ui/NorthStarCallout';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import SweCompassDiagram, { type SweCompassAxis } from '@/components/features/SweCompassDiagram';
 
@@ -156,18 +156,7 @@ const SweCompassSection = () => {
           </Link>{' '}
           — this page doesn&apos;t repeat that depth, it names the parallel.
         </p>
-        <div className="rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-900/10 p-5 sm:p-6">
-          <span className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-3">
-            <Quote size={12} className="stroke-[2.5]" /> Why This Pattern
-          </span>
-          <blockquote className="text-sm sm:text-base italic text-emerald-900 dark:text-emerald-200 leading-relaxed border-l-2 border-emerald-300 dark:border-emerald-700 pl-4">
-            &quot;Navigate ambiguity by understanding what to use, when to use it, and why to use
-            it.&quot;
-          </blockquote>
-          <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mt-3">
-            — Thomas To
-          </p>
-        </div>
+        <NorthStarCallout tone="emerald" label="Why This Pattern" />
       </div>
     </div>
   );

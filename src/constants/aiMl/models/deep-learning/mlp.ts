@@ -14,7 +14,7 @@ import type { AiMlModel } from '../../types';
 export const MLP: AiMlModel = {
   slug: 'mlp',
   name: 'Multilayer Perceptron',
-  aliases: ['MLP', 'Feedforward network', 'Fully-connected network', 'Dense network', 'Backpropagation'],
+  aliases: ['MLP', 'Feedforward network', 'Fully-connected network', 'Dense network', 'Backpropagation', 'Neural Networks'],
   category: 'deep-learning',
   group: 'foundations',
   kind: 'model',

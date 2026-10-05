@@ -231,7 +231,13 @@ export const RANDOM_FOREST: AiMlModel = {
     },
   ],
 
-  relatedSlugs: ['decision-tree', 'gradient-boosting', 'isolation-forest'],
+  relatedSlugs: [
+    'decision-tree',
+    'gradient-boosting',
+    'isolation-forest',
+    'stepwise-regression',
+    'genetic-algorithm',
+  ],
 
   implementations: {
     python: {

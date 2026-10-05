@@ -7,12 +7,13 @@ import AiMlPageShell from '@/components/sections/aiMl/AiMlPageShell';
 import CategoryComparison from '@/components/sections/aiMl/CategoryComparison';
 import LanguageStandardsPanel from '@/components/sections/aiMl/LanguageStandardsPanel';
 import ModelDecisionTree from '@/components/sections/aiMl/ModelDecisionTree';
+import ProblemGenreSection from '@/components/sections/aiMl/ProblemGenreSection';
 import { AI_ML_MODELS, BREADTH_DOMAINS, FEATURED_DOMAINS } from '@/constants/aiMl';
 
 export const metadata: Metadata = {
   title: 'AI/ML Model Reference — Thomas To',
   description:
-    'A reasoning path through classical machine learning, deep learning, generative AI, and reinforcement learning — organized general to niche, with each model\'s objective, optimization procedure, applied-domain fit, and implementations in Python, C/C++, and Rust progressing from intuitive to optimized.',
+    'A reasoning path through classical machine learning, deep learning, generative AI, and reinforcement learning: an interactive map of problem genres, a similarity-metric explorer (Jaccard, cosine, Euclidean, Mahalanobis, edit distance), then each model\'s objective, optimization procedure, applied-domain fit, and implementations in Python, C/C++, and Rust progressing from intuitive to optimized.',
   alternates: { canonical: '/ai-ml' },
 };
 
@@ -31,8 +32,14 @@ export default function AiMlHubPage() {
       backHref="/"
       backLabel="Back to home"
     >
+      <ProblemGenreSection />
+
       <section id="decision-tree" className={SECTION_CLASS}>
         <SectionHeading eyebrow="Where to start" title="A decision path, general to niche" />
+        <p className="mb-4 max-w-3xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          Once you know the genre, these questions narrow it to a family and then to a model, by what you are producing, what the
+          data looks like, and what constrains you.
+        </p>
         <ModelDecisionTree />
       </section>
 

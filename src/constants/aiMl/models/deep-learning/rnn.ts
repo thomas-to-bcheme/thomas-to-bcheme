@@ -14,7 +14,7 @@ import type { AiMlModel } from '../../types';
 export const RNN: AiMlModel = {
   slug: 'rnn',
   name: 'Recurrent Neural Network',
-  aliases: ['Vanilla RNN', 'Elman network', 'BPTT', 'Simple recurrent network'],
+  aliases: ['Vanilla RNN', 'Elman network', 'BPTT', 'Simple recurrent network', 'RNN'],
   category: 'deep-learning',
   group: 'sequence',
   kind: 'model',
