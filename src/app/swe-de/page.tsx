@@ -9,9 +9,11 @@ import AiMlPageShell from '@/components/sections/aiMl/AiMlPageShell';
 import FoundationsAccordion from '@/components/sections/systemDesignPrep/foundations/FoundationsAccordion';
 import BookCard from '@/components/sections/sweDe/BookCard';
 import BookSequence from '@/components/sections/sweDe/BookSequence';
+import LifecycleStakeholderSection from '@/components/sections/sweDe/LifecycleStakeholderSection';
+import TopicFigure from '@/components/sections/sweDe/figures/TopicFigure';
 import PathAssessment from '@/components/sections/sweDe/PathAssessment';
 import ReadingPathStages from '@/components/sections/sweDe/ReadingPathStages';
-import { BODY_TEXT_CLASS, FOCUS_RING, SECTION_CLASS } from '@/components/sections/sweDe/styles';
+import { BODY_TEXT_CLASS, FOCUS_RING, LINK_CLASS, SECTION_CLASS } from '@/components/sections/sweDe/styles';
 import {
   BOOK_TRACK_LABELS,
   BOOK_TRACK_ORDER,
@@ -20,23 +22,28 @@ import {
   START_HERE_PATH,
   SWE_DE_BASE_PATH,
   SWE_DE_LEVELS,
+  LEVELS_STACK_FIGURE,
+  getLevelById,
 } from '@/constants/sweDe';
 
 export const metadata: Metadata = {
   title: 'SWE/DE Reading Path — Thomas To',
   description:
-    'An O\'Reilly reading path for data engineering end to end, then software engineering, ordered hardware → application → distributed — with first-principles explanations of CPU-bound data work, storage engines (B-tree vs LSM-tree), SQL and Spark execution, and why Kubernetes and Airflow are the standards.',
+    'An O\'Reilly reading path that starts with the data engineering lifecycle and the cross-functional stakeholders around it, then covers data engineering end to end, then software engineering, ordered hardware → application → distributed — with first-principles explanations of CPU-bound data work, storage engines (B-tree vs LSM-tree), SQL and Spark execution, and why Kubernetes and Airflow are the standards.',
   alternates: { canonical: SWE_DE_BASE_PATH },
 };
 
 const SECTIONS = [
+  { id: 'lifecycle', label: 'Lifecycle' },
   { id: 'north-star', label: 'North Star' },
   { id: 'assessment', label: 'Assessment' },
   { id: 'start-here', label: 'Start here' },
   { id: 'reading-path', label: 'Reading path' },
-  { id: 'levels', label: 'Three levels' },
+  { id: 'levels', label: 'Four levels' },
   { id: 'books', label: 'All books' },
 ];
+
+const pipelinesLevel = getLevelById('pipelines');
 
 const booksByTrack = BOOK_TRACK_ORDER.map((track) => ({
   track,
@@ -54,6 +61,20 @@ export default function SweDeOverviewPage() {
       backLabel="Back to home"
     >
       <PageSectionNav items={SECTIONS} />
+
+      <section id="lifecycle" className={SECTION_CLASS}>
+        <SectionHeading eyebrow="Fundamentals" title="The data engineering lifecycle, and who it talks to" />
+        <LifecycleStakeholderSection />
+        {pipelinesLevel && (
+          <p className={`mt-6 max-w-3xl ${BODY_TEXT_CLASS}`}>
+            Preparing for a data engineering interview?{' '}
+            <Link href={pipelinesLevel.href} className={`${LINK_CLASS} rounded-sm ${FOCUS_RING}`}>
+              Start at the Pipelines level
+            </Link>
+            , then return to the hardware, application, and distributed levels for the machinery underneath.
+          </p>
+        )}
+      </section>
 
       <section id="north-star" className={SECTION_CLASS}>
         <SectionHeading eyebrow="How to read this" title="What to use, when, and why" />
@@ -91,7 +112,7 @@ export default function SweDeOverviewPage() {
       </section>
 
       <section id="reading-path" className={SECTION_CLASS}>
-        <SectionHeading eyebrow="The full path" title="Hardware → code → orchestration" />
+        <SectionHeading eyebrow="The full path" title="Hardware → code → orchestration → pipelines" />
         <p className={`mb-4 max-w-3xl ${BODY_TEXT_CLASS}`}>
           Each stage builds on the previous one, and each ends on something you can now explain. The
           software engineering base (last stage) runs alongside the rest rather than after it.
@@ -100,8 +121,11 @@ export default function SweDeOverviewPage() {
       </section>
 
       <section id="levels" className={SECTION_CLASS}>
-        <SectionHeading eyebrow="Go deeper" title="Three levels of thinking" />
-        <div className="grid gap-4 md:grid-cols-3">
+        <SectionHeading eyebrow="Go deeper" title="Four levels of thinking" />
+        <div className="mb-4">
+          <TopicFigure spec={LEVELS_STACK_FIGURE} />
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {SWE_DE_LEVELS.map((level) => (
             <Link
               key={level.id}

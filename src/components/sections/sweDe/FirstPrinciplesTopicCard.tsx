@@ -2,6 +2,7 @@ import { FRAMING_DECISION_TREE } from '@/constants/systemDesignPrep/framingDecis
 import type { FirstPrinciplesTopic } from '@/constants/sweDe';
 import ComparisonTable from './ComparisonTable';
 import BookLink from './BookLink';
+import TopicFigure from './figures/TopicFigure';
 import { BODY_TEXT_CLASS } from './styles';
 
 const [WHAT_QUESTION, WHY_QUESTION, HOW_QUESTION] = FRAMING_DECISION_TREE;
@@ -33,6 +34,8 @@ const FirstPrinciplesTopicCard = ({ topic }: FirstPrinciplesTopicCardProps) => (
         <p className={`mt-1 ${BODY_TEXT_CLASS}`}>{topic.why}</p>
       </div>
     </div>
+
+    {topic.visual && <TopicFigure spec={topic.visual} />}
 
     <div>
       <p className={QUESTION_LABEL_CLASS}>{HOW_QUESTION.question}</p>

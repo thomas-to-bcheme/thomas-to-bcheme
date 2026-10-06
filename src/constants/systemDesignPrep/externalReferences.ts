@@ -7,7 +7,8 @@ export type ExternalReferenceGroup =
   | 'standards'
   | 'videos'
   | 'social'
-  | 'ml-system-design';
+  | 'ml-system-design'
+  | 'data-engineering';
 
 export type ExternalReferenceMedium = 'video' | 'social';
 
@@ -314,5 +315,113 @@ export const EXTERNAL_REFERENCES: ExternalReference[] = [
     url: 'https://www.uber.com/blog/michelangelo-machine-learning-platform/',
     whatItOffers:
       "Uber's own account of its internal ML platform — a 6-stage architecture (data management → training → evaluation → deployment → prediction serving → monitoring) built on a shared feature store, cited directly in this page's ML-Specific Framework's High-Level Architecture step.",
+  },
+
+  // --- Data engineering: official docs, specs, and standards ---
+  // Cited by the /swe-de figures. Each URL was checked reachable when added;
+  // descriptions state only what the linked page is for.
+  {
+    id: 'debezium-docs',
+    group: 'data-engineering',
+    title: 'Debezium Documentation',
+    url: 'https://debezium.io/documentation/',
+    whatItOffers:
+      'Reference documentation for Debezium, an open-source platform that streams row-level changes out of database transaction logs — how log-based change data capture connectors work.',
+  },
+  {
+    id: 'airflow-dag-runs',
+    group: 'data-engineering',
+    title: 'Apache Airflow — DAG Runs',
+    url: 'https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/dag-run.html',
+    whatItOffers:
+      'How Airflow models a run per data interval, plus catchup and backfill — the state-per-interval design that makes selective re-runs possible.',
+  },
+  {
+    id: 'dbt-incremental-models',
+    group: 'data-engineering',
+    title: 'dbt — Incremental models',
+    url: 'https://docs.getdbt.com/docs/build/incremental-models',
+    whatItOffers:
+      'How a SQL transformation processes only new or changed rows on each run, and the strategies for merging them into the existing table.',
+  },
+  {
+    id: 'iceberg-table-spec',
+    group: 'data-engineering',
+    title: 'Apache Iceberg — Table Spec',
+    url: 'https://iceberg.apache.org/spec/',
+    whatItOffers:
+      'The open specification for an Iceberg table: metadata files, manifests, and snapshots, and how a commit atomically swaps the table metadata pointer.',
+  },
+  {
+    id: 'delta-transaction-log',
+    group: 'data-engineering',
+    title: 'Delta Lake — Transaction Log Protocol',
+    url: 'https://github.com/delta-io/delta/blob/master/PROTOCOL.md',
+    whatItOffers:
+      'The Delta Lake protocol specification: the ordered transaction log of actions that defines each table version on top of immutable data files.',
+  },
+  {
+    id: 'flink-time',
+    group: 'data-engineering',
+    title: 'Apache Flink — Timely Stream Processing',
+    url: 'https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/time/',
+    whatItOffers:
+      'Event time versus processing time and watermarks, from a stream processor that treats them as first-class concepts.',
+  },
+  {
+    id: 'kimball-dimensional-modeling',
+    group: 'data-engineering',
+    title: 'Kimball Group — Dimensional Modeling Techniques',
+    url: 'https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/',
+    whatItOffers:
+      'A free index of the dimensional modeling techniques: grain, facts, dimensions, surrogate keys, and the slowly changing dimension types.',
+  },
+  {
+    id: 'terraform-intro',
+    group: 'data-engineering',
+    title: 'Terraform — Introduction',
+    url: 'https://developer.hashicorp.com/terraform/intro',
+    whatItOffers:
+      'The infrastructure-as-code model: declare desired state, plan the difference against current state, then apply it.',
+  },
+  {
+    id: 'finops-framework',
+    group: 'data-engineering',
+    title: 'FinOps Foundation — Framework',
+    url: 'https://www.finops.org/framework/',
+    whatItOffers:
+      'The FinOps framework for managing cloud cost as an engineering and business discipline: allocation, unit economics, and optimization.',
+  },
+  {
+    id: 'dora-research',
+    group: 'data-engineering',
+    title: 'DORA — DevOps Research and Assessment',
+    url: 'https://dora.dev/',
+    whatItOffers:
+      'The research program behind the software delivery performance metrics, useful for judging whether CI/CD changes are actually improving delivery.',
+  },
+  {
+    id: 'open-data-contract-standard',
+    group: 'data-engineering',
+    title: 'Open Data Contract Standard',
+    url: 'https://github.com/bitol-io/open-data-contract-standard',
+    whatItOffers:
+      'An open specification for describing a data contract: schema, quality rules, service levels, and ownership in one machine-readable document.',
+  },
+  {
+    id: 'confluent-schema-evolution',
+    group: 'data-engineering',
+    title: 'Confluent Schema Registry — Schema Evolution and Compatibility',
+    url: 'https://docs.confluent.io/platform/current/schema-registry/fundamentals/schema-evolution.html',
+    whatItOffers:
+      'Backward, forward, and full compatibility explained with the schema changes each one allows — the rules behind safe schema evolution.',
+  },
+  {
+    id: 'openlineage-docs',
+    group: 'data-engineering',
+    title: 'OpenLineage Documentation',
+    url: 'https://openlineage.io/docs/',
+    whatItOffers:
+      'An open standard for collecting dataset and job lineage metadata, so impact analysis and debugging can follow data across tools.',
   },
 ];

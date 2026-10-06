@@ -1,5 +1,5 @@
 /**
- * The three thinking levels (hardware → application → distributed) and the
+ * The thinking levels (hardware → application → distributed → pipelines) and the
  * /swe-de route each one owns. Plain data with no registry import, so
  * src/constants/site.ts can derive the SWE/DE nav group from it.
  */
@@ -40,6 +40,16 @@ export const SWE_DE_LEVELS: LevelPageMeta[] = [
     titleAccent: 'to a control plane',
     lede: 'Distribution buys scale and survival, and pays for them in partial failure and coordination. This level covers partitioning, replication, consensus, delivery semantics, and reusable patterns, then argues from their algorithms why Kubernetes and Airflow became the standard control planes for compute and workflows.',
     summary: 'Partitioning, replication, consensus, delivery semantics, distributed patterns, and why Kubernetes and Airflow are the standards.',
+  },
+  {
+    id: 'pipelines',
+    href: levelHref('pipelines'),
+    navLabel: 'Pipelines',
+    eyebrow: 'Level 4 · Pipelines',
+    title: 'Design the pipeline',
+    titleAccent: 'from source to consumer',
+    lede: 'The first three levels explain the machinery. This level applies it to the decisions a data engineer actually makes: where to transform, when to run, how to retry safely, how to model, store, capture, test, and ship. Each topic argues one decision from first principles and draws the mechanism, then ends with how an interviewer is likely to probe it.',
+    summary: 'ETL vs ELT, batch vs streaming, idempotent loads, orchestration, modeling, lakehouse tables, CDC, quality, testing, SQL patterns, cost, and interview structure.',
   },
 ];
 

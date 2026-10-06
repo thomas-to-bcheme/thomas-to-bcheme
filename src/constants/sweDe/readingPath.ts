@@ -1,7 +1,7 @@
 /**
  * The reading path: data engineering end to end first, then software
  * engineering as the base for designing and scaling data-intensive
- * applications, ordered hardware → code → orchestration. Every book id
+ * applications, ordered hardware → code → orchestration → pipeline design. Every book id
  * resolves against OREILLY_BOOKS (checked by scripts/verifySweDe.ts).
  */
 
@@ -166,16 +166,25 @@ export const READING_STAGES: ReadingStage[] = [
     outcome: 'Reconciliation loops, scheduling, and DAG-based workflow orchestration.',
   },
   {
-    id: 'platform',
+    id: 'pipelines-in-practice',
     stepNumber: 8,
+    label: 'Pipeline design in practice',
+    kind: 'pipelines',
+    bookIds: ['data-pipelines-pocket-reference'],
+    outcome:
+      'Where to transform, how to load idempotently, and which pipeline patterns recur — the decisions the Pipelines level argues from first principles.',
+  },
+  {
+    id: 'platform',
+    stepNumber: 9,
     label: 'Platform at scale',
     kind: 'platform',
-    bookIds: ['data-pipelines-pocket-reference', 'seven-databases', 'data-mesh', 'data-management-at-scale'],
+    bookIds: ['seven-databases', 'data-mesh', 'data-management-at-scale'],
     outcome: 'Choosing a platform shape — store per access pattern, and ownership per domain.',
   },
   {
     id: 'ai-era',
-    stepNumber: 9,
+    stepNumber: 10,
     label: 'AI-era extensions',
     kind: 'platform',
     bookIds: [
@@ -189,7 +198,7 @@ export const READING_STAGES: ReadingStage[] = [
   },
   {
     id: 'software-craft',
-    stepNumber: 10,
+    stepNumber: 11,
     label: 'Software engineering base (read in parallel)',
     kind: 'craft',
     bookIds: [
