@@ -45,6 +45,7 @@ import { HIERARCHICAL_CLUSTERING } from './hierarchical-clustering';
 import { DBSCAN } from './dbscan';
 import { AFFINITY_PROPAGATION } from './affinity-propagation';
 import { ASSOCIATION_RULES } from './association-rules';
+import { LINEAR_PROGRAMMING } from './linear-programming';
 import { GENETIC_ALGORITHM } from './genetic-algorithm';
 
 export const CLASSICAL_ML_MODELS: AiMlModel[] = [
@@ -79,5 +80,6 @@ export const CLASSICAL_ML_MODELS: AiMlModel[] = [
   META_LEARNERS,
   DOUBLE_MACHINE_LEARNING,
   INSTRUMENTAL_VARIABLES,
+  LINEAR_PROGRAMMING,
   GENETIC_ALGORITHM,
 ];

@@ -10,6 +10,8 @@ import { PERCEPTRON } from './perceptron';
 import { MLP } from './mlp';
 import { CNN } from './cnn';
 import { OBJECT_DETECTION } from './object-detection';
+import { RESNET } from './resnet';
+import { U_NET } from './u-net';
 import { RNN } from './rnn';
 import { LSTM } from './lstm';
 import { GRU } from './gru';
@@ -35,6 +37,8 @@ export const DEEP_LEARNING_MODELS: AiMlModel[] = [
   MLP,
   CNN,
   OBJECT_DETECTION,
+  RESNET,
+  U_NET,
   RNN,
   LSTM,
   GRU,
