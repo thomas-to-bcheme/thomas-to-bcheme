@@ -152,6 +152,8 @@ export interface FlowStep {
 export interface FlowLane {
   id: string;
   title: string;
+  /** True when the steps are parallel items or alternatives, not a sequence — drawn without arrows. */
+  isUnordered?: boolean;
   steps: FlowStep[];
 }
 

@@ -669,6 +669,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         {
           id: 'undercurrents',
           title: 'Spanning every stage',
+          isUnordered: true,
           steps: [
             { id: 'identity', label: 'Identity and keys', detail: 'Roles, least privilege, encryption keys', tone: 'purple' },
             { id: 'catalog', label: 'Catalog and lineage', detail: 'Discoverability and impact analysis', tone: 'blue' },
@@ -767,6 +768,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         {
           id: 'loop',
           title: 'Typical loop areas',
+          isUnordered: true,
           steps: [
             { id: 'sql', label: 'SQL', detail: 'Window functions, joins, tuning', tone: 'blue' },
             { id: 'coding', label: 'Coding', detail: 'Data structures and transforms', tone: 'zinc' },

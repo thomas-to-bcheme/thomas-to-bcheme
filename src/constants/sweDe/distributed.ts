@@ -46,8 +46,12 @@ export const DISTRIBUTED_TOPICS: FirstPrinciplesTopic[] = [
           title: 'Choosing the partition function',
           steps: [
             { id: 'access-pattern', label: 'Dominant access pattern', detail: 'Point lookups or ordered scans?', tone: 'rose' },
-            { id: 'hash', label: 'Hash', detail: 'Even spread; key order is lost', tone: 'violet' },
-            { id: 'range', label: 'Range', detail: 'Ordered scans; hot ranges risk skew', tone: 'sky' },
+            {
+              id: 'pick-function',
+              label: 'Pick the function',
+              detail: 'Hash: even spread, key order lost. Range: ordered scans, hot ranges risk skew',
+              tone: 'violet',
+            },
             { id: 'rebalance', label: 'Rebalance', detail: 'Consistent hashing or many fixed partitions keep data movement small', tone: 'teal' },
           ],
         },
@@ -101,8 +105,13 @@ export const DISTRIBUTED_TOPICS: FirstPrinciplesTopic[] = [
           title: 'Under a network partition (CAP)',
           steps: [
             { id: 'partition', label: 'Partition', detail: 'Nodes cannot reach each other', tone: 'rose' },
-            { id: 'choose-consistency', label: 'Consistency', detail: 'The minority side refuses writes, giving up availability', tone: 'sky' },
-            { id: 'choose-availability', label: 'Availability', detail: 'Both sides keep accepting writes, giving up consistency', tone: 'yellow' },
+            {
+              id: 'choose',
+              label: 'Choose one',
+              detail:
+                'Consistency: the minority side refuses writes, giving up availability. Availability: both sides keep accepting writes, giving up consistency',
+              tone: 'sky',
+            },
           ],
         },
       ],
@@ -334,8 +343,13 @@ export const DISTRIBUTED_TOPICS: FirstPrinciplesTopic[] = [
             { id: 'scheduled', label: 'Scheduled', detail: 'Dependencies are met', tone: 'zinc' },
             { id: 'queued', label: 'Queued', detail: 'Handed to the executor', tone: 'amber' },
             { id: 'running', label: 'Running', detail: 'A worker executes the task', tone: 'sky' },
-            { id: 'success', label: 'Success', detail: 'Downstream tasks may start', tone: 'emerald' },
-            { id: 'failed', label: 'Failed or up for retry', detail: 'Retries left: back to queued; none left: failed', tone: 'rose' },
+            {
+              id: 'outcome',
+              label: 'Success or failure',
+              detail:
+                'Success releases downstream tasks. Failure with retries left goes back to queued; with none left it ends as failed',
+              tone: 'emerald',
+            },
           ],
         },
       ],

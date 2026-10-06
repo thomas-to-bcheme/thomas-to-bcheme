@@ -54,6 +54,7 @@ export const ROLE_MAP_FIGURE: FlowFigureSpec = {
     {
       id: 'handoffs',
       title: 'What changes hands',
+          isUnordered: true,
       steps: [
         { id: 'contract', label: 'Data contract', detail: 'Producer and engineer agree schema and change notice', tone: 'purple' },
         { id: 'freshness', label: 'Freshness agreement', detail: 'Engineer and consumers agree how stale data may be', tone: 'sky' },
@@ -64,6 +65,7 @@ export const ROLE_MAP_FIGURE: FlowFigureSpec = {
     {
       id: 'partners',
       title: 'Partner roles that own cross-cutting concerns',
+          isUnordered: true,
       steps: [
         { id: 'security', label: 'Security', detail: 'Classification, access, encryption', tone: 'purple' },
         { id: 'governance', label: 'Governance', detail: 'Ownership, quality bar, lineage', tone: 'blue' },
