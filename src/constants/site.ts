@@ -89,6 +89,7 @@ export const NAV_LINKS: NavEntry[] = [
       ...SWE_DE_LEVELS.map((level) => ({ label: level.navLabel, href: level.href })),
     ],
   },
+  { type: 'link', label: 'DeployOps', href: '/#deployops' },
   { type: 'link', label: 'Jobs', href: '/jobs' },
   { type: 'link', label: 'Hugging Face', href: '/huggingface' },
   { type: 'link', label: 'Projects', href: '/projects' },
