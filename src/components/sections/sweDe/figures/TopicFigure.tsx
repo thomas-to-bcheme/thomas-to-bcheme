@@ -28,26 +28,13 @@ const renderBody = (spec: FigureSpec) => {
     case 'triangle':
       return <TriangleFigure corners={spec.corners} markers={spec.markers} />;
     case 'event-time':
-      return (
-        <EventTimeFigure
-          windowEnd={spec.windowEnd}
-          watermarkPassesAt={spec.watermarkPassesAt}
-          axisMax={spec.axisMax}
-          events={spec.events}
-        />
-      );
+      return <EventTimeFigure windowEnd={spec.windowEnd} watermarkPassesAt={spec.watermarkPassesAt} axisMax={spec.axisMax} events={spec.events} />;
   }
 };
 
 /** Picks the renderer for a figure spec; the switch is exhaustive, so a new `kind` fails `tsc` until handled. */
 const TopicFigure = ({ spec }: { spec: FigureSpec }) => (
-  <FundamentalsFigure
-    id={spec.id}
-    label={spec.label}
-    caption={spec.caption}
-    sourceIds={spec.sourceIds}
-    bookIds={spec.bookIds}
-  >
+  <FundamentalsFigure id={spec.id} label={spec.label} caption={spec.caption} sourceIds={spec.sourceIds} bookIds={spec.bookIds}>
     {renderBody(spec)}
   </FundamentalsFigure>
 );

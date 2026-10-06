@@ -1,13 +1,14 @@
+import ScrollableDiagram from './ScrollableDiagram';
 import type { TriangleFigureSpec } from '@/constants/sweDe';
 
-const VIEW_WIDTH = 380;
+const VIEW_WIDTH = 520;
 const VIEW_HEIGHT = 300;
 const VERTICES: [number, number][] = [
-  [190, 34],
-  [48, 262],
-  [332, 262],
+  [260, 34],
+  [90, 262],
+  [430, 262],
 ];
-const LABEL_FLIP_X = 190;
+const LABEL_FLIP_X = 260;
 
 const markerPosition = (weights: [number, number, number]): [number, number] => {
   const x = weights.reduce((sum, weight, corner) => sum + weight * VERTICES[corner][0], 0);
@@ -23,46 +24,42 @@ const markerPosition = (weights: [number, number, number]): [number, number] => 
  */
 const TriangleFigure = ({ corners, markers }: Pick<TriangleFigureSpec, 'corners' | 'markers'>) => (
   <div>
-    <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="mx-auto h-auto w-full max-w-md" role="presentation" aria-hidden="true">
-      <polygon
-        points={VERTICES.map(([x, y]) => `${x},${y}`).join(' ')}
-        className="fill-zinc-50 stroke-zinc-400 dark:fill-zinc-900 dark:stroke-zinc-600"
-        strokeWidth={1.5}
-        strokeLinejoin="round"
-      />
-      {corners.map((corner, index) => {
-        const [x, y] = VERTICES[index];
-        const isTop = index === 0;
-        return (
-          <text
-            key={corner.id}
-            x={x}
-            y={isTop ? y - 10 : y + 20}
-            textAnchor="middle"
-            className="fill-zinc-900 text-[12px] font-bold dark:fill-white"
-          >
-            {corner.label}
-          </text>
-        );
-      })}
-      {markers.map((marker) => {
-        const [x, y] = markerPosition(marker.weights);
-        const isRightOfCenter = x > LABEL_FLIP_X;
-        return (
-          <g key={marker.id}>
-            <circle cx={x} cy={y} r={6} className={`fill-blue-600 stroke-white dark:fill-blue-400 dark:stroke-zinc-900`} strokeWidth={1.5} />
-            <text
-              x={isRightOfCenter ? x + 10 : x - 10}
-              y={y + 4}
-              textAnchor={isRightOfCenter ? 'start' : 'end'}
-              className="fill-zinc-800 text-[11px] font-semibold dark:fill-zinc-200"
-            >
-              {marker.label}
+    <ScrollableDiagram>
+      <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="mx-auto h-auto w-full min-w-[32rem] max-w-2xl" role="presentation" aria-hidden="true">
+        <polygon
+          points={VERTICES.map(([x, y]) => `${x},${y}`).join(' ')}
+          className="fill-zinc-50 stroke-zinc-400 dark:fill-zinc-900 dark:stroke-zinc-600"
+          strokeWidth={1.5}
+          strokeLinejoin="round"
+        />
+        {corners.map((corner, index) => {
+          const [x, y] = VERTICES[index];
+          const isTop = index === 0;
+          return (
+            <text key={corner.id} x={x} y={isTop ? y - 10 : y + 20} textAnchor="middle" className="fill-zinc-900 text-[12px] font-bold dark:fill-white">
+              {corner.label}
             </text>
-          </g>
-        );
-      })}
-    </svg>
+          );
+        })}
+        {markers.map((marker) => {
+          const [x, y] = markerPosition(marker.weights);
+          const isRightOfCenter = x > LABEL_FLIP_X;
+          return (
+            <g key={marker.id}>
+              <circle cx={x} cy={y} r={6} className={`fill-blue-600 stroke-white dark:fill-blue-400 dark:stroke-zinc-900`} strokeWidth={1.5} />
+              <text
+                x={isRightOfCenter ? x + 10 : x - 10}
+                y={y + 4}
+                textAnchor={isRightOfCenter ? 'start' : 'end'}
+                className="fill-zinc-800 text-[11px] font-semibold dark:fill-zinc-200"
+              >
+                {marker.label}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </ScrollableDiagram>
     <dl className="mt-3 grid gap-2 sm:grid-cols-3">
       {corners.map((corner) => (
         <div key={corner.id}>

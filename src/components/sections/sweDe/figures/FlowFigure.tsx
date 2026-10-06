@@ -6,13 +6,7 @@ import { TONE_CLASSES } from './tones';
 const STEP_CLASS = 'flex w-full flex-1 flex-col justify-center rounded-lg border px-3 py-2.5 text-center';
 
 /** Points down while the lane is stacked (below `sm:`), right once it's a row. */
-const FlowArrow = () => (
-  <ArrowRight
-    size={18}
-    aria-hidden="true"
-    className="shrink-0 rotate-90 sm:rotate-0 stroke-[2.5] text-zinc-400 dark:text-zinc-600"
-  />
-);
+const FlowArrow = () => <ArrowRight size={18} aria-hidden="true" className="shrink-0 rotate-90 sm:rotate-0 stroke-[2.5] text-zinc-400 dark:text-zinc-600" />;
 
 const StepBox = ({ step }: { step: FlowStep }) => (
   <div className={cn(STEP_CLASS, TONE_CLASSES[step.tone])}>

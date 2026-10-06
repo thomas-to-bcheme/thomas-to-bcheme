@@ -1,3 +1,4 @@
+import ScrollableDiagram from './ScrollableDiagram';
 import type { EventTimeFigureSpec } from '@/constants/sweDe';
 
 const VIEW_WIDTH = 420;
@@ -45,49 +46,66 @@ const EventTimeFigure = ({
 
   return (
     <div>
-      <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="mx-auto h-auto w-full max-w-lg" role="presentation" aria-hidden="true">
-        <line x1={PLOT.left} y1={PLOT.top} x2={PLOT.left} y2={PLOT.bottom} className={AXIS_CLASS} strokeWidth={1.5} />
-        <line x1={PLOT.left} y1={PLOT.bottom} x2={PLOT.right} y2={PLOT.bottom} className={AXIS_CLASS} strokeWidth={1.5} />
+      <ScrollableDiagram>
+        <svg viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`} className="mx-auto h-auto w-full min-w-[26rem] max-w-lg" role="presentation" aria-hidden="true">
+          <line x1={PLOT.left} y1={PLOT.top} x2={PLOT.left} y2={PLOT.bottom} className={AXIS_CLASS} strokeWidth={1.5} />
+          <line x1={PLOT.left} y1={PLOT.bottom} x2={PLOT.right} y2={PLOT.bottom} className={AXIS_CLASS} strokeWidth={1.5} />
 
-        <line x1={xOf(0)} y1={yOf(0)} x2={xOf(axisMax)} y2={yOf(axisMax)} className={AXIS_CLASS} strokeWidth={1} strokeDasharray="5 4" />
-        <text x={xOf(axisMax) - 6} y={yOf(axisMax) + 14} textAnchor="end" className={`${MUTED_TEXT_CLASS} text-[10px]`}>
-          No delay
-        </text>
+          <line x1={xOf(0)} y1={yOf(0)} x2={xOf(axisMax)} y2={yOf(axisMax)} className={AXIS_CLASS} strokeWidth={1} strokeDasharray="5 4" />
+          <text x={xOf(axisMax) - 6} y={yOf(axisMax) + 14} textAnchor="end" className={`${MUTED_TEXT_CLASS} text-[10px]`}>
+            No delay
+          </text>
 
-        <line x1={PLOT.left} y1={yOf(windowEnd)} x2={PLOT.right} y2={yOf(windowEnd)} className="stroke-blue-500 dark:stroke-blue-400" strokeWidth={1.5} strokeDasharray="2 3" />
-        <text x={PLOT.left + 6} y={yOf(windowEnd) - 5} className="fill-blue-700 text-[10px] font-semibold dark:fill-blue-300">
-          Window ends
-        </text>
+          <line
+            x1={PLOT.left}
+            y1={yOf(windowEnd)}
+            x2={PLOT.right}
+            y2={yOf(windowEnd)}
+            className="stroke-blue-500 dark:stroke-blue-400"
+            strokeWidth={1.5}
+            strokeDasharray="2 3"
+          />
+          <text x={PLOT.left + 6} y={yOf(windowEnd) - 5} className="fill-blue-700 text-[10px] font-semibold dark:fill-blue-300">
+            Window ends
+          </text>
 
-        <line x1={xOf(watermarkPassesAt)} y1={PLOT.top} x2={xOf(watermarkPassesAt)} y2={PLOT.bottom} className="stroke-amber-500 dark:stroke-amber-400" strokeWidth={1.5} />
-        <text x={xOf(watermarkPassesAt) + 5} y={PLOT.top + 11} className="fill-amber-700 text-[10px] font-semibold dark:fill-amber-300">
-          Watermark passes window end
-        </text>
-
-        {events.map((event) => (
-          <circle
-            key={event.id}
-            cx={xOf(event.processingTime)}
-            cy={yOf(event.eventTime)}
-            r={5}
-            className={`${STATUS_FILL[statusOf(event)]} stroke-white dark:stroke-zinc-900`}
+          <line
+            x1={xOf(watermarkPassesAt)}
+            y1={PLOT.top}
+            x2={xOf(watermarkPassesAt)}
+            y2={PLOT.bottom}
+            className="stroke-amber-500 dark:stroke-amber-400"
             strokeWidth={1.5}
           />
-        ))}
+          <text x={xOf(watermarkPassesAt) - 5} y={PLOT.top + 11} textAnchor="end" className="fill-amber-700 text-[10px] font-semibold dark:fill-amber-300">
+            Watermark passes window end
+          </text>
 
-        <text x={(PLOT.left + PLOT.right) / 2} y={VIEW_HEIGHT - 30} textAnchor="middle" className={`${MUTED_TEXT_CLASS} text-[11px]`}>
-          Processing time (when the system sees the event)
-        </text>
-        <text
-          x={14}
-          y={(PLOT.top + PLOT.bottom) / 2}
-          textAnchor="middle"
-          transform={`rotate(-90 14 ${(PLOT.top + PLOT.bottom) / 2})`}
-          className={`${MUTED_TEXT_CLASS} text-[11px]`}
-        >
-          Event time (when it happened)
-        </text>
-      </svg>
+          {events.map((event) => (
+            <circle
+              key={event.id}
+              cx={xOf(event.processingTime)}
+              cy={yOf(event.eventTime)}
+              r={5}
+              className={`${STATUS_FILL[statusOf(event)]} stroke-white dark:stroke-zinc-900`}
+              strokeWidth={1.5}
+            />
+          ))}
+
+          <text x={(PLOT.left + PLOT.right) / 2} y={VIEW_HEIGHT - 30} textAnchor="middle" className={`${MUTED_TEXT_CLASS} text-[11px]`}>
+            Processing time (when the system sees the event)
+          </text>
+          <text
+            x={14}
+            y={(PLOT.top + PLOT.bottom) / 2}
+            textAnchor="middle"
+            transform={`rotate(-90 14 ${(PLOT.top + PLOT.bottom) / 2})`}
+            className={`${MUTED_TEXT_CLASS} text-[11px]`}
+          >
+            Event time (when it happened)
+          </text>
+        </svg>
+      </ScrollableDiagram>
       <ul className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-zinc-600 dark:text-zinc-400">
         {statuses.map((status) => {
           const count = events.filter((event) => statusOf(event) === status).length;

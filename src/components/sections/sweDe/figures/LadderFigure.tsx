@@ -27,18 +27,16 @@ const LadderFigure = ({ axisLabel, rungs }: Pick<LadderFigureSpec, 'axisLabel' |
       <p className="mb-3 text-micro font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">{axisLabel}</p>
       <ol className="space-y-2">
         {rungs.map((rung) => (
-          <li key={rung.id} className="grid gap-1 sm:grid-cols-[minmax(0,11rem)_minmax(0,1fr)] sm:items-center sm:gap-3">
+          <li key={rung.id} className="grid gap-1 sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] sm:items-center sm:gap-3">
             <div>
-              <p className="text-sm font-semibold text-zinc-900 dark:text-white">{rung.label}</p>
+              <p className="text-sm font-semibold text-zinc-900 dark:text-white">
+                {rung.label} <span className="ml-1 text-xs font-bold text-blue-700 dark:text-blue-400">{rung.valueLabel}</span>
+              </p>
               <p className="text-xs leading-snug text-zinc-500 dark:text-zinc-400">{rung.detail}</p>
             </div>
-            <div className="flex items-center gap-2" aria-hidden="true">
-              <div
-                className={cn('h-5 rounded border', TONE_CLASSES[rung.tone])}
-                style={{ width: `${barPercent(rung.log10Value, minLog, maxLog)}%` }}
-              />
+            <div className="flex items-center" aria-hidden="true">
+              <div className={cn('h-5 rounded border', TONE_CLASSES[rung.tone])} style={{ width: `${barPercent(rung.log10Value, minLog, maxLog)}%` }} />
             </div>
-            <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 sm:col-start-2 sm:-mt-1">{rung.valueLabel}</p>
           </li>
         ))}
       </ol>

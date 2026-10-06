@@ -2,10 +2,8 @@ import { cn } from '@/lib/utils';
 import type { StripsFigureSpec } from '@/constants/sweDe';
 
 const CELL_BASE_CLASS = 'rounded border px-2 py-1 text-xs font-medium leading-tight';
-const HIGHLIGHTED_CELL_CLASS =
-  'bg-blue-100 border-blue-400 text-blue-900 dark:bg-blue-950/70 dark:border-blue-600 dark:text-blue-100';
-const DIMMED_CELL_CLASS =
-  'bg-zinc-50 border-zinc-200 text-zinc-400 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-600';
+const HIGHLIGHTED_CELL_CLASS = 'bg-blue-100 border-blue-400 text-blue-900 dark:bg-blue-950/70 dark:border-blue-600 dark:text-blue-100';
+const DIMMED_CELL_CLASS = 'bg-zinc-50 border-zinc-200 text-zinc-400 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-600';
 
 /**
  * Lanes of adjacent cells (bytes on disk, pages in an index) with the cells an
