@@ -1,15 +1,14 @@
-import type { DeployStrategy } from '@/types/deployOps';
+import type { DeployStrategy } from './types';
 
 /**
  * Six release strategies, each with a Kubernetes manifest and a GitHub Actions
  * job fragment.
  *
- * Snippets are illustrative and parameterized: every ${PLACEHOLDER} is listed in
- * the strategy's `variables` and is meant to be rendered (envsubst, Helm or
- * Kustomize) rather than edited by hand. Nothing here is this repo's own
- * workflow -- this site deploys through Vercel, where previews and instant
- * rollback are built in. Canary / A-B / Shadow assume Istio; plain Kubernetes
- * has no native weighted routing.
+ * Snippets are illustrative teaching examples, parameterized: every
+ * ${PLACEHOLDER} is listed in the strategy's `variables` and is meant to be
+ * rendered (envsubst, Helm or Kustomize) rather than edited by hand. They are
+ * not production configuration. Canary / A-B / Shadow assume Istio; plain
+ * Kubernetes has no native weighted routing.
  *
  * Third-party actions must be pinned to commit SHAs in a real pipeline. The
  * kubeconfig / OIDC auth step is omitted from every job fragment.
@@ -35,6 +34,8 @@ export const DEPLOY_STRATEGIES: readonly DeployStrategy[] = [
     id: 'recreate',
     name: 'Recreate',
     tagline: 'Tear down the old version, then bring up the new one.',
+    how:
+      'Scale the old version to zero, then start the new one. Because the two never run together, there is no version skew to reason about, and the cost is the gap in between.',
     useWhen:
       'Downtime is acceptable, or v1 and v2 cannot coexist (breaking schema, singleton worker, dev or batch environments).',
     rollback: 'Redeploy the old version, which is a second outage.',
@@ -93,6 +94,8 @@ spec:
     id: 'rolling',
     name: 'Rolling update',
     tagline: 'Replace instances gradually; the Kubernetes default.',
+    how:
+      'Start a few new pods, wait until their readiness probes pass, then stop the same number of old pods, and repeat. Capacity stays up, but for a while both versions serve traffic.',
     useWhen:
       'Stateless services where v1 and v2 can run side by side behind the same Service.',
     rollback: 'kubectl rollout undo is gradual, and mixed versions serve traffic meanwhile.',
@@ -153,6 +156,8 @@ spec:
     id: 'blue-green',
     name: 'Blue-green',
     tagline: 'Two identical environments; flip traffic at the Service.',
+    how:
+      'Run the new version as a full second environment next to the live one, test it with no users on it, then switch the Service selector so all traffic moves at once. The old environment stays warm for instant rollback.',
     useWhen: 'You need an instant cutover and instant rollback and can afford two full stacks.',
     rollback: 'Flip the Service selector back, in seconds.',
     resourceCost: '~2x during cutover',
@@ -228,6 +233,8 @@ spec:
     id: 'canary',
     name: 'Canary',
     tagline: 'Send a small share of traffic to the new version, then widen.',
+    how:
+      'Send a small, weighted share of real traffic to the new version, check an SLO such as error rate and latency, and widen only if the check passes. A bad version harms only the small share.',
     useWhen: 'You want real-traffic validation with a small blast radius and have trustworthy metrics.',
     rollback: 'Set the canary weight to 0. Fast.',
     resourceCost: '1x plus a small canary',
@@ -282,6 +289,8 @@ spec:
     id: 'ab-testing',
     name: 'A/B testing',
     tagline: 'Route by user attribute or header to compare business metrics.',
+    how:
+      'Route by a stable user attribute such as a cookie or header, so each user always sees the same variant, then compare a business metric between the groups. The goal is to learn, not to limit release risk.',
     useWhen:
       'You are running an experiment on conversion or engagement, not de-risking a release.',
     rollback: 'Remove the routing rule.',
@@ -337,6 +346,8 @@ spec:
     id: 'shadow',
     name: 'Shadow',
     tagline: 'Mirror production traffic to the new version; users never see its answers.',
+    how:
+      'Copy live requests to the new version and discard its responses, so users are unaffected. You then compare its behavior and cost with the live version offline before sending it any real traffic.',
     useWhen:
       'You want to validate a new version against real traffic with zero user impact, including model and prompt candidates.',
     rollback: 'Nothing to roll back for users: delete the shadow.',

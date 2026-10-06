@@ -7,7 +7,7 @@
 
 import { LATEST_CHANGELOG_VERSION } from './changelog';
 import { SWE_DE_BASE_PATH, SWE_DE_LEVELS } from './sweDe/levels';
-import { DEPLOYOPS_BASE_PATH } from './deployOps/route';
+import { DEPLOYOPS_BASE_PATH, DEPLOYOPS_LEVELS } from './deployOps/levels';
 
 // --- Identity ---
 export const SITE_OWNER_NAME = 'Thomas To';
@@ -90,7 +90,14 @@ export const NAV_LINKS: NavEntry[] = [
       ...SWE_DE_LEVELS.map((level) => ({ label: level.navLabel, href: level.href })),
     ],
   },
-  { type: 'link', label: 'DeployOps', href: DEPLOYOPS_BASE_PATH },
+  {
+    type: 'group',
+    label: 'DeployOps',
+    items: [
+      { label: 'Overview', href: DEPLOYOPS_BASE_PATH },
+      ...DEPLOYOPS_LEVELS.map((level) => ({ label: level.navLabel, href: level.href })),
+    ],
+  },
   { type: 'link', label: 'Jobs', href: '/jobs' },
   { type: 'link', label: 'Hugging Face', href: '/huggingface' },
   { type: 'link', label: 'Projects', href: '/projects' },
