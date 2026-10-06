@@ -13,7 +13,6 @@ import { ChatWidgetProvider } from '@/components/layout/ChatWidgetProvider';
 import SiteHeader from '@/components/layout/SiteHeader';
 import SkipLink from '@/components/ui/SkipLink';
 import Footer from '@/components/sections/Footer';
-import DeployOpsSection from '@/components/sections/DeployOpsSection';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -33,9 +32,6 @@ export default function Home() {
       {/* Vertical rhythm is centralized here: one consistent 48px (space-y-12) gap
           between every top-level block, so no section sets its own outer margin. */}
       <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 space-y-12" role="main">
-
-        {/* --- DEPLOYOPS: delivery engineering, SWE foundation + AI/ML/LLMOps --- */}
-        <DeployOpsSection />
 
         {/* --- ABOUT ME SECTION — same 48px rhythm between hero, press, and about --- */}
         <div id="about-me" className="scroll-mt-24 space-y-12">

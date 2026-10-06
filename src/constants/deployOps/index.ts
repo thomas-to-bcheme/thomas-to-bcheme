@@ -1,3 +1,4 @@
+export { DEPLOYOPS_BASE_PATH } from './route';
 export { LIFECYCLE_STAGES, DETERMINISM_PILLARS, DETERMINISM_SPECTRUM } from './foundation';
 export { DEPLOY_STRATEGIES } from './strategies';
 export { MLOPS_TOPICS } from './mlops';
