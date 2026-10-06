@@ -33,7 +33,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Two lanes compared. ETL: extract, transform in an external engine, load curated tables. ELT: extract, load raw data, transform inside the warehouse, serve.',
       caption: 'The same four verbs in a different order. The order decides where compute is paid for and whether raw data is kept.',
-      bookIds: ['data-pipelines-pocket-reference', 'fundamentals-of-data-engineering'],
+      bookIds: ['data-pipelines-pocket-reference', 'fundamentals-of-data-engineering', 'analytics-engineering-with-sql-and-dbt', 'data-engineering-design-patterns'],
       lanes: [
         {
           id: 'etl',
@@ -68,7 +68,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         { id: 'fits', label: 'Fits when', cells: ['Data must be reduced or masked before landing', 'Storage is cheap and compute is elastic'] },
       ],
     },
-    sourceBookIds: ['data-pipelines-pocket-reference', 'fundamentals-of-data-engineering', 'data-warehouse-toolkit'],
+    sourceBookIds: ['data-pipelines-pocket-reference', 'fundamentals-of-data-engineering', 'data-warehouse-toolkit', 'analytics-engineering-with-sql-and-dbt', 'data-engineering-design-patterns'],
   },
   {
     id: 'batch-vs-streaming',
@@ -91,7 +91,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Three lanes compared. Batch accumulates a bounded window, runs a job, and publishes a complete result. Micro-batch does the same on short windows. Streaming updates state per event and emits continuously.',
       caption: 'Processing models ordered by latency. Each step to the right trades simplicity and cost for freshness.',
-      bookIds: ['streaming-systems', 'designing-data-intensive-applications', 'kafka-definitive-guide'],
+      bookIds: ['streaming-systems', 'designing-data-intensive-applications', 'kafka-definitive-guide', 'stream-processing-with-apache-flink'],
       sourceIds: ['flink-time'],
       lanes: [
         {
@@ -135,7 +135,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         { id: 'rerun', label: 'Re-run after a bug', cells: ['Re-run the window', 'Re-run affected batches', 'Replay the log from an offset'] },
       ],
     },
-    sourceBookIds: ['streaming-systems', 'designing-data-intensive-applications', 'kafka-definitive-guide', 'fundamentals-of-data-engineering'],
+    sourceBookIds: ['streaming-systems', 'designing-data-intensive-applications', 'kafka-definitive-guide', 'fundamentals-of-data-engineering', 'stream-processing-with-apache-flink'],
   },
   {
     id: 'idempotent-loads',
@@ -158,7 +158,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Three write strategies run twice on the same three input rows. Append ends with six rows. Delete the partition then insert ends with three rows. Merge on the key ends with three rows.',
       caption: 'The same retry under three write strategies. Only the last two are safe to re-run.',
-      bookIds: ['data-pipelines-with-airflow', 'data-pipelines-pocket-reference', 'designing-data-intensive-applications'],
+      bookIds: ['data-pipelines-with-airflow', 'data-pipelines-pocket-reference', 'designing-data-intensive-applications', 'data-engineering-design-patterns'],
       lanes: [
         {
           id: 'append',
@@ -200,7 +200,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         { id: 'merge', label: 'Merge or upsert on a key', cells: ['Same rows', 'A stable, unique business or event key', 'Choosing a key that is not truly unique silently drops rows'] },
       ],
     },
-    sourceBookIds: ['data-pipelines-with-airflow', 'data-pipelines-pocket-reference', 'designing-data-intensive-applications', 'kafka-definitive-guide'],
+    sourceBookIds: ['data-pipelines-with-airflow', 'data-pipelines-pocket-reference', 'designing-data-intensive-applications', 'kafka-definitive-guide', 'data-engineering-design-patterns'],
   },
   {
     id: 'orchestration-dags',
@@ -280,7 +280,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Two lanes. Dimensional design in four steps: pick the business process, declare the grain, choose the dimensions, identify the facts. Type 2 slowly changing dimension: an attribute changes, the old row is closed, a new row is inserted, facts join by surrogate key.',
       caption: 'Design order for a star schema, and the row mechanics that preserve dimension history.',
-      bookIds: ['data-warehouse-toolkit', 'fundamentals-of-data-engineering'],
+      bookIds: ['data-warehouse-toolkit', 'fundamentals-of-data-engineering', 'analytics-engineering-with-sql-and-dbt'],
       sourceIds: ['kimball-dimensional-modeling'],
       lanes: [
         {
@@ -305,7 +305,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         },
       ],
     },
-    sourceBookIds: ['data-warehouse-toolkit', 'fundamentals-of-data-engineering', 'learning-sql'],
+    sourceBookIds: ['data-warehouse-toolkit', 'fundamentals-of-data-engineering', 'learning-sql', 'analytics-engineering-with-sql-and-dbt'],
   },
   {
     id: 'warehouse-lakehouse',
@@ -328,7 +328,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Three lanes. Evolution: warehouse, data lake, lakehouse. Layers: raw, cleaned, business-ready. Atomic commit: write data files, then publish one metadata entry, so readers see a consistent snapshot.',
       caption: 'Each generation fixes the previous one. The commit protocol is what makes files behave like a table.',
-      bookIds: ['fundamentals-of-data-engineering', 'learning-spark', 'data-management-at-scale'],
+      bookIds: ['fundamentals-of-data-engineering', 'learning-spark', 'data-management-at-scale', 'delta-lake-up-and-running', 'apache-iceberg-definitive-guide'],
       sourceIds: ['iceberg-table-spec', 'delta-transaction-log'],
       lanes: [
         {
@@ -360,7 +360,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         },
       ],
     },
-    sourceBookIds: ['fundamentals-of-data-engineering', 'learning-spark', 'data-management-at-scale', 'data-warehouse-toolkit'],
+    sourceBookIds: ['fundamentals-of-data-engineering', 'learning-spark', 'data-management-at-scale', 'data-warehouse-toolkit', 'delta-lake-up-and-running', 'apache-iceberg-definitive-guide'],
   },
   {
     id: 'change-data-capture',
@@ -440,7 +440,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Two lanes. Happy path: contract at the source, ingestion validation, transformation tests, publish with a freshness monitor. Failure path: failing rows go to a quarantine table, an alert fires, and the producer is notified.',
       caption: 'Checks sit at every boundary. Failures are isolated and routed to an owner instead of blocking everything.',
-      bookIds: ['data-management-at-scale', 'data-mesh', 'fundamentals-of-data-engineering'],
+      bookIds: ['data-management-at-scale', 'data-mesh', 'fundamentals-of-data-engineering', 'data-quality-fundamentals', 'data-contracts', 'data-governance-the-definitive-guide', 'implementing-service-level-objectives', 'database-reliability-engineering'],
       sourceIds: ['open-data-contract-standard', 'confluent-schema-evolution', 'openlineage-docs'],
       lanes: [
         {
@@ -464,7 +464,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         },
       ],
     },
-    sourceBookIds: ['data-management-at-scale', 'data-mesh', 'fundamentals-of-data-engineering', 'building-event-driven-microservices'],
+    sourceBookIds: ['data-management-at-scale', 'data-mesh', 'fundamentals-of-data-engineering', 'building-event-driven-microservices', 'data-quality-fundamentals', 'data-contracts', 'data-governance-the-definitive-guide', 'implementing-service-level-objectives', 'database-reliability-engineering'],
   },
   {
     id: 'pipeline-testing',
@@ -487,7 +487,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Two lanes. Test layers from fastest to slowest: unit tests on fixtures, data tests on real output, contract tests against consumers, end-to-end staging run. Change flow: pull request, CI tests, deploy to staging, data diff against production, promote.',
       caption: 'Fast, cheap tests run on every change; slower, data-dependent tests run where the data lives.',
-      bookIds: ['software-engineering-at-google', 'data-pipelines-with-airflow', 'fundamentals-of-data-engineering'],
+      bookIds: ['software-engineering-at-google', 'data-pipelines-with-airflow', 'fundamentals-of-data-engineering', 'analytics-engineering-with-sql-and-dbt', 'data-quality-fundamentals'],
       lanes: [
         {
           id: 'layers',
@@ -511,7 +511,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         },
       ],
     },
-    sourceBookIds: ['software-engineering-at-google', 'data-pipelines-with-airflow', 'fundamentals-of-data-engineering', 'pragmatic-programmer'],
+    sourceBookIds: ['software-engineering-at-google', 'data-pipelines-with-airflow', 'fundamentals-of-data-engineering', 'pragmatic-programmer', 'analytics-engineering-with-sql-and-dbt', 'data-quality-fundamentals'],
   },
   {
     id: 'sql-patterns-interview',
@@ -534,7 +534,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Four lanes, one per pattern. Latest row per key: partition and order, number rows, keep row one. Running total: order within a partition, aggregate over a frame. Consecutive runs: number rows, subtract from the value, group by the result. Sessions: compare to the previous row, flag a gap, cumulative sum labels the session.',
       caption: 'Each pattern is a short pipeline of window steps. Name the pattern first, then write the SQL.',
-      bookIds: ['learning-sql', 'postgresql-query-optimization'],
+      bookIds: ['learning-sql', 'postgresql-query-optimization', 'sql-antipatterns'],
       lanes: [
         {
           id: 'dedup',
@@ -574,7 +574,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         },
       ],
     },
-    sourceBookIds: ['learning-sql', 'postgresql-query-optimization', 'high-performance-mysql'],
+    sourceBookIds: ['learning-sql', 'postgresql-query-optimization', 'high-performance-mysql', 'sql-antipatterns'],
   },
   {
     id: 'partitioning-cost',
@@ -597,7 +597,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Three lanes. With pruning: the engine reads partition metadata, discards partitions the filter excludes, reads only needed columns of the rest, and scans few bytes. Without pruning: the filter cannot use the layout, every file is read, and many bytes are scanned. Shuffle: a wide join redistributes rows by key across the network and a hot key overloads one worker.',
       caption: 'Layout decides bytes, and bytes decide cost. Prune first, shuffle as little as possible.',
-      bookIds: ['designing-data-intensive-applications', 'high-performance-spark', 'spark-definitive-guide'],
+      bookIds: ['designing-data-intensive-applications', 'high-performance-spark', 'spark-definitive-guide', 'cloud-finops'],
       sourceIds: ['finops-framework'],
       lanes: [
         {
@@ -630,7 +630,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         },
       ],
     },
-    sourceBookIds: ['designing-data-intensive-applications', 'high-performance-spark', 'spark-definitive-guide', 'fundamentals-of-data-engineering'],
+    sourceBookIds: ['designing-data-intensive-applications', 'high-performance-spark', 'spark-definitive-guide', 'fundamentals-of-data-engineering', 'cloud-finops'],
   },
   {
     id: 'cloud-data-landscape',
@@ -702,7 +702,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
       label:
         'Two lanes. Code path: commit, CI checks, deploy to staging, data diff against production, approve, promote. Infrastructure as code: declare desired state, plan the difference, review, apply, record state and detect drift.',
       caption: 'Both paths end in a reviewed, automated change. The data diff is the step application delivery does not have.',
-      bookIds: ['software-engineering-at-google', 'release-it', 'fundamentals-of-data-engineering'],
+      bookIds: ['software-engineering-at-google', 'release-it', 'fundamentals-of-data-engineering', 'terraform-up-and-running', 'infrastructure-as-code'],
       sourceIds: ['terraform-intro', 'dora-research'],
       lanes: [
         {
@@ -729,7 +729,7 @@ export const PIPELINES_TOPICS: FirstPrinciplesTopic[] = [
         },
       ],
     },
-    sourceBookIds: ['software-engineering-at-google', 'release-it', 'fundamentals-of-data-engineering', 'data-pipelines-with-airflow'],
+    sourceBookIds: ['software-engineering-at-google', 'release-it', 'fundamentals-of-data-engineering', 'data-pipelines-with-airflow', 'terraform-up-and-running', 'infrastructure-as-code'],
   },
   {
     id: 'de-interview-expectations',

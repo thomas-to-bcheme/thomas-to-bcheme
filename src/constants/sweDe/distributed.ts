@@ -153,7 +153,7 @@ export const DISTRIBUTED_TOPICS: FirstPrinciplesTopic[] = [
         { id: 'next-2', eventTime: 15, processingTime: 17 },
       ],
     },
-    sourceBookIds: ['streaming-systems', 'kafka-definitive-guide', 'building-event-driven-microservices', 'building-resilient-distributed-systems'],
+    sourceBookIds: ['streaming-systems', 'kafka-definitive-guide', 'building-event-driven-microservices', 'building-resilient-distributed-systems', 'stream-processing-with-apache-flink'],
   },
   {
     id: 'distributed-patterns',

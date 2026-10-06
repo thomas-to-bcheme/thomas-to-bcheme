@@ -50,7 +50,21 @@ export type BookId =
   | 'software-engineering-at-google'
   | 'pragmatic-programmer'
   | 'release-it'
-  | 'working-effectively-with-legacy-code';
+  | 'working-effectively-with-legacy-code'
+  | 'data-engineering-design-patterns'
+  | 'data-quality-fundamentals'
+  | 'data-contracts'
+  | 'data-governance-the-definitive-guide'
+  | 'analytics-engineering-with-sql-and-dbt'
+  | 'delta-lake-up-and-running'
+  | 'apache-iceberg-definitive-guide'
+  | 'stream-processing-with-apache-flink'
+  | 'database-reliability-engineering'
+  | 'implementing-service-level-objectives'
+  | 'terraform-up-and-running'
+  | 'infrastructure-as-code'
+  | 'cloud-finops'
+  | 'sql-antipatterns';
 
 export type BookTrack =
   | 'frame'

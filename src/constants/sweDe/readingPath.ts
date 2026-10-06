@@ -124,8 +124,7 @@ export const READING_STAGES: ReadingStage[] = [
       'learning-sql',
       'postgresql-query-optimization',
       'high-performance-mysql',
-      'data-warehouse-toolkit',
-    ],
+      'data-warehouse-toolkit', 'sql-antipatterns'],
     outcome: 'Execution plans, index choice, join algorithms, and dimensional modeling.',
   },
   {
@@ -141,7 +140,7 @@ export const READING_STAGES: ReadingStage[] = [
     stepNumber: 5,
     label: 'Streams and events',
     kind: 'distributed',
-    bookIds: ['streaming-systems', 'kafka-definitive-guide', 'building-event-driven-microservices'],
+    bookIds: ['streaming-systems', 'kafka-definitive-guide', 'building-event-driven-microservices', 'stream-processing-with-apache-flink'],
     outcome: 'Event time, effectively-once delivery, event sourcing, and the outbox pattern.',
   },
   {
@@ -162,7 +161,7 @@ export const READING_STAGES: ReadingStage[] = [
     stepNumber: 7,
     label: 'Orchestration',
     kind: 'distributed',
-    bookIds: ['kubernetes-up-and-running', 'kubernetes-patterns', 'data-pipelines-with-airflow'],
+    bookIds: ['kubernetes-up-and-running', 'kubernetes-patterns', 'data-pipelines-with-airflow', 'terraform-up-and-running', 'infrastructure-as-code'],
     outcome: 'Reconciliation loops, scheduling, and DAG-based workflow orchestration.',
   },
   {
@@ -170,16 +169,16 @@ export const READING_STAGES: ReadingStage[] = [
     stepNumber: 8,
     label: 'Pipeline design in practice',
     kind: 'pipelines',
-    bookIds: ['data-pipelines-pocket-reference'],
+    bookIds: ['data-pipelines-pocket-reference', 'data-engineering-design-patterns', 'analytics-engineering-with-sql-and-dbt', 'delta-lake-up-and-running', 'apache-iceberg-definitive-guide', 'data-quality-fundamentals', 'data-contracts'],
     outcome:
-      'Where to transform, how to load idempotently, and which pipeline patterns recur — the decisions the Pipelines level argues from first principles.',
+      'Where to transform, how to load idempotently, how to model and store tables, and how to enforce quality and contracts — the decisions the Pipelines level argues from first principles.',
   },
   {
     id: 'platform',
     stepNumber: 9,
     label: 'Platform at scale',
     kind: 'platform',
-    bookIds: ['seven-databases', 'data-mesh', 'data-management-at-scale'],
+    bookIds: ['seven-databases', 'data-mesh', 'data-management-at-scale', 'data-governance-the-definitive-guide', 'cloud-finops'],
     outcome: 'Choosing a platform shape — store per access pattern, and ownership per domain.',
   },
   {
@@ -206,8 +205,7 @@ export const READING_STAGES: ReadingStage[] = [
       'pragmatic-programmer',
       'software-engineering-at-google',
       'release-it',
-      'working-effectively-with-legacy-code',
-    ],
+      'working-effectively-with-legacy-code', 'database-reliability-engineering', 'implementing-service-level-objectives'],
     outcome: 'Shipping, testing, and keeping production systems alive as they grow and age.',
   },
 ];
