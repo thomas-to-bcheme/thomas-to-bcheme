@@ -55,6 +55,27 @@ export default function AppliedIndexPage() {
         <OperationalGoalTaxonomy />
       </section>
 
+      <section id="worked-example" className="scroll-mt-24 mt-12">
+        <Link
+          href="/ai-ml/applied/worked-example"
+          className={`card-base block border-l-2 border-l-blue-400 p-5 transition-colors hover:border-blue-300 dark:hover:border-blue-700 ${FOCUS_RING}`}
+        >
+          <span className="text-micro font-bold uppercase tracking-widest text-zinc-400">
+            Worked example
+          </span>
+          <h3 className="mt-1 text-sm font-bold text-zinc-900 dark:text-white">
+            One retail question, answered by regression, classification and clustering
+          </h3>
+          <p className="mt-1.5 max-w-3xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            How much of each product should each store hold next week? Split into a quantity, a
+            yes-or-no alert and a grouping, to show which method answers which part.
+          </p>
+          <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 dark:text-blue-400">
+            See the three lenses <ArrowRight size={13} />
+          </span>
+        </Link>
+      </section>
+
       <section id="featured" className="scroll-mt-24 mt-12">
         <SectionHeading eyebrow="Featured" title="Where this site goes deepest" />
         <div className="grid gap-4 md:grid-cols-3">

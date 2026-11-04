@@ -40,6 +40,13 @@ export { LANGUAGE_STANDARDS, type LanguageStandard } from './languageStandards';
 export { DECISION_TREE, type DecisionTreeNode, type DecisionTarget, type DecisionTargetKind } from './decisionTree';
 export { PROBLEM_GENRES } from './problemGenres';
 export { SIMILARITY_METRICS } from './similarityMetrics';
+export {
+  WORKED_EXAMPLES,
+  type WorkedExample,
+  type WorkedLens,
+  type WorkedLensGenreId,
+  type WorkedPipelineStep,
+} from './workedExamples';
 
 /** Canonical order: categories general -> niche, models general -> niche within. */
 export const AI_ML_MODELS: AiMlModel[] = [

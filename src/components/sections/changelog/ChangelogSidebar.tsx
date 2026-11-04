@@ -1,13 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Compass, Layers, Workflow, HelpCircle } from 'lucide-react';
+import { Compass, Layers, Workflow, HelpCircle, HeartHandshake, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import {
   CHANGELOG_TOC_ITEMS,
   MENTAL_MODEL_TOC_ITEMS,
   PROJECT_TOC_ITEMS,
+  LEADERSHIP_TOC_ITEM,
+  STAFF_PLUS_TOC_ITEM,
+  STAFF_PLUS_TOPIC_TOC_ITEMS,
   PIPELINE_TOC_ITEM,
   FAQ_TOC_ITEM,
 } from '@/constants/changelogToc';
@@ -19,8 +22,8 @@ const NAV_LINK_CLASS =
 
 /**
  * Sticky desktop sidebar — hidden below `lg:`, where ChangelogMobileToc takes
- * over instead. One useActiveSection call, scoped to the full flat TOC (7
- * essay sections + 4 project ids + faq), drives which link is highlighted.
+ * over instead. One useActiveSection call, scoped to the full flat TOC (essay
+ * sections, project ids, leadership, Staff+ topics, pipeline, faq), drives which link is highlighted.
  */
 const ChangelogSidebar = () => {
   const activeId = useActiveSection(TOC_IDS);
@@ -61,6 +64,21 @@ const ChangelogSidebar = () => {
           <Layers size={12} className="stroke-[2.5]" /> Projects
         </span>
         {PROJECT_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
+      </div>
+
+      <div className="space-y-1">
+        <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
+          <HeartHandshake size={12} className="stroke-[2.5]" /> Leadership
+        </span>
+        {renderLink(LEADERSHIP_TOC_ITEM.id, LEADERSHIP_TOC_ITEM.label)}
+      </div>
+
+      <div className="space-y-1">
+        <span className="flex items-center gap-1.5 px-3 text-micro text-zinc-400 mb-2">
+          <TrendingUp size={12} className="stroke-[2.5]" /> Senior to Staff+
+        </span>
+        {renderLink(STAFF_PLUS_TOC_ITEM.id, 'Overview & questions')}
+        {STAFF_PLUS_TOPIC_TOC_ITEMS.map((item) => renderLink(item.id, item.label))}
       </div>
 
       <div className="space-y-1">

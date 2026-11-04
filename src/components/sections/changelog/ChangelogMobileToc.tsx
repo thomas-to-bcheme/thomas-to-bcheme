@@ -3,6 +3,9 @@ import { ChevronDown, ListTree } from 'lucide-react';
 import {
   MENTAL_MODEL_TOC_ITEMS,
   PROJECT_TOC_ITEMS,
+  LEADERSHIP_TOC_ITEM,
+  STAFF_PLUS_TOC_ITEM,
+  STAFF_PLUS_TOPIC_TOC_ITEMS,
   PIPELINE_TOC_ITEM,
   FAQ_TOC_ITEM,
 } from '@/constants/changelogToc';
@@ -35,6 +38,23 @@ const ChangelogMobileToc = () => (
       <div className="space-y-1">
         <span className="block px-3 text-micro text-zinc-400 mb-1">Projects</span>
         {PROJECT_TOC_ITEMS.map((item) => (
+          <a key={item.id} href={`#${item.id}`} className={LINK_CLASS}>
+            {item.label}
+          </a>
+        ))}
+      </div>
+      <div className="space-y-1">
+        <span className="block px-3 text-micro text-zinc-400 mb-1">Leadership</span>
+        <a href={`#${LEADERSHIP_TOC_ITEM.id}`} className={LINK_CLASS}>
+          {LEADERSHIP_TOC_ITEM.label}
+        </a>
+      </div>
+      <div className="space-y-1">
+        <span className="block px-3 text-micro text-zinc-400 mb-1">Senior to Staff+</span>
+        <a href={`#${STAFF_PLUS_TOC_ITEM.id}`} className={LINK_CLASS}>
+          Overview &amp; questions
+        </a>
+        {STAFF_PLUS_TOPIC_TOC_ITEMS.map((item) => (
           <a key={item.id} href={`#${item.id}`} className={LINK_CLASS}>
             {item.label}
           </a>

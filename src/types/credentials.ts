@@ -70,7 +70,7 @@ export interface ImpactMetric {
 }
 
 /**
- * One behavioral-signal story for the homepage's Leadership & Recognition
+ * One behavioral-signal story for the /projects Leadership & Recognition
  * section, shaped like `/behavioural`'s own High-Signal Storytelling pyramid
  * (Headline → Behavioral Core → Base) rather than a program/activity blurb.
  * `attribution` is a plain string, not a foreign key into `RecognitionItem`/

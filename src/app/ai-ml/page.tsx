@@ -83,6 +83,25 @@ export default function AiMlHubPage() {
           ))}
         </div>
 
+        <Link
+          href="/ai-ml/applied/worked-example"
+          className={`card-base mt-4 block border-l-2 border-l-blue-400 p-5 transition-colors hover:border-blue-300 dark:hover:border-blue-700 ${FOCUS_RING}`}
+        >
+          <span className="text-micro font-bold uppercase tracking-widest text-zinc-400">
+            Worked example
+          </span>
+          <h3 className="mt-1 text-sm font-bold text-zinc-900 dark:text-white">
+            One retail question, three kinds of answer
+          </h3>
+          <p className="mt-1.5 max-w-3xl text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            See regression, classification and clustering each answer a different part of the same
+            inventory question.
+          </p>
+          <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 dark:text-blue-400">
+            Compare the methods <ArrowRight size={13} />
+          </span>
+        </Link>
+
         <div className="mt-6">
           <span className="text-micro text-zinc-400 block mb-2">
             And the wider field, for contrast

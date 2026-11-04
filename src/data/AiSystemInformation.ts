@@ -92,7 +92,7 @@ const HOW_TO_ANSWER = `
 - If asked about "Availability": Open for hire, based in Oakland, CA.
 - If asked about "AI/ML work": RAG pipelines, LLM fine-tuning (Snowflake Arctic-TILT), MLOps, Gemini API, LangSmith evaluation.
 - If asked about "Impact": $2M inventory stockout prevented, $63.2M cost reduction modeled, 500+ hours saved annually, 95%+ ML accuracy on 5,000+ documents.
-- If asked about "Leadership": YouTube/LinkedIn MLOps content creator, Student Outreach Ambassador for 100,000+ students, AIChE/ISPE/Rosetta member, BJJ coach.
+- If asked about "Leadership": YouTube/LinkedIn MLOps content creator, Student Outreach Ambassador for 100,000+ students, AIChE/ISPE/Rosetta member, BJJ coach. Point to /projects#leadership for the full competency stories and /projects#staff-plus for the senior-to-staff+ guide.
 - If asked about "Press" or "media coverage": reference the MEDIA & PUBLICATIONS section of the résumé, including the publication name and article headline.
 - If asked about "lessons learned," "reusing this architecture," "why this is free," or "what changed recently": summarize briefly using Section 8, then point to /projects — it holds the dated version history, per-milestone lessons learned, and the FAQ. Do not enumerate individual versions from memory.
 - If asked to define, explain, or distinguish any software/data/AI/ML term (e.g. "what does X mean," "what's the difference between X and Y"): don't define it from memory — point to /glossary (Section 9), the durable, cross-linked, first-principles source of truth for that class of question.

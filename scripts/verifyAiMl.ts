@@ -33,6 +33,7 @@ import { DECISION_TREE } from '../src/constants/aiMl/decisionTree';
 import { OPERATIONAL_GOALS } from '../src/constants/aiMl/operationalGoals';
 import { PROBLEM_GENRES } from '../src/constants/aiMl/problemGenres';
 import { SIMILARITY_METRICS } from '../src/constants/aiMl/similarityMetrics';
+import { WORKED_EXAMPLES } from '../src/constants/aiMl/workedExamples';
 import {
   chebyshev,
   correlationCovariance,
@@ -571,6 +572,60 @@ function checkProblemGenres(failures: string[]): void {
   }
 }
 
+function checkWorkedExamples(failures: string[]): void {
+  const genreIds = new Set<string>(PROBLEM_GENRES.map((genre) => genre.id));
+  const exampleIds = new Set<string>();
+
+  for (const example of WORKED_EXAMPLES) {
+    if (exampleIds.has(example.id)) failures.push(`duplicate worked example id "${example.id}"`);
+    exampleIds.add(example.id);
+
+    for (const field of ['label', 'businessQuestion', 'whyMoreThanOneMethod'] as const) {
+      if (!example[field].trim()) failures.push(`worked example "${example.id}" has an empty ${field}`);
+    }
+
+    const lensGenres = new Set<string>();
+    for (const lens of example.lenses) {
+      if (!genreIds.has(lens.genreId)) {
+        failures.push(`worked example "${example.id}" uses unknown problem genre "${lens.genreId}"`);
+      }
+      if (lensGenres.has(lens.genreId)) {
+        failures.push(`worked example "${example.id}" has two lenses for "${lens.genreId}"`);
+      }
+      lensGenres.add(lens.genreId);
+
+      for (const field of ['subQuestion', 'input', 'exampleOutput', 'metric', 'action', 'reachWhen', 'caution'] as const) {
+        if (!lens[field].trim()) {
+          failures.push(`worked example "${example.id}" lens "${lens.genreId}" has an empty ${field}`);
+        }
+      }
+
+      if (lens.modelSlugs.length === 0) {
+        failures.push(`worked example "${example.id}" lens "${lens.genreId}" lists no models`);
+      }
+      for (const slug of lens.modelSlugs) {
+        if (!getModelBySlug(slug)) {
+          failures.push(`worked example "${example.id}" lens "${lens.genreId}" references unregistered model "${slug}"`);
+        }
+      }
+    }
+
+    if (example.lenses.length < 2) {
+      failures.push(`worked example "${example.id}" needs at least two lenses to compare methods`);
+    }
+
+    if (example.pipeline.length === 0) failures.push(`worked example "${example.id}" has an empty pipeline`);
+    for (const step of example.pipeline) {
+      if (!lensGenres.has(step.genreId)) {
+        failures.push(`worked example "${example.id}" pipeline step "${step.label}" has no matching lens for "${step.genreId}"`);
+      }
+      if (!step.label.trim() || !step.detail.trim()) {
+        failures.push(`worked example "${example.id}" has a pipeline step with an empty label or detail`);
+      }
+    }
+  }
+}
+
 function checkSimilarityMetrics(failures: string[], warnings: string[]): void {
   const seen = new Set<string>();
   const levelIds = new Set(VECTORIZATION_LEVELS.map((level) => level.id));
@@ -829,6 +884,7 @@ function main(): void {
   checkImplementationShape(failures, warnings);
   checkBundleSafety(failures);
   checkProblemGenres(failures);
+  checkWorkedExamples(failures);
   checkSimilarityMetrics(failures, warnings);
   checkSimilarityMath(failures);
 

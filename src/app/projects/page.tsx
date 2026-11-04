@@ -10,13 +10,15 @@ import ChangelogMobileToc from '@/components/sections/changelog/ChangelogMobileT
 import ChangelogHeaderEssay from '@/components/sections/changelog/ChangelogHeaderEssay';
 import ExecutiveSummary from '@/components/sections/changelog/ExecutiveSummary';
 import ProjectChangelogSection from '@/components/sections/changelog/ProjectChangelogSection';
+import LeadershipRecognitionSection from '@/components/sections/changelog/LeadershipRecognitionSection';
+import StaffPlusSection from '@/components/sections/changelog/staffPlus/StaffPlusSection';
 import ProjectPipelineSection from '@/components/sections/changelog/ProjectPipelineSection';
 import { CHANGELOG_PROJECTS } from '@/constants/changelog';
 
 export const metadata: Metadata = {
   title: 'Projects — Thomas To',
   description:
-    'The mental model behind this $0-infrastructure portfolio — mission, outbound/inbound funnel, the SWE Compass (including the lifecycle-agnostic pattern its own end-to-end axis instantiates), what "agent" means here, and a system-design philosophy beyond CAP theorem — plus a per-project version history, lessons learned, the open-source & content project pipeline with its own tier-by-tier architecture, and FAQ for the Job Board, Hugging Face/ZeroGPU backend, Study Plan, and Chat/RAG agent.',
+    'The mental model behind this $0-infrastructure portfolio — mission, outbound/inbound funnel, the SWE Compass (including the lifecycle-agnostic pattern its own end-to-end axis instantiates), what "agent" means here, and a system-design philosophy beyond CAP theorem — plus a per-project version history, lessons learned, the open-source & content project pipeline with its own tier-by-tier architecture, leadership & recognition stories framed around trade-offs and business impact, a senior-to-staff+ guide (advice, best practices, industry standards, and the questions to ask) for nine data-engineering competencies, and FAQ for the Job Board, Hugging Face/ZeroGPU backend, Study Plan, and Chat/RAG agent.',
 };
 
 const FOCUS_RING =
@@ -63,6 +65,14 @@ export default function ChangelogPage() {
             {CHANGELOG_PROJECTS.map((project) => (
               <ProjectChangelogSection key={project.id} project={project} />
             ))}
+          </div>
+
+          <div className="mt-20">
+            <LeadershipRecognitionSection />
+          </div>
+
+          <div className="mt-20">
+            <StaffPlusSection />
           </div>
 
           <div className="mt-20">

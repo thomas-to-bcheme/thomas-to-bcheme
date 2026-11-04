@@ -12,6 +12,7 @@
     "audit:ai-ml": "tsx scripts/auditAiMl.ts",
     "check:ai-ml-samples": "tsx scripts/checkAiMlSamples.ts",
     "verify:swe-de": "tsx scripts/verifySweDe.ts",
+    "verify:staff-plus": "tsx scripts/verifyStaffPlus.ts",
     "postinstall": "mkdir -p public/excalidraw && cp -r node_modules/@excalidraw/excalidraw/dist/prod/fonts public/"
   },
   "dependencies": {

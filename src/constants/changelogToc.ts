@@ -9,6 +9,7 @@
  */
 
 import { CHANGELOG_PROJECTS } from '@/constants/changelog';
+import { STAFF_PLUS_TOPICS } from '@/constants/staffPlus/topics';
 
 export interface ChangelogTocItem {
   id: string;
@@ -37,6 +38,18 @@ export const PROJECT_TOC_ITEMS: ChangelogTocItem[] = CHANGELOG_PROJECTS.map((pro
   label: project.name,
 }));
 
+// Leadership & Recognition — one entry; its story cards stay deep-linkable by
+// their own `story-<id>` anchors without a sidebar row each.
+export const LEADERSHIP_TOC_ITEM: ChangelogTocItem = { id: 'leadership', label: 'Leadership & Recognition' };
+
+// Senior-to-Staff+ — the section itself, then one entry per topic derived from
+// STAFF_PLUS_TOPICS so the sidebar never has to be hand-kept in sync with it.
+export const STAFF_PLUS_TOC_ITEM: ChangelogTocItem = { id: 'staff-plus', label: 'Senior to Staff+' };
+export const STAFF_PLUS_TOPIC_TOC_ITEMS: ChangelogTocItem[] = STAFF_PLUS_TOPICS.map((topic) => ({
+  id: topic.id,
+  label: topic.title,
+}));
+
 export const FAQ_TOC_ITEM: ChangelogTocItem = { id: 'faq', label: 'FAQ' };
 
 // The Project Pipeline section (11 Kanban-sourced cards, grouped by status) —
@@ -45,11 +58,15 @@ export const FAQ_TOC_ITEM: ChangelogTocItem = { id: 'faq', label: 'FAQ' };
 // their own id even without a dedicated TOC row each.
 export const PIPELINE_TOC_ITEM: ChangelogTocItem = { id: 'project-pipeline', label: 'Project Pipeline' };
 
-// Full, flat TOC — 7 essay sections + 4 project ids + pipeline + faq — the
-// exact set ChangelogSidebar's single useActiveSection call is scoped to.
+// Full, flat TOC in page reading order — essay sections, project ids,
+// leadership, the Staff+ section and its topics, pipeline, faq — the exact set
+// ChangelogSidebar's single useActiveSection call is scoped to.
 export const CHANGELOG_TOC_ITEMS: ChangelogTocItem[] = [
   ...MENTAL_MODEL_TOC_ITEMS,
   ...PROJECT_TOC_ITEMS,
+  LEADERSHIP_TOC_ITEM,
+  STAFF_PLUS_TOC_ITEM,
+  ...STAFF_PLUS_TOPIC_TOC_ITEMS,
   PIPELINE_TOC_ITEM,
   FAQ_TOC_ITEM,
 ];

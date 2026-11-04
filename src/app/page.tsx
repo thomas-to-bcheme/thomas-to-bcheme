@@ -41,7 +41,7 @@ export default function Home() {
           <ImpactMetricsSection />
         </div>
 
-        {/* --- OFF THE CLOCK: personal photo section (follows Leadership & Recognition) --- */}
+        {/* --- OFF THE CLOCK: personal photo section (follows the impact metrics) --- */}
         <BeyondTheTerminal />
 
 				{/* --- FOOTER SECTION --- */}

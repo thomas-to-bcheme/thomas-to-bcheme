@@ -18,7 +18,7 @@ const ICON_MAP: Record<ImpactMetricIconName, LucideIcon> = {
 /**
  * "Impact, by the numbers" — a quantified-results stat grid pulled straight
  * from the resume's Professional Experience bullets, placed right after
- * AboutMeSection's Professional Summary / Leadership & Recognition cards.
+ * AboutMeSection's Professional Summary.
  * Header markup mirrors BeyondTheTerminal's hand-rolled eyebrow + h2 +
  * description (the homepage's own convention for a full section header,
  * rather than the shared SectionHeading used on /behavioural and /projects).

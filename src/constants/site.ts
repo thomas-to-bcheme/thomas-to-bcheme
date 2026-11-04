@@ -77,6 +77,7 @@ export const NAV_LINKS: NavEntry[] = [
       { label: 'Generative AI', href: '/ai-ml/generative-ai' },
       { label: 'Reinforcement Learning', href: '/ai-ml/reinforcement-learning' },
       { label: 'Applied ML', href: '/ai-ml/applied' },
+      { label: 'Worked Example', href: '/ai-ml/applied/worked-example' },
       { label: 'Time-Series Forecasting', href: '/ai-ml/applied/time-series-forecasting' },
       { label: 'Anomaly Detection', href: '/ai-ml/applied/anomaly-detection' },
       { label: 'Optimization', href: '/ai-ml/applied/optimization' },
