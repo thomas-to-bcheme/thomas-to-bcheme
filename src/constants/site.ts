@@ -8,6 +8,7 @@
 import { LATEST_CHANGELOG_VERSION } from './changelog';
 import { SWE_DE_BASE_PATH, SWE_DE_LEVELS } from './sweDe/levels';
 import { DEPLOYOPS_BASE_PATH, DEPLOYOPS_LEVELS } from './deployOps/levels';
+import { IMPLEMENTATION_BASE_PATH, IMPLEMENTATION_MODULES } from './implementation/modules';
 
 // --- Identity ---
 export const SITE_OWNER_NAME = 'Thomas To';
@@ -43,7 +44,7 @@ export const SITE_REGION = 'US-West (SFO)';
 
 // --- Navigation ---
 // Discriminated union: a plain route link, or a dropdown group of related
-// links. Three groups today -- "Interview" (the 4 prep routes), "AI/ML" (the
+// links. Groups today -- "Interview" (the 4 prep routes), "AI/ML" (the
 // model reference), and "SWE/DE" (the reading path and its 3 thinking levels,
 // derived from SWE_DE_LEVELS) -- each collapsing many routes into one
 // top-level slot so the header doesn't overflow at common widths.
@@ -99,6 +100,14 @@ export const NAV_LINKS: NavEntry[] = [
       ...DEPLOYOPS_LEVELS.map((level) => ({ label: level.navLabel, href: level.href })),
     ],
   },
+  {
+    type: 'group',
+    label: 'Implementation',
+    items: [
+      { label: 'Overview', href: IMPLEMENTATION_BASE_PATH },
+      ...IMPLEMENTATION_MODULES.map((entry) => ({ label: entry.navLabel, href: entry.href })),
+    ],
+  },
   { type: 'link', label: 'Jobs', href: '/jobs' },
   { type: 'link', label: 'Hugging Face', href: '/huggingface' },
   { type: 'link', label: 'Projects', href: '/projects' },
@@ -124,6 +133,7 @@ export const FOOTER_NAV_LINKS = [
   { label: 'Applied ML', href: '/ai-ml/applied' },
   { label: 'SWE/DE', href: SWE_DE_BASE_PATH },
   { label: 'DeployOps', href: DEPLOYOPS_BASE_PATH },
+  { label: 'Implementation', href: IMPLEMENTATION_BASE_PATH },
   { label: 'Jobs', href: '/jobs' },
   { label: 'Hugging Face', href: '/huggingface' },
   { label: 'Projects', href: '/projects' },
